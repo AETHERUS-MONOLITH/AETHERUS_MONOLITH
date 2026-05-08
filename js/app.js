@@ -12,6 +12,16 @@
   // cardObserver lives here so observeNew() can register dynamically injected
   // doc cards (docs.js calls window.AetherusReveal.observeNew() after fetch).
   function initScrollReveal() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal, .doc-card').forEach(el => el.classList.add('is-visible'));
+      window.AetherusReveal = {
+        observeNew() {
+          document.querySelectorAll('.reveal, .doc-card').forEach(el => el.classList.add('is-visible'));
+        }
+      };
+      return;
+    }
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -50,7 +60,10 @@
 
   /* ─── PIPELINE NODE STAGGER ─────────────────────── */
   function initPipelineReveal() {
-    const pipelineContainer = document.querySelector('.pipeline-container');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+
+    const pipelineContainer = document.querySelector('.pipeline-hud');
     if (!pipelineContainer) return;
 
     const nodes = pipelineContainer.querySelectorAll('[data-node-id]');
@@ -59,6 +72,13 @@
       n.style.transform = 'translateY(4px)';
       n.style.transition = 'opacity 300ms ease, transform 300ms ease';
     });
+
+    const revealNodes = () => {
+      nodes.forEach(n => {
+        n.style.opacity = '1';
+        n.style.transform = 'translateY(0)';
+      });
+    };
 
     const pObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -75,18 +95,22 @@
     }, { threshold: 0.2 });
 
     pObserver.observe(pipelineContainer);
+    setTimeout(revealNodes, 1800);
   }
 
   /* ─── SMOOTH NAV ANCHORS ────────────────────────── */
-  function initNavigation() {
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
+	  function initNavigation() {
+	    document.querySelectorAll('a[href^="#"]').forEach(link => {
+	      link.addEventListener('click', (e) => {
+	        const hash = link.getAttribute('href');
+	        if (!hash || hash === '#') return;
+	        e.preventDefault();
+	        const target = document.querySelector(hash);
+	        if (target) {
+	          const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+	          target.scrollIntoView({ behavior });
+	        }
+	      });
     });
   }
 
@@ -125,6 +149,10 @@
       // X = simulate Fail
       if ((e.key === 'x' || e.key === 'X') && window.AetherusPipeline) {
         window.AetherusPipeline.simulateFail();
+      }
+      // I = demonstrate idempotency/cached-artifact branch
+      if ((e.key === 'i' || e.key === 'I') && window.AetherusPipeline) {
+        window.AetherusPipeline.simulateIdempotentCache();
       }
     });
   }

@@ -3,254 +3,318 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AETHERUS — Governed LLM Pipeline</title>
+  <title>AETHERUS MONOLITH - AI Governance Architecture</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="scan-line" aria-hidden="true"></div>
 
-<div class="scan-line" aria-hidden="true"></div>
+  <header class="site-header" role="banner">
+    <a href="#" class="brand-lockup" aria-label="AETHERUS MONOLITH home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-copy">
+        <span class="brand-name">AETHERUS <b>&middot;</b> MONOLITH</span>
+        <span class="brand-subtitle">AI Governance &amp; Model-Behavior Risk Architecture</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#architecture">Architecture</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#artifacts">Artifacts</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="interface-chip">Conceptual Research Interface</span>
+  </header>
 
-<!-- ═══════════════════════════════════════════
-     NAVIGATION
-═══════════════════════════════════════════ -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="#" class="nav-brand" aria-label="AETHERUS">AETHERUS<span> ·</span> MONOLITH</a>
-  <ul class="nav-links">
-    <li><a href="#governance">Governance</a></li>
-    <li><a href="#pipeline">Pipeline</a></li>
-    <li><a href="#artifacts">Artifacts</a></li>
-  </ul>
-</nav>
+  <main>
+    <section class="cutaway-hero" aria-labelledby="hero-title">
+      <aside class="thesis-panel panel-frame">
+        <span class="panel-kicker">Conceptual Research Interface</span>
+        <h1 id="hero-title">Govern AI behavior. Control the path from intent to release.</h1>
+        <p>
+          AETHERUS MONOLITH is a conceptual architecture for governing model behavior
+          through explicit authority, verifiable evidence, and traceable decisions.
+        </p>
+        <p>
+          Every output traverses a disciplined stack of controls, each producing
+          evidence and bound by authority.
+        </p>
 
-<!-- ═══════════════════════════════════════════
-     HERO — 3D GRID GRAVITY
-═══════════════════════════════════════════ -->
-<section class="hero-section" aria-label="Hero">
-  <canvas id="grid-canvas" aria-hidden="true"></canvas>
-  <div class="hero-vignette" aria-hidden="true"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">GOVERNANCE INFRASTRUCTURE</div>
-    <h1 class="hero-title">
-      Intelligence Is Probabilistic.<br>
-      <em>Governance Is Deterministic.</em>
-    </h1>
-    <p class="hero-subtitle">
-      Your AI agents are executing decisions right now. Can you prove who authorized them? This is the governance infrastructure that makes the answer possible.
-    </p>
-    <div class="hero-index" aria-hidden="true">
-      <span class="hero-index-item">01 — Governance</span>
-      <span class="hero-index-item">02 — Pipeline</span>
-      <span class="hero-index-item">03 — Artifacts</span>
-    </div>
-  </div>
-  <div class="hero-scroll-cue" aria-hidden="true">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     MAIN CONTENT
-═══════════════════════════════════════════ -->
-<main class="wrapper">
-
-  <!-- ─── SECTION 01: GOVERNANCE ────────────── -->
-  <section id="governance" class="section" aria-labelledby="governance-title">
-    <div class="section-header reveal">
-      <span class="section-number">Section 01</span>
-      <h2 class="section-title" id="governance-title">Governance Layer</h2>
-      <div class="section-divider" aria-hidden="true"></div>
-    </div>
-
-    <!-- Governance doc cards -->
-    <div class="docs-grid" id="docs-governance" aria-label="Governance documents"></div>
-    <div class="doc-detail-panel" id="detail-governance" aria-live="polite" aria-atomic="true"></div>
-  </section>
-
-  <!-- ─── SECTION 02: PIPELINE ──────────────── -->
-  <section id="pipeline" class="section" aria-labelledby="pipeline-title">
-    <!-- Section header -->
-    <div class="section-header reveal">
-      <span class="section-number">Section 02</span>
-      <h2 class="section-title" id="pipeline-title">Pipeline Layer</h2>
-      <div class="section-divider" aria-hidden="true"></div>
-    </div>
-
-    <!-- HUD CONTAINER -->
-    <div class="pipeline-hud reveal" role="region" aria-label="Pipeline architecture visualizer">
-
-      <!-- Corner bracket spans -->
-      <span class="hud-corner hud-corner--tl" aria-hidden="true"></span>
-      <span class="hud-corner hud-corner--tr" aria-hidden="true"></span>
-      <span class="hud-corner hud-corner--bl" aria-hidden="true"></span>
-      <span class="hud-corner hud-corner--br" aria-hidden="true"></span>
-
-      <!-- Greeble micro-data -->
-      <span class="hud-greeble hud-greeble--tl" aria-hidden="true">DATA FLOW: —</span>
-      <span class="hud-greeble hud-greeble--tc" aria-hidden="true">[ ACTIVE CONDUIT: P-714 ]</span>
-      <span class="hud-greeble hud-greeble--tr" aria-hidden="true">PRESSURE: STABLE</span>
-      <span class="hud-greeble hud-greeble--bl" aria-hidden="true">CHECKPOINT: VALIDATING</span>
-      <span class="hud-greeble hud-greeble--br" aria-hidden="true">CYCLE: 42Hz</span>
-
-      <!-- Atmospheric balyage glow -->
-      <div class="pipeline-atmosphere" aria-hidden="true"></div>
-
-      <!-- SVG angular wiring layer (rendered behind nodes, above atmosphere) -->
-      <svg class="pipeline-wiring" aria-hidden="true" preserveAspectRatio="none"></svg>
-
-      <!-- Rail -->
-      <div class="pipeline-rail-wrap">
-        <div class="pipeline-rail" aria-hidden="true">
-
-          <!-- Particles -->
-          <div class="pipeline-particle" aria-hidden="true"></div>
-          <div class="pipeline-particle" aria-hidden="true"></div>
-          <div class="pipeline-particle" aria-hidden="true"></div>
-
-        </div><!-- /pipeline-rail -->
-      </div><!-- /pipeline-rail-wrap -->
-
-      <!-- Nodes row — semantic list for screen readers -->
-      <ol class="pipeline-nodes-row" aria-label="Pipeline stages left to right">
-
-        <li class="gnode" data-node-id="G_IDEM" tabindex="0" aria-label="Gate: Idempotency check">
-          <div class="gnode-diamond" aria-hidden="true"></div>
-          <span class="node-label">G_IDEM</span>
-        </li>
-
-        <li class="pnode" data-node-id="S1" tabindex="0" aria-label="Joint S1: Communicator">
-          <div class="pnode-box">
-            <div class="pnode-pulser" aria-hidden="true"></div>
-            <span class="pnode-id" aria-hidden="true">S1</span>
+        <dl class="doctrine-list" aria-label="AETHERUS doctrine">
+          <div>
+            <dt>Authority Boundaries</dt>
+            <dd>Explicit permissioning and override scope define who can decide and when.</dd>
           </div>
-          <span class="node-label">COMMUNICATOR</span>
-        </li>
-
-        <li class="gnode" data-node-id="G1" tabindex="0" aria-label="Gate G1">
-          <div class="gnode-diamond" aria-hidden="true"></div>
-          <span class="node-label">G1</span>
-        </li>
-
-        <li class="gnode" data-node-id="G1A" tabindex="0" aria-label="Gate G1A">
-          <div class="gnode-diamond" aria-hidden="true"></div>
-          <span class="node-label">G1A</span>
-        </li>
-
-        <li class="pnode" data-node-id="S2" tabindex="0" aria-label="Joint S2: Mediator">
-          <div class="pnode-box">
-            <div class="pnode-pulser" aria-hidden="true"></div>
-            <span class="pnode-id" aria-hidden="true">S2</span>
+          <div>
+            <dt>Verifiable Evidence</dt>
+            <dd>Every decision is supported by recorded lineage and reviewable proof.</dd>
           </div>
-          <span class="node-label">MEDIATOR</span>
-        </li>
-
-        <li class="gnode" data-node-id="G2" tabindex="0" aria-label="Gate G2">
-          <div class="gnode-diamond" aria-hidden="true"></div>
-          <span class="node-label">G2</span>
-        </li>
-
-        <li class="pnode" data-node-id="S3" tabindex="0" aria-label="Joint S3: Drafter">
-          <div class="pnode-box">
-            <div class="pnode-pulser" aria-hidden="true"></div>
-            <span class="pnode-id" aria-hidden="true">S3</span>
+          <div>
+            <dt>Risk-Aware by Design</dt>
+            <dd>Risk is classified and contextualized before any action can progress.</dd>
           </div>
-          <span class="node-label">DRAFTER</span>
-        </li>
-
-        <li class="pnode" data-node-id="S4" tabindex="0" aria-label="Joint S4: Refiner">
-          <div class="pnode-box">
-            <div class="pnode-pulser" aria-hidden="true"></div>
-            <span class="pnode-id" aria-hidden="true">S4</span>
+          <div>
+            <dt>Release With Confidence</dt>
+            <dd>Only eligible outputs with complete proof can enter the release corridor.</dd>
           </div>
-          <span class="node-label">REFINER</span>
-        </li>
+        </dl>
 
-        <li class="gnode" data-node-id="G4" tabindex="0" aria-label="Gate G4: Verdict">
-          <div class="gnode-diamond" aria-hidden="true"></div>
-          <span class="node-label">G4</span>
-        </li>
+        <p class="disclaimer-box">This is a conceptual architecture, not a deployed system.</p>
+      </aside>
 
-        <li class="pnode" data-node-id="S5" tabindex="0" aria-label="Joint S5: Origin">
-          <div class="pnode-box">
-            <div class="pnode-pulser" aria-hidden="true"></div>
-            <span class="pnode-id" aria-hidden="true">S5</span>
+      <section class="stack-stage" id="architecture" aria-labelledby="stack-title">
+        <div class="stack-header">
+          <span>Governance Stack Cutaway</span>
+          <ul class="flow-legend" aria-label="Flow type legend">
+            <li><span class="flow-swatch control"></span>Control Flow</li>
+            <li><span class="flow-swatch evidence"></span>Evidence Flow</li>
+            <li><span class="flow-swatch state"></span>State Transition</li>
+            <li><span class="flow-swatch release"></span>Release Corridor</li>
+          </ul>
+        </div>
+
+        <div class="stack-cutaway" role="region" aria-labelledby="stack-title">
+          <h2 id="stack-title" class="sr-only">Layered governance stack cutaway</h2>
+          <svg class="cutaway-lines" viewBox="0 0 900 760" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="stackEdge" x1="0" x2="1">
+                <stop offset="0" stop-color="#5bc8ee" stop-opacity="0.18"/>
+                <stop offset="0.5" stop-color="#d8f3ff" stop-opacity="0.4"/>
+                <stop offset="1" stop-color="#5bc8ee" stop-opacity="0.18"/>
+              </linearGradient>
+            </defs>
+            <path class="control-line" d="M450 55 L450 570"/>
+            <path class="control-line" d="M370 290 L530 290 L530 438 L450 438"/>
+            <path class="evidence-line" d="M210 85 H690 M210 168 H690 M210 250 H690 M210 332 H690 M210 575 H690"/>
+            <path class="state-line" d="M240 360 H660"/>
+            <path class="release-line" d="M245 692 H655"/>
+            <path class="release-arrow" d="M650 682 L670 692 L650 702"/>
+            <circle class="junction" cx="450" cy="85" r="4"/>
+            <circle class="junction" cx="450" cy="168" r="4"/>
+            <circle class="junction" cx="450" cy="250" r="4"/>
+            <circle class="junction" cx="450" cy="332" r="4"/>
+            <circle class="junction" cx="450" cy="438" r="4"/>
+            <circle class="junction" cx="450" cy="575" r="4"/>
+            <circle class="junction" cx="450" cy="692" r="5"/>
+          </svg>
+
+          <ol class="stack-layers" aria-label="Governance stack layers">
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="INPUT_FRAME" data-stage-label="Input / Context" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">01</span>
+                <span class="layer-copy"><strong>Input / Context</strong><small>Prompt, intent, context, assumptions, constraints</small></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="AUTHORITY_CHECK" data-stage-label="Authority" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">02</span>
+                <span class="layer-copy"><strong>Authority</strong><small>Authority roots, delegation, intent scope</small></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="WHOLE_SYSTEM" data-stage-label="Provenance" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">03</span>
+                <span class="layer-copy"><strong>Provenance</strong><small>Origin, lineage, data and model pedigree</small></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="RISK_CLASSIFICATION" data-stage-label="Risk Classification" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">04</span>
+                <span class="layer-copy"><strong>Risk Classification</strong><small>Model-behavior risk surface and taxonomy</small></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="GATE_DECISION" data-stage-label="Governance Gates" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">05</span>
+                <span class="layer-copy"><strong>Governance Gates</strong><small>Policy evaluation with explicit outcomes</small></span>
+              </button>
+            </li>
+            <li class="state-layer">
+              <div class="stack-layer stack-layer-static">
+                <span class="layer-number">06</span>
+                <span class="layer-copy"><strong>State Chambers</strong><small>Mutually exclusive outcomes and actions</small></span>
+              </div>
+              <div class="state-chambers" aria-label="State chambers">
+                <button type="button" class="state-chamber freeze" data-stage-key="RECOVERY_PATH" data-stage-label="Freeze Chamber" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                  <span>Freeze</span><small>Halt propagation and enforce hold</small>
+                </button>
+                <button type="button" class="state-chamber repair" data-stage-key="RECOVERY_PATH" data-stage-label="Repair Chamber" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                  <span>Repair</span><small>Mitigate, correct, and validate</small>
+                </button>
+                <button type="button" class="state-chamber escalate" data-stage-key="RECOVERY_PATH" data-stage-label="Escalate Chamber" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                  <span>Escalate</span><small>Raise for review and decision</small>
+                </button>
+              </div>
+            </li>
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="AUDIT_RELEASE" data-stage-label="Audit Layer" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">07</span>
+                <span class="layer-copy"><strong>Audit Layer</strong><small>Record, verify, and attest</small></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="S5" data-stage-label="Artifact Lineage" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">08</span>
+                <span class="layer-copy"><strong>Artifact Lineage</strong><small>Lineage graph across artifacts</small></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="stack-layer" data-stage-key="AUDIT_RELEASE" data-stage-label="Release Eligibility" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">09</span>
+                <span class="layer-copy"><strong>Release Eligibility</strong><small>Eligibility assessment, conditions, constraints</small></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="stack-layer release-layer" data-stage-key="AUDIT_RELEASE" data-stage-label="Release Corridor" aria-controls="pipeline-related-evidence" aria-pressed="false">
+                <span class="layer-number">10</span>
+                <span class="layer-copy"><strong>Release Corridor</strong><small>Authorized release with controls</small></span>
+              </button>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <aside class="taxonomy-panel panel-frame" aria-label="Stack taxonomy legend">
+        <h2>Taxonomy Legend</h2>
+        <ol class="taxonomy-list">
+          <li><strong>Input Boundary</strong><span>Defines the scope of what enters the system.</span></li>
+          <li><strong>Authority Boundary</strong><span>Establishes who can direct, approve, and act.</span></li>
+          <li><strong>Provenance Chain</strong><span>Captures origin and lineage of all inputs.</span></li>
+          <li><strong>Risk Context Layer</strong><span>Contextual risk understanding.</span></li>
+          <li><strong>Governance Gates</strong><span>Policy-based evaluation with explicit outcomes.</span></li>
+          <li><strong>State Chambers</strong><span>Controlled outcome paths with distinct controls and actions.</span></li>
+          <li><strong>Audit Layer</strong><span>Independent record of actions and decisions.</span></li>
+          <li><strong>Artifact Lineage</strong><span>Traceability across artifacts, versions, and relations.</span></li>
+          <li><strong>Eligibility Boundary</strong><span>Final eligibility check before release.</span></li>
+          <li><strong>Release Corridor</strong><span>Controlled path to release with conditions.</span></li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="lower-panels" id="evidence" aria-label="Governance model summary">
+      <article class="analysis-panel panel-frame" id="problem">
+        <span class="section-kicker">The Governance Gap</span>
+        <h2>Ungoverned outputs move through invisible space.</h2>
+        <p>
+          Without a governed pathway, model outputs can progress without authority checks,
+          provenance review, risk state, gates, audit boundaries, or release criteria.
+        </p>
+        <div class="comparison-strip" aria-label="Ungoverned versus governed flow">
+          <div>
+            <strong>Ungoverned Flow</strong>
+            <small>Intent -> model -> output -> action</small>
+            <span>No authority, provenance, gate, or audit boundary.</span>
           </div>
-          <span class="node-label">ORIGIN</span>
-        </li>
+          <div>
+            <strong>Governed Release</strong>
+            <small>Input -> authority -> evidence -> eligibility</small>
+            <span>Constrained by lineage, risk, audit, and release proof.</span>
+          </div>
+        </div>
+      </article>
 
-      </ol><!-- /pipeline-nodes-row -->
+      <article class="analysis-panel panel-frame" id="methodology">
+        <span class="section-kicker">System Architecture</span>
+        <h2>Layered controls define structure before operation.</h2>
+        <p>
+          AETHERUS describes the structure, constraints, and observable evidence
+          needed to govern model-behavior risk before productization.
+        </p>
+        <div class="mini-grid">
+          <span>Authority Layer</span>
+          <span>Governance Gates</span>
+          <span>Risk Model</span>
+          <span>Artifact Lineage</span>
+          <span>Auditability Layer</span>
+          <span>Human Control Surface</span>
+        </div>
+        <p class="micro-note">Immutable foundation: evidence records, artifact references, time anchors.</p>
+      </article>
 
-      <!-- Idempotency status readout -->
-      <div class="pipeline-status-readout" aria-live="polite"></div>
+      <article class="analysis-panel evidence-panel-anchor panel-frame">
+        <span class="section-kicker">Governance Pipeline to Evidence</span>
+        <h2>Every layer should reference supporting proof.</h2>
+        <p>
+          Select any stack layer to see which research artefacts support that part of
+          the governance model. The binding is static metadata, not live execution.
+        </p>
+        <div class="pipeline-control-map compact-controls" aria-label="Pipeline evidence stages">
+          <button type="button" data-stage-key="INPUT_FRAME" data-stage-label="Input / Context" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>01</span><small>Input / Context</small></button>
+          <button type="button" data-stage-key="AUTHORITY_CHECK" data-stage-label="Authority" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>02</span><small>Authority</small></button>
+          <button type="button" data-stage-key="RISK_CLASSIFICATION" data-stage-label="Risk Classification" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>03</span><small>Risk</small></button>
+          <button type="button" data-stage-key="GATE_DECISION" data-stage-label="Gate Decision" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>04</span><small>Gate</small></button>
+          <button type="button" data-stage-key="RECOVERY_PATH" data-stage-label="Freeze / Repair / Escalate" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>05</span><small>Freeze / Repair</small></button>
+          <button type="button" data-stage-key="AUDIT_RELEASE" data-stage-label="Audit / Release Eligibility" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>06</span><small>Audit / Release</small></button>
+        </div>
+        <div class="related-evidence-panel" id="pipeline-related-evidence" aria-live="polite" aria-atomic="true">
+          <div class="related-evidence-copy">
+            <span>Related Evidence</span>
+            <strong>Stack-to-evidence binding</strong>
+            <p>Select a stack layer or stage to see which research artefacts support that part of the governance model.</p>
+          </div>
+          <ul class="related-evidence-list" id="related-evidence-list">
+            <li>Evidence links are loaded from local artefact metadata.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
 
-    </div><!-- /pipeline-hud -->
-
-    <!-- Legend -->
-    <div class="pipeline-legend reveal" aria-label="Node type legend">
-      <div class="pipeline-legend-item">
-        <span class="legend-gate-sym" aria-hidden="true"></span>
-        <span>Gate — Checkpoint (not actor)</span>
+    <section class="artifacts-section panel-frame" id="artifacts" aria-labelledby="artifacts-title">
+      <div class="artifacts-intro">
+        <span class="section-kicker">Research Artefacts</span>
+        <h2 id="artifacts-title">Curated research and evidence modules.</h2>
+        <p>
+          These artefacts define the conceptual architecture, prototype evidence,
+          and methodology behind AETHERUS MONOLITH. Each card names its claim,
+          evidence type, boundary, and related stack stage.
+        </p>
       </div>
-      <div class="pipeline-legend-item">
-        <span class="legend-joint-sym" aria-hidden="true"></span>
-        <span>Joint — Actor (executor)</span>
+
+      <div class="artifact-surfaces" aria-label="Evidence module groups">
+        <div>
+          <h3>Architecture &amp; Governance</h3>
+          <div class="docs-grid" id="docs-governance" aria-label="Governance research modules"></div>
+          <div class="doc-detail-panel" id="detail-governance" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div>
+          <h3>Pipeline Methodology</h3>
+          <div class="docs-grid" id="docs-pipeline" aria-label="Pipeline governance modules"></div>
+          <div class="doc-detail-panel" id="detail-pipeline" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div>
+          <h3>Artefact Evidence</h3>
+          <div class="docs-grid" id="docs-artifacts" aria-label="Research and artifact modules"></div>
+          <div class="doc-detail-panel" id="detail-artifacts" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
+        </div>
       </div>
+    </section>
+  </main>
+
+  <footer class="footer-status" id="contact" role="contentinfo">
+    <div class="footer-statement">
+      <span class="brand-mark small" aria-hidden="true"></span>
+      <p>
+        AETHERUS MONOLITH is a conceptual research and prototype initiative. It is
+        an exploration of governance architecture for AI systems, not a deployed
+        system, compliance solution, or product.
+      </p>
     </div>
-
-    <!-- Pipeline doc cards grid — keep existing -->
-    <div class="docs-grid" id="docs-pipeline" aria-label="Pipeline documents"></div>
-    <div class="doc-detail-panel" id="detail-pipeline" aria-live="polite" aria-atomic="true"></div>
-  </section>
-
-  <!-- ─── SECTION 03: ARTIFACTS ─────────────── -->
-  <section id="artifacts" class="section" aria-labelledby="artifacts-title">
-    <div class="section-header reveal">
-      <span class="section-number">Section 03</span>
-      <h2 class="section-title" id="artifacts-title">Artifact Layer</h2>
-      <div class="section-divider" aria-hidden="true"></div>
-    </div>
-
-    <!-- Documentation Architecture Tree -->
-    <p class="artifact-tree-header">Every execution produces versioned, schema-validated artifacts. This is the complete inventory.</p>
-    <pre class="doc-tree reveal" aria-label="Documentation architecture tree" id="doc-tree"></pre>
-
-    <!-- Artifact doc cards -->
-    <div class="docs-grid" id="docs-artifacts" aria-label="Artifact documents"></div>
-    <div class="doc-detail-panel" id="detail-artifacts" aria-live="polite" aria-atomic="true"></div>
-  </section>
-
-  <!-- ─── DOCTRINE ANCHOR ──────────────────── -->
-  <section class="doctrine-anchor closing-composition reveal" aria-label="Doctrine">
-    <hr class="doctrine-rule">
-    <p class="doctrine-claim">Agentic systems fail at the boundary between intent and execution. Most systems ignore the boundary. This one enforces it.</p>
-    <p class="contact-line">
-      Engagements by introduction or direct inquiry.
-      <a href="mailto:camilocarlone2@gmail.com" class="contact-email">camilocarlone2@gmail.com</a>
-    </p>
-  </section>
-  <hr class="footer-rule">
-
-  <!-- ─── FOOTER ────────────────────────────── -->
-  <footer class="footer reveal" role="contentinfo">
-    <div class="footer-brand">AETHERUS · MONOLITH · v1.0</div>
-    <div class="footer-meta">
-      THE ABSOLUTE ARCHITECT<br>
-      CLASSIFICATION: PORTFOLIO INSTRUMENT PANEL
-    </div>
+    <dl class="status-band">
+      <div><dt>Scope</dt><dd>Research &amp; Design Exploration</dd></div>
+      <div><dt>Maturity</dt><dd>Conceptual Prototype</dd></div>
+      <div><dt>Intent</dt><dd>Advance Understanding of Governance</dd></div>
+      <div><dt>Status</dt><dd>Not for Operational Use</dd></div>
+    </dl>
+    <p class="footer-disclaimer">This interface is for research and discussion only. Do not use it as the basis for operational decisions.</p>
   </footer>
 
-</main><!-- /wrapper -->
-
-<!-- ═══════════════════════════════════════════
-     SCRIPTS — deferred, in dependency order
-═══════════════════════════════════════════ -->
-<script defer src="js/app.js"></script>
-<script defer src="js/grid.js"></script>
-<script defer src="js/pipeline.js"></script>
-<script defer src="js/docs.js"></script>
-
+  <script defer src="js/app.js"></script>
+  <script defer src="js/grid.js"></script>
+  <script defer src="js/pipeline.js"></script>
+  <script defer src="js/docs.js"></script>
 </body>
 </html>

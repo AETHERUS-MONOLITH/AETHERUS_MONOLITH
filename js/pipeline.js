@@ -8,16 +8,38 @@
 
   // ── Node → related doc IDs ─────────────────────────────────
   const nodeDocMap = {
-    'G_IDEM': ['PIPELINE_OVERVIEW'],
-    'S1':     ['JOINT_SPECIFICATIONS'],
-    'G1':     ['GATE_SPECIFICATIONS'],
-    'G1A':    ['GATE_SPECIFICATIONS'],
-    'S2':     ['JOINT_SPECIFICATIONS'],
-    'G2':     ['GATE_SPECIFICATIONS'],
-    'S3':     ['JOINT_SPECIFICATIONS'],
-    'S4':     ['JOINT_SPECIFICATIONS'],
-    'G4':     ['GATE_SPECIFICATIONS'],
-    'S5':     ['JOINT_SPECIFICATIONS', 'DELTA_BRIEF']
+    'G_IDEM': ['PIPELINE_OVERVIEW', 'AUTHORITY_MODEL', 'GATE_SPECIFICATIONS'],
+    'S1':     ['JOINT_SPECIFICATIONS', 'PROTOCOL_CATALOG', 'TEMPLATE_INDEX'],
+    'G1':     ['GATE_SPECIFICATIONS', 'SCHEMA_DEFINITIONS_OVERVIEW'],
+    'G1A':    ['GATE_SPECIFICATIONS', 'SCHEMA_DEFINITIONS_OVERVIEW'],
+    'S2':     ['JOINT_SPECIFICATIONS', 'PROTOCOL_CATALOG', 'TEMPLATE_INDEX'],
+    'G2':     ['GATE_SPECIFICATIONS', 'SCHEMA_DEFINITIONS_OVERVIEW'],
+    'S3':     ['JOINT_SPECIFICATIONS', 'PROTOCOL_CATALOG', 'TEMPLATE_INDEX'],
+    'S4':     ['JOINT_SPECIFICATIONS', 'FREEZE_SEMANTICS', 'TEMPLATE_INDEX'],
+    'G4':     ['GATE_SPECIFICATIONS', 'FREEZE_SEMANTICS', 'SCHEMA_DEFINITIONS_OVERVIEW'],
+    'S5':     ['JOINT_SPECIFICATIONS', 'ARTIFACT_CATALOG', 'VERSION_LIFECYCLE', 'DELTA_BRIEF']
+  };
+
+  const nodeLabelMap = {
+    'G_IDEM': 'G_IDEM authority and idempotency gate',
+    'S1':     'S1 communicator handoff',
+    'G1':     'G1 plan validation gate',
+    'G1A':    'G1A schema validation gate',
+    'S2':     'S2 mediator handoff',
+    'G2':     'G2 constraints validation gate',
+    'S3':     'S3 drafter handoff',
+    'S4':     'S4 refiner and repair path',
+    'G4':     'G4 verdict and escalation gate',
+    'S5':     'S5 origin audit handoff'
+  };
+
+  const controlStageLabels = {
+    INPUT_FRAME: 'Input / task frame',
+    AUTHORITY_CHECK: 'Authority check',
+    RISK_CLASSIFICATION: 'Risk classification',
+    GATE_DECISION: 'Gate decision',
+    RECOVERY_PATH: 'Freeze / repair / escalate',
+    AUDIT_RELEASE: 'Audit / release eligibility'
   };
 
   const NODE_ORDER = ['G_IDEM', 'S1', 'G1', 'G1A', 'S2', 'G2', 'S3', 'S4', 'G4', 'S5'];
@@ -29,7 +51,39 @@
   function clearAllActive() {
     document.querySelectorAll('[data-node-id]').forEach(el => {
       el.classList.remove('active', 'failure');
+      el.setAttribute('aria-pressed', 'false');
     });
+  }
+
+  function setControlStageActive(stageKey) {
+    document.querySelectorAll('[data-stage-key]').forEach(el => {
+      const isActive = el.getAttribute('data-stage-key') === stageKey;
+      el.classList.toggle('active', isActive);
+      el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  }
+
+  function showRelatedEvidence(stageKey, label, fallbackDocIds = []) {
+    if (window.AetherusEvidence) {
+      window.AetherusEvidence.showRelatedByStage(stageKey, label, fallbackDocIds);
+      return;
+    }
+
+    const panel = document.getElementById('pipeline-related-evidence');
+    const list = document.getElementById('related-evidence-list');
+    if (!panel || !list) return;
+
+    const panelTitle = panel.querySelector('.related-evidence-copy strong');
+    const panelText = panel.querySelector('.related-evidence-copy p');
+    if (panelTitle) panelTitle.textContent = `Related evidence: ${label || stageKey}`;
+    if (panelText) {
+      panelText.textContent = 'Evidence metadata is still loading or unavailable. This static pipeline view remains explanatory and does not represent live execution.';
+    }
+    list.innerHTML = '<li>Local artefact metadata is unavailable for this selection.</li>';
+  }
+
+  function getStageLabel(stageEl, stageKey) {
+    return stageEl.getAttribute('data-stage-label') || controlStageLabels[stageKey] || stageKey;
   }
 
   function setNodeActive(nodeId, isFailure = false) {
@@ -42,6 +96,7 @@
       el.classList.remove('failure');
       el.classList.add('active');
     }
+    el.setAttribute('aria-pressed', 'true');
   }
 
   function showStatus(text, duration = 2500) {
@@ -88,33 +143,46 @@
 
   function initNodeInteraction() {
     document.querySelectorAll('[data-node-id]').forEach(nodeEl => {
+      nodeEl.setAttribute('role', 'button');
+      nodeEl.setAttribute('aria-controls', 'pipeline-related-evidence');
+      nodeEl.setAttribute('aria-pressed', 'false');
+
       function activate() {
         if (frozen) return;
         const nodeId     = nodeEl.getAttribute('data-node-id');
         const relatedDocs = nodeDocMap[nodeId] || [];
 
         clearAllActive();
-        nodeEl.classList.add('active');
-
-        // Scroll to artifacts section
-        const artifacts = document.getElementById('artifacts');
-        if (artifacts) artifacts.scrollIntoView({ behavior: 'smooth' });
-
-        // After 400ms highlight related doc cards
-        setTimeout(() => {
-          document.querySelectorAll('.doc-card').forEach(card => {
-            const cardId = card.getAttribute('data-doc-id');
-            if (relatedDocs.includes(cardId)) {
-              card.classList.add('active');
-            } else {
-              card.classList.remove('active');
-            }
-          });
-        }, 400);
+        setControlStageActive('');
+        setNodeActive(nodeId);
+        showRelatedEvidence(nodeId, nodeLabelMap[nodeId] || nodeId, relatedDocs);
       }
 
       nodeEl.addEventListener('click', activate);
       nodeEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate();
+        }
+      });
+    });
+  }
+
+  function initControlStageInteraction() {
+    document.querySelectorAll('[data-stage-key]').forEach(stageEl => {
+      stageEl.setAttribute('aria-controls', 'pipeline-related-evidence');
+      stageEl.setAttribute('aria-pressed', 'false');
+
+      function activate() {
+        if (frozen) return;
+        const stageKey = stageEl.getAttribute('data-stage-key');
+        clearAllActive();
+        setControlStageActive(stageKey);
+        showRelatedEvidence(stageKey, getStageLabel(stageEl, stageKey));
+      }
+
+      stageEl.addEventListener('click', activate);
+      stageEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           activate();
@@ -166,29 +234,10 @@
       hud.style.opacity    = isFrozen ? '0.5' : '';
     }
 
-    if (isFrozen) clearAllActive();
-  }
-
-  // ── Keyboard dev controls ──────────────────────────────────
-
-  function initKeyboardControls() {
-    document.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      switch (e.key) {
-        case 'f': case 'F':
-          applyFrozen(!frozen);
-          break;
-        case 'p': case 'P':
-          window.AetherusPipeline.simulatePass();
-          break;
-        case 'x': case 'X':
-          window.AetherusPipeline.simulateFail();
-          break;
-        case 'i': case 'I':
-          window.AetherusPipeline.simulateIdempotentCache();
-          break;
-      }
-    });
+    if (isFrozen) {
+      clearAllActive();
+      setControlStageActive('');
+    }
   }
 
   // ── Public API ─────────────────────────────────────────────
@@ -201,9 +250,15 @@
       applyFrozen(bool);
     },
 
+    showRelatedByStage(stageKey) {
+      setControlStageActive(stageKey);
+      showRelatedEvidence(stageKey, controlStageLabels[stageKey] || stageKey);
+    },
+
     simulatePass() {
       if (frozen) return;
       clearAllActive();
+      setControlStageActive('');
       const sequence = NODE_ORDER.slice(); // all 10 nodes
       sequence.forEach((nodeId, i) => {
         setTimeout(() => {
@@ -218,6 +273,7 @@
     simulateFail() {
       if (frozen) return;
       clearAllActive();
+      setControlStageActive('');
       const forward = ['G_IDEM', 'S1', 'G1', 'G1A', 'S2', 'G2', 'S3', 'S4'];
       forward.forEach((nodeId, i) => {
         setTimeout(() => {
@@ -245,6 +301,7 @@
     simulateIdempotentCache() {
       if (frozen) return;
       clearAllActive();
+      setControlStageActive('');
       setNodeActive('G_IDEM');
       showStatus('Idempotency confirmed. Returning cached artifact.', 2500);
       setTimeout(() => clearAllActive(), 2500);
@@ -255,7 +312,7 @@
 
   function init() {
     initNodeInteraction();
-    initKeyboardControls();
+    initControlStageInteraction();
     // Draw junction dots after layout paint
     requestAnimationFrame(drawRailJunctions);
     window.addEventListener('resize', () => requestAnimationFrame(drawRailJunctions));
