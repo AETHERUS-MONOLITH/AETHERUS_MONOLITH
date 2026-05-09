@@ -40,8 +40,12 @@ The visual system is intended to support comprehension of the architecture, not 
 - `js/app.js` - Page initialization, reveal behavior, reduced-motion handling, navigation anchors, and static mode controls.
 - `js/docs.js` - Local artefact card rendering, detail panels, evidence metadata display, graceful docs failure state, and evidence-binding API.
 - `js/pipeline.js` - Stack and pipeline interaction behavior, stage-to-evidence binding, related evidence panel updates, and static explanatory state handling.
+- `js/governance-engine.js` - Pure browser-side deterministic evaluator for Intelligence Layer v0 scenarios.
+- `js/trace-viewer.js` - UI adapter for scenario selection and illustrative governance trace rendering.
 - `js/grid.js` - Ambient grid/canvas visual behavior used as part of the static visual identity.
 - `data/docs.json` - Structured local artefact metadata and explanatory content for the research evidence model.
+- `data/joint-workflow.manifest.json` - Normalized Joint-Workflow-derived architecture manifest.
+- `data/scenarios.json` - Deterministic scenario fixtures for prototype governance traces.
 
 ## Local Development
 
@@ -76,6 +80,25 @@ A local server is recommended so `data/docs.json` can be loaded through the brow
 
 These fields distinguish conceptual architecture, prototype evidence, research artefacts, methodology, and planned interface direction. They also make explicit what each artefact should not be confused with.
 
+## AETHERUS Intelligence Layer v0
+
+AETHERUS Intelligence Layer v0 is a deterministic browser-side governance trace prototype derived from the Joint-Workflow architecture.
+
+It loads a static manifest and static scenario fixtures, evaluates bounded rule-based gates, activates the Governance Stack Cutaway, and renders illustrative in-memory trace events. The layer is designed to demonstrate how authority, provenance, risk classification, governance gates, state chambers, audit traceability, artifact lineage, and release eligibility can be represented in a controlled research interface.
+
+It does not execute AI, call models, persist data, authenticate users, transmit telemetry, operate a production audit ledger, or perform live orchestration.
+
+### Intelligence Layer Files
+
+- `data/joint-workflow.manifest.json` - Normalized Joint-Workflow-derived architecture manifest.
+- `data/scenarios.json` - Deterministic scenario fixtures.
+- `js/governance-engine.js` - Pure browser-side deterministic evaluator.
+- `js/trace-viewer.js` - UI adapter for scenario selection and trace rendering.
+
+### Intelligence Layer Boundary
+
+The trace layer is illustrative and prototype-facing. Generated trace events are in-memory browser artifacts, not persistent ledger records or operational audit evidence.
+
 ## Claim Boundaries
 
 This project does not claim to be:
@@ -109,8 +132,12 @@ The current accepted verification checks are:
 node --check js/app.js
 node --check js/docs.js
 node --check js/pipeline.js
+node --check js/governance-engine.js
+node --check js/trace-viewer.js
 node -e 'JSON.parse(require("fs").readFileSync("data/docs.json","utf8")); console.log("data/docs.json parses")'
+node -e 'JSON.parse(require("fs").readFileSync("data/joint-workflow.manifest.json","utf8")); console.log("data/joint-workflow.manifest.json parses")'
+node -e 'JSON.parse(require("fs").readFileSync("data/scenarios.json","utf8")); console.log("data/scenarios.json parses")'
 git diff --check
 ```
 
-These checks validate JavaScript syntax, local evidence metadata parseability, and diff whitespace integrity. Browser review should also confirm that the Governance Stack Cutaway, evidence binding, artefact cards, detail panels, and responsive layouts render without console errors.
+These checks validate JavaScript syntax, local evidence and scenario metadata parseability, and diff whitespace integrity. Browser review should also confirm that the Governance Stack Cutaway, Intelligence Layer scenarios, evidence binding, artefact cards, detail panels, and responsive layouts render without console errors.
