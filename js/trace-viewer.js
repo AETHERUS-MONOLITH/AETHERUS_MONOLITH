@@ -91,6 +91,105 @@
     `).join('');
   }
 
+  function renderDecisionExplanation(explanation) {
+    if (!explanation) return '';
+
+    return `
+      <section class="trace-decision">
+        <div>
+          <span>Decision Explanation</span>
+          <strong>Why this verdict?</strong>
+          <p>${escapeText(explanation.why_verdict)}</p>
+        </div>
+        <dl>
+          <div>
+            <dt>Determining condition</dt>
+            <dd>${escapeText(explanation.determining_condition)}</dd>
+          </div>
+          <div>
+            <dt>Decisive rule or gate</dt>
+            <dd>${escapeText(explanation.decisive_rule_or_gate)}</dd>
+          </div>
+          <div>
+            <dt>Different verdict requires</dt>
+            <dd>${escapeText(explanation.different_verdict_requires)}</dd>
+          </div>
+        </dl>
+      </section>
+    `;
+  }
+
+  function renderDecisiveGate(gate) {
+    if (!gate) return '';
+
+    return `
+      <section class="trace-decisive-gate">
+        <h4>Decisive Gate</h4>
+        <div class="trace-gate-card">
+          <span>${escapeText(gate.source)}</span>
+          <strong>${escapeText(gate.id)} / ${escapeText(gate.status)}</strong>
+          <p>${escapeText(gate.reason)}</p>
+          <small>${escapeText(gate.prevents_or_permits)}</small>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderOperationalEvidence(items) {
+    if (!Array.isArray(items) || !items.length) return '';
+
+    return `
+      <section class="trace-operational-evidence">
+        <h4>Operational Evidence Required</h4>
+        <ul>
+          ${items.map(item => `<li>${escapeText(item)}</li>`).join('')}
+        </ul>
+      </section>
+    `;
+  }
+
+  function renderNonOperationalBoundaries(items) {
+    if (!Array.isArray(items) || !items.length) return '';
+
+    return `
+      <section class="trace-boundary-list">
+        <h4>Non-Operational Boundaries</h4>
+        <ul>
+          ${items.map(item => `<li>${escapeText(item)}</li>`).join('')}
+        </ul>
+      </section>
+    `;
+  }
+
+  function renderAssertions(assertions) {
+    if (!assertions) return '';
+
+    const rows = [
+      ['Expected verdict', assertions.expected_verdict],
+      ['Expected chamber', assertions.expected_chamber],
+      ['Expected decisive gate', assertions.expected_decisive_gate],
+      ['Expected active layer', assertions.expected_active_layer],
+      ['Expected release eligibility', assertions.expected_release_eligibility],
+      ['Expected boundary note', assertions.expected_boundary_note]
+    ];
+
+    return `
+      <section class="trace-assertions">
+        <h4>Scenario Assertions</h4>
+        <table>
+          <tbody>
+            ${rows.map(([label, value]) => `
+              <tr>
+                <th scope="row">${escapeText(label)}</th>
+                <td>${escapeText(value)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </section>
+    `;
+  }
+
   function activateEvidence(trace) {
     if (window.AetherusPipeline && typeof window.AetherusPipeline.showRelatedByStage === 'function') {
       window.AetherusPipeline.showRelatedByStage(trace.activeStageKey);
@@ -113,6 +212,7 @@
     const chamber = trace.stateChamber || {};
     const gate = trace.currentGate || {};
     const layer = trace.activeStackLayer || {};
+    const layerExplanation = trace.activeLayerExplanation || {};
 
     readout.innerHTML = `
       <div class="trace-summary-grid">
@@ -134,9 +234,11 @@
         <div class="trace-metric">
           <span>Stack Layer</span>
           <strong>${escapeText(layer.stack_layer || trace.activeStageKey)}</strong>
-          <small>${escapeText(trace.activeStageKey)}</small>
+          <small>${escapeText(layerExplanation.reason || trace.activeStageKey)}</small>
         </div>
       </div>
+
+      ${renderDecisionExplanation(trace.decisionExplanation)}
 
       <div class="trace-release" data-eligible="${release.eligible ? 'true' : 'false'}">
         <span>Release Eligibility</span>
@@ -144,14 +246,20 @@
         <p>${escapeText(release.explanation || '')}</p>
       </div>
 
+      ${renderOperationalEvidence(trace.operationalEvidenceRequired)}
+      ${renderNonOperationalBoundaries(trace.nonOperationalBoundaries)}
+
       <div class="trace-policy">
         <span>Static Retry Policy</span>
         <p>${escapeText(trace.retryPolicy || 'No runtime retry loop is executed.')}</p>
       </div>
 
+      ${renderAssertions(trace.assertions)}
+
       <div class="trace-columns">
         <section>
           <h4>Gate Results</h4>
+          ${renderDecisiveGate(trace.decisiveGate)}
           <ul class="trace-list">${renderGateResults(trace.gateResults || [])}</ul>
         </section>
         <section>

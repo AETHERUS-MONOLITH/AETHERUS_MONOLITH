@@ -99,6 +99,12 @@ It does not execute AI, call models, persist data, authenticate users, transmit 
 
 The trace layer is illustrative and prototype-facing. Generated trace events are in-memory browser artifacts, not persistent ledger records or operational audit evidence.
 
+### Intelligence Layer v0.1
+
+Intelligence Layer v0.1 adds decision-legibility explanations to the deterministic scenarios. Each scenario can describe why a verdict was produced, which gate was decisive, which stack layer is active, what operational evidence would be required, and what remains non-operational.
+
+v0.1 remains static, browser-side, deterministic, illustrative, prototype-facing, and non-operational. It does not add backend logic, authentication, persistence, model calls, telemetry, live orchestration, or operational audit evidence.
+
 ## Claim Boundaries
 
 This project does not claim to be:

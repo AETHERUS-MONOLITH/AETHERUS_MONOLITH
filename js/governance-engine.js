@@ -92,12 +92,28 @@
         'static_retry_policy',
         'gate_results',
         'handoff_receipts',
-        'events'
+        'events',
+        'decision_explanation',
+        'decisive_gate',
+        'active_layer_explanation',
+        'operational_evidence_required',
+        'non_operational_boundaries',
+        'assertions'
       ].forEach(key => {
         if (!scenario[key]) {
           throw new Error(`Scenario ${scenario.id || 'unknown'} is missing ${key}`);
         }
       });
+
+      if (!Array.isArray(scenario.operational_evidence_required)) {
+        throw new Error(`Scenario ${scenario.id} operational_evidence_required must be an array`);
+      }
+      if (!Array.isArray(scenario.non_operational_boundaries)) {
+        throw new Error(`Scenario ${scenario.id} non_operational_boundaries must be an array`);
+      }
+      if (scenario.decisive_gate && scenario.decisive_gate.id === 'G4') {
+        throw new Error(`Scenario ${scenario.id} must not use G4 as the decisive gate`);
+      }
     });
   }
 
@@ -169,6 +185,12 @@
         joint_workflow_concepts: clone(activeStackLayer.joint_workflow_concepts || [])
       } : null,
       releaseEligibility: clone(scenario.release_eligibility),
+      decisionExplanation: clone(scenario.decision_explanation),
+      decisiveGate: clone(scenario.decisive_gate),
+      activeLayerExplanation: clone(scenario.active_layer_explanation),
+      operationalEvidenceRequired: clone(scenario.operational_evidence_required),
+      nonOperationalBoundaries: clone(scenario.non_operational_boundaries),
+      assertions: clone(scenario.assertions),
       gateResults: clone(scenario.gate_results),
       handoffReceipts: clone(scenario.handoff_receipts),
       traceEvents: scenario.events.map(event => normalizeEvent(event, scenario.id)),

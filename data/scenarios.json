@@ -139,6 +139,55 @@
           "payload_ref": "happy_path_valid_release/origin_commit",
           "note": "Illustrative release eligibility is explained."
         }
+      ],
+      "decision_explanation": {
+        "why_verdict": "The scenario passes because all configured static gate expectations are satisfied and no blocking fault is selected by the fixture.",
+        "determining_condition": "Complete receipts, pass gate results, and no selected safety or schema failure.",
+        "decisive_rule_or_gate": "schema_validation",
+        "different_verdict_requires": "A selected schema fault, missing receipt, critical safety pattern, or failed gate fixture."
+      },
+      "decisive_gate": {
+        "id": "schema_validation",
+        "label": "Schema Validation",
+        "status": "pass",
+        "source": "joint-workflow",
+        "reason": "The fixture reaches the final validation boundary with complete receipts and no configured blocking fault.",
+        "prevents_or_permits": "Permits prototype release eligibility when the static fixture has complete receipts and no blocking validation fault."
+      },
+      "active_layer_explanation": {
+        "stack_layer": "Audit / Release Eligibility",
+        "stage_key": "AUDIT_RELEASE",
+        "reason": "The trace focuses on the audit and release boundary because the decisive question is whether the completed fixture can be treated as release-eligible in the prototype model.",
+        "related_evidence_mapping": "Maps to artefacts tagged with AUDIT_RELEASE and release eligibility evidence metadata.",
+        "layer_status": "prototype-facing"
+      },
+      "operational_evidence_required": [
+        "Real input/output artifact would be required for operational evidence.",
+        "Persistent trace storage would be required for operational evidence.",
+        "Append-only ledger semantics would be required for operational evidence.",
+        "Hash-chain verification would be required for operational evidence.",
+        "Backend validation would be required for operational evidence.",
+        "Authenticated actor identity would be required for operational evidence.",
+        "Reproducible execution logs would be required for operational evidence.",
+        "Test result artifact would be required for operational evidence.",
+        "Security review would be required for operational evidence.",
+        "Storage/audit retention model would be required for operational evidence."
+      ],
+      "assertions": {
+        "expected_verdict": "pass",
+        "expected_chamber": "Release Eligible",
+        "expected_decisive_gate": "schema_validation",
+        "expected_active_layer": "Audit / Release Eligibility",
+        "expected_release_eligibility": "Eligible in prototype trace",
+        "expected_boundary_note": "Illustrative eligibility only; not an operational release decision."
+      },
+      "non_operational_boundaries": [
+        "No live AI execution.",
+        "No persistent audit ledger.",
+        "No backend trace service.",
+        "No model calls.",
+        "No authenticated workflow.",
+        "No operational release decision."
       ]
     },
     {
@@ -211,6 +260,53 @@
           "payload_ref": "critical_safety_freeze/freeze",
           "note": "Prototype trace enters Freeze chamber."
         }
+      ],
+      "decision_explanation": {
+        "why_verdict": "The scenario fails because the fixture selects GF04, a critical forbidden wrapper pattern.",
+        "determining_condition": "A non-excludable critical safety pattern is present in the static fixture.",
+        "decisive_rule_or_gate": "VAL-SAFE-001",
+        "different_verdict_requires": "Removal of the selected GF04 condition and a pass through the safety scan."
+      },
+      "decisive_gate": {
+        "id": "VAL-SAFE-001",
+        "label": "Critical Safety Scan",
+        "status": "fail",
+        "source": "joint-workflow",
+        "reason": "GF04 is selected by the fixture and is marked critical and non-excludable in the manifest model.",
+        "prevents_or_permits": "Prevents propagation when a critical forbidden pattern is selected by the static fixture."
+      },
+      "active_layer_explanation": {
+        "stack_layer": "State Chambers / Recovery Path",
+        "stage_key": "RECOVERY_PATH",
+        "reason": "The trace focuses on the recovery path because the decisive safety failure routes the fixture into the Freeze chamber.",
+        "related_evidence_mapping": "Maps to artefacts tagged with RECOVERY_PATH, freeze semantics, and failure-handling evidence.",
+        "layer_status": "prototype-facing"
+      },
+      "operational_evidence_required": [
+        "Real contaminated artifact would be required for operational evidence.",
+        "Raw input/output capture would be required for operational evidence.",
+        "Backend validator implementation would be required for operational evidence.",
+        "Reproducible safety-scan logs would be required for operational evidence.",
+        "Persistent trace storage would be required for operational evidence.",
+        "Authenticated reviewer identity would be required for operational evidence.",
+        "Security review would be required for operational evidence.",
+        "Test result artifact would be required for operational evidence."
+      ],
+      "assertions": {
+        "expected_verdict": "fail",
+        "expected_chamber": "Freeze",
+        "expected_decisive_gate": "VAL-SAFE-001",
+        "expected_active_layer": "State Chambers / Recovery Path",
+        "expected_release_eligibility": "Not eligible",
+        "expected_boundary_note": "Static safety fixture only; not live safety enforcement."
+      },
+      "non_operational_boundaries": [
+        "No live AI execution.",
+        "No persistent audit ledger.",
+        "No backend trace service.",
+        "No model calls.",
+        "No authenticated workflow.",
+        "No operational release decision."
       ]
     },
     {
@@ -284,6 +380,53 @@
           "payload_ref": "missing_constraints_escalate/escalation",
           "note": "Prototype trace enters Escalate chamber."
         }
+      ],
+      "decision_explanation": {
+        "why_verdict": "The scenario escalates because the required constraints_packet is absent in the fixture.",
+        "determining_condition": "The input contract cannot be satisfied because a required handoff item is missing.",
+        "decisive_rule_or_gate": "contract_validation",
+        "different_verdict_requires": "A present and valid constraints packet."
+      },
+      "decisive_gate": {
+        "id": "contract_validation",
+        "label": "Input Contract Validation",
+        "status": "escalate",
+        "source": "joint-workflow",
+        "reason": "The fixture marks constraints_packet as missing, so the input contract boundary cannot pass.",
+        "prevents_or_permits": "Prevents progression when required input material is absent and permits only an illustrative escalation state."
+      },
+      "active_layer_explanation": {
+        "stack_layer": "State Chambers / Recovery Path",
+        "stage_key": "RECOVERY_PATH",
+        "reason": "The trace focuses on the recovery path because the missing input condition routes the fixture into Escalate rather than release flow.",
+        "related_evidence_mapping": "Maps to artefacts tagged with RECOVERY_PATH and human escalation evidence.",
+        "layer_status": "prototype-facing"
+      },
+      "operational_evidence_required": [
+        "Real job ticket would be required for operational evidence.",
+        "Real constraints packet would be required for operational evidence.",
+        "Backend input validator would be required for operational evidence.",
+        "Authenticated actor identity would be required for operational evidence.",
+        "Reproducible missing-input logs would be required for operational evidence.",
+        "Persistent trace storage would be required for operational evidence.",
+        "Escalation workflow record would be required for operational evidence.",
+        "Security review would be required for operational evidence."
+      ],
+      "assertions": {
+        "expected_verdict": "escalate",
+        "expected_chamber": "Escalate",
+        "expected_decisive_gate": "contract_validation",
+        "expected_active_layer": "State Chambers / Recovery Path",
+        "expected_release_eligibility": "Blocked by missing input",
+        "expected_boundary_note": "Static missing-input fixture only; not backend orchestration."
+      },
+      "non_operational_boundaries": [
+        "No live AI execution.",
+        "No persistent audit ledger.",
+        "No backend trace service.",
+        "No model calls.",
+        "No authenticated workflow.",
+        "No operational release decision."
       ]
     },
     {
@@ -343,6 +486,53 @@
           "payload_ref": "adapter_failure_escalate/adapter",
           "note": "Adapter gate reports E_JOB_TICKET_ADAPTER_FAILURE."
         }
+      ],
+      "decision_explanation": {
+        "why_verdict": "The scenario escalates because adapter normalization is selected as failed for this fixture.",
+        "determining_condition": "The static fixture marks the G1A normalization boundary as unsuccessful.",
+        "decisive_rule_or_gate": "G1A",
+        "different_verdict_requires": "Valid normalization from ingress payload to canonical job-ticket representation."
+      },
+      "decisive_gate": {
+        "id": "G1A",
+        "label": "Adapter Gate",
+        "status": "escalate",
+        "source": "joint-workflow",
+        "reason": "The fixture selects the adapter failure branch before downstream constraints or release evaluation can proceed.",
+        "prevents_or_permits": "Prevents progression beyond normalization when the static adapter boundary is failed."
+      },
+      "active_layer_explanation": {
+        "stack_layer": "Governance Gates",
+        "stage_key": "GATE_DECISION",
+        "reason": "The trace focuses on Governance Gates because the decisive condition is a gate-level adapter failure.",
+        "related_evidence_mapping": "Maps to artefacts tagged with GATE_DECISION, G1A, and gate validation evidence.",
+        "layer_status": "prototype-facing"
+      },
+      "operational_evidence_required": [
+        "Real ingress payload would be required for operational evidence.",
+        "Adapter implementation would be required for operational evidence.",
+        "Backend validation logs would be required for operational evidence.",
+        "Reproducible parser/normalization test result would be required for operational evidence.",
+        "Model/API boundary documentation would be required if model output is involved.",
+        "Authenticated actor identity would be required for operational evidence.",
+        "Persistent trace storage would be required for operational evidence.",
+        "Security review would be required for operational evidence."
+      ],
+      "assertions": {
+        "expected_verdict": "escalate",
+        "expected_chamber": "Escalate",
+        "expected_decisive_gate": "G1A",
+        "expected_active_layer": "Governance Gates",
+        "expected_release_eligibility": "Blocked by adapter boundary",
+        "expected_boundary_note": "Static adapter-boundary fixture only; not a live parser or orchestration service."
+      },
+      "non_operational_boundaries": [
+        "No live AI execution.",
+        "No persistent audit ledger.",
+        "No backend trace service.",
+        "No model calls.",
+        "No authenticated workflow.",
+        "No operational release decision."
       ]
     },
     {
@@ -400,6 +590,54 @@
           "payload_ref": "idempotency_cache_hit/prototype_cached_artifact",
           "note": "Static trace demonstrates cache-hit control semantics without persistence."
         }
+      ],
+      "decision_explanation": {
+        "why_verdict": "The scenario passes because the fixture selects a bounded cache-hit branch at the idempotency gate.",
+        "determining_condition": "The static fixture marks G_IDEMPOTENCY as a cache hit before downstream gates are evaluated.",
+        "decisive_rule_or_gate": "G_IDEMPOTENCY",
+        "different_verdict_requires": "No cache-hit fixture condition and continuation into downstream gates."
+      },
+      "decisive_gate": {
+        "id": "G_IDEMPOTENCY",
+        "label": "Idempotency Gate",
+        "status": "pass",
+        "source": "joint-workflow",
+        "reason": "The fixture selects a cache-hit branch at the authority/idempotency boundary.",
+        "prevents_or_permits": "Permits an illustrative pass/cache-hit outcome while skipping downstream steps as static control-flow explanation."
+      },
+      "active_layer_explanation": {
+        "stack_layer": "Authority",
+        "stage_key": "AUTHORITY_CHECK",
+        "reason": "The trace focuses on Authority because idempotency is evaluated before downstream execution in the static pipeline model.",
+        "related_evidence_mapping": "Maps to artefacts tagged with AUTHORITY_CHECK and G_IDEM evidence metadata.",
+        "layer_status": "prototype-facing"
+      },
+      "operational_evidence_required": [
+        "Real input hash would be required for operational evidence.",
+        "Real session-state hash would be required for operational evidence.",
+        "Persistent trace storage would be required for operational evidence.",
+        "Append-only ledger semantics would be required for operational evidence.",
+        "Hash-chain verification would be required for operational evidence.",
+        "Cached artifact storage reference would be required for operational evidence.",
+        "Backend validation would be required for operational evidence.",
+        "Authenticated actor identity would be required for operational evidence.",
+        "Storage/audit retention model would be required for operational evidence."
+      ],
+      "assertions": {
+        "expected_verdict": "pass / cache_hit",
+        "expected_chamber": "Pass",
+        "expected_decisive_gate": "G_IDEMPOTENCY",
+        "expected_active_layer": "Authority",
+        "expected_release_eligibility": "Eligible by static cache-hit trace",
+        "expected_boundary_note": "Illustrative cache-hit semantics only; no persisted artifact retrieval."
+      },
+      "non_operational_boundaries": [
+        "No live AI execution.",
+        "No persistent audit ledger.",
+        "No backend trace service.",
+        "No model calls.",
+        "No authenticated workflow.",
+        "No operational release decision."
       ]
     }
   ]
