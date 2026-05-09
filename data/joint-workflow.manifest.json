@@ -1,0 +1,794 @@
+{
+  "name": "AETHERUS Intelligence Layer v0",
+  "version": "0.1.0",
+  "source_document": "Joint-Workflow.pdf",
+  "source_section": "Architecture overview, joint definitions, pipelines, safety policy, handoff receipt contract, event ledger contract, fixture library",
+  "implementation_status": "deterministic-browser-model",
+  "operational_status": "not-operational",
+  "description": "Static explanatory data model derived from Joint-Workflow concepts for deterministic browser-side governance traces. This manifest is not an executable prompt system.",
+  "joints": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Joint definitions",
+    "implementation_status": "metadata-only",
+    "operational_status": "not-operational",
+    "items": [
+      {
+        "id": "orchestrator",
+        "label": "Orchestrator",
+        "role": "Human-controlled message bus and execution-order authority.",
+        "responsibilities": [
+          "Controls joint invocation order",
+          "Passes outputs between isolated joints",
+          "Reviews escalations and trace boundaries"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Architecture overview; joint definitions",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "communicator",
+        "label": "Communicator",
+        "role": "Planner and normalizer that translates raw intent into structured execution plans.",
+        "responsibilities": [
+          "Parse user input into job-ticket-oriented structure",
+          "Prepare routing decisions",
+          "Emit planning metadata"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Joint definitions",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "mediator",
+        "label": "Mediator",
+        "role": "Constraint generator defining enforceable boundaries.",
+        "responsibilities": [
+          "Produce constraints packet metadata",
+          "Define acceptance test expectations",
+          "Carry inherited forbidden-pattern references"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Joint definitions; forbidden pattern enforcement",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "drafter",
+        "label": "Drafter",
+        "role": "Constrained content producer within mediator boundaries.",
+        "responsibilities": [
+          "Respect constraints packet boundaries",
+          "Produce bounded artifact output metadata",
+          "Avoid forbidden output patterns"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Joint definitions",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "refiner",
+        "label": "Refiner",
+        "role": "Quality gate that verifies drafter output and issues verdicts.",
+        "responsibilities": [
+          "Evaluate constraints and forbidden patterns",
+          "Produce minimal patchlist metadata",
+          "Issue pass, fail, or escalate verdicts"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Joint definitions; T_refiner_patchlist rules",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "origin",
+        "label": "Origin",
+        "role": "Commit authority for verified changes and delta briefs.",
+        "responsibilities": [
+          "Accept only pass-qualified patchlist metadata",
+          "Record lineage and delta-brief semantics",
+          "Reject non-pass preconditions"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Joint definitions; T_origin_commit rules",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      }
+    ]
+  },
+  "pipelines": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Pipelines: default_single_capsule",
+    "implementation_status": "static-trace-sequence",
+    "operational_status": "not-operational",
+    "items": [
+      {
+        "id": "default_single_capsule",
+        "label": "Default Single Capsule",
+        "description": "Static sequence for showing how intent can move through idempotency, planning, normalization, constraints, drafting, refinement, and origin authority.",
+        "retry_policy": "Retry behavior is represented only as static trace policy. v0 implements no runtime retry loops.",
+        "steps": [
+          {
+            "order": "0",
+            "joint": "orchestrator",
+            "template": "G_IDEMPOTENCY",
+            "gate": "G_IDEMPOTENCY",
+            "stage_key": "AUTHORITY_CHECK",
+            "output": "artifact_content or proceed_signal"
+          },
+          {
+            "order": "1",
+            "joint": "communicator",
+            "template": "T_comm_execution_plan",
+            "gate": "G1",
+            "stage_key": "INPUT_FRAME",
+            "output": "execution_plan"
+          },
+          {
+            "order": "1A",
+            "joint": "orchestrator",
+            "template": "ADP-JT-JSON2XML-001",
+            "gate": "G1A",
+            "stage_key": "PROVENANCE",
+            "output": "canonical XML job_ticket"
+          },
+          {
+            "order": "2",
+            "joint": "mediator",
+            "template": "T_mediator_constraints_packet",
+            "gate": "G2",
+            "stage_key": "GATE_DECISION",
+            "output": "constraints_packet"
+          },
+          {
+            "order": "3",
+            "joint": "drafter",
+            "template": "T_drafter_constrained_output",
+            "gate": "contract_validation",
+            "stage_key": "RISK_CLASSIFICATION",
+            "output": "drafter_output"
+          },
+          {
+            "order": "4",
+            "joint": "refiner",
+            "template": "T_refiner_patchlist",
+            "gate": "VAL-SAFE-001",
+            "stage_key": "RECOVERY_PATH",
+            "output": "patchlist"
+          },
+          {
+            "order": "5",
+            "joint": "origin",
+            "template": "T_origin_commit",
+            "gate": "schema_validation",
+            "stage_key": "AUDIT_RELEASE",
+            "output": "origin_commit"
+          }
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Pipelines: default_single_capsule",
+        "implementation_status": "static-trace-sequence",
+        "operational_status": "not-operational"
+      }
+    ]
+  },
+  "gates": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Pipelines; global output contract; safety policy",
+    "implementation_status": "deterministic-static-evaluation",
+    "operational_status": "not-operational",
+    "items": [
+      {
+        "id": "G_IDEMPOTENCY",
+        "label": "Idempotency Gate",
+        "source": "joint-workflow",
+        "purpose": "Determine cache-hit versus proceed signal from input and session-state fingerprints.",
+        "stage_key": "AUTHORITY_CHECK",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Pipelines: step 0",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "G1",
+        "label": "Execution Plan Gate",
+        "source": "joint-workflow",
+        "purpose": "Validate communicator execution plan metadata.",
+        "stage_key": "INPUT_FRAME",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Pipelines: step 1",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "G1A",
+        "label": "Adapter Gate",
+        "source": "joint-workflow",
+        "purpose": "Represent JSON-to-XML adapter success or blocking failure.",
+        "stage_key": "GATE_DECISION",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Pipelines: step 1A; adapters",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "G2",
+        "label": "Constraints Packet Gate",
+        "source": "joint-workflow",
+        "purpose": "Validate constraints packet metadata.",
+        "stage_key": "GATE_DECISION",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Pipelines: step 2",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "VAL-SAFE-001",
+        "label": "Critical Safety Scan",
+        "source": "joint-workflow",
+        "purpose": "Represent pre-parse critical safety scan for non-excludable forbidden patterns.",
+        "stage_key": "RISK_CLASSIFICATION",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global output contract; safety policy",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "VAL-001",
+        "label": "Verdict Enum Validation",
+        "source": "joint-workflow",
+        "purpose": "Restrict verdict status to pass, fail, or escalate.",
+        "stage_key": "GATE_DECISION",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global output contract",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "contract_validation",
+        "label": "Input Contract Validation",
+        "source": "joint-workflow",
+        "purpose": "Represent required input presence and contract alignment.",
+        "stage_key": "GATE_DECISION",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global output contract; input contracts",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "schema_validation",
+        "label": "Schema Validation",
+        "source": "joint-workflow",
+        "purpose": "Represent schema-level validation outcome.",
+        "stage_key": "AUDIT_RELEASE",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global output contract; template schemas",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "G4",
+        "label": "Verdict and Escalation Interface Gate",
+        "source": "derived",
+        "purpose": "AETHERUS interface mapping for verdict-to-state-chamber explanation. It is not treated as a verified Joint-Workflow-native hard gate in v0.",
+        "stage_key": "RECOVERY_PATH",
+        "source_document": "AETHERUS interface mapping derived from Joint-Workflow verdict semantics",
+        "source_section": "Derived stack interaction layer",
+        "implementation_status": "interface-derived-mapping",
+        "operational_status": "not-operational"
+      }
+    ]
+  },
+  "verdicts": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Global output contract; T_refiner_patchlist verdict rules",
+    "implementation_status": "deterministic-static-evaluation",
+    "operational_status": "not-operational",
+    "items": [
+      {
+        "id": "pass",
+        "label": "PASS",
+        "meaning": "Scenario satisfies configured static gate expectations.",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Verdict enum validator",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "fail",
+        "label": "FAIL",
+        "meaning": "Scenario triggers a controlled failure path such as critical safety violation.",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Safety policy; refiner verdict rules",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "escalate",
+        "label": "ESCALATE",
+        "meaning": "Scenario requires human/orchestrator intervention due to missing input, adapter failure, or meta-level blockage.",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Error handling; missing input contract",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      }
+    ],
+    "allowed_subtypes": [
+      "cache_hit",
+      "blocking_error",
+      "critical_schema_failure"
+    ]
+  },
+  "handoff_receipt_contract": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Handoff receipt contract",
+    "implementation_status": "static-trace-policy",
+    "operational_status": "not-operational",
+    "validation_status_values": [
+      {
+        "joint": "mediator",
+        "values": [
+          "complete",
+          "incomplete"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Handoff receipt contract",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      },
+      {
+        "joint": "drafter",
+        "values": [
+          "complete",
+          "incomplete"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Handoff receipt contract",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      },
+      {
+        "joint": "refiner",
+        "values": [
+          "complete",
+          "incomplete"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Handoff receipt contract",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      },
+      {
+        "joint": "origin",
+        "values": [
+          "complete",
+          "incomplete",
+          "rejected"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Handoff receipt contract",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      }
+    ],
+    "rules": [
+      "Validation status describes input completeness, not execution provenance.",
+      "Synthetic wrapper provenance belongs in metadata, not new validation values.",
+      "Origin may reject when patchlist verdict precondition is not pass."
+    ]
+  },
+  "authority_ladder": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Authority ladder",
+    "implementation_status": "static-trace-policy",
+    "operational_status": "not-operational",
+    "layers": [
+      {
+        "order": 1,
+        "id": "logic_invariants",
+        "label": "Logic Invariants",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Authority ladder",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      },
+      {
+        "order": 2,
+        "id": "validators_schemas",
+        "label": "Validators / Schemas",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Authority ladder",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      },
+      {
+        "order": 3,
+        "id": "job_ticket",
+        "label": "Job Ticket",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Authority ladder",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      },
+      {
+        "order": 4,
+        "id": "session_state",
+        "label": "Session State",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Authority ladder",
+        "implementation_status": "static-trace-policy",
+        "operational_status": "not-operational"
+      }
+    ],
+    "conflict_policy": "If a lower layer conflicts with a higher layer, v0 reports a static meta-fault explanation in the trace."
+  },
+  "event_ledger_schema": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Event ledger contract RES-024",
+    "implementation_status": "illustrative-in-memory-trace-events",
+    "operational_status": "not-operational",
+    "label": "illustrative_in_memory_trace_events",
+    "description": "v0 renders illustrative in-memory trace events only. It does not persist, hash-chain, store, update, delete, or retrieve operational ledger records.",
+    "fields": [
+      "id",
+      "sequence",
+      "timestamp_label",
+      "agent_id",
+      "action_type",
+      "input_ref",
+      "state_ref",
+      "payload_ref",
+      "trace_note"
+    ]
+  },
+  "forbidden_patterns": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Global forbidden patterns; safety policy",
+    "implementation_status": "deterministic-static-evaluation",
+    "operational_status": "not-operational",
+    "pattern_sets": [
+      {
+        "id": "PS_FORMAT",
+        "category": "format_contamination",
+        "patterns": [
+          {
+            "id": "GF01",
+            "description": "Markdown code fence",
+            "severity": "high",
+            "non_excludable": false
+          },
+          {
+            "id": "GF02",
+            "description": "Markdown header",
+            "severity": "high",
+            "non_excludable": false
+          },
+          {
+            "id": "GF03",
+            "description": "Markdown list item at line start",
+            "severity": "high",
+            "non_excludable": false
+          }
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global forbidden patterns",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "PS_WRAPPER",
+        "category": "output_wrapper_contamination",
+        "patterns": [
+          {
+            "id": "GF04",
+            "description": "Leading output wrapper",
+            "severity": "critical",
+            "non_excludable": true
+          },
+          {
+            "id": "GF05",
+            "description": "Entire output wrapped in quotes",
+            "severity": "critical",
+            "non_excludable": true
+          },
+          {
+            "id": "GF06",
+            "description": "Prose preamble",
+            "severity": "high",
+            "non_excludable": false
+          },
+          {
+            "id": "GF07",
+            "description": "Conversational preamble",
+            "severity": "high",
+            "non_excludable": false
+          }
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global forbidden patterns",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "PS_META",
+        "category": "demo_meta_language",
+        "patterns": [
+          {
+            "id": "GF08",
+            "description": "Demo/example tags",
+            "severity": "high",
+            "non_excludable": false
+          },
+          {
+            "id": "GF09",
+            "description": "Example tags",
+            "severity": "high",
+            "non_excludable": false
+          },
+          {
+            "id": "GF10",
+            "description": "Template meta-tags in output",
+            "severity": "high",
+            "non_excludable": false
+          },
+          {
+            "id": "GF11",
+            "description": "Placeholder token",
+            "severity": "medium",
+            "non_excludable": false
+          },
+          {
+            "id": "GF12",
+            "description": "TODO marker",
+            "severity": "medium",
+            "non_excludable": false
+          },
+          {
+            "id": "GF13",
+            "description": "Insert instruction token",
+            "severity": "medium",
+            "non_excludable": false
+          }
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global forbidden patterns",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "PS_STRUCTURE",
+        "category": "structural_violations",
+        "patterns": [
+          {
+            "id": "GF14",
+            "description": "XML declaration",
+            "severity": "critical",
+            "non_excludable": true
+          },
+          {
+            "id": "GF15",
+            "description": "DOCTYPE declaration",
+            "severity": "high",
+            "non_excludable": false
+          }
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Global forbidden patterns",
+        "implementation_status": "deterministic-static-evaluation",
+        "operational_status": "not-operational"
+      }
+    ]
+  },
+  "templates": {
+    "source_document": "Joint-Workflow.pdf",
+    "source_section": "Template metadata",
+    "implementation_status": "metadata-only",
+    "operational_status": "not-operational",
+    "items": [
+      {
+        "id": "T_comm_execution_plan",
+        "joint": "communicator",
+        "label": "Execution Plan",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Template: Communicator - Execution Plan",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "T_mediator_constraints_packet",
+        "joint": "mediator",
+        "label": "Constraints Packet",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Template: Mediator - Constraints Packet",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "T_drafter_constrained_output",
+        "joint": "drafter",
+        "label": "Constrained Output",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Template: Drafter - Constrained Output",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "T_refiner_patchlist",
+        "joint": "refiner",
+        "label": "Patchlist",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Template: Refiner - Patchlist",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      },
+      {
+        "id": "T_origin_commit",
+        "joint": "origin",
+        "label": "Origin Commit",
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Template: Origin - Commit",
+        "implementation_status": "metadata-only",
+        "operational_status": "not-operational"
+      }
+    ]
+  },
+  "stack_mapping": {
+    "source_document": "Joint-Workflow.pdf and AETHERUS stack interface",
+    "source_section": "Derived conceptual mapping",
+    "implementation_status": "deterministic-browser-model",
+    "operational_status": "not-operational",
+    "items": [
+      {
+        "stack_layer": "Input / Context",
+        "stage_key": "INPUT_FRAME",
+        "joint_workflow_concepts": [
+          "raw user intent",
+          "job_ticket",
+          "execution_plan"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Glossary; communicator joint",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Authority",
+        "stage_key": "AUTHORITY_CHECK",
+        "joint_workflow_concepts": [
+          "authority_ladder",
+          "orchestrator",
+          "G_IDEMPOTENCY"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Authority ladder; pipelines",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Provenance",
+        "stage_key": "WHOLE_SYSTEM",
+        "joint_workflow_concepts": [
+          "handoff_receipt",
+          "received items semantics",
+          "synthetic wrapper provenance"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Handoff receipt contract",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Risk Classification",
+        "stage_key": "RISK_CLASSIFICATION",
+        "joint_workflow_concepts": [
+          "forbidden_patterns",
+          "VAL-SAFE-001",
+          "critical pattern list"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Safety policy; global forbidden patterns",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Governance Gates",
+        "stage_key": "GATE_DECISION",
+        "joint_workflow_concepts": [
+          "G1",
+          "G1A",
+          "G2",
+          "VAL-001",
+          "contract_validation"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Pipelines; global output contract",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "State Chambers",
+        "stage_key": "RECOVERY_PATH",
+        "joint_workflow_concepts": [
+          "pass",
+          "fail",
+          "escalate",
+          "static retry policy"
+        ],
+        "source_document": "Joint-Workflow.pdf and AETHERUS interface mapping",
+        "source_section": "Error handling; verdict rules; derived state chamber mapping",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Audit Layer",
+        "stage_key": "AUDIT_RELEASE",
+        "joint_workflow_concepts": [
+          "illustrative in-memory trace events",
+          "handoff receipts",
+          "event ledger schema"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Event ledger contract; handoff receipt contract",
+        "implementation_status": "illustrative-in-memory-trace-events",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Artifact Lineage",
+        "stage_key": "S5",
+        "joint_workflow_concepts": [
+          "origin_commit",
+          "delta_brief",
+          "payload reference"
+        ],
+        "source_document": "Joint-Workflow.pdf",
+        "source_section": "Origin joint; T_origin_commit",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Release Eligibility",
+        "stage_key": "AUDIT_RELEASE",
+        "joint_workflow_concepts": [
+          "pass verdict",
+          "complete receipts",
+          "no blocking gate failures"
+        ],
+        "source_document": "Joint-Workflow.pdf and AETHERUS interface mapping",
+        "source_section": "Verdict rules; derived release boundary",
+        "implementation_status": "deterministic-browser-model",
+        "operational_status": "not-operational"
+      },
+      {
+        "stack_layer": "Release Corridor",
+        "stage_key": "AUDIT_RELEASE",
+        "joint_workflow_concepts": [
+          "eligible illustrative outcome",
+          "bounded release explanation"
+        ],
+        "source_document": "AETHERUS interface mapping derived from Joint-Workflow verdict semantics",
+        "source_section": "Derived release corridor mapping",
+        "implementation_status": "interface-derived-mapping",
+        "operational_status": "not-operational"
+      }
+    ]
+  },
+  "claim_boundaries": {
+    "source_document": "Joint-Workflow.pdf and AETHERUS project scope",
+    "source_section": "Implementation boundary",
+    "implementation_status": "active-boundary-copy",
+    "operational_status": "not-operational",
+    "non_claims": [
+      "No live AI execution",
+      "No enterprise deployment",
+      "No compliance certification",
+      "No persistent audit ledger",
+      "No authenticated dashboard",
+      "No production orchestration",
+      "No telemetry",
+      "No customer validation claim"
+    ],
+    "required_boundary_copy": "Deterministic prototype trace. Static browser-side evaluation. Not live AI execution. Not a production audit ledger."
+  }
+}

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AETHERUS MONOLITH - AI Governance Architecture</title>
+  <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -242,6 +243,11 @@
           Select any stack layer to see which research artefacts support that part of
           the governance model. The binding is static metadata, not live execution.
         </p>
+        <div class="trace-viewer" id="governance-trace-viewer" role="region" aria-label="Deterministic governance trace">
+          <div class="trace-fallback" role="status">
+            Deterministic prototype trace loading from local fixtures.
+          </div>
+        </div>
         <div class="pipeline-control-map compact-controls" aria-label="Pipeline evidence stages">
           <button type="button" data-stage-key="INPUT_FRAME" data-stage-label="Input / Context" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>01</span><small>Input / Context</small></button>
           <button type="button" data-stage-key="AUTHORITY_CHECK" data-stage-label="Authority" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>02</span><small>Authority</small></button>
@@ -316,5 +322,7 @@
   <script defer src="js/grid.js"></script>
   <script defer src="js/pipeline.js"></script>
   <script defer src="js/docs.js"></script>
+  <script defer src="js/governance-engine.js"></script>
+  <script defer src="js/trace-viewer.js"></script>
 </body>
 </html>

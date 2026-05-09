@@ -987,6 +987,231 @@ main {
   font-size: 10px;
 }
 
+.trace-viewer {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid rgba(153, 207, 226, 0.14);
+  background:
+    linear-gradient(90deg, rgba(24, 191, 245, 0.045), transparent 34%),
+    rgba(3, 9, 14, 0.52);
+}
+
+.trace-fallback,
+.trace-failure {
+  color: rgba(220, 232, 238, 0.58);
+  font-size: 12px;
+}
+
+.trace-failure strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.trace-failure p {
+  margin: 0;
+}
+
+.trace-viewer-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.56fr);
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.trace-viewer h3,
+.trace-viewer h4 {
+  margin: 0;
+  color: rgba(230, 245, 250, 0.88);
+  font-family: var(--mono);
+  text-transform: uppercase;
+}
+
+.trace-viewer h3 {
+  margin-top: 6px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+}
+
+.trace-viewer h4 {
+  margin-bottom: 9px;
+  color: rgba(220, 232, 238, 0.62);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+.trace-selector-label span,
+.trace-boundary,
+.trace-metric span,
+.trace-release span,
+.trace-policy span,
+.trace-list span,
+.trace-event-list span {
+  font-family: var(--mono);
+  text-transform: uppercase;
+}
+
+.trace-selector-label {
+  display: grid;
+  gap: 7px;
+}
+
+.trace-selector-label span {
+  color: var(--blue);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+.trace-selector-label select {
+  width: 100%;
+  min-height: 38px;
+  padding: 0 10px;
+  color: rgba(220, 232, 238, 0.84);
+  font: 11px var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(153, 207, 226, 0.18);
+  border-radius: 0;
+  background: rgba(3, 9, 14, 0.9);
+}
+
+.trace-boundary {
+  margin: 0 0 12px;
+  padding: 9px 10px;
+  color: rgba(220, 232, 238, 0.64);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+  line-height: 1.55;
+  border: 1px solid rgba(201, 133, 33, 0.22);
+  background: rgba(201, 133, 33, 0.055);
+}
+
+.trace-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.trace-metric,
+.trace-release,
+.trace-policy,
+.trace-list li,
+.trace-event-list li {
+  border: 1px solid rgba(153, 207, 226, 0.12);
+  background: rgba(8, 22, 32, 0.52);
+}
+
+.trace-metric {
+  min-height: 96px;
+  padding: 11px;
+}
+
+.trace-metric span,
+.trace-release span,
+.trace-policy span {
+  display: block;
+  color: var(--blue);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+}
+
+.trace-metric strong,
+.trace-release strong {
+  display: block;
+  margin: 7px 0 6px;
+  color: rgba(230, 245, 250, 0.86);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.trace-metric small,
+.trace-list small,
+.trace-event-list small {
+  color: rgba(220, 232, 238, 0.48);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.trace-verdict[data-verdict="pass"] strong,
+.trace-release[data-eligible="true"] strong {
+  color: var(--green);
+}
+
+.trace-verdict[data-verdict="fail"] strong,
+.trace-release[data-eligible="false"] strong {
+  color: var(--red);
+}
+
+.trace-verdict[data-verdict="escalate"] strong {
+  color: var(--amber);
+}
+
+.trace-release,
+.trace-policy {
+  margin-top: 8px;
+  padding: 12px;
+}
+
+.trace-release p,
+.trace-policy p,
+.trace-event-list p {
+  margin: 6px 0 0;
+  color: rgba(220, 232, 238, 0.56);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.trace-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.trace-list,
+.trace-event-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trace-list li,
+.trace-event-list li {
+  padding: 10px;
+}
+
+.trace-list span,
+.trace-event-list span {
+  display: block;
+  color: var(--blue);
+  font-size: 8px;
+  letter-spacing: 0.11em;
+}
+
+.trace-list strong,
+.trace-event-list strong {
+  display: block;
+  margin: 5px 0 3px;
+  color: rgba(230, 245, 250, 0.78);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.trace-events {
+  margin-top: 12px;
+}
+
 .compact-controls {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -1568,6 +1793,9 @@ main {
   .comparison-strip,
   .artifacts-intro,
   .mini-grid,
+  .trace-viewer-header,
+  .trace-summary-grid,
+  .trace-columns,
   .related-evidence-panel,
   .related-evidence-list,
   .taxonomy-list,
