@@ -24,7 +24,8 @@ const track3TextFiles = [
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
   'docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md',
-  'docs/TRACK_3_FIXTURE_SUITE.md'
+  'docs/TRACK_3_FIXTURE_SUITE.md',
+  'docs/TRACK_3_CONTRACT_INVARIANTS.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -55,8 +56,18 @@ const allowedContextPattern = /\b(no|not|does not|do not|without|forbidden|forbi
 
 const forbiddenPhrasePatterns = [
   { label: 'runs NEXUS', pattern: /\bruns\s+nexus\b/i },
+  { label: 'NEXUS execution', pattern: /\bnexus\s+execution\b/i },
   { label: 'live orchestration', pattern: /\blive\s+orchestration\b/i },
+  { label: 'live Joint-Workflow execution', pattern: /\blive\s+joint-workflow\s+execution\b/i },
+  { label: 'autonomous orchestration', pattern: /\bautonomous\s+orchestration\b/i },
+  { label: 'active multi-joint runtime', pattern: /\bactive\s+multi-joint\s+runtime\b/i },
+  { label: 'real Origin commit', pattern: /\breal\s+origin\s+commit\b/i },
+  { label: 'real Communicator execution', pattern: /\breal\s+communicator.*execution\b/i },
+  { label: 'real Mediator execution', pattern: /\breal\s+mediator.*execution\b/i },
+  { label: 'real Drafter execution', pattern: /\breal\s+drafter.*execution\b/i },
+  { label: 'real Refiner execution', pattern: /\breal\s+refiner.*execution\b/i },
   { label: 'persistent ledger', pattern: /\bpersistent\s+(audit\s+)?ledger\b/i },
+  { label: 'backend trace storage', pattern: /\bbackend\s+trace\s+storage\b/i },
   { label: 'authenticated dashboard', pattern: /\bauthenticated\s+dashboard\b/i },
   { label: 'production SaaS', pattern: /\bproduction\s+saas\b/i },
   { label: 'deployed enterprise platform', pattern: /\bdeployed\s+enterprise\s+platform\b/i },
@@ -68,6 +79,17 @@ const forbiddenPhrasePatterns = [
 
 const failures = [];
 const parsed = new Map();
+const approvedVerdictStatuses = new Set(['pass', 'fail', 'escalate']);
+const localTraceStatus = 'local_dry_run_not_persistent_not_ledger';
+const requiredClaimBoundaryFlags = [
+  'not_backend',
+  'not_persisted',
+  'not_ledger',
+  'not_authenticated',
+  'not_nexus_integrated',
+  'not_model_executing',
+  'not_public_operational_behavior'
+];
 
 function relPath(filePath) {
   return path.relative(repoRoot, filePath);
@@ -220,6 +242,91 @@ function validateFixtureAlignment(fixture, scenarios, options = {}) {
   if (!traceBoundary.includes('not persistent') && !traceBoundary.includes('not a persistent ledger')) {
     addFailure(file, 'Fixture alignment', 'trace_events must state they are not persistent ledger records');
   }
+
+  validateRuntimeBoundaryFlags(file, scenario, label);
+  validateTraceStatus(file, scenario, label);
+  validateVerdictVocabulary(file, scenario, label);
+  validateReleaseEligibilityCoherence(file, scenario, label);
+}
+
+function validateRuntimeBoundaryFlags(file, scenario, label) {
+  const boundary = scenario.claim_boundary || {};
+  const scenarioText = JSON.stringify(scenario).toLowerCase();
+
+  requiredClaimBoundaryFlags.forEach(flag => {
+    if (boundary[flag] !== true) {
+      addFailure(file, 'Runtime boundary invariants', `${label} must encode claim_boundary.${flag}: true`);
+    }
+  });
+
+  [
+    ['backend', /not[_\s-]backend|no backend/],
+    ['persistence', /not[_\s-]persisted|not persistent|no persistence/],
+    ['ledger', /not[_\s-]ledger|not persistent ledger|not a persistent ledger|no ledger/],
+    ['NEXUS execution', /not nexus execution|no nexus|not[_\s-]nexus[_\s-]integrated|not_currently_implemented/],
+    ['model execution', /not model execution|not-model-executing|not[_\s-]model[_\s-]executing|no model/],
+    ['public operational behavior', /not public operational behavior|not[_\s-]public[_\s-]operational[_\s-]behavior|no public operational/]
+  ].forEach(([boundaryName, boundaryPattern]) => {
+    if (!boundaryPattern.test(scenarioText)) {
+      addFailure(file, 'Runtime boundary invariants', `${label} does not clearly bound ${boundaryName}`);
+    }
+  });
+}
+
+function validateTraceStatus(file, scenario, label) {
+  const traceEvents = scenario.trace_events;
+  if (!traceEvents || !Array.isArray(traceEvents.items)) {
+    addFailure(file, 'Trace boundary invariants', `${label} must include trace_events.items`);
+    return;
+  }
+
+  traceEvents.items.forEach((event, index) => {
+    if (event.trace_status !== localTraceStatus) {
+      addFailure(file, 'Trace boundary invariants', `${label} trace_events.items[${index}].trace_status must be ${localTraceStatus}`);
+    }
+    const text = JSON.stringify(event).toLowerCase();
+    if (/\bledger record\b|\bimmutable ledger entry\b|\bpersistent audit record\b|\bproduction trace\b/.test(text)) {
+      addFailure(file, 'Trace boundary invariants', `${label} trace event ${index} uses prohibited trace terminology`);
+    }
+  });
+}
+
+function validateVerdictVocabulary(file, scenario, label) {
+  const status = scenario.verdict && scenario.verdict.status;
+  if (!approvedVerdictStatuses.has(status)) {
+    addFailure(file, 'Verdict invariants', `${label} has unapproved verdict status "${status}"`);
+  }
+}
+
+function validateReleaseEligibilityCoherence(file, scenario, label) {
+  const eligible = scenario.release_eligibility && scenario.release_eligibility.eligible === true;
+  if (!eligible) return;
+
+  const verdictStatus = scenario.verdict && scenario.verdict.status;
+  if (verdictStatus === 'fail' || verdictStatus === 'escalate') {
+    addFailure(file, 'Release eligibility invariants', `${label} is release-eligible with blocking verdict "${verdictStatus}"`);
+  }
+
+  const gateResults = Array.isArray(scenario.gate_results) ? scenario.gate_results : [];
+  if (!gateResults.length) {
+    addFailure(file, 'Release eligibility invariants', `${label} is release-eligible without gate results`);
+  }
+  gateResults.forEach(result => {
+    if (['fail', 'escalate', 'blocked'].includes(result.status)) {
+      addFailure(file, 'Release eligibility invariants', `${label} is release-eligible with blocking gate ${result.gate_id}:${result.status}`);
+    }
+  });
+
+  const requirements = Array.isArray(scenario.evidence_requirements) ? scenario.evidence_requirements : [];
+  requirements.forEach((requirement, index) => {
+    const status = requirement.required_for_status;
+    if (
+      requirement.evidence_present === false
+      && (status === 'static_interface_seed' || status === 'deterministic_static_simulation')
+    ) {
+      addFailure(file, 'Release eligibility invariants', `${label} is release-eligible while current-status evidence requirement ${index} is unresolved`);
+    }
+  });
 }
 
 function validateFixtureSuite(suite, scenarios) {
@@ -234,42 +341,36 @@ function validateFixtureSuite(suite, scenarios) {
   }
 
   const scenarioIds = new Set((scenarios.scenarios || []).map(item => item.id));
-  const fixtureIds = new Set();
+  const fixtureCounts = new Map();
 
   fixtures.forEach((fixture, index) => {
     const scenarioId = fixture && fixture.scenario && fixture.scenario.id;
-    if (scenarioId) fixtureIds.add(scenarioId);
+    if (scenarioId) fixtureCounts.set(scenarioId, (fixtureCounts.get(scenarioId) || 0) + 1);
     validateFixtureAlignment(fixture, scenarios, {
       file,
       label: `fixtures[${index}]`
     });
 
-    const text = JSON.stringify(fixture).toLowerCase();
-    [
-      ['backend', /not backend|no backend/],
-      ['persistence', /not persisted|not persistent|no persistence/],
-      ['ledger', /not ledger|not persistent ledger|not a persistent ledger|no ledger/],
-      ['NEXUS execution', /not nexus execution|no nexus|not_currently_implemented/],
-      ['model execution', /not model execution|not model-executing|no model/],
-      ['public operational behavior', /not public operational behavior|no public operational/]
-    ].forEach(([label, boundary]) => {
-      if (!boundary.test(text)) {
-        addFailure(file, 'Fixture suite boundaries', `Fixture ${scenarioId || index} does not clearly bound ${label}`);
-      }
-    });
+    if (scenarioId && !scenarioIds.has(scenarioId)) {
+      addFailure(file, 'Scenario coverage invariants', `Orphan suite fixture references unknown scenario ${scenarioId}`);
+    }
   });
 
   scenarioIds.forEach(id => {
-    if (!fixtureIds.has(id)) {
-      addFailure(file, 'Fixture suite', `Missing suite fixture for scenario ${id}`);
+    const count = fixtureCounts.get(id) || 0;
+    if (count === 0) {
+      addFailure(file, 'Scenario coverage invariants', `Missing suite fixture for scenario ${id}`);
+    }
+    if (count > 1) {
+      addFailure(file, 'Scenario coverage invariants', `Duplicate suite fixtures for scenario ${id}: ${count}`);
     }
   });
 }
 
-function validateManifestAlignment(contract, fixture) {
+function validateManifestAlignment(contract, fixture, fixtureFile = 'data/interface-fixture.example.v0.json') {
   const files = [
     ['data/interface-contract.v0.json', JSON.stringify(contract)],
-    ['data/interface-fixture.example.v0.json', JSON.stringify(fixture)]
+    [fixtureFile, JSON.stringify(fixture)]
   ];
 
   files.forEach(([file, text]) => {
@@ -378,7 +479,7 @@ if (fixtureSuite) {
 }
 if (fixtureSuite && scenarios) validateFixtureSuite(fixtureSuite, scenarios);
 if (contract && fixture && manifest) validateManifestAlignment(contract, fixture);
-if (contract && fixtureSuite && manifest) validateManifestAlignment(contract, fixtureSuite);
+if (contract && fixtureSuite && manifest) validateManifestAlignment(contract, fixtureSuite, 'data/interface-fixtures.v0.json');
 
 track3TextFiles.forEach(validateOperationalClaimScan);
 

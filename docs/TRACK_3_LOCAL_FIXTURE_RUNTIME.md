@@ -67,6 +67,7 @@ The dry-run demonstrates:
 The generated report includes:
 
 - Run metadata.
+- Contract invariant metadata.
 - Source file references.
 - Scenario input summary.
 - Gate results summary.

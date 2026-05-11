@@ -145,12 +145,12 @@ function validateFixtureSuite(suite, scenarios) {
 
     const text = JSON.stringify(fixture).toLowerCase();
     [
-      ['backend', /not backend|no backend/],
-      ['persistence', /not persisted|not persistent|no persistence/],
-      ['ledger', /not ledger|not persistent ledger|not a persistent ledger|no ledger/],
-      ['NEXUS execution', /not nexus execution|no nexus|not_currently_implemented/],
-      ['model execution', /not model execution|not model-executing|no model/],
-      ['public operational behavior', /not public operational behavior|no public operational/]
+      ['backend', /not[_\s-]backend|no backend/],
+      ['persistence', /not[_\s-]persisted|not persistent|no persistence/],
+      ['ledger', /not[_\s-]ledger|not persistent ledger|not a persistent ledger|no ledger/],
+      ['NEXUS execution', /not nexus execution|no nexus|not[_\s-]nexus[_\s-]integrated|not_currently_implemented/],
+      ['model execution', /not model execution|not-model-executing|not[_\s-]model[_\s-]executing|no model/],
+      ['public operational behavior', /not public operational behavior|not[_\s-]public[_\s-]operational[_\s-]behavior|no public operational/]
     ].forEach(([boundaryName, boundaryPattern]) => {
       if (!boundaryPattern.test(text)) {
         addFailure('Suite boundary', `${scenario && scenario.id || `fixture ${index}`} does not clearly bound ${boundaryName}`);
@@ -237,6 +237,9 @@ function buildReport({
       track_phase: trackPhase,
       run_mode: runMode,
       run_id: runId,
+      invariant_set: 'track_3_contract_invariants_v0',
+      invariant_status: 'passed',
+      claim_boundary_status: 'bounded',
       public_runtime: false,
       persistence: false,
       ledger: false,
@@ -350,6 +353,9 @@ function buildSuiteReport({ contract, suite, scenarios, manifest, suiteText }) {
       track_phase: '3.5',
       run_mode: 'local_fixture_suite_dry_run',
       suite_run_id: `track3-5-suite-${stableHash(`${files.suite}:${suiteHash}`).slice(0, 16)}`,
+      invariant_set: 'track_3_contract_invariants_v0',
+      invariant_status: 'passed',
+      claim_boundary_status: 'bounded',
       public_runtime: false,
       persistence: false,
       ledger: false,

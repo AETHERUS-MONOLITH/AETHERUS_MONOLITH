@@ -6,6 +6,8 @@ The Track 3 fixture suite expands the single Track 3.4 local dry-run into a dete
 
 The suite does not execute Joint-Workflow, NEXUS, model calls, backend orchestration, or live governance behavior.
 
+The suite is governed by the invariants in `docs/TRACK_3_CONTRACT_INVARIANTS.md`.
+
 ## Single Fixture Versus Suite Fixture
 
 `data/interface-fixture.example.v0.json` remains the single representative example fixture derived from `happy_path_valid_release`.
@@ -65,6 +67,9 @@ Suite mode validates:
 - Each fixture contains scenario input, gate or gate-result data, verdict, decision explanation, evidence requirements, release eligibility, runtime status, and trace-event policy.
 - Trace-like events are marked as local dry-run placeholders.
 - Fixture boundaries state no backend, no persistence, no ledger, no NEXUS execution, no model execution, and no public operational behavior.
+- Verdicts remain bounded to `pass`, `fail`, and `escalate`.
+- Release eligibility remains coherent with verdicts, gate results, evidence requirements, and decision explanations.
+- Trace-like events use `local_dry_run_not_persistent_not_ledger`.
 
 ## What Suite Mode Does Not Prove
 

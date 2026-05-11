@@ -200,14 +200,16 @@
           "type": "illustrative in-memory trace event",
           "agent_id": "orchestrator",
           "action_type": "plan",
-          "payload_ref": "happy_path_valid_release/job_ticket"
+          "payload_ref": "happy_path_valid_release/job_ticket",
+          "trace_status": "local_dry_run_not_persistent_not_ledger"
         },
         {
           "id": "TRACE-HAPPY-PATH-VALID-RELEASE-04",
           "type": "illustrative in-memory trace event",
           "agent_id": "origin",
           "action_type": "commit",
-          "payload_ref": "happy_path_valid_release/origin_commit"
+          "payload_ref": "happy_path_valid_release/origin_commit",
+          "trace_status": "local_dry_run_not_persistent_not_ledger"
         }
       ]
     },
@@ -229,6 +231,15 @@
       "integration_status": "not_currently_implemented",
       "field_status": "not_currently_implemented",
       "boundary": "No NEXUS runtime, adapter call, or repository binding exists in this fixture."
+    },
+    "claim_boundary": {
+      "not_backend": true,
+      "not_persisted": true,
+      "not_ledger": true,
+      "not_authenticated": true,
+      "not_nexus_integrated": true,
+      "not_model_executing": true,
+      "not_public_operational_behavior": true
     }
   }
 }

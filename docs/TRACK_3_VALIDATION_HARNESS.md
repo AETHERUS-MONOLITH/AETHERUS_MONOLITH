@@ -37,7 +37,12 @@ The harness validates:
   - `future_nexus_adapter`
   - `not_currently_implemented`
 - Alignment between the example fixture and an existing scenario id in `data/scenarios.json`.
+- Full scenario-to-suite coverage in `data/interface-fixtures.v0.json`.
 - Boundary language around illustrative trace events.
+- Runtime boundary flags for fixture-driven local reports.
+- Verdict vocabulary invariants for `pass`, `fail`, and `escalate`.
+- Release eligibility coherence against gate results, evidence requirements, verdict, and decision explanation.
+- Trace status invariants requiring `local_dry_run_not_persistent_not_ledger`.
 - Bounded use of Joint-Workflow and NEXUS references.
 - Potential unbounded operational claims in Track 3 JSON and documentation files.
 

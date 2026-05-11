@@ -293,7 +293,8 @@
               "agent_id": "orchestrator",
               "action_type": "plan",
               "payload_ref": "happy_path_valid_release/job_ticket",
-              "stage_key": "INPUT_FRAME"
+              "stage_key": "INPUT_FRAME",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             },
             {
               "id": "TRACE-HAPPY-PATH-VALID-RELEASE-02",
@@ -301,7 +302,8 @@
               "agent_id": "mediator",
               "action_type": "constrain",
               "payload_ref": "happy_path_valid_release/constraints_packet",
-              "stage_key": "GATE_DECISION"
+              "stage_key": "GATE_DECISION",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             },
             {
               "id": "TRACE-HAPPY-PATH-VALID-RELEASE-03",
@@ -309,7 +311,8 @@
               "agent_id": "refiner",
               "action_type": "refine",
               "payload_ref": "happy_path_valid_release/patchlist",
-              "stage_key": "RISK_CLASSIFICATION"
+              "stage_key": "RISK_CLASSIFICATION",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             },
             {
               "id": "TRACE-HAPPY-PATH-VALID-RELEASE-04",
@@ -317,7 +320,8 @@
               "agent_id": "origin",
               "action_type": "commit",
               "payload_ref": "happy_path_valid_release/origin_commit",
-              "stage_key": "AUDIT_RELEASE"
+              "stage_key": "AUDIT_RELEASE",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             }
           ]
         },
@@ -539,7 +543,8 @@
               "agent_id": "refiner",
               "action_type": "refine",
               "payload_ref": "critical_safety_freeze/drafter_output",
-              "stage_key": "RISK_CLASSIFICATION"
+              "stage_key": "RISK_CLASSIFICATION",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             },
             {
               "id": "TRACE-CRITICAL-SAFETY-FREEZE-02",
@@ -547,7 +552,8 @@
               "agent_id": "orchestrator",
               "action_type": "escalate",
               "payload_ref": "critical_safety_freeze/freeze",
-              "stage_key": "RECOVERY_PATH"
+              "stage_key": "RECOVERY_PATH",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             }
           ]
         },
@@ -770,7 +776,8 @@
               "agent_id": "drafter",
               "action_type": "escalate",
               "payload_ref": "missing_constraints_escalate/handoff_receipt",
-              "stage_key": "GATE_DECISION"
+              "stage_key": "GATE_DECISION",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             },
             {
               "id": "TRACE-MISSING-CONSTRAINTS-ESCALATE-02",
@@ -778,7 +785,8 @@
               "agent_id": "orchestrator",
               "action_type": "escalate",
               "payload_ref": "missing_constraints_escalate/escalation",
-              "stage_key": "RECOVERY_PATH"
+              "stage_key": "RECOVERY_PATH",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             }
           ]
         },
@@ -989,7 +997,8 @@
               "agent_id": "orchestrator",
               "action_type": "escalate",
               "payload_ref": "adapter_failure_escalate/adapter",
-              "stage_key": "GATE_DECISION"
+              "stage_key": "GATE_DECISION",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             }
           ]
         },
@@ -1204,7 +1213,8 @@
               "agent_id": "orchestrator",
               "action_type": "cache_retrieval",
               "payload_ref": "idempotency_cache_hit/prototype_cached_artifact",
-              "stage_key": "AUTHORITY_CHECK"
+              "stage_key": "AUTHORITY_CHECK",
+              "trace_status": "local_dry_run_not_persistent_not_ledger"
             }
           ]
         },
