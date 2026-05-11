@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
 
-const expectedAetherusBaseline = '5b41fdbff9fcf6c3c4eae29abe4c88a8de34f1f4';
+const expectedAetherusBaseline = 'b2a4018de3a29e1e5939be449fec779caa1f5f37';
 const expectedNexusCommit = 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f';
 const outputDir = '.track3-runs';
 const outputFile = '.track3-runs/latest-nexus-import-environment-preflight.json';

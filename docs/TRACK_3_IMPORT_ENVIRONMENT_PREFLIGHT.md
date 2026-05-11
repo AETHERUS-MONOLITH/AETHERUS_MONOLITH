@@ -95,3 +95,5 @@ If it does not pass, resolve missing preconditions first.
 Default recommendation: do not implement an import adapter unless explicitly authorized.
 
 Track 3.14 source pin resolution for the observed local NEXUS path: see `docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md`.
+
+Track 3.15 pinned source preflight: see `docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md`.

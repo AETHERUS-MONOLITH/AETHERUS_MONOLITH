@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "name": "AETHERUS Pinned NEXUS Source Preflight",
+    "version": "0.1.0",
+    "track_phase": "3.15",
+    "status": "pinned_source_preflight_only",
+    "integration_status": "not_integrated",
+    "nexus_execution": false,
+    "python_execution": false,
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "boundary": "Pinned source preflight only. This file does not authorize or perform NEXUS import, NEXUS execution, Python execution of NEXUS code, dependency installation, public runtime wiring, persistence, ledger behavior, backend behavior, authentication, database use, or model execution."
+  },
+  "pinned_nexus_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "previous_non_authoritative_path": "/Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp",
+  "previous_non_authoritative_head": "acd8b2abfd3ea66ed6d91fb908c761774bdf110d",
+  "clean_source_strategy": "local_clone_detached_checkout",
+  "clean_source_path": "/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb",
+  "clean_source_head_or_source_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "clean_source_status": {
+    "git_metadata_exists": true,
+    "branch_state": "detached_head",
+    "working_tree_status": "clean",
+    "matches_pinned_commit": true,
+    "required_file_groups_present": true,
+    "dependency_declaration": "requirements.txt"
+  },
+  "environment_preflight_status": {
+    "command": "node scripts/check-nexus-import-environment.mjs --nexus-path /Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb --require-python",
+    "command_result": "pass",
+    "python_available": true,
+    "python_version": "Python 3.9.6",
+    "nexus_path_status": "provided",
+    "nexus_commit_status": "matches_pinned_commit",
+    "nexus_working_tree_status": "clean",
+    "required_file_group_status": "present",
+    "dependency_declaration_status": "requirements.txt present",
+    "source_path_stop_condition_resolved": true,
+    "ready_for_authorization_during_authoring": false,
+    "authoring_note": "The preflight command was run while AETHERUS Track 3.15 files were uncommitted, so the script reported the AETHERUS working tree as not clean. The NEXUS source-path stop condition itself was resolved."
+  },
+  "ready_for_import_adapter_authorization": false,
+  "import_adapter_authorized": false,
+  "stop_conditions_triggered": [],
+  "missing_preconditions": [
+    "Run the environment preflight again after the AETHERUS working tree is clean.",
+    "Receive explicit authorization before any local NEXUS import execution."
+  ],
+  "claim_boundary": {
+    "allowed_after_track_3_15": [
+      "clean pinned NEXUS source path prepared",
+      "NEXUS source preflight passed/failed",
+      "future import adapter remains gated"
+    ],
+    "forbidden_after_track_3_15": [
+      "AETHERUS_MONOLITH runs NEXUS",
+      "NEXUS import adapter implemented",
+      "NEXUS powers the public interface",
+      "NEXUS-integrated system",
+      "live governance kernel",
+      "persistent NEXUS ledger",
+      "production runtime"
+    ]
+  }
+}

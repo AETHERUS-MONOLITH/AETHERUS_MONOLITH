@@ -19,7 +19,8 @@ const dataFiles = [
   'data/nexus-adapter-mismatch-fixtures.v0.json',
   'data/nexus-adapter-normalization-fixtures.v0.json',
   'data/nexus-import-adapter-preflight.v0.json',
-  'data/nexus-source-pin-resolution.v0.json'
+  'data/nexus-source-pin-resolution.v0.json',
+  'data/nexus-pinned-source-preflight.v0.json'
 ];
 
 const track3TextFiles = [
@@ -32,6 +33,7 @@ const track3TextFiles = [
   'data/nexus-adapter-normalization-fixtures.v0.json',
   'data/nexus-import-adapter-preflight.v0.json',
   'data/nexus-source-pin-resolution.v0.json',
+  'data/nexus-pinned-source-preflight.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -45,7 +47,8 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md',
   'docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md',
   'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md',
-  'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md'
+  'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md',
+  'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md'
 ];
 
 const requiredScriptFiles = [
@@ -55,7 +58,8 @@ const requiredScriptFiles = [
 
 const requiredDocFiles = [
   'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md',
-  'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md'
+  'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md',
+  'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -1028,6 +1032,81 @@ function validateNexusSourcePinResolution(resolution) {
   }
 }
 
+function validateNexusPinnedSourcePreflight(preflight) {
+  const file = 'data/nexus-pinned-source-preflight.v0.json';
+  requirePath(preflight, ['metadata'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['pinned_nexus_commit'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['previous_non_authoritative_path'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['previous_non_authoritative_head'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['clean_source_strategy'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['clean_source_path'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['clean_source_head_or_source_commit'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['clean_source_status'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['environment_preflight_status'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['ready_for_import_adapter_authorization'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['import_adapter_authorized'], file, 'NEXUS pinned source preflight');
+  requirePath(preflight, ['claim_boundary'], file, 'NEXUS pinned source preflight');
+
+  const metadata = preflight.metadata || {};
+  if (metadata.status !== 'pinned_source_preflight_only') {
+    addFailure(file, 'NEXUS pinned source preflight', `metadata.status must be pinned_source_preflight_only, found "${metadata.status}"`);
+  }
+  if (metadata.integration_status !== 'not_integrated') {
+    addFailure(file, 'NEXUS pinned source preflight', `metadata.integration_status must be not_integrated, found "${metadata.integration_status}"`);
+  }
+
+  [
+    'nexus_execution',
+    'python_execution',
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, 'NEXUS pinned source preflight', `metadata.${flag} must be false`);
+    }
+  });
+
+  if (preflight.pinned_nexus_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS pinned source preflight', 'pinned_nexus_commit must match ab95cbbd24df5817c4e363d24b3b199ac8af6c6f');
+  }
+  if (preflight.clean_source_head_or_source_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS pinned source preflight', 'clean_source_head_or_source_commit must match the pinned NEXUS commit');
+  }
+  if (preflight.previous_non_authoritative_head !== 'acd8b2abfd3ea66ed6d91fb908c761774bdf110d') {
+    addFailure(file, 'NEXUS pinned source preflight', 'previous_non_authoritative_head must match acd8b2abfd3ea66ed6d91fb908c761774bdf110d');
+  }
+  if (preflight.import_adapter_authorized !== false) {
+    addFailure(file, 'NEXUS pinned source preflight', 'import_adapter_authorized must be false');
+  }
+  if (preflight.ready_for_import_adapter_authorization === true && preflight.clean_source_head_or_source_commit !== preflight.pinned_nexus_commit) {
+    addFailure(file, 'NEXUS pinned source preflight', 'ready_for_import_adapter_authorization requires clean_source_head_or_source_commit to match pinned_nexus_commit');
+  }
+
+  const sourceStatus = preflight.clean_source_status || {};
+  if (sourceStatus.matches_pinned_commit !== true) {
+    addFailure(file, 'NEXUS pinned source preflight', 'clean_source_status.matches_pinned_commit must be true');
+  }
+  if (sourceStatus.working_tree_status !== 'clean') {
+    addFailure(file, 'NEXUS pinned source preflight', 'clean_source_status.working_tree_status must be clean');
+  }
+
+  const envStatus = preflight.environment_preflight_status || {};
+  if (envStatus.command_result !== 'pass') {
+    addFailure(file, 'NEXUS pinned source preflight', 'environment_preflight_status.command_result must be pass');
+  }
+  if (envStatus.nexus_commit_status !== 'matches_pinned_commit') {
+    addFailure(file, 'NEXUS pinned source preflight', 'environment_preflight_status.nexus_commit_status must be matches_pinned_commit');
+  }
+  if (envStatus.source_path_stop_condition_resolved !== true) {
+    addFailure(file, 'NEXUS pinned source preflight', 'environment_preflight_status.source_path_stop_condition_resolved must be true');
+  }
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -1123,6 +1202,7 @@ const nexusMismatchFixtures = parseJson('data/nexus-adapter-mismatch-fixtures.v0
 const nexusNormalizationFixtures = parseJson('data/nexus-adapter-normalization-fixtures.v0.json');
 const nexusImportPreflight = parseJson('data/nexus-import-adapter-preflight.v0.json');
 const nexusSourcePinResolution = parseJson('data/nexus-source-pin-resolution.v0.json');
+const nexusPinnedSourcePreflight = parseJson('data/nexus-pinned-source-preflight.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -1152,6 +1232,7 @@ if (nexusMismatchFixtures && nexusAdapterStub) validateNexusAdapterMismatchFixtu
 if (nexusNormalizationFixtures) validateNexusAdapterNormalizationFixtures(nexusNormalizationFixtures);
 if (nexusImportPreflight) validateNexusImportAdapterPreflight(nexusImportPreflight);
 if (nexusSourcePinResolution) validateNexusSourcePinResolution(nexusSourcePinResolution);
+if (nexusPinnedSourcePreflight) validateNexusPinnedSourcePreflight(nexusPinnedSourcePreflight);
 validateNexusImportEnvironmentPreflightScript();
 validateRequiredScriptFiles();
 validateRequiredDocFiles();

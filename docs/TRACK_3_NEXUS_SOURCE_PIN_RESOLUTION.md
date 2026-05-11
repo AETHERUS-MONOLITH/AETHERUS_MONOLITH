@@ -101,6 +101,8 @@ A future import adapter prototype remains blocked until:
 - no stop conditions are triggered,
 - the user explicitly authorizes local NEXUS import execution.
 
+Track 3.15 pinned source preflight: see `docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md`.
+
 ## Public Claim Boundary
 
 Allowed after this pass:
