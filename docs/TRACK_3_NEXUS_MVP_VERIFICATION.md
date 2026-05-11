@@ -407,3 +407,5 @@ Scope should be limited to:
 - no persistence,
 - no model calls,
 - no NEXUS execution from the public site.
+
+Track 3.8 follow-up: see `docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md` for the local-only adapter contract stub. That document preserves the Track 3.7 boundary: NEXUS remains external and not integrated.

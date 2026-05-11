@@ -14,7 +14,8 @@ const dataFiles = [
   'data/interface-contract.v0.json',
   'data/interface-fixture.example.v0.json',
   'data/interface-fixtures.v0.json',
-  'data/nexus-adapter-readiness.v0.json'
+  'data/nexus-adapter-readiness.v0.json',
+  'data/nexus-adapter-contract.stub.v0.json'
 ];
 
 const track3TextFiles = [
@@ -22,13 +23,15 @@ const track3TextFiles = [
   'data/interface-fixture.example.v0.json',
   'data/interface-fixtures.v0.json',
   'data/nexus-adapter-readiness.v0.json',
+  'data/nexus-adapter-contract.stub.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
   'docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md',
   'docs/TRACK_3_FIXTURE_SUITE.md',
   'docs/TRACK_3_CONTRACT_INVARIANTS.md',
-  'docs/TRACK_3_NEXUS_MVP_VERIFICATION.md'
+  'docs/TRACK_3_NEXUS_MVP_VERIFICATION.md',
+  'docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -448,6 +451,106 @@ function validateNexusAdapterReadiness(readiness) {
   }
 }
 
+function validateNexusAdapterContractStub(stub) {
+  const file = 'data/nexus-adapter-contract.stub.v0.json';
+  requirePath(stub, ['metadata'], file, 'NEXUS adapter contract stub');
+  requirePath(stub, ['verified_nexus_surface'], file, 'NEXUS adapter contract stub');
+  requirePath(stub, ['adapter_input_stub'], file, 'NEXUS adapter contract stub');
+  requirePath(stub, ['nexus_payload_stub'], file, 'NEXUS adapter contract stub');
+  requirePath(stub, ['nexus_result_stub'], file, 'NEXUS adapter contract stub');
+  requirePath(stub, ['normalized_interface_result_stub'], file, 'NEXUS adapter contract stub');
+  requirePath(stub, ['mismatch_policy'], file, 'NEXUS adapter contract stub');
+  requirePath(stub, ['forbidden_claims'], file, 'NEXUS adapter contract stub');
+
+  const metadata = stub.metadata || {};
+  if (metadata.status !== 'stub_only') {
+    addFailure(file, 'NEXUS adapter contract stub', `metadata.status must be "stub_only", found "${metadata.status}"`);
+  }
+  if (metadata.integration_status !== 'not_integrated') {
+    addFailure(file, 'NEXUS adapter contract stub', `metadata.integration_status must be "not_integrated", found "${metadata.integration_status}"`);
+  }
+
+  [
+    'nexus_execution',
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, 'NEXUS adapter contract stub', `metadata.${flag} must be false`);
+    }
+  });
+
+  const verified = stub.verified_nexus_surface || {};
+  if (verified.inspected_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS adapter contract stub', `verified_nexus_surface.inspected_commit must match ab95cbbd24df5817c4e363d24b3b199ac8af6c6f`);
+  }
+
+  const readinessOrder = new Map([
+    ['not_ready', 0],
+    ['documentation_only', 1],
+    ['fixture_exchange_ready', 2],
+    ['cli_wrapper_ready', 3],
+    ['import_adapter_ready', 4],
+    ['service_adapter_ready', 5]
+  ]);
+  const readiness = verified.readiness_level;
+  if (!readinessOrder.has(readiness)) {
+    addFailure(file, 'NEXUS adapter contract stub', `verified_nexus_surface.readiness_level uses unapproved value "${readiness}"`);
+  } else if (readinessOrder.get(readiness) > readinessOrder.get('import_adapter_ready')) {
+    addFailure(file, 'NEXUS adapter contract stub', `verified_nexus_surface.readiness_level must not exceed import_adapter_ready`);
+  }
+
+  const surfaces = new Set(verified.execution_surfaces || []);
+  ['python_import', 'cli_demo_runner'].forEach(surface => {
+    if (!surfaces.has(surface)) {
+      addFailure(file, 'NEXUS adapter contract stub', `verified_nexus_surface.execution_surfaces missing "${surface}"`);
+    }
+  });
+
+  const ledgerBoundary = new Set(verified.ledger_boundary || []);
+  if (!ledgerBoundary.has('not_production_ledger')) {
+    addFailure(file, 'NEXUS adapter contract stub', 'verified_nexus_surface.ledger_boundary must include not_production_ledger');
+  }
+  if (!ledgerBoundary.has('hash_chaining_not_implemented')) {
+    addFailure(file, 'NEXUS adapter contract stub', 'verified_nexus_surface.ledger_boundary must include hash_chaining_not_implemented');
+  }
+
+  const runtimeFlags = stub.adapter_input_stub && stub.adapter_input_stub.runtime_boundary_flags;
+  [
+    'not_integrated',
+    'not_backend',
+    'not_authenticated',
+    'not_persistent',
+    'not_ledger',
+    'not_model_executing',
+    'not_public_runtime'
+  ].forEach(flag => {
+    if (!runtimeFlags || runtimeFlags[flag] !== true) {
+      addFailure(file, 'NEXUS adapter contract stub', `adapter_input_stub.runtime_boundary_flags.${flag} must be true`);
+    }
+  });
+
+  const normalizedBoundary = stub.normalized_interface_result_stub && stub.normalized_interface_result_stub.claim_boundary;
+  [
+    'not_integrated',
+    'not_backend',
+    'not_authenticated',
+    'not_persistent',
+    'not_ledger',
+    'not_model_executing',
+    'not_public_runtime'
+  ].forEach(flag => {
+    if (!normalizedBoundary || normalizedBoundary[flag] !== true) {
+      addFailure(file, 'NEXUS adapter contract stub', `normalized_interface_result_stub.claim_boundary.${flag} must be true`);
+    }
+  });
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -522,6 +625,7 @@ const contract = parseJson('data/interface-contract.v0.json');
 const fixture = parseJson('data/interface-fixture.example.v0.json');
 const fixtureSuite = parseJson('data/interface-fixtures.v0.json');
 const nexusReadiness = parseJson('data/nexus-adapter-readiness.v0.json');
+const nexusAdapterStub = parseJson('data/nexus-adapter-contract.stub.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -546,6 +650,7 @@ if (fixtureSuite && scenarios) validateFixtureSuite(fixtureSuite, scenarios);
 if (contract && fixture && manifest) validateManifestAlignment(contract, fixture);
 if (contract && fixtureSuite && manifest) validateManifestAlignment(contract, fixtureSuite, 'data/interface-fixtures.v0.json');
 if (nexusReadiness) validateNexusAdapterReadiness(nexusReadiness);
+if (nexusAdapterStub) validateNexusAdapterContractStub(nexusAdapterStub);
 
 track3TextFiles.forEach(validateOperationalClaimScan);
 

@@ -1,0 +1,238 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Adapter Contract Stub",
+    "version": "0.1.0",
+    "track_phase": "3.8",
+    "status": "stub_only",
+    "integration_status": "not_integrated",
+    "nexus_execution": false,
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "boundary": "Contract stub only. This file does not import, execute, integrate, or expose NEXUS runtime behavior."
+  },
+  "verified_nexus_surface": {
+    "inspected_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "readiness_level": "import_adapter_ready",
+    "execution_surfaces": [
+      "python_import",
+      "cli_demo_runner"
+    ],
+    "verified_imports": [
+      "alpha_operator",
+      "delta_operator",
+      "OmegaOperator",
+      "ARBOverlay",
+      "LEDGEROverlay"
+    ],
+    "input_contract": [
+      "query_string",
+      "regulatory_context_dict"
+    ],
+    "output_contract": [
+      "alpha_result_dict",
+      "delta_result_dict",
+      "omega_result_dict",
+      "jsonl_audit_log_output"
+    ],
+    "ledger_boundary": [
+      "not_production_ledger",
+      "hash_chaining_not_implemented",
+      "jsonl_output_must_remain_bounded_until_verified"
+    ]
+  },
+  "adapter_input_stub": {
+    "status": "stub_only",
+    "scenario_id": {
+      "source": "AETHERUS Interface Layer fixture",
+      "required": true,
+      "example": "happy_path_valid_release"
+    },
+    "query": {
+      "source": "future normalized ScenarioInput",
+      "required": true,
+      "boundary": "A query string would be derived from a fixture or local test input. No public site input is wired."
+    },
+    "regulatory_context": {
+      "source": "future normalized ScenarioInput or fixture metadata",
+      "required": true,
+      "fields": [
+        "session_id",
+        "timestamp",
+        "regulatory_framework",
+        "jurisdiction"
+      ]
+    },
+    "governance_manifest_reference": {
+      "source": "data/joint-workflow.manifest.json or future adapter manifest",
+      "required": true,
+      "boundary": "Static manifest reference only in this stub."
+    },
+    "evidence_context": {
+      "source": "AETHERUS evidence metadata",
+      "required": false,
+      "boundary": "Evidence context would support normalization only; it is not operational evidence in this stub."
+    },
+    "runtime_boundary_flags": {
+      "not_integrated": true,
+      "not_backend": true,
+      "not_authenticated": true,
+      "not_persistent": true,
+      "not_ledger": true,
+      "not_model_executing": true,
+      "not_public_runtime": true
+    }
+  },
+  "nexus_payload_stub": {
+    "status": "future_payload_shape_only",
+    "query": {
+      "maps_from": "adapter_input_stub.query",
+      "unresolved": false
+    },
+    "context": {
+      "maps_from": "adapter_input_stub.regulatory_context",
+      "unresolved": false
+    },
+    "mode": {
+      "value": "local_import_adapter_candidate",
+      "unresolved": true,
+      "note": "A future pass must decide whether direct import or CLI wrapping is authorized."
+    },
+    "manifest_reference": {
+      "maps_from": "NEXUS data/risk_manifest.json or adapter-provided manifest path",
+      "unresolved": true
+    },
+    "domain": {
+      "maps_from": "regulatory context or fixture metadata",
+      "unresolved": true
+    },
+    "risk_controls": {
+      "maps_from": "NEXUS risk manifest and AETHERUS gate mapping",
+      "unresolved": true
+    },
+    "metadata": {
+      "maps_from": "adapter_input_stub plus Track 3 boundary flags",
+      "unresolved": false
+    }
+  },
+  "nexus_result_stub": {
+    "status": "future_result_shape_only",
+    "alpha": {
+      "expected_shape": "alpha_result_dict",
+      "currently_produced_by_this_repository": false
+    },
+    "delta": {
+      "expected_shape": "delta_result_dict",
+      "currently_produced_by_this_repository": false
+    },
+    "omega": {
+      "expected_shape": "omega_result_dict",
+      "currently_produced_by_this_repository": false
+    },
+    "audit_log_reference": {
+      "expected_shape": "bounded_jsonl_reference",
+      "currently_produced_by_this_repository": false,
+      "boundary": "May reference local NEXUS JSONL output in a future local adapter. Must not be represented as persistent ledger evidence."
+    },
+    "raw_result_boundary": {
+      "not_public_runtime": true,
+      "not_persistent": true,
+      "not_production_ledger": true,
+      "not_operational_evidence": true
+    }
+  },
+  "normalized_interface_result_stub": {
+    "status": "normalization_shape_only",
+    "normalized_verdict": {
+      "maps_from": "nexus_result_stub.omega.decision plus delta status",
+      "allowed_current_values": [
+        "pass",
+        "fail",
+        "escalate"
+      ],
+      "mismatch_boundary": "Unknown NEXUS decisions must not be silently mapped to release eligibility."
+    },
+    "normalized_gate_results": {
+      "maps_from": "delta risk gate and ARB reason code",
+      "required": true
+    },
+    "normalized_release_eligibility": {
+      "maps_from": "omega decision plus gate results",
+      "required": true,
+      "boundary": "Release eligibility remains local adapter output unless operational evidence exists."
+    },
+    "normalized_evidence_requirements": {
+      "maps_from": "AETHERUS evidence requirements plus NEXUS output gaps",
+      "required": true
+    },
+    "normalized_decision_explanation": {
+      "maps_from": "Omega reasoning plus adapter mapping rationale",
+      "required": true
+    },
+    "normalized_trace_event": {
+      "maps_from": "adapter-local event generation",
+      "trace_status": "local_adapter_stub_not_persistent_not_ledger",
+      "boundary": "Not an AETHERUS ledger event and not public operational behavior."
+    },
+    "claim_boundary": {
+      "not_integrated": true,
+      "not_backend": true,
+      "not_authenticated": true,
+      "not_persistent": true,
+      "not_ledger": true,
+      "not_model_executing": true,
+      "not_public_runtime": true
+    }
+  },
+  "mismatch_policy": {
+    "unknown_nexus_verdict": {
+      "adapter_behavior": "fail_closed_to_escalate_for_local_stub",
+      "required_output": "mismatch note and no release eligibility claim"
+    },
+    "unknown_risk_level": {
+      "adapter_behavior": "mark gate result unresolved",
+      "required_output": "evidence requirement for risk-classification mapping"
+    },
+    "missing_omega_decision": {
+      "adapter_behavior": "return adapter failure result",
+      "required_output": "no release eligibility and explicit execution-surface mismatch"
+    },
+    "audit_log_present_but_not_ledger_valid": {
+      "adapter_behavior": "preserve as bounded audit-log reference",
+      "required_output": "not_production_ledger boundary"
+    },
+    "missing_regulatory_context": {
+      "adapter_behavior": "reject adapter input fixture",
+      "required_output": "missing context evidence requirement"
+    },
+    "missing_manifest_mapping": {
+      "adapter_behavior": "reject adapter input fixture",
+      "required_output": "manifest mapping evidence requirement"
+    },
+    "unsupported_scenario_domain": {
+      "adapter_behavior": "return unsupported-domain mismatch",
+      "required_output": "no NEXUS execution claim"
+    },
+    "non_deterministic_output": {
+      "adapter_behavior": "fail validation",
+      "required_output": "determinism failure and no release eligibility claim"
+    },
+    "nexus_execution_failure": {
+      "adapter_behavior": "return adapter execution failure in local-only report",
+      "required_output": "no public capability claim"
+    }
+  },
+  "forbidden_claims": [
+    "site runs NEXUS",
+    "NEXUS integrated into live site",
+    "persistent NEXUS ledger",
+    "live governance kernel",
+    "NEXUS powers public interface",
+    "production runtime",
+    "compliance certification"
+  ]
+}
