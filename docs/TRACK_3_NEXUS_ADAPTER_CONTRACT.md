@@ -119,6 +119,10 @@ If repeated local adapter runs over the same input produce mismatched normalized
 
 If a future local adapter run fails during NEXUS execution, the output must remain a local adapter failure report. It must not be represented as public operational behavior.
 
+### Malformed Alpha / Delta / Omega Shape
+
+If Alpha, Delta, or Omega result structures are missing or not object-shaped, the adapter must return an adapter failure result. It must not infer a verdict from malformed structures.
+
 ## Ledger Boundary
 
 NEXUS MVP includes JSONL audit-log output through `LEDGEROverlay`, but Track 3.7 verified that hash-chaining is not implemented.
@@ -186,3 +190,5 @@ Track 3.9 should remain:
 - not public site behavior
 
 Actual local import-adapter execution should require a separate authorization after mismatch tests are defined.
+
+Track 3.9 follow-up: see `docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md` for local-only mismatch fixtures and validation. Those tests preserve the same no-import and no-execution boundary.

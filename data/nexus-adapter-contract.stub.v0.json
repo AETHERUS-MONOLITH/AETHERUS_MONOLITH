@@ -224,6 +224,10 @@
     "nexus_execution_failure": {
       "adapter_behavior": "return adapter execution failure in local-only report",
       "required_output": "no public capability claim"
+    },
+    "malformed_alpha_delta_omega_shape": {
+      "adapter_behavior": "return adapter failure result",
+      "required_output": "no release eligibility and explicit malformed result explanation"
     }
   },
   "forbidden_claims": [

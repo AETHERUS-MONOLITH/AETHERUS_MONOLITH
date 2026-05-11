@@ -1,0 +1,479 @@
+{
+  "metadata": {
+    "name": "NEXUS adapter mismatch fixtures",
+    "version": "0.1.0",
+    "track_phase": "3.9",
+    "status": "local_only_contract_tests",
+    "source_contract": "data/nexus-adapter-contract.stub.v0.json",
+    "integration_status": "not_integrated",
+    "nexus_execution": false,
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "boundary": "Local-only mismatch fixtures. They simulate adapter failure modes without importing, executing, or integrating NEXUS."
+  },
+  "fixture_policy": {
+    "expected_behavior": "fail_closed",
+    "allowed_normalized_verdicts": [
+      "escalate"
+    ],
+    "release_eligibility_must_be": false,
+    "trace_boundary_must_include": [
+      "not_persistent",
+      "not_ledger"
+    ],
+    "claim_boundary": {
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    }
+  },
+  "fixtures": [
+    {
+      "fixture_id": "mismatch_unknown_nexus_verdict",
+      "mismatch_category": "unknown_nexus_verdict",
+      "input_stub": {
+        "scenario_id": "happy_path_valid_release",
+        "query": "Fixture query for unknown NEXUS verdict mapping.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "omega": {
+          "decision": "authorize_now",
+          "reasoning": "Simulated unknown decision value."
+        },
+        "delta": {
+          "status": "safe",
+          "risk_score": 0.1
+        }
+      },
+      "expected_adapter_behavior": {
+        "behavior": "fail_closed_to_escalate_for_local_stub",
+        "reason": "Unknown NEXUS verdict must not be mapped to release eligibility."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Unknown verdict mismatch is a local test artifact, not a ledger event."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_unknown_risk_level",
+      "mismatch_category": "unknown_risk_level",
+      "input_stub": {
+        "scenario_id": "critical_safety_freeze",
+        "query": "Fixture query for unknown risk level mapping.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "delta": {
+          "status": "safe",
+          "risk_level": "hypercritical",
+          "risk_score": 0.42
+        },
+        "omega": {
+          "decision": "release"
+        }
+      },
+      "expected_adapter_behavior": {
+        "behavior": "fail_closed_to_escalate_for_local_stub",
+        "reason": "Unknown risk level prevents trustworthy gate normalization."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Unknown risk mismatch is a local test artifact, not operational evidence."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_missing_omega_decision",
+      "mismatch_category": "missing_omega_decision",
+      "input_stub": {
+        "scenario_id": "adapter_failure_escalate",
+        "query": "Fixture query with Alpha and Delta but missing Omega decision.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": {
+          "status": "pending"
+        },
+        "delta": {
+          "status": "blocked",
+          "risk_score": 1
+        },
+        "omega": {}
+      },
+      "expected_adapter_behavior": {
+        "behavior": "return_adapter_failure_result",
+        "reason": "Missing Omega decision prevents verdict normalization."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Missing Omega mismatch is not public runtime behavior."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_audit_log_not_ledger_valid",
+      "mismatch_category": "audit_log_present_but_not_ledger_valid",
+      "input_stub": {
+        "scenario_id": "happy_path_valid_release",
+        "query": "Fixture query with JSONL audit-log reference.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "omega": {
+          "decision": "release"
+        },
+        "audit_log_reference": {
+          "format": "jsonl",
+          "hash_chaining": false,
+          "ledger_valid": false
+        }
+      },
+      "expected_adapter_behavior": {
+        "behavior": "preserve_as_bounded_audit_log_reference",
+        "reason": "JSONL audit-log output is not ledger-valid without hash-chain verification."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Audit-log reference must remain not ledger-valid."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_missing_regulatory_context",
+      "mismatch_category": "missing_regulatory_context",
+      "input_stub": {
+        "scenario_id": "missing_constraints_escalate",
+        "query": "Fixture query missing regulatory context.",
+        "regulatory_context": null,
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "adapter_input_error": "regulatory_context_missing"
+      },
+      "expected_adapter_behavior": {
+        "behavior": "reject_adapter_input_fixture",
+        "reason": "Adapter must not fabricate regulatory context."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Missing context mismatch is local validation output only."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_missing_manifest_mapping",
+      "mismatch_category": "missing_manifest_mapping",
+      "input_stub": {
+        "scenario_id": "happy_path_valid_release",
+        "query": "Fixture query with missing manifest mapping.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": null,
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "adapter_input_error": "manifest_mapping_missing"
+      },
+      "expected_adapter_behavior": {
+        "behavior": "reject_adapter_input_fixture",
+        "reason": "Adapter must not infer a missing manifest mapping."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Missing manifest mismatch is local validation output only."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_unsupported_scenario_domain",
+      "mismatch_category": "unsupported_scenario_domain",
+      "input_stub": {
+        "scenario_id": "idempotency_cache_hit",
+        "query": "Fixture query outside the NEXUS MVP FinTech model.",
+        "regulatory_context": {
+          "regulatory_framework": "UNKNOWN",
+          "jurisdiction": "US"
+        },
+        "domain": "non_fintech_symbolic_governance"
+      },
+      "simulated_nexus_like_result": {
+        "adapter_input_error": "unsupported_domain"
+      },
+      "expected_adapter_behavior": {
+        "behavior": "return_unsupported_domain_mismatch",
+        "reason": "Adapter must not coerce an unsupported domain into a known NEXUS risk class."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Unsupported domain mismatch is not NEXUS execution."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_nondeterministic_output_detected",
+      "mismatch_category": "non_deterministic_output",
+      "input_stub": {
+        "scenario_id": "happy_path_valid_release",
+        "query": "Fixture query with repeated result divergence.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "repeat_results": [
+          {
+            "omega": {
+              "decision": "release"
+            },
+            "delta": {
+              "status": "safe",
+              "risk_score": 0.1
+            }
+          },
+          {
+            "omega": {
+              "decision": "escalate"
+            },
+            "delta": {
+              "status": "blocked",
+              "risk_score": 1
+            }
+          }
+        ]
+      },
+      "expected_adapter_behavior": {
+        "behavior": "fail_validation",
+        "reason": "Decision-relevant fields diverge across repeated simulated results."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Nondeterminism mismatch cannot be normalized as stable release."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_nexus_execution_failure",
+      "mismatch_category": "nexus_execution_failure",
+      "input_stub": {
+        "scenario_id": "adapter_failure_escalate",
+        "query": "Fixture query with simulated execution error object.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "success": false,
+        "error": "simulated_local_adapter_error"
+      },
+      "expected_adapter_behavior": {
+        "behavior": "return_adapter_execution_failure_in_local_only_report",
+        "reason": "Execution failure must not produce release eligibility."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Execution failure fixture is simulated and not public operational behavior."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    },
+    {
+      "fixture_id": "mismatch_malformed_alpha_delta_omega_shape",
+      "mismatch_category": "malformed_alpha_delta_omega_shape",
+      "input_stub": {
+        "scenario_id": "adapter_failure_escalate",
+        "query": "Fixture query with malformed Alpha Delta Omega shape.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": "not_an_object",
+        "delta": null,
+        "omega": []
+      },
+      "expected_adapter_behavior": {
+        "behavior": "return_adapter_failure_result",
+        "reason": "Malformed Alpha Delta Omega shapes cannot be normalized safely."
+      },
+      "expected_normalized_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_trace_boundary": {
+        "trace_status": "local_adapter_mismatch_not_persistent_not_ledger",
+        "reason": "Malformed shape mismatch is local validation output only."
+      },
+      "expected_claim_boundary": {
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false
+    }
+  ]
+}
