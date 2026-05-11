@@ -13,19 +13,22 @@ const dataFiles = [
   'data/joint-workflow.manifest.json',
   'data/interface-contract.v0.json',
   'data/interface-fixture.example.v0.json',
-  'data/interface-fixtures.v0.json'
+  'data/interface-fixtures.v0.json',
+  'data/nexus-adapter-readiness.v0.json'
 ];
 
 const track3TextFiles = [
   'data/interface-contract.v0.json',
   'data/interface-fixture.example.v0.json',
   'data/interface-fixtures.v0.json',
+  'data/nexus-adapter-readiness.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
   'docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md',
   'docs/TRACK_3_FIXTURE_SUITE.md',
-  'docs/TRACK_3_CONTRACT_INVARIANTS.md'
+  'docs/TRACK_3_CONTRACT_INVARIANTS.md',
+  'docs/TRACK_3_NEXUS_MVP_VERIFICATION.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -384,6 +387,67 @@ function validateManifestAlignment(contract, fixture, fixtureFile = 'data/interf
   });
 }
 
+function validateNexusAdapterReadiness(readiness) {
+  const file = 'data/nexus-adapter-readiness.v0.json';
+  requirePath(readiness, ['metadata'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['inspected_repository'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['readiness_level'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['execution_surface'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['input_contract_status'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['output_contract_status'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['test_status'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['ledger_boundary_status'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['recommended_adapter_strategy'], file, 'NEXUS adapter readiness');
+  requirePath(readiness, ['claim_boundaries'], file, 'NEXUS adapter readiness');
+
+  const allowedReadinessLevels = new Set([
+    'not_ready',
+    'documentation_only',
+    'fixture_exchange_ready',
+    'cli_wrapper_ready',
+    'import_adapter_ready',
+    'service_adapter_ready'
+  ]);
+  if (!allowedReadinessLevels.has(readiness.readiness_level)) {
+    addFailure(file, 'NEXUS adapter readiness', `readiness_level uses unapproved value "${readiness.readiness_level}"`);
+  }
+
+  const integrationStatus = readiness.metadata && readiness.metadata.integration_status;
+  if (integrationStatus !== 'not_integrated') {
+    addFailure(file, 'NEXUS adapter readiness', `metadata.integration_status must be "not_integrated", found "${integrationStatus}"`);
+  }
+  const claimBoundaryStatus = readiness.metadata && readiness.metadata.claim_boundary_status;
+  if (claimBoundaryStatus !== 'bounded') {
+    addFailure(file, 'NEXUS adapter readiness', `metadata.claim_boundary_status must be "bounded", found "${claimBoundaryStatus}"`);
+  }
+
+  const strategy = readiness.recommended_adapter_strategy || {};
+  [
+    'public_site_wiring',
+    'backend_required_now',
+    'auth_required_now',
+    'persistence_required_now',
+    'model_calls_allowed_now'
+  ].forEach(flag => {
+    if (strategy[flag] !== false) {
+      addFailure(file, 'NEXUS adapter readiness', `recommended_adapter_strategy.${flag} must be false`);
+    }
+  });
+
+  const ledgerBoundary = readiness.ledger_boundary_status || {};
+  if (ledgerBoundary.aetherus_ledger_claim_allowed !== false) {
+    addFailure(file, 'NEXUS adapter readiness', 'ledger_boundary_status.aetherus_ledger_claim_allowed must be false');
+  }
+  if (ledgerBoundary.hash_chaining_verified !== false) {
+    addFailure(file, 'NEXUS adapter readiness', 'ledger_boundary_status.hash_chaining_verified must be false unless separately verified');
+  }
+
+  const text = JSON.stringify(readiness).toLowerCase();
+  if (text.includes('integrated into the live site') && !text.includes('not_integrated')) {
+    addFailure(file, 'NEXUS adapter readiness', 'Live-site integration language must remain explicitly bounded');
+  }
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -457,6 +521,7 @@ const manifest = parseJson('data/joint-workflow.manifest.json');
 const contract = parseJson('data/interface-contract.v0.json');
 const fixture = parseJson('data/interface-fixture.example.v0.json');
 const fixtureSuite = parseJson('data/interface-fixtures.v0.json');
+const nexusReadiness = parseJson('data/nexus-adapter-readiness.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -480,6 +545,7 @@ if (fixtureSuite) {
 if (fixtureSuite && scenarios) validateFixtureSuite(fixtureSuite, scenarios);
 if (contract && fixture && manifest) validateManifestAlignment(contract, fixture);
 if (contract && fixtureSuite && manifest) validateManifestAlignment(contract, fixtureSuite, 'data/interface-fixtures.v0.json');
+if (nexusReadiness) validateNexusAdapterReadiness(nexusReadiness);
 
 track3TextFiles.forEach(validateOperationalClaimScan);
 

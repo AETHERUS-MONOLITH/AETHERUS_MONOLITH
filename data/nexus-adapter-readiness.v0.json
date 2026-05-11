@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "name": "NEXUS MVP adapter readiness summary",
+    "version": "0.1.0",
+    "track_phase": "3.7",
+    "created_for": "AETHERUS_MONOLITH Interface Layer contract planning",
+    "summary_status": "verification_only",
+    "integration_status": "not_integrated",
+    "claim_boundary_status": "bounded"
+  },
+  "inspected_repository": {
+    "name": "AETHERUS-MONOLITH/nexus-mvp",
+    "local_path": "/Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp",
+    "inspected_ref": "origin/main",
+    "inspected_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "local_worktree_branch_at_inspection": "codex/add-license-contributing-security",
+    "local_worktree_modified": false
+  },
+  "aetherus_repository": {
+    "name": "AETHERUS-MONOLITH/AETHERUS_MONOLITH",
+    "branch": "main",
+    "baseline_commit_before_verification": "e727bd6f2d9acbe8de5edafeea59dbd1e4578299"
+  },
+  "readiness_level": "import_adapter_ready",
+  "execution_surface": {
+    "python_imports": {
+      "status": "verified",
+      "surfaces": [
+        "src.operators.alpha.alpha_operator",
+        "src.operators.delta.delta_operator",
+        "src.operators.omega.OmegaOperator",
+        "src.overlays.arb.ARBOverlay",
+        "src.overlays.ledger.LEDGEROverlay"
+      ]
+    },
+    "cli": {
+      "status": "verified",
+      "entry_point": "demo_runner.py",
+      "recommended_adapter_use": "smoke_test_only"
+    },
+    "http_service": {
+      "status": "not_currently_implemented"
+    }
+  },
+  "input_contract_status": {
+    "native_input_shape": "query string plus regulatory context dictionary",
+    "required_adapter_mapping": [
+      "AETHERUS scenario to query/context",
+      "AETHERUS manifest reference to NEXUS risk manifest reference",
+      "AETHERUS gate vocabulary to NEXUS risk and ARB outcomes"
+    ],
+    "not_native_inputs": [
+      "AETHERUS Scenario object",
+      "Joint-Workflow JobTicket",
+      "Joint-Workflow constraints_packet",
+      "AETHERUS TraceEvent"
+    ]
+  },
+  "output_contract_status": {
+    "native_outputs": [
+      "Alpha Cell dictionary",
+      "Delta-mutated Cell dictionary",
+      "Omega decision dictionary",
+      "JSONL audit-log entry when Omega runs"
+    ],
+    "requires_normalization": [
+      "release to AETHERUS pass or release eligibility",
+      "blocked cell status to AETHERUS gate or state result",
+      "ARB reason code to normalized gate result",
+      "JSONL audit-log entry to bounded local trace-event reference"
+    ]
+  },
+  "test_status": {
+    "pytest": {
+      "command": "python3 -m pytest tests/ -v --tb=short",
+      "result": "pass",
+      "summary": "97 passed in 0.26s"
+    },
+    "determinism": {
+      "command": "python3 scripts/prove_determinism.py",
+      "result": "pass",
+      "summary": "stable decision fields matched across 3 runs"
+    },
+    "demo_runner": {
+      "command": "python3 demo_runner.py \"Approve a mortgage for a protected class applicant\" --mode nexus --no-color",
+      "result": "pass",
+      "summary": "deterministic fallback intake, fair_lending_check risk classification, Omega escalate decision"
+    }
+  },
+  "ledger_boundary_status": {
+    "nexus_output_type": "append_only_jsonl_audit_log",
+    "hash_chaining_verified": false,
+    "aetherus_ledger_claim_allowed": false,
+    "boundary": "Not a persistent AETHERUS ledger and not a production ledger. NEXUS documentation states hash-chaining is not implemented."
+  },
+  "recommended_adapter_strategy": {
+    "strategy": "local_python_import_adapter_prototype",
+    "next_pass": "Track 3.8 adapter contract stub",
+    "public_site_wiring": false,
+    "backend_required_now": false,
+    "auth_required_now": false,
+    "persistence_required_now": false,
+    "model_calls_allowed_now": false
+  },
+  "claim_boundaries": {
+    "allowed_after_this_pass": [
+      "NEXUS MVP verified as external candidate for future adapter.",
+      "Adapter-readiness assessment completed.",
+      "Future NEXUS adapter boundary documented."
+    ],
+    "forbidden_current_claims": [
+      "AETHERUS_MONOLITH runs NEXUS.",
+      "NEXUS is integrated into the live site.",
+      "NEXUS decisions power the public interface.",
+      "persistent NEXUS ledger",
+      "live governance kernel",
+      "production runtime"
+    ],
+    "integration_status": "not_integrated",
+    "claim_boundary_status": "bounded"
+  }
+}
