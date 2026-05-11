@@ -195,3 +195,5 @@ Forbidden after Track 3.12:
 Recommended default: Track 3.13 dependency/environment preflight script.
 
 A local NEXUS import adapter prototype should require separate explicit authorization. The conservative next gate is to verify local dependency and environment conditions without importing or executing NEXUS.
+
+Track 3.13 environment preflight: see `docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md`.

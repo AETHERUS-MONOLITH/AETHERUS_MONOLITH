@@ -41,11 +41,17 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md',
   'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md',
   'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md',
-  'docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md'
+  'docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md',
+  'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md'
 ];
 
 const requiredScriptFiles = [
-  'scripts/validate-nexus-adapter-normalizer-suite.mjs'
+  'scripts/validate-nexus-adapter-normalizer-suite.mjs',
+  'scripts/check-nexus-import-environment.mjs'
+];
+
+const requiredDocFiles = [
+  'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -906,6 +912,47 @@ function validateNexusImportAdapterPreflight(preflight) {
   });
 }
 
+function validateNexusImportEnvironmentPreflightScript() {
+  const file = 'scripts/check-nexus-import-environment.mjs';
+  if (!existsSync(path.join(repoRoot, file))) {
+    addFailure(file, 'NEXUS import environment preflight', 'Environment preflight script is missing');
+    return;
+  }
+
+  const text = readText(file);
+  const prohibitedInvocationPatterns = [
+    { label: 'pytest invocation', pattern: /(?:spawnSync|runCommand)\s*\([^)]*['"]pytest['"]/i },
+    { label: 'demo_runner.py invocation', pattern: /(?:spawnSync|runCommand)\s*\([^)]*demo_runner\.py/i },
+    { label: 'prove_determinism.py invocation', pattern: /(?:spawnSync|runCommand)\s*\([^)]*prove_determinism\.py/i },
+    { label: 'pip install invocation', pattern: /(?:spawnSync|runCommand)\s*\([^)]*['"]pip(?:3)?['"][^)]*install/i },
+    { label: 'npm install invocation', pattern: /(?:spawnSync|runCommand)\s*\([^)]*['"]npm['"][^)]*install/i },
+    { label: 'python import execution', pattern: /(?:spawnSync|runCommand)\s*\([^)]*['"]python3?['"][^)]*['"]-c['"][^)]*import/i }
+  ];
+
+  prohibitedInvocationPatterns.forEach(({ label, pattern }) => {
+    if (pattern.test(text)) {
+      addFailure(file, 'NEXUS import environment preflight', `Script contains prohibited ${label}`);
+    }
+  });
+
+  [
+    'integration_status',
+    'nexus_execution',
+    'python_execution',
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database'
+  ].forEach(flag => {
+    if (!text.includes(flag)) {
+      addFailure(file, 'NEXUS import environment preflight', `Script must include boundary flag ${flag}`);
+    }
+  });
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -947,6 +994,14 @@ function validateRequiredScriptFiles() {
   requiredScriptFiles.forEach(file => {
     if (!existsSync(path.join(repoRoot, file))) {
       addFailure(file, 'Required script', 'Required Track 3 validation script is missing');
+    }
+  });
+}
+
+function validateRequiredDocFiles() {
+  requiredDocFiles.forEach(file => {
+    if (!existsSync(path.join(repoRoot, file))) {
+      addFailure(file, 'Required documentation', 'Required Track 3 documentation file is missing');
     }
   });
 }
@@ -1020,7 +1075,9 @@ if (nexusAdapterStub) validateNexusAdapterContractStub(nexusAdapterStub);
 if (nexusMismatchFixtures && nexusAdapterStub) validateNexusAdapterMismatchFixtures(nexusMismatchFixtures, nexusAdapterStub);
 if (nexusNormalizationFixtures) validateNexusAdapterNormalizationFixtures(nexusNormalizationFixtures);
 if (nexusImportPreflight) validateNexusImportAdapterPreflight(nexusImportPreflight);
+validateNexusImportEnvironmentPreflightScript();
 validateRequiredScriptFiles();
+validateRequiredDocFiles();
 
 track3TextFiles.forEach(validateOperationalClaimScan);
 
