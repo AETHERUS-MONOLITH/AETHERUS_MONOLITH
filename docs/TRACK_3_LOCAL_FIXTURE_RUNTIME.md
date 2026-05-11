@@ -16,6 +16,12 @@ Run from the repository root:
 node scripts/run-track3-local-fixture.mjs
 ```
 
+To run the expanded local fixture suite:
+
+```sh
+node scripts/run-track3-local-fixture.mjs --suite
+```
+
 The script uses only built-in Node modules. It does not require a package manager, framework, server, or build step.
 
 ## Inputs
@@ -24,6 +30,7 @@ The dry-run scaffold reads:
 
 - `data/interface-contract.v0.json`
 - `data/interface-fixture.example.v0.json`
+- `data/interface-fixtures.v0.json` when `--suite` is used
 - `data/scenarios.json`
 - `data/joint-workflow.manifest.json`
 
@@ -37,6 +44,12 @@ The script prints a compact stdout summary and writes the full local report to:
 
 ```text
 .track3-runs/latest-local-fixture-report.json
+```
+
+Suite mode writes:
+
+```text
+.track3-runs/latest-local-fixture-suite-report.json
 ```
 
 The `.track3-runs/` directory is ignored by git and should not be committed.

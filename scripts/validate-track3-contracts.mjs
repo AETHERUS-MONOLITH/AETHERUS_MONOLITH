@@ -12,14 +12,19 @@ const dataFiles = [
   'data/scenarios.json',
   'data/joint-workflow.manifest.json',
   'data/interface-contract.v0.json',
-  'data/interface-fixture.example.v0.json'
+  'data/interface-fixture.example.v0.json',
+  'data/interface-fixtures.v0.json'
 ];
 
 const track3TextFiles = [
   'data/interface-contract.v0.json',
   'data/interface-fixture.example.v0.json',
+  'data/interface-fixtures.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
-  'docs/TRACK_3_SCHEMA_ALIGNMENT.md'
+  'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
+  'docs/TRACK_3_VALIDATION_HARNESS.md',
+  'docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md',
+  'docs/TRACK_3_FIXTURE_SUITE.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -168,8 +173,9 @@ function validateContractShape(contract) {
   });
 }
 
-function validateFixtureAlignment(fixture, scenarios) {
-  const file = 'data/interface-fixture.example.v0.json';
+function validateFixtureAlignment(fixture, scenarios, options = {}) {
+  const file = options.file || 'data/interface-fixture.example.v0.json';
+  const label = options.label || 'fixture';
   requirePath(fixture, ['metadata'], file, 'Fixture alignment');
   const scenario = requirePath(fixture, ['scenario'], file, 'Fixture alignment');
   if (!scenario) return;
@@ -189,16 +195,16 @@ function validateFixtureAlignment(fixture, scenarios) {
   }
 
   const scenarioIds = new Set((scenarios.scenarios || []).map(item => item.id));
-  if (scenario.id !== 'happy_path_valid_release') {
+  if (options.expectedScenarioId && scenario.id !== options.expectedScenarioId) {
     addFailure(file, 'Scenario derivation', `Expected fixture scenario id "happy_path_valid_release", found "${scenario.id}"`);
   }
   if (!scenarioIds.has(scenario.id)) {
-    addFailure(file, 'Scenario derivation', `Fixture references missing scenario id "${scenario.id}"`);
+    addFailure(file, 'Scenario derivation', `${label} references missing scenario id "${scenario.id}"`);
   }
 
   const sourceScenario = fixture.metadata && fixture.metadata.source_scenario;
-  if (sourceScenario && !sourceScenario.includes('happy_path_valid_release')) {
-    addFailure(file, 'Scenario derivation', `metadata.source_scenario does not reference happy_path_valid_release: ${sourceScenario}`);
+  if (sourceScenario && !sourceScenario.includes(scenario.id)) {
+    addFailure(file, 'Scenario derivation', `${label} metadata.source_scenario does not reference ${scenario.id}: ${sourceScenario}`);
   }
 
   const traceEvents = scenario.trace_events;
@@ -214,6 +220,50 @@ function validateFixtureAlignment(fixture, scenarios) {
   if (!traceBoundary.includes('not persistent') && !traceBoundary.includes('not a persistent ledger')) {
     addFailure(file, 'Fixture alignment', 'trace_events must state they are not persistent ledger records');
   }
+}
+
+function validateFixtureSuite(suite, scenarios) {
+  const file = 'data/interface-fixtures.v0.json';
+  requirePath(suite, ['metadata'], file, 'Fixture suite');
+  requirePath(suite, ['fixture_policy'], file, 'Fixture suite');
+  const fixtures = requirePath(suite, ['fixtures'], file, 'Fixture suite');
+
+  if (!Array.isArray(fixtures) || !fixtures.length) {
+    addFailure(file, 'Fixture suite', 'fixtures must be a non-empty array');
+    return;
+  }
+
+  const scenarioIds = new Set((scenarios.scenarios || []).map(item => item.id));
+  const fixtureIds = new Set();
+
+  fixtures.forEach((fixture, index) => {
+    const scenarioId = fixture && fixture.scenario && fixture.scenario.id;
+    if (scenarioId) fixtureIds.add(scenarioId);
+    validateFixtureAlignment(fixture, scenarios, {
+      file,
+      label: `fixtures[${index}]`
+    });
+
+    const text = JSON.stringify(fixture).toLowerCase();
+    [
+      ['backend', /not backend|no backend/],
+      ['persistence', /not persisted|not persistent|no persistence/],
+      ['ledger', /not ledger|not persistent ledger|not a persistent ledger|no ledger/],
+      ['NEXUS execution', /not nexus execution|no nexus|not_currently_implemented/],
+      ['model execution', /not model execution|not model-executing|no model/],
+      ['public operational behavior', /not public operational behavior|no public operational/]
+    ].forEach(([label, boundary]) => {
+      if (!boundary.test(text)) {
+        addFailure(file, 'Fixture suite boundaries', `Fixture ${scenarioId || index} does not clearly bound ${label}`);
+      }
+    });
+  });
+
+  scenarioIds.forEach(id => {
+    if (!fixtureIds.has(id)) {
+      addFailure(file, 'Fixture suite', `Missing suite fixture for scenario ${id}`);
+    }
+  });
 }
 
 function validateManifestAlignment(contract, fixture) {
@@ -305,6 +355,7 @@ const scenarios = parseJson('data/scenarios.json');
 const manifest = parseJson('data/joint-workflow.manifest.json');
 const contract = parseJson('data/interface-contract.v0.json');
 const fixture = parseJson('data/interface-fixture.example.v0.json');
+const fixtureSuite = parseJson('data/interface-fixtures.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -317,8 +368,17 @@ if (fixture) {
   validateMaturityLabels('data/interface-fixture.example.v0.json', fixture);
 }
 
-if (fixture && scenarios) validateFixtureAlignment(fixture, scenarios);
+if (fixture && scenarios) {
+  validateFixtureAlignment(fixture, scenarios, {
+    expectedScenarioId: 'happy_path_valid_release'
+  });
+}
+if (fixtureSuite) {
+  validateMaturityLabels('data/interface-fixtures.v0.json', fixtureSuite);
+}
+if (fixtureSuite && scenarios) validateFixtureSuite(fixtureSuite, scenarios);
 if (contract && fixture && manifest) validateManifestAlignment(contract, fixture);
+if (contract && fixtureSuite && manifest) validateManifestAlignment(contract, fixtureSuite);
 
 track3TextFiles.forEach(validateOperationalClaimScan);
 
