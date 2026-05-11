@@ -51,6 +51,28 @@
     "Run the environment preflight again after the AETHERUS working tree is clean.",
     "Receive explicit authorization before any local NEXUS import execution."
   ],
+  "post_commit_refresh": {
+    "track_phase": "3.16",
+    "aetherus_baseline": "c25d23b38a399ab00c933525e7996acbbf23be09",
+    "clean_source_path": "/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb",
+    "clean_source_head_or_source_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "environment_preflight_rerun": "passed",
+    "ready_for_import_adapter_authorization": true,
+    "import_adapter_authorized": false,
+    "nexus_execution": false,
+    "python_execution": false,
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "integration_status": "not_integrated",
+    "stop_conditions_triggered": [],
+    "claim_boundary_status": "bounded",
+    "authorization_note": "Readiness can be true while import-adapter authorization remains false. A future local NEXUS import-adapter prototype requires explicit user authorization."
+  },
   "claim_boundary": {
     "allowed_after_track_3_15": [
       "clean pinned NEXUS source path prepared",

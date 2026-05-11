@@ -100,6 +100,8 @@ If the clean pinned path is used again after the AETHERUS working tree is clean 
 
 If the preflight does not pass in a clean repository state, resolve the listed preconditions first.
 
+Track 3.16 post-commit readiness refresh: see `docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md`.
+
 ## Public Claim Boundary
 
 Allowed after this pass:

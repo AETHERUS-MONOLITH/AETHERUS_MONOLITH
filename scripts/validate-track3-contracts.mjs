@@ -48,7 +48,8 @@ const track3TextFiles = [
   'docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md',
   'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md',
   'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md',
-  'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md'
+  'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md',
+  'docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md'
 ];
 
 const requiredScriptFiles = [
@@ -59,7 +60,8 @@ const requiredScriptFiles = [
 const requiredDocFiles = [
   'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md',
   'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md',
-  'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md'
+  'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md',
+  'docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -1104,6 +1106,44 @@ function validateNexusPinnedSourcePreflight(preflight) {
   }
   if (envStatus.source_path_stop_condition_resolved !== true) {
     addFailure(file, 'NEXUS pinned source preflight', 'environment_preflight_status.source_path_stop_condition_resolved must be true');
+  }
+
+  const refresh = preflight.post_commit_refresh;
+  if (!isObject(refresh)) {
+    addFailure(file, 'NEXUS pinned source preflight', 'post_commit_refresh must be present');
+    return;
+  }
+  if (refresh.aetherus_baseline !== 'c25d23b38a399ab00c933525e7996acbbf23be09') {
+    addFailure(file, 'NEXUS pinned source preflight', 'post_commit_refresh.aetherus_baseline must match c25d23b38a399ab00c933525e7996acbbf23be09');
+  }
+  if (refresh.clean_source_head_or_source_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS pinned source preflight', 'post_commit_refresh.clean_source_head_or_source_commit must match the pinned NEXUS commit');
+  }
+  if (refresh.import_adapter_authorized !== false) {
+    addFailure(file, 'NEXUS pinned source preflight', 'post_commit_refresh.import_adapter_authorized must be false');
+  }
+  if (refresh.integration_status !== 'not_integrated') {
+    addFailure(file, 'NEXUS pinned source preflight', 'post_commit_refresh.integration_status must be not_integrated');
+  }
+
+  [
+    'nexus_execution',
+    'python_execution',
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database'
+  ].forEach(flag => {
+    if (refresh[flag] !== false) {
+      addFailure(file, 'NEXUS pinned source preflight', `post_commit_refresh.${flag} must be false`);
+    }
+  });
+
+  if (refresh.claim_boundary_status !== 'bounded') {
+    addFailure(file, 'NEXUS pinned source preflight', 'post_commit_refresh.claim_boundary_status must be bounded');
   }
 }
 
