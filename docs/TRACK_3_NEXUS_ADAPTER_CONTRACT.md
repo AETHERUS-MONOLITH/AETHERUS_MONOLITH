@@ -179,6 +179,8 @@ Recommended next pass: Track 3.9 adapter mismatch tests.
 
 This is safer than immediately executing NEXUS because it can validate mapping behavior, unsupported domains, missing context, missing manifest mapping, and verdict vocabulary boundaries without importing NEXUS code.
 
+Later preflight gate before import execution: see `docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md`.
+
 Track 3.9 should remain:
 
 - local-only

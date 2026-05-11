@@ -17,7 +17,8 @@ const dataFiles = [
   'data/nexus-adapter-readiness.v0.json',
   'data/nexus-adapter-contract.stub.v0.json',
   'data/nexus-adapter-mismatch-fixtures.v0.json',
-  'data/nexus-adapter-normalization-fixtures.v0.json'
+  'data/nexus-adapter-normalization-fixtures.v0.json',
+  'data/nexus-import-adapter-preflight.v0.json'
 ];
 
 const track3TextFiles = [
@@ -28,6 +29,7 @@ const track3TextFiles = [
   'data/nexus-adapter-contract.stub.v0.json',
   'data/nexus-adapter-mismatch-fixtures.v0.json',
   'data/nexus-adapter-normalization-fixtures.v0.json',
+  'data/nexus-import-adapter-preflight.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -38,7 +40,8 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md',
   'docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md',
   'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md',
-  'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md'
+  'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md',
+  'docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md'
 ];
 
 const requiredScriptFiles = [
@@ -772,6 +775,137 @@ function validateNexusAdapterNormalizationFixtures(suite) {
   });
 }
 
+function validateNexusImportAdapterPreflight(preflight) {
+  const file = 'data/nexus-import-adapter-preflight.v0.json';
+  requirePath(preflight, ['metadata'], file, 'NEXUS import adapter preflight');
+  requirePath(preflight, ['reference_commits'], file, 'NEXUS import adapter preflight');
+  requirePath(preflight, ['required_conditions'], file, 'NEXUS import adapter preflight');
+  requirePath(preflight, ['future_adapter_scope'], file, 'NEXUS import adapter preflight');
+  requirePath(preflight, ['stop_conditions'], file, 'NEXUS import adapter preflight');
+  requirePath(preflight, ['required_future_report_fields'], file, 'NEXUS import adapter preflight');
+  requirePath(preflight, ['claim_boundary'], file, 'NEXUS import adapter preflight');
+
+  const metadata = preflight.metadata || {};
+  if (metadata.status !== 'preflight_only') {
+    addFailure(file, 'NEXUS import adapter preflight', `metadata.status must be preflight_only, found "${metadata.status}"`);
+  }
+  if (metadata.integration_status !== 'not_integrated') {
+    addFailure(file, 'NEXUS import adapter preflight', `metadata.integration_status must be not_integrated, found "${metadata.integration_status}"`);
+  }
+
+  [
+    'nexus_execution',
+    'python_execution',
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, 'NEXUS import adapter preflight', `metadata.${flag} must be false`);
+    }
+  });
+
+  const referenceCommits = preflight.reference_commits || {};
+  if (referenceCommits.aetherus_baseline !== '3bab5579813fb9f18ac73288fc05c84c9802c9c8') {
+    addFailure(file, 'NEXUS import adapter preflight', 'reference_commits.aetherus_baseline must match 3bab5579813fb9f18ac73288fc05c84c9802c9c8');
+  }
+  if (referenceCommits.nexus_reference_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS import adapter preflight', 'reference_commits.nexus_reference_commit must match ab95cbbd24df5817c4e363d24b3b199ac8af6c6f');
+  }
+
+  const requiredConditions = preflight.required_conditions || {};
+  [
+    'repository',
+    'dependency',
+    'execution',
+    'adapter_contract',
+    'boundary',
+    'security',
+    'rollback'
+  ].forEach(key => {
+    if (!Array.isArray(requiredConditions[key]) || !requiredConditions[key].length) {
+      addFailure(file, 'NEXUS import adapter preflight', `required_conditions.${key} must be a non-empty array`);
+    }
+  });
+
+  const scope = preflight.future_adapter_scope || {};
+  if (!Array.isArray(scope.allowed_if_authorized) || !scope.allowed_if_authorized.length) {
+    addFailure(file, 'NEXUS import adapter preflight', 'future_adapter_scope.allowed_if_authorized must be a non-empty array');
+  }
+  if (!Array.isArray(scope.forbidden_without_separate_authorization) || !scope.forbidden_without_separate_authorization.length) {
+    addFailure(file, 'NEXUS import adapter preflight', 'future_adapter_scope.forbidden_without_separate_authorization must be a non-empty array');
+  }
+
+  const stopText = Array.isArray(preflight.stop_conditions)
+    ? preflight.stop_conditions.join(' ').toLowerCase()
+    : '';
+  [
+    ['NEXUS commit mismatch', /nexus commit mismatch/],
+    ['nondeterministic output', /nondeterministic/],
+    ['missing Omega decision', /missing omega decision/],
+    ['JSONL audit treated as ledger', /jsonl audit.*ledger/],
+    ['release eligibility true after fail/escalate', /release eligibility true after fail\/escalate/],
+    ['public claim escalation', /public claim escalation/]
+  ].forEach(([label, pattern]) => {
+    if (!pattern.test(stopText)) {
+      addFailure(file, 'NEXUS import adapter preflight', `stop_conditions must include ${label}`);
+    }
+  });
+
+  const reportFields = new Set(preflight.required_future_report_fields || []);
+  [
+    'meta.track_phase',
+    'meta.run_mode',
+    'meta.integration_status',
+    'meta.nexus_execution',
+    'meta.public_runtime',
+    'meta.persistence',
+    'meta.ledger',
+    'meta.model_execution',
+    'meta.backend',
+    'source.aetherus_commit',
+    'source.nexus_commit',
+    'source.adapter_contract_file',
+    'source.fixture_id',
+    'adapter_input',
+    'nexus_invocation_boundary',
+    'raw_nexus_result_boundary',
+    'normalized_interface_result',
+    'release_eligibility',
+    'trace_boundary',
+    'claim_boundary',
+    'failure_mode'
+  ].forEach(field => {
+    if (!reportFields.has(field)) {
+      addFailure(file, 'NEXUS import adapter preflight', `required_future_report_fields missing ${field}`);
+    }
+  });
+
+  const claimBoundary = preflight.claim_boundary || {};
+  if (!Array.isArray(claimBoundary.allowed_after_track_3_12) || !claimBoundary.allowed_after_track_3_12.length) {
+    addFailure(file, 'NEXUS import adapter preflight', 'claim_boundary.allowed_after_track_3_12 must be a non-empty array');
+  }
+  const forbidden = Array.isArray(claimBoundary.forbidden_after_track_3_12)
+    ? claimBoundary.forbidden_after_track_3_12.join(' ').toLowerCase()
+    : '';
+  [
+    'aetherus_monolith runs nexus',
+    'nexus powers the public interface',
+    'nexus-integrated system',
+    'live governance kernel',
+    'persistent nexus ledger',
+    'production runtime'
+  ].forEach(phrase => {
+    if (!forbidden.includes(phrase)) {
+      addFailure(file, 'NEXUS import adapter preflight', `claim_boundary.forbidden_after_track_3_12 missing "${phrase}"`);
+    }
+  });
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -857,6 +991,7 @@ const nexusReadiness = parseJson('data/nexus-adapter-readiness.v0.json');
 const nexusAdapterStub = parseJson('data/nexus-adapter-contract.stub.v0.json');
 const nexusMismatchFixtures = parseJson('data/nexus-adapter-mismatch-fixtures.v0.json');
 const nexusNormalizationFixtures = parseJson('data/nexus-adapter-normalization-fixtures.v0.json');
+const nexusImportPreflight = parseJson('data/nexus-import-adapter-preflight.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -884,6 +1019,7 @@ if (nexusReadiness) validateNexusAdapterReadiness(nexusReadiness);
 if (nexusAdapterStub) validateNexusAdapterContractStub(nexusAdapterStub);
 if (nexusMismatchFixtures && nexusAdapterStub) validateNexusAdapterMismatchFixtures(nexusMismatchFixtures, nexusAdapterStub);
 if (nexusNormalizationFixtures) validateNexusAdapterNormalizationFixtures(nexusNormalizationFixtures);
+if (nexusImportPreflight) validateNexusImportAdapterPreflight(nexusImportPreflight);
 validateRequiredScriptFiles();
 
 track3TextFiles.forEach(validateOperationalClaimScan);

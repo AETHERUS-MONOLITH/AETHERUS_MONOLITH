@@ -1,0 +1,157 @@
+{
+  "metadata": {
+    "name": "AETHERUS NEXUS Import Adapter Preflight",
+    "version": "0.1.0",
+    "track_phase": "3.12",
+    "status": "preflight_only",
+    "integration_status": "not_integrated",
+    "nexus_execution": false,
+    "python_execution": false,
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "boundary": "Preflight checklist only. This file does not authorize or perform NEXUS import, NEXUS execution, Python execution, public runtime wiring, persistence, ledger behavior, backend behavior, authentication, database use, or model execution."
+  },
+  "reference_commits": {
+    "aetherus_baseline": "3bab5579813fb9f18ac73288fc05c84c9802c9c8",
+    "nexus_reference_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f"
+  },
+  "required_conditions": {
+    "repository": [
+      "AETHERUS_MONOLITH working tree clean.",
+      "Accepted AETHERUS baseline explicitly named.",
+      "NEXUS MVP commit pinned.",
+      "NEXUS MVP working tree clean or archived source exact commit used.",
+      "No unverified NEXUS branch or local dirty state."
+    ],
+    "dependency": [
+      "Python version identified.",
+      "NEXUS requirements identified.",
+      "Dependency installation method documented.",
+      "No global dependency mutation without explicit authorization.",
+      "No hidden package installation.",
+      "No network dependency during validation unless explicitly approved."
+    ],
+    "execution": [
+      "Local-only execution.",
+      "No public UI wiring.",
+      "No backend.",
+      "No authentication.",
+      "No persistence.",
+      "No ledger behavior.",
+      "No model calls.",
+      "No API calls.",
+      "No live orchestration.",
+      "No production browser JavaScript changes."
+    ],
+    "adapter_contract": [
+      "Adapter input maps to NEXUS query string plus regulatory context dictionary.",
+      "NEXUS result maps back to normalized AETHERUS result.",
+      "Mismatch policy remains fail-closed.",
+      "Normalizer suite passes before and after adapter prototype.",
+      "Release eligibility coherence preserved."
+    ],
+    "boundary": [
+      "Public claim language remains bounded.",
+      "No live site claim of NEXUS integration.",
+      "No README marketing escalation.",
+      "No operational decision-making claim.",
+      "No ledger claim from JSONL audit logs."
+    ],
+    "security": [
+      "No secrets.",
+      "No API keys.",
+      "No user data.",
+      "No external calls.",
+      "No sensitive prompts.",
+      "No artifact leakage.",
+      "Generated outputs ignored.",
+      "Logs local only."
+    ],
+    "rollback": [
+      "Adapter prototype reversible.",
+      "Existing Track 3 validators not weakened.",
+      "Live behavior not modified.",
+      "Public files not wired to import adapter.",
+      "Failure leaves repository clean or clearly revertible."
+    ]
+  },
+  "future_adapter_scope": {
+    "allowed_if_authorized": [
+      "Create local-only script such as scripts/run-nexus-import-adapter-local.mjs.",
+      "Spawn Python subprocess or use documented local bridge only if explicitly authorized.",
+      "Call pinned NEXUS source locally.",
+      "Pass fixture-derived query/context to NEXUS.",
+      "Normalize NEXUS output through existing normalizer contract.",
+      "Write generated report to .track3-runs/.",
+      "Keep generated outputs ignored."
+    ],
+    "forbidden_without_separate_authorization": [
+      "Public UI wiring.",
+      "Backend route.",
+      "Deployed endpoint.",
+      "Authentication.",
+      "Database.",
+      "Persistence.",
+      "Ledger claim.",
+      "Model/API execution.",
+      "Production runtime claim."
+    ]
+  },
+  "stop_conditions": [
+    "NEXUS commit mismatch.",
+    "Test failures.",
+    "Nondeterministic decision-relevant output.",
+    "Unknown verdict or risk value.",
+    "Missing Omega decision.",
+    "Missing regulatory context.",
+    "Malformed Alpha/Delta/Omega shape.",
+    "JSONL audit output treated as ledger.",
+    "Release eligibility true after fail/escalate.",
+    "Public claim escalation.",
+    "Dependency/environment uncertainty.",
+    "Any need for backend/auth/persistence/model/API calls."
+  ],
+  "required_future_report_fields": [
+    "meta.track_phase",
+    "meta.run_mode",
+    "meta.integration_status",
+    "meta.nexus_execution",
+    "meta.public_runtime",
+    "meta.persistence",
+    "meta.ledger",
+    "meta.model_execution",
+    "meta.backend",
+    "source.aetherus_commit",
+    "source.nexus_commit",
+    "source.adapter_contract_file",
+    "source.fixture_id",
+    "adapter_input",
+    "nexus_invocation_boundary",
+    "raw_nexus_result_boundary",
+    "normalized_interface_result",
+    "release_eligibility",
+    "trace_boundary",
+    "claim_boundary",
+    "failure_mode"
+  ],
+  "claim_boundary": {
+    "allowed_after_track_3_12": [
+      "import-adapter preflight checklist documented",
+      "local NEXUS import prerequisites defined",
+      "NEXUS remains external and not integrated"
+    ],
+    "forbidden_after_track_3_12": [
+      "AETHERUS_MONOLITH runs NEXUS",
+      "NEXUS powers the public interface",
+      "NEXUS-integrated system",
+      "live governance kernel",
+      "persistent NEXUS ledger",
+      "production runtime"
+    ]
+  }
+}

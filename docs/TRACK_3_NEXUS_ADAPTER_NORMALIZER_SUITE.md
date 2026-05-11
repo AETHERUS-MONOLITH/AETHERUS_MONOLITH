@@ -67,3 +67,5 @@ Forbidden after this pass:
 Recommended next pass: Track 3.12 import-adapter preflight checklist, still without NEXUS import.
 
 The safest default is a preflight checklist before real import execution. A local import adapter prototype should require separate explicit authorization.
+
+Track 3.12 preflight gate: see `docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md`.
