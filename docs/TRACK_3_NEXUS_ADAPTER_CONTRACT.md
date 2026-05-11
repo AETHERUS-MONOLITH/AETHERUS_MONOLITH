@@ -192,3 +192,5 @@ Track 3.9 should remain:
 Actual local import-adapter execution should require a separate authorization after mismatch tests are defined.
 
 Track 3.9 follow-up: see `docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md` for local-only mismatch fixtures and validation. Those tests preserve the same no-import and no-execution boundary.
+
+Track 3.10 follow-up: see `docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md` for the local-only normalizer stub over simulated NEXUS-like objects. It preserves the same no-import, no-Python, and no-execution boundary.

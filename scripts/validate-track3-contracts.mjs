@@ -16,7 +16,8 @@ const dataFiles = [
   'data/interface-fixtures.v0.json',
   'data/nexus-adapter-readiness.v0.json',
   'data/nexus-adapter-contract.stub.v0.json',
-  'data/nexus-adapter-mismatch-fixtures.v0.json'
+  'data/nexus-adapter-mismatch-fixtures.v0.json',
+  'data/nexus-adapter-normalization-fixtures.v0.json'
 ];
 
 const track3TextFiles = [
@@ -26,6 +27,7 @@ const track3TextFiles = [
   'data/nexus-adapter-readiness.v0.json',
   'data/nexus-adapter-contract.stub.v0.json',
   'data/nexus-adapter-mismatch-fixtures.v0.json',
+  'data/nexus-adapter-normalization-fixtures.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -34,7 +36,8 @@ const track3TextFiles = [
   'docs/TRACK_3_CONTRACT_INVARIANTS.md',
   'docs/TRACK_3_NEXUS_MVP_VERIFICATION.md',
   'docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md',
-  'docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md'
+  'docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md',
+  'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -646,6 +649,124 @@ function validateNexusAdapterMismatchFixtures(suite, contract) {
   });
 }
 
+function validateNexusAdapterNormalizationFixtures(suite) {
+  const file = 'data/nexus-adapter-normalization-fixtures.v0.json';
+  const requiredCategories = new Set([
+    'nexus_like_release_candidate',
+    'nexus_like_escalation_candidate',
+    'nexus_like_freeze_candidate',
+    'nexus_like_repair_candidate',
+    'nexus_like_audit_log_reference',
+    'nexus_like_manifest_routing',
+    'nexus_like_deterministic_duplicate'
+  ]);
+
+  requirePath(suite, ['metadata'], file, 'NEXUS adapter normalization fixtures');
+  requirePath(suite, ['fixture_policy'], file, 'NEXUS adapter normalization fixtures');
+  const fixtures = requirePath(suite, ['fixtures'], file, 'NEXUS adapter normalization fixtures');
+
+  if (!Array.isArray(fixtures) || !fixtures.length) {
+    addFailure(file, 'NEXUS adapter normalization fixtures', 'fixtures must be a non-empty array');
+    return;
+  }
+
+  const metadata = suite.metadata || {};
+  if (metadata.reference_nexus_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS adapter normalization fixtures', 'metadata.reference_nexus_commit must match ab95cbbd24df5817c4e363d24b3b199ac8af6c6f');
+  }
+  if (metadata.integration_status !== 'not_integrated') {
+    addFailure(file, 'NEXUS adapter normalization fixtures', 'metadata.integration_status must be not_integrated');
+  }
+  [
+    'nexus_execution',
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `metadata.${flag} must be false`);
+    }
+  });
+
+  const categoryCounts = new Map();
+  fixtures.forEach((fixture, index) => {
+    const label = fixture.fixture_id || `fixtures[${index}]`;
+    [
+      'fixture_id',
+      'normalization_category',
+      'adapter_input_stub',
+      'simulated_nexus_like_result',
+      'expected_normalized_interface_result',
+      'expected_verdict',
+      'expected_release_eligibility',
+      'expected_gate_results',
+      'expected_evidence_requirements',
+      'expected_trace_boundary',
+      'expected_claim_boundary',
+      'integration_status'
+    ].forEach(key => {
+      if (fixture[key] === undefined || fixture[key] === null) {
+        addFailure(file, 'NEXUS adapter normalization fixtures', `${label} missing ${key}`);
+      }
+    });
+
+    categoryCounts.set(fixture.normalization_category, (categoryCounts.get(fixture.normalization_category) || 0) + 1);
+
+    if (fixture.integration_status !== 'not_integrated') {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `${label} integration_status must be not_integrated`);
+    }
+    [
+      'nexus_execution',
+      'public_runtime',
+      'persistence',
+      'ledger',
+      'model_execution',
+      'backend'
+    ].forEach(flag => {
+      if (fixture[flag] !== false) {
+        addFailure(file, 'NEXUS adapter normalization fixtures', `${label} ${flag} must be false`);
+      }
+    });
+
+    if (!approvedVerdictStatuses.has(fixture.expected_verdict)) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `${label} expected_verdict must be pass, fail, or escalate`);
+    }
+    if ((fixture.expected_verdict === 'fail' || fixture.expected_verdict === 'escalate') && fixture.expected_release_eligibility === true) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `${label} cannot be release eligible with ${fixture.expected_verdict}`);
+    }
+
+    const traceStatus = fixture.expected_trace_boundary && fixture.expected_trace_boundary.trace_status;
+    if (traceStatus !== 'local_dry_run_not_persistent_not_ledger') {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `${label} trace boundary must be local_dry_run_not_persistent_not_ledger`);
+    }
+    if (!fixture.expected_trace_boundary || fixture.expected_trace_boundary.not_persistent !== true || fixture.expected_trace_boundary.not_ledger !== true) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `${label} trace boundary must state not_persistent and not_ledger`);
+    }
+
+    const text = JSON.stringify(fixture).toLowerCase();
+    if (/\bledger_valid"\s*:\s*true/.test(text) || /\bpersistent ledger\b|\bproduction ledger\b/.test(text)) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `${label} must not claim ledger validity`);
+    }
+    if (/\bruns\s+nexus\b|\bnexus powers\b|\blive governance kernel\b|\bproduction runtime\b/.test(text)) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `${label} contains unbounded operational language`);
+    }
+  });
+
+  requiredCategories.forEach(category => {
+    const count = categoryCounts.get(category) || 0;
+    if (count === 0) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `Missing fixture for ${category}`);
+    }
+    if (count > 1) {
+      addFailure(file, 'NEXUS adapter normalization fixtures', `Duplicate fixtures for ${category}: ${count}`);
+    }
+  });
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -722,6 +843,7 @@ const fixtureSuite = parseJson('data/interface-fixtures.v0.json');
 const nexusReadiness = parseJson('data/nexus-adapter-readiness.v0.json');
 const nexusAdapterStub = parseJson('data/nexus-adapter-contract.stub.v0.json');
 const nexusMismatchFixtures = parseJson('data/nexus-adapter-mismatch-fixtures.v0.json');
+const nexusNormalizationFixtures = parseJson('data/nexus-adapter-normalization-fixtures.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -748,6 +870,7 @@ if (contract && fixtureSuite && manifest) validateManifestAlignment(contract, fi
 if (nexusReadiness) validateNexusAdapterReadiness(nexusReadiness);
 if (nexusAdapterStub) validateNexusAdapterContractStub(nexusAdapterStub);
 if (nexusMismatchFixtures && nexusAdapterStub) validateNexusAdapterMismatchFixtures(nexusMismatchFixtures, nexusAdapterStub);
+if (nexusNormalizationFixtures) validateNexusAdapterNormalizationFixtures(nexusNormalizationFixtures);
 
 track3TextFiles.forEach(validateOperationalClaimScan);
 

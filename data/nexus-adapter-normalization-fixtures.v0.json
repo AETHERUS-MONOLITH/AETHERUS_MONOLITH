@@ -1,0 +1,828 @@
+{
+  "metadata": {
+    "name": "NEXUS adapter normalization fixtures",
+    "version": "0.1.0",
+    "track_phase": "3.10",
+    "status": "local_only_normalizer_stub_fixtures",
+    "source_contract": "data/nexus-adapter-contract.stub.v0.json",
+    "reference_nexus_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "integration_status": "not_integrated",
+    "nexus_execution": false,
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "boundary": "Local-only normalization fixtures. They use simulated NEXUS-like objects and do not import, execute, or integrate NEXUS."
+  },
+  "fixture_policy": {
+    "run_mode": "local_adapter_normalizer_stub",
+    "trace_status": "local_dry_run_not_persistent_not_ledger",
+    "release_eligibility_rule": "Eligible only when normalized verdict is pass, all gate results pass, and evidence requirements are satisfied.",
+    "claim_boundary": {
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    }
+  },
+  "fixtures": [
+    {
+      "fixture_id": "normalize_nexus_like_release_candidate",
+      "normalization_category": "nexus_like_release_candidate",
+      "source_scenario_id": "happy_path_valid_release",
+      "adapter_input_stub": {
+        "scenario_id": "happy_path_valid_release",
+        "query": "What are the standard procedures for quarterly reviews?",
+        "regulatory_context": {
+          "regulatory_framework": "UNKNOWN",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": "data/joint-workflow.manifest.json",
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": {
+          "status": "pending",
+          "cell_id": "sim-alpha-release"
+        },
+        "delta": {
+          "status": "safe",
+          "intent_type": "general_compliance_query",
+          "risk_score": 0.15,
+          "gate_result": "pass"
+        },
+        "omega": {
+          "decision": "release",
+          "reasoning": "Risk within acceptable thresholds"
+        },
+        "gate_results": [
+          {
+            "gate_id": "NEXUS_DELTA_RISK_GATE",
+            "status": "pass",
+            "source": "simulated_delta"
+          },
+          {
+            "gate_id": "NEXUS_OMEGA_DECISION",
+            "status": "pass",
+            "source": "simulated_omega"
+          }
+        ],
+        "evidence_requirements": [
+          {
+            "label": "Simulated fixture evidence satisfied for local normalizer stub.",
+            "evidence_present": true,
+            "required_for_status": "local_adapter_normalizer_stub"
+          }
+        ],
+        "manifest_route": {
+          "manifest_reference": "data/joint-workflow.manifest.json",
+          "domain": "fintech",
+          "route": "general_compliance_query"
+        }
+      },
+      "expected_normalized_interface_result": {
+        "normalized_verdict": "pass",
+        "normalized_release_eligibility": {
+          "eligible": true,
+          "reason": "Simulated NEXUS-like release decision with passing gates and satisfied fixture evidence."
+        },
+        "normalized_manifest_reference": "data/joint-workflow.manifest.json",
+        "normalized_trace_event": {
+          "trace_status": "local_dry_run_not_persistent_not_ledger",
+          "event_type": "adapter_normalization"
+        }
+      },
+      "expected_verdict": "pass",
+      "expected_release_eligibility": true,
+      "expected_gate_results": [
+        {
+          "gate_id": "NEXUS_DELTA_RISK_GATE",
+          "status": "pass"
+        },
+        {
+          "gate_id": "NEXUS_OMEGA_DECISION",
+          "status": "pass"
+        }
+      ],
+      "expected_evidence_requirements": [
+        {
+          "label": "Simulated fixture evidence satisfied for local normalizer stub.",
+          "evidence_present": true
+        }
+      ],
+      "expected_trace_boundary": {
+        "trace_status": "local_dry_run_not_persistent_not_ledger",
+        "not_persistent": true,
+        "not_ledger": true
+      },
+      "expected_claim_boundary": {
+        "not_integrated": true,
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    },
+    {
+      "fixture_id": "normalize_nexus_like_escalation_candidate",
+      "normalization_category": "nexus_like_escalation_candidate",
+      "source_scenario_id": "adapter_failure_escalate",
+      "adapter_input_stub": {
+        "scenario_id": "adapter_failure_escalate",
+        "query": "Should we approve a high-risk credit application?",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": "data/joint-workflow.manifest.json",
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": {
+          "status": "pending",
+          "cell_id": "sim-alpha-escalate"
+        },
+        "delta": {
+          "status": "blocked",
+          "intent_type": "credit_decision",
+          "risk_score": 1,
+          "gate_result": "fail"
+        },
+        "omega": {
+          "decision": "escalate",
+          "variant": "defer_to_compliance_officer",
+          "reasoning": "credit_decision risk score exceeds hard gate"
+        },
+        "gate_results": [
+          {
+            "gate_id": "NEXUS_DELTA_RISK_GATE",
+            "status": "fail",
+            "source": "simulated_delta"
+          },
+          {
+            "gate_id": "NEXUS_OMEGA_DECISION",
+            "status": "escalate",
+            "source": "simulated_omega"
+          }
+        ],
+        "evidence_requirements": [
+          {
+            "label": "Operational escalation evidence would require real execution logs.",
+            "evidence_present": false,
+            "required_for_status": "local_runtime_prototype"
+          }
+        ],
+        "manifest_route": {
+          "manifest_reference": "data/joint-workflow.manifest.json",
+          "domain": "fintech",
+          "route": "credit_decision"
+        }
+      },
+      "expected_normalized_interface_result": {
+        "normalized_verdict": "escalate",
+        "normalized_release_eligibility": {
+          "eligible": false,
+          "reason": "Simulated NEXUS-like escalation blocks release eligibility."
+        },
+        "normalized_manifest_reference": "data/joint-workflow.manifest.json",
+        "normalized_trace_event": {
+          "trace_status": "local_dry_run_not_persistent_not_ledger",
+          "event_type": "adapter_normalization"
+        }
+      },
+      "expected_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_gate_results": [
+        {
+          "gate_id": "NEXUS_DELTA_RISK_GATE",
+          "status": "fail"
+        },
+        {
+          "gate_id": "NEXUS_OMEGA_DECISION",
+          "status": "escalate"
+        }
+      ],
+      "expected_evidence_requirements": [
+        {
+          "label": "Operational escalation evidence would require real execution logs.",
+          "evidence_present": false
+        }
+      ],
+      "expected_trace_boundary": {
+        "trace_status": "local_dry_run_not_persistent_not_ledger",
+        "not_persistent": true,
+        "not_ledger": true
+      },
+      "expected_claim_boundary": {
+        "not_integrated": true,
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    },
+    {
+      "fixture_id": "normalize_nexus_like_freeze_candidate",
+      "normalization_category": "nexus_like_freeze_candidate",
+      "source_scenario_id": "critical_safety_freeze",
+      "adapter_input_stub": {
+        "scenario_id": "critical_safety_freeze",
+        "query": "Fixture query with critical stop condition.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": "data/joint-workflow.manifest.json",
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": {
+          "status": "pending",
+          "cell_id": "sim-alpha-freeze"
+        },
+        "delta": {
+          "status": "blocked",
+          "intent_type": "fair_lending_check",
+          "risk_score": 1,
+          "gate_result": "fail"
+        },
+        "omega": {
+          "decision": "escalate",
+          "state_chamber": "freeze",
+          "reasoning": "Critical stop condition requires propagation hold."
+        },
+        "gate_results": [
+          {
+            "gate_id": "NEXUS_DELTA_RISK_GATE",
+            "status": "fail",
+            "source": "simulated_delta"
+          },
+          {
+            "gate_id": "AETHERUS_FREEZE_MAPPING",
+            "status": "fail",
+            "source": "adapter_stub"
+          }
+        ],
+        "evidence_requirements": [
+          {
+            "label": "Freeze evidence would require real contaminated artifact and reproducible safety logs.",
+            "evidence_present": false,
+            "required_for_status": "local_runtime_prototype"
+          }
+        ],
+        "manifest_route": {
+          "manifest_reference": "data/joint-workflow.manifest.json",
+          "domain": "fintech",
+          "route": "fair_lending_check"
+        }
+      },
+      "expected_normalized_interface_result": {
+        "normalized_verdict": "fail",
+        "normalized_release_eligibility": {
+          "eligible": false,
+          "reason": "Simulated freeze condition blocks release eligibility."
+        },
+        "normalized_manifest_reference": "data/joint-workflow.manifest.json",
+        "normalized_trace_event": {
+          "trace_status": "local_dry_run_not_persistent_not_ledger",
+          "event_type": "adapter_normalization"
+        }
+      },
+      "expected_verdict": "fail",
+      "expected_release_eligibility": false,
+      "expected_gate_results": [
+        {
+          "gate_id": "NEXUS_DELTA_RISK_GATE",
+          "status": "fail"
+        },
+        {
+          "gate_id": "AETHERUS_FREEZE_MAPPING",
+          "status": "fail"
+        }
+      ],
+      "expected_evidence_requirements": [
+        {
+          "label": "Freeze evidence would require real contaminated artifact and reproducible safety logs.",
+          "evidence_present": false
+        }
+      ],
+      "expected_trace_boundary": {
+        "trace_status": "local_dry_run_not_persistent_not_ledger",
+        "not_persistent": true,
+        "not_ledger": true
+      },
+      "expected_claim_boundary": {
+        "not_integrated": true,
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    },
+    {
+      "fixture_id": "normalize_nexus_like_repair_candidate",
+      "normalization_category": "nexus_like_repair_candidate",
+      "source_scenario_id": "missing_constraints_escalate",
+      "adapter_input_stub": {
+        "scenario_id": "missing_constraints_escalate",
+        "query": "Fixture query requiring revision before release.",
+        "regulatory_context": {
+          "regulatory_framework": "ECOA",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": "data/joint-workflow.manifest.json",
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": {
+          "status": "pending",
+          "cell_id": "sim-alpha-repair"
+        },
+        "delta": {
+          "status": "blocked",
+          "intent_type": "credit_decision",
+          "risk_score": 0.85,
+          "gate_result": "fail"
+        },
+        "omega": {
+          "decision": "escalate",
+          "state_chamber": "repair",
+          "reasoning": "Revision required before a release boundary can be evaluated."
+        },
+        "gate_results": [
+          {
+            "gate_id": "NEXUS_DELTA_RISK_GATE",
+            "status": "fail",
+            "source": "simulated_delta"
+          },
+          {
+            "gate_id": "AETHERUS_REPAIR_MAPPING",
+            "status": "escalate",
+            "source": "adapter_stub"
+          }
+        ],
+        "evidence_requirements": [
+          {
+            "label": "Repair evidence would require revised artifact and validation logs.",
+            "evidence_present": false,
+            "required_for_status": "local_runtime_prototype"
+          }
+        ],
+        "manifest_route": {
+          "manifest_reference": "data/joint-workflow.manifest.json",
+          "domain": "fintech",
+          "route": "credit_decision"
+        }
+      },
+      "expected_normalized_interface_result": {
+        "normalized_verdict": "escalate",
+        "normalized_release_eligibility": {
+          "eligible": false,
+          "reason": "Simulated repair condition requires escalation and blocks release eligibility."
+        },
+        "normalized_manifest_reference": "data/joint-workflow.manifest.json",
+        "normalized_trace_event": {
+          "trace_status": "local_dry_run_not_persistent_not_ledger",
+          "event_type": "adapter_normalization"
+        }
+      },
+      "expected_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_gate_results": [
+        {
+          "gate_id": "NEXUS_DELTA_RISK_GATE",
+          "status": "fail"
+        },
+        {
+          "gate_id": "AETHERUS_REPAIR_MAPPING",
+          "status": "escalate"
+        }
+      ],
+      "expected_evidence_requirements": [
+        {
+          "label": "Repair evidence would require revised artifact and validation logs.",
+          "evidence_present": false
+        }
+      ],
+      "expected_trace_boundary": {
+        "trace_status": "local_dry_run_not_persistent_not_ledger",
+        "not_persistent": true,
+        "not_ledger": true
+      },
+      "expected_claim_boundary": {
+        "not_integrated": true,
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    },
+    {
+      "fixture_id": "normalize_nexus_like_audit_log_reference",
+      "normalization_category": "nexus_like_audit_log_reference",
+      "source_scenario_id": "happy_path_valid_release",
+      "adapter_input_stub": {
+        "scenario_id": "happy_path_valid_release",
+        "query": "Fixture query with bounded audit-log reference.",
+        "regulatory_context": {
+          "regulatory_framework": "UNKNOWN",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": "data/joint-workflow.manifest.json",
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": {
+          "status": "pending",
+          "cell_id": "sim-alpha-audit"
+        },
+        "delta": {
+          "status": "safe",
+          "intent_type": "general_compliance_query",
+          "risk_score": 0.15,
+          "gate_result": "pass"
+        },
+        "omega": {
+          "decision": "release",
+          "reasoning": "Risk within acceptable thresholds"
+        },
+        "audit_log_reference": {
+          "format": "jsonl",
+          "path": "local/nexus/audit.jsonl",
+          "hash_chaining": false,
+          "ledger_valid": false
+        },
+        "gate_results": [
+          {
+            "gate_id": "NEXUS_DELTA_RISK_GATE",
+            "status": "pass",
+            "source": "simulated_delta"
+          },
+          {
+            "gate_id": "NEXUS_AUDIT_LOG_BOUNDARY",
+            "status": "pass",
+            "source": "adapter_stub"
+          }
+        ],
+        "evidence_requirements": [
+          {
+            "label": "Ledger claim would require hash-chain verification and retention semantics.",
+            "evidence_present": false,
+            "required_for_status": "backend_trace_prototype"
+          }
+        ],
+        "manifest_route": {
+          "manifest_reference": "data/joint-workflow.manifest.json",
+          "domain": "fintech",
+          "route": "general_compliance_query"
+        }
+      },
+      "expected_normalized_interface_result": {
+        "normalized_verdict": "pass",
+        "normalized_release_eligibility": {
+          "eligible": false,
+          "reason": "Audit-log reference remains non-ledger and prevents operational release evidence."
+        },
+        "normalized_manifest_reference": "data/joint-workflow.manifest.json",
+        "normalized_trace_event": {
+          "trace_status": "local_dry_run_not_persistent_not_ledger",
+          "event_type": "adapter_normalization"
+        }
+      },
+      "expected_verdict": "pass",
+      "expected_release_eligibility": false,
+      "expected_gate_results": [
+        {
+          "gate_id": "NEXUS_DELTA_RISK_GATE",
+          "status": "pass"
+        },
+        {
+          "gate_id": "NEXUS_AUDIT_LOG_BOUNDARY",
+          "status": "pass"
+        }
+      ],
+      "expected_evidence_requirements": [
+        {
+          "label": "Ledger claim would require hash-chain verification and retention semantics.",
+          "evidence_present": false
+        }
+      ],
+      "expected_trace_boundary": {
+        "trace_status": "local_dry_run_not_persistent_not_ledger",
+        "not_persistent": true,
+        "not_ledger": true
+      },
+      "expected_claim_boundary": {
+        "not_integrated": true,
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    },
+    {
+      "fixture_id": "normalize_nexus_like_manifest_routing",
+      "normalization_category": "nexus_like_manifest_routing",
+      "source_scenario_id": "adapter_failure_escalate",
+      "adapter_input_stub": {
+        "scenario_id": "adapter_failure_escalate",
+        "query": "Fixture query with manifest route.",
+        "regulatory_context": {
+          "regulatory_framework": "BSA_AML",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": "data/joint-workflow.manifest.json",
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "alpha": {
+          "status": "pending",
+          "cell_id": "sim-alpha-route"
+        },
+        "delta": {
+          "status": "blocked",
+          "intent_type": "aml_screening",
+          "risk_score": 0.8,
+          "gate_result": "fail"
+        },
+        "omega": {
+          "decision": "escalate",
+          "variant": "defer_to_compliance_officer",
+          "reasoning": "aml_screening risk score exceeds hard gate"
+        },
+        "gate_results": [
+          {
+            "gate_id": "NEXUS_MANIFEST_ROUTE",
+            "status": "pass",
+            "source": "simulated_manifest"
+          },
+          {
+            "gate_id": "NEXUS_OMEGA_DECISION",
+            "status": "escalate",
+            "source": "simulated_omega"
+          }
+        ],
+        "evidence_requirements": [
+          {
+            "label": "Regulatory route evidence would require verified manifest mapping.",
+            "evidence_present": false,
+            "required_for_status": "local_runtime_prototype"
+          }
+        ],
+        "manifest_route": {
+          "manifest_reference": "data/joint-workflow.manifest.json",
+          "domain": "fintech",
+          "route": "aml_screening"
+        }
+      },
+      "expected_normalized_interface_result": {
+        "normalized_verdict": "escalate",
+        "normalized_release_eligibility": {
+          "eligible": false,
+          "reason": "Simulated manifest-routed escalation blocks release eligibility."
+        },
+        "normalized_manifest_reference": "data/joint-workflow.manifest.json",
+        "normalized_trace_event": {
+          "trace_status": "local_dry_run_not_persistent_not_ledger",
+          "event_type": "adapter_normalization"
+        }
+      },
+      "expected_verdict": "escalate",
+      "expected_release_eligibility": false,
+      "expected_gate_results": [
+        {
+          "gate_id": "NEXUS_MANIFEST_ROUTE",
+          "status": "pass"
+        },
+        {
+          "gate_id": "NEXUS_OMEGA_DECISION",
+          "status": "escalate"
+        }
+      ],
+      "expected_evidence_requirements": [
+        {
+          "label": "Regulatory route evidence would require verified manifest mapping.",
+          "evidence_present": false
+        }
+      ],
+      "expected_trace_boundary": {
+        "trace_status": "local_dry_run_not_persistent_not_ledger",
+        "not_persistent": true,
+        "not_ledger": true
+      },
+      "expected_claim_boundary": {
+        "not_integrated": true,
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    },
+    {
+      "fixture_id": "normalize_nexus_like_deterministic_duplicate",
+      "normalization_category": "nexus_like_deterministic_duplicate",
+      "source_scenario_id": "happy_path_valid_release",
+      "adapter_input_stub": {
+        "scenario_id": "happy_path_valid_release",
+        "query": "Fixture query repeated for deterministic normalization.",
+        "regulatory_context": {
+          "regulatory_framework": "UNKNOWN",
+          "jurisdiction": "US"
+        },
+        "governance_manifest_reference": "data/joint-workflow.manifest.json",
+        "domain": "fintech"
+      },
+      "simulated_nexus_like_result": {
+        "repeat_results": [
+          {
+            "alpha": {
+              "status": "pending",
+              "cell_id": "sim-alpha-duplicate"
+            },
+            "delta": {
+              "status": "safe",
+              "intent_type": "general_compliance_query",
+              "risk_score": 0.15,
+              "gate_result": "pass"
+            },
+            "omega": {
+              "decision": "release",
+              "reasoning": "Risk within acceptable thresholds"
+            },
+            "gate_results": [
+              {
+                "gate_id": "NEXUS_DELTA_RISK_GATE",
+                "status": "pass",
+                "source": "simulated_delta"
+              },
+              {
+                "gate_id": "NEXUS_OMEGA_DECISION",
+                "status": "pass",
+                "source": "simulated_omega"
+              }
+            ],
+            "evidence_requirements": [
+              {
+                "label": "Simulated fixture evidence satisfied for deterministic duplicate.",
+                "evidence_present": true,
+                "required_for_status": "local_adapter_normalizer_stub"
+              }
+            ],
+            "manifest_route": {
+              "manifest_reference": "data/joint-workflow.manifest.json",
+              "domain": "fintech",
+              "route": "general_compliance_query"
+            }
+          },
+          {
+            "alpha": {
+              "status": "pending",
+              "cell_id": "sim-alpha-duplicate"
+            },
+            "delta": {
+              "status": "safe",
+              "intent_type": "general_compliance_query",
+              "risk_score": 0.15,
+              "gate_result": "pass"
+            },
+            "omega": {
+              "decision": "release",
+              "reasoning": "Risk within acceptable thresholds"
+            },
+            "gate_results": [
+              {
+                "gate_id": "NEXUS_DELTA_RISK_GATE",
+                "status": "pass",
+                "source": "simulated_delta"
+              },
+              {
+                "gate_id": "NEXUS_OMEGA_DECISION",
+                "status": "pass",
+                "source": "simulated_omega"
+              }
+            ],
+            "evidence_requirements": [
+              {
+                "label": "Simulated fixture evidence satisfied for deterministic duplicate.",
+                "evidence_present": true,
+                "required_for_status": "local_adapter_normalizer_stub"
+              }
+            ],
+            "manifest_route": {
+              "manifest_reference": "data/joint-workflow.manifest.json",
+              "domain": "fintech",
+              "route": "general_compliance_query"
+            }
+          }
+        ]
+      },
+      "expected_normalized_interface_result": {
+        "normalized_verdict": "pass",
+        "normalized_release_eligibility": {
+          "eligible": true,
+          "reason": "Repeated simulated NEXUS-like results normalize to identical decision-relevant fields."
+        },
+        "normalized_manifest_reference": "data/joint-workflow.manifest.json",
+        "normalized_trace_event": {
+          "trace_status": "local_dry_run_not_persistent_not_ledger",
+          "event_type": "adapter_normalization"
+        },
+        "deterministic_identity_match": true
+      },
+      "expected_verdict": "pass",
+      "expected_release_eligibility": true,
+      "expected_gate_results": [
+        {
+          "gate_id": "NEXUS_DELTA_RISK_GATE",
+          "status": "pass"
+        },
+        {
+          "gate_id": "NEXUS_OMEGA_DECISION",
+          "status": "pass"
+        }
+      ],
+      "expected_evidence_requirements": [
+        {
+          "label": "Simulated fixture evidence satisfied for deterministic duplicate.",
+          "evidence_present": true
+        }
+      ],
+      "expected_trace_boundary": {
+        "trace_status": "local_dry_run_not_persistent_not_ledger",
+        "not_persistent": true,
+        "not_ledger": true
+      },
+      "expected_claim_boundary": {
+        "not_integrated": true,
+        "not_actual_nexus_execution": true,
+        "not_public_runtime": true,
+        "not_ledger_valid": true
+      },
+      "integration_status": "not_integrated",
+      "nexus_execution": false,
+      "public_runtime": false,
+      "persistence": false,
+      "ledger": false,
+      "model_execution": false,
+      "backend": false,
+      "auth": false,
+      "database": false
+    }
+  ]
+}
