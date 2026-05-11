@@ -93,3 +93,5 @@ If environment preflight passes with a supplied NEXUS path, Track 3.14 local imp
 If it does not pass, resolve missing preconditions first.
 
 Default recommendation: do not implement an import adapter unless explicitly authorized.
+
+Track 3.14 source pin resolution for the observed local NEXUS path: see `docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md`.

@@ -18,7 +18,8 @@ const dataFiles = [
   'data/nexus-adapter-contract.stub.v0.json',
   'data/nexus-adapter-mismatch-fixtures.v0.json',
   'data/nexus-adapter-normalization-fixtures.v0.json',
-  'data/nexus-import-adapter-preflight.v0.json'
+  'data/nexus-import-adapter-preflight.v0.json',
+  'data/nexus-source-pin-resolution.v0.json'
 ];
 
 const track3TextFiles = [
@@ -30,6 +31,7 @@ const track3TextFiles = [
   'data/nexus-adapter-mismatch-fixtures.v0.json',
   'data/nexus-adapter-normalization-fixtures.v0.json',
   'data/nexus-import-adapter-preflight.v0.json',
+  'data/nexus-source-pin-resolution.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -42,7 +44,8 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md',
   'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md',
   'docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md',
-  'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md'
+  'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md',
+  'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md'
 ];
 
 const requiredScriptFiles = [
@@ -51,7 +54,8 @@ const requiredScriptFiles = [
 ];
 
 const requiredDocFiles = [
-  'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md'
+  'docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md',
+  'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -953,6 +957,77 @@ function validateNexusImportEnvironmentPreflightScript() {
   });
 }
 
+function validateNexusSourcePinResolution(resolution) {
+  const file = 'data/nexus-source-pin-resolution.v0.json';
+  requirePath(resolution, ['metadata'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['expected_nexus_commit'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['observed_nexus_path'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['observed_nexus_head'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['observed_branch'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['expected_commit_present_locally'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['working_tree_status'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['stop_condition_status'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['import_adapter_authorized'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['recommended_source_strategy'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['required_next_conditions'], file, 'NEXUS source pin resolution');
+  requirePath(resolution, ['claim_boundary'], file, 'NEXUS source pin resolution');
+
+  const metadata = resolution.metadata || {};
+  if (metadata.status !== 'source_pin_resolution_only') {
+    addFailure(file, 'NEXUS source pin resolution', `metadata.status must be source_pin_resolution_only, found "${metadata.status}"`);
+  }
+  if (metadata.integration_status !== 'not_integrated') {
+    addFailure(file, 'NEXUS source pin resolution', `metadata.integration_status must be not_integrated, found "${metadata.integration_status}"`);
+  }
+
+  [
+    'nexus_execution',
+    'python_execution',
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, 'NEXUS source pin resolution', `metadata.${flag} must be false`);
+    }
+  });
+
+  if (resolution.expected_nexus_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS source pin resolution', 'expected_nexus_commit must match ab95cbbd24df5817c4e363d24b3b199ac8af6c6f');
+  }
+  if (resolution.observed_nexus_head !== 'acd8b2abfd3ea66ed6d91fb908c761774bdf110d') {
+    addFailure(file, 'NEXUS source pin resolution', 'observed_nexus_head must match acd8b2abfd3ea66ed6d91fb908c761774bdf110d');
+  }
+  if (resolution.import_adapter_authorized !== false) {
+    addFailure(file, 'NEXUS source pin resolution', 'import_adapter_authorized must be false');
+  }
+
+  const stop = resolution.stop_condition_status || {};
+  if (!['blocked', 'not_ready'].includes(stop.status)) {
+    addFailure(file, 'NEXUS source pin resolution', 'stop_condition_status.status must be blocked or not_ready');
+  }
+  if (stop.import_adapter_ready !== false) {
+    addFailure(file, 'NEXUS source pin resolution', 'stop_condition_status.import_adapter_ready must be false');
+  }
+  const stopText = JSON.stringify(stop).toLowerCase();
+  if (!stopText.includes('does not match') && !stopText.includes('mismatch')) {
+    addFailure(file, 'NEXUS source pin resolution', 'stop_condition_status must document the observed commit mismatch');
+  }
+
+  if (resolution.expected_commit_present_locally !== true) {
+    addFailure(file, 'NEXUS source pin resolution', 'expected_commit_present_locally must be true for the inspected local path');
+  }
+
+  const strategyText = JSON.stringify(resolution.recommended_source_strategy || {}).toLowerCase();
+  if (!strategyText.includes('pinned commit') && !strategyText.includes('clean')) {
+    addFailure(file, 'NEXUS source pin resolution', 'recommended_source_strategy must recommend a clean pinned source path');
+  }
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -1047,6 +1122,7 @@ const nexusAdapterStub = parseJson('data/nexus-adapter-contract.stub.v0.json');
 const nexusMismatchFixtures = parseJson('data/nexus-adapter-mismatch-fixtures.v0.json');
 const nexusNormalizationFixtures = parseJson('data/nexus-adapter-normalization-fixtures.v0.json');
 const nexusImportPreflight = parseJson('data/nexus-import-adapter-preflight.v0.json');
+const nexusSourcePinResolution = parseJson('data/nexus-source-pin-resolution.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -1075,6 +1151,7 @@ if (nexusAdapterStub) validateNexusAdapterContractStub(nexusAdapterStub);
 if (nexusMismatchFixtures && nexusAdapterStub) validateNexusAdapterMismatchFixtures(nexusMismatchFixtures, nexusAdapterStub);
 if (nexusNormalizationFixtures) validateNexusAdapterNormalizationFixtures(nexusNormalizationFixtures);
 if (nexusImportPreflight) validateNexusImportAdapterPreflight(nexusImportPreflight);
+if (nexusSourcePinResolution) validateNexusSourcePinResolution(nexusSourcePinResolution);
 validateNexusImportEnvironmentPreflightScript();
 validateRequiredScriptFiles();
 validateRequiredDocFiles();

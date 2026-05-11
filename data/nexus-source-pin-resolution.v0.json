@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "name": "AETHERUS NEXUS Source Pin Resolution",
+    "version": "0.1.0",
+    "track_phase": "3.14",
+    "status": "source_pin_resolution_only",
+    "integration_status": "not_integrated",
+    "nexus_execution": false,
+    "python_execution": false,
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "boundary": "Source pin resolution only. This file does not authorize or perform NEXUS import, NEXUS execution, Python execution, dependency installation, public runtime wiring, persistence, ledger behavior, backend behavior, authentication, database use, or model execution."
+  },
+  "expected_nexus_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "observed_nexus_path": "/Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp",
+  "observed_nexus_head": "acd8b2abfd3ea66ed6d91fb908c761774bdf110d",
+  "observed_branch": "codex/add-license-contributing-security",
+  "observed_remote": "https://github.com/AETHERUS-MONOLITH/nexus-mvp.git",
+  "expected_commit_present_locally": true,
+  "expected_commit_location": [
+    "origin/main",
+    "origin/HEAD"
+  ],
+  "current_head_contains_expected_commit": false,
+  "working_tree_status": "clean",
+  "branch_status": "behind upstream by one commit",
+  "diff_from_expected_to_observed": {
+    "file_diff_observed": false,
+    "tree_hash_matches_expected": true,
+    "observed_tree_hash": "61da11b595ad98b457a340dfa0611538b497a86c",
+    "expected_tree_hash": "61da11b595ad98b457a340dfa0611538b497a86c",
+    "note": "The observed local HEAD and pinned commit have identical file trees but different commit objects."
+  },
+  "stop_condition_status": {
+    "status": "blocked",
+    "import_adapter_ready": false,
+    "stop_conditions_triggered": [
+      "observed NEXUS HEAD does not match expected pinned NEXUS commit"
+    ]
+  },
+  "import_adapter_authorized": false,
+  "recommended_source_strategy": {
+    "strategy": "use_clean_checkout_or_archive_of_pinned_commit",
+    "preferred_option": "Option A",
+    "rationale": "Future adapter work should target a clean source path at the verified pinned commit rather than a non-authoritative working branch, even when file trees currently match."
+  },
+  "source_strategy_options": {
+    "option_a": "Use a clean archive or checkout of the pinned commit.",
+    "option_b": "Update the pin only after deliberate acceptance and renewed NEXUS verification.",
+    "option_c": "Keep the local path as a working branch but do not use it for import-adapter work.",
+    "option_d": "Create a separate local archive directory for the pinned commit."
+  },
+  "required_next_conditions": [
+    "Run the preflight script against a NEXUS path at the pinned commit.",
+    "Confirm the NEXUS path is clean.",
+    "Identify dependency declarations.",
+    "Confirm no stop conditions are triggered.",
+    "Receive explicit authorization for local NEXUS import execution before any import-adapter prototype."
+  ],
+  "claim_boundary": {
+    "allowed_after_track_3_14": [
+      "NEXUS source pin resolution documented",
+      "current local NEXUS path mismatch identified",
+      "future import adapter remains gated"
+    ],
+    "forbidden_after_track_3_14": [
+      "AETHERUS_MONOLITH runs NEXUS",
+      "NEXUS import adapter implemented",
+      "NEXUS powers the public interface",
+      "NEXUS-integrated system",
+      "live governance kernel",
+      "persistent NEXUS ledger",
+      "production runtime"
+    ]
+  }
+}
