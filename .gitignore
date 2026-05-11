@@ -10,3 +10,6 @@ Thumbs.db
 !.dev.vars.example
 .env*
 !.env.example
+
+# Local Track 3 dry-run reports
+.track3-runs/
