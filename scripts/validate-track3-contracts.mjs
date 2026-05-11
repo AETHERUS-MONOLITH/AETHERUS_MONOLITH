@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -37,7 +37,12 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_MVP_VERIFICATION.md',
   'docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md',
   'docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md',
-  'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md'
+  'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md',
+  'docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md'
+];
+
+const requiredScriptFiles = [
+  'scripts/validate-nexus-adapter-normalizer-suite.mjs'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -804,6 +809,14 @@ function validateAllDataJsonFilesParsed() {
     });
 }
 
+function validateRequiredScriptFiles() {
+  requiredScriptFiles.forEach(file => {
+    if (!existsSync(path.join(repoRoot, file))) {
+      addFailure(file, 'Required script', 'Required Track 3 validation script is missing');
+    }
+  });
+}
+
 function printResults(filesValidated) {
   console.log('Track 3 contract validation');
   console.log('');
@@ -871,6 +884,7 @@ if (nexusReadiness) validateNexusAdapterReadiness(nexusReadiness);
 if (nexusAdapterStub) validateNexusAdapterContractStub(nexusAdapterStub);
 if (nexusMismatchFixtures && nexusAdapterStub) validateNexusAdapterMismatchFixtures(nexusMismatchFixtures, nexusAdapterStub);
 if (nexusNormalizationFixtures) validateNexusAdapterNormalizationFixtures(nexusNormalizationFixtures);
+validateRequiredScriptFiles();
 
 track3TextFiles.forEach(validateOperationalClaimScan);
 
@@ -878,6 +892,7 @@ const filesValidated = [
   ...new Set([
     ...dataFiles,
     ...track3TextFiles,
+    ...requiredScriptFiles,
     ...Array.from(parsed.keys())
   ])
 ].sort();

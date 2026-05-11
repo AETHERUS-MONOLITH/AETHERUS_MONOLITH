@@ -94,3 +94,5 @@ Forbidden after this pass:
 Recommended next pass: Track 3.11 local adapter normalizer negative/positive suite hardening.
 
 The safest default is one more local-only hardening pass before any import execution is considered. A local import adapter prototype should require explicit authorization.
+
+Track 3.11 follow-up: see `docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md` for the local-only positive/negative suite hardening. It preserves the same no-import, no-Python, and no-execution boundary.
