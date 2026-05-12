@@ -574,6 +574,7 @@ function buildReport(options, fixture, adapterInput, nexusPayload, nexusPathStat
       excluded_fields: ['generated_at', 'duration', 'raw process metadata', 'file paths', 'NEXUS run_id', 'timestamps']
     },
     stop_conditions_triggered: stopConditions,
+    stop_conditions: stopConditions,
     claim_boundary: {
       not_public_runtime: true,
       not_persistent: true,
@@ -655,6 +656,15 @@ if (!failures.length && fixture && nexusPathStatus) {
       live_orchestration: false,
       public_ui_wiring: false
     },
+    failure_category: failures[0] ? failures[0].category : 'nexus_execution_failure',
+    failure_reason: failures.map(failure => `${failure.category}: ${failure.message}`).join('; ') || 'Adapter preflight failed before local NEXUS execution.',
+    source: {
+      aetherus_commit: gitValue(['rev-parse', 'HEAD'], repoRoot),
+      adapter_contract: files.adapterContract,
+      interface_contract: files.interfaceContract,
+      fixture_id: options.fixtureId
+    },
+    attempted_fixture_id: options.fixtureId,
     nexus_boundary: {
       nexus_source_path: options.nexusPath,
       nexus_commit: nexusPathStatus && nexusPathStatus.head,
@@ -663,6 +673,7 @@ if (!failures.length && fixture && nexusPathStatus) {
       python_execution: false,
       python_execution_scope: 'not_executed_due_to_preflight_failure'
     },
+    normalized_verdict: 'escalate',
     normalized_interface_result: {
       normalized_verdict: 'escalate',
       normalized_release_eligibility: {
@@ -680,6 +691,14 @@ if (!failures.length && fixture && nexusPathStatus) {
       not_ledger: true
     },
     failures,
+    stop_conditions: failures.map(failure => `${failure.category}: ${failure.message}`),
+    stop_conditions_triggered: failures.map(failure => `${failure.category}: ${failure.message}`),
+    raw_error_boundary: {
+      raw_error_is_local_only: true,
+      raw_error_is_public_runtime: false,
+      raw_error_is_operational_evidence: false,
+      error_summary: failures.map(failure => `${failure.category}: ${failure.message}`)
+    },
     claim_boundary: {
       not_public_runtime: true,
       not_persistent: true,

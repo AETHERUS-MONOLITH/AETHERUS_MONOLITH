@@ -20,7 +20,8 @@ const dataFiles = [
   'data/nexus-adapter-normalization-fixtures.v0.json',
   'data/nexus-import-adapter-preflight.v0.json',
   'data/nexus-source-pin-resolution.v0.json',
-  'data/nexus-pinned-source-preflight.v0.json'
+  'data/nexus-pinned-source-preflight.v0.json',
+  'data/nexus-import-adapter-report-contract.v0.json'
 ];
 
 const track3TextFiles = [
@@ -34,6 +35,7 @@ const track3TextFiles = [
   'data/nexus-import-adapter-preflight.v0.json',
   'data/nexus-source-pin-resolution.v0.json',
   'data/nexus-pinned-source-preflight.v0.json',
+  'data/nexus-import-adapter-report-contract.v0.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -51,14 +53,16 @@ const track3TextFiles = [
   'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md',
   'docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md',
   'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md',
-  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md'
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md',
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md'
 ];
 
 const requiredScriptFiles = [
   'scripts/validate-nexus-adapter-normalizer-suite.mjs',
   'scripts/check-nexus-import-environment.mjs',
   'scripts/run-nexus-import-adapter-local.mjs',
-  'scripts/run-nexus-import-adapter-regression-suite.mjs'
+  'scripts/run-nexus-import-adapter-regression-suite.mjs',
+  'scripts/validate-nexus-import-adapter-reports.mjs'
 ];
 
 const requiredDocFiles = [
@@ -67,7 +71,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md',
   'docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md',
   'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md',
-  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md'
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md',
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -1474,6 +1479,182 @@ function validateLocalNexusImportAdapterRegressionReportIfPresent() {
   });
 }
 
+function validateNexusImportAdapterReportContract(contract) {
+  const file = 'data/nexus-import-adapter-report-contract.v0.json';
+  requirePath(contract, ['metadata'], file, 'NEXUS import adapter report contract');
+  requirePath(contract, ['required_success_report_fields'], file, 'NEXUS import adapter report contract');
+  requirePath(contract, ['required_regression_report_fields'], file, 'NEXUS import adapter report contract');
+  requirePath(contract, ['required_failure_report_fields'], file, 'NEXUS import adapter report contract');
+  requirePath(contract, ['allowed_failure_categories'], file, 'NEXUS import adapter report contract');
+  requirePath(contract, ['release_eligibility_invariants'], file, 'NEXUS import adapter report contract');
+  requirePath(contract, ['trace_boundary_invariants'], file, 'NEXUS import adapter report contract');
+  requirePath(contract, ['claim_boundary_invariants'], file, 'NEXUS import adapter report contract');
+
+  const metadata = contract.metadata || {};
+  if (metadata.status !== 'local_report_contract') {
+    addFailure(file, 'NEXUS import adapter report contract', `metadata.status must be local_report_contract, found "${metadata.status}"`);
+  }
+  if (metadata.pinned_nexus_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'NEXUS import adapter report contract', 'metadata.pinned_nexus_commit must match pinned NEXUS commit');
+  }
+  [
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database',
+    'live_orchestration',
+    'public_ui_wiring'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, 'NEXUS import adapter report contract', `metadata.${flag} must be false`);
+    }
+  });
+
+  const successFields = new Set(contract.required_success_report_fields || []);
+  [
+    'meta',
+    'nexus_boundary',
+    'source',
+    'adapter_input',
+    'nexus_payload',
+    'raw_nexus_result_boundary',
+    'normalized_interface_result',
+    'release_eligibility',
+    'trace_boundary',
+    'claim_boundary',
+    'deterministic_identity',
+    'stop_conditions'
+  ].forEach(field => {
+    if (!successFields.has(field)) {
+      addFailure(file, 'NEXUS import adapter report contract', `required_success_report_fields missing ${field}`);
+    }
+  });
+
+  const regressionFields = new Set(contract.required_regression_report_fields || []);
+  [
+    'meta',
+    'nexus_boundary',
+    'suite_summary',
+    'fixture_results',
+    'deterministic_identity_summary',
+    'release_eligibility_summary',
+    'trace_boundary_summary',
+    'claim_boundary',
+    'stop_conditions'
+  ].forEach(field => {
+    if (!regressionFields.has(field)) {
+      addFailure(file, 'NEXUS import adapter report contract', `required_regression_report_fields missing ${field}`);
+    }
+  });
+
+  const failureFields = new Set(contract.required_failure_report_fields || []);
+  [
+    'meta',
+    'failure_category',
+    'failure_reason',
+    'source',
+    'attempted_fixture_id',
+    'nexus_boundary',
+    'normalized_verdict',
+    'release_eligibility',
+    'trace_boundary',
+    'claim_boundary',
+    'stop_conditions',
+    'raw_error_boundary'
+  ].forEach(field => {
+    if (!failureFields.has(field)) {
+      addFailure(file, 'NEXUS import adapter report contract', `required_failure_report_fields missing ${field}`);
+    }
+  });
+
+  const categories = new Set(contract.allowed_failure_categories || []);
+  [
+    'nexus_path_missing',
+    'nexus_commit_mismatch',
+    'nexus_working_tree_dirty',
+    'fixture_mapping_missing',
+    'regulatory_context_missing',
+    'manifest_mapping_missing',
+    'nexus_execution_failure',
+    'malformed_nexus_result',
+    'unknown_nexus_verdict',
+    'unknown_risk_level',
+    'missing_omega_decision',
+    'nondeterministic_output',
+    'release_eligibility_incoherent',
+    'trace_boundary_violation',
+    'claim_boundary_violation'
+  ].forEach(category => {
+    if (!categories.has(category)) {
+      addFailure(file, 'NEXUS import adapter report contract', `allowed_failure_categories missing ${category}`);
+    }
+  });
+
+  const trace = contract.trace_boundary_invariants || {};
+  if (trace.trace_status !== 'local_adapter_run_not_persistent_not_ledger') {
+    addFailure(file, 'NEXUS import adapter report contract', 'trace_boundary_invariants.trace_status must be local_adapter_run_not_persistent_not_ledger');
+  }
+  const claim = contract.claim_boundary_invariants || {};
+  [
+    'public_runtime',
+    'backend',
+    'auth',
+    'database',
+    'persistence',
+    'model_execution',
+    'live_orchestration',
+    'public_ui_wiring',
+    'production_runtime',
+    'compliance_certification'
+  ].forEach(flag => {
+    if (claim[flag] !== false) {
+      addFailure(file, 'NEXUS import adapter report contract', `claim_boundary_invariants.${flag} must be false`);
+    }
+  });
+}
+
+function validateNexusImportAdapterReportsScript() {
+  const file = 'scripts/validate-nexus-import-adapter-reports.mjs';
+  if (!existsSync(path.join(repoRoot, file))) {
+    addFailure(file, 'NEXUS import adapter report validator', 'Report validator script is missing');
+    return;
+  }
+
+  const text = readText(file);
+  [
+    ['report contract input', /data\/nexus-import-adapter-report-contract\.v0\.json/],
+    ['local report path', /\.track3-runs\/latest-nexus-import-adapter-local-report\.json/],
+    ['regression report path', /\.track3-runs\/latest-nexus-import-adapter-regression-suite-report\.json/],
+    ['pinned NEXUS commit check', /ab95cbbd24df5817c4e363d24b3b199ac8af6c6f/],
+    ['trace boundary check', /local_adapter_run_not_persistent_not_ledger/],
+    ['release eligibility failure group', /release_eligibility_failure/],
+    ['ledger boundary failure group', /ledger_boundary_failure/],
+    ['deterministic identity failure group', /deterministic_identity_failure/],
+    ['claim boundary failure group', /claim_boundary_failure/]
+  ].forEach(([label, pattern]) => {
+    if (!pattern.test(text)) {
+      addFailure(file, 'NEXUS import adapter report validator', `Script missing ${label}`);
+    }
+  });
+
+  const prohibitedPatterns = [
+    { label: 'dependency installation', pattern: /\b(?:pip3?|npm)\s+install\b|['"]install['"]/i },
+    { label: 'public UI wiring', pattern: /\bdocument\.|\bwindow\.|querySelector|addEventListener/i },
+    { label: 'public HTML modification target', pattern: /index\.html/i },
+    { label: 'production browser JS modification target', pattern: /js\/(?:app|docs|pipeline|grid|governance-engine|trace-viewer)\.js/i },
+    { label: 'network fetch', pattern: /\bfetch\s*\(|https?:\/\//i }
+  ];
+
+  prohibitedPatterns.forEach(({ label, pattern }) => {
+    if (pattern.test(text)) {
+      addFailure(file, 'NEXUS import adapter report validator', `Script contains prohibited ${label}`);
+    }
+  });
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -1570,6 +1751,7 @@ const nexusNormalizationFixtures = parseJson('data/nexus-adapter-normalization-f
 const nexusImportPreflight = parseJson('data/nexus-import-adapter-preflight.v0.json');
 const nexusSourcePinResolution = parseJson('data/nexus-source-pin-resolution.v0.json');
 const nexusPinnedSourcePreflight = parseJson('data/nexus-pinned-source-preflight.v0.json');
+const nexusImportAdapterReportContract = parseJson('data/nexus-import-adapter-report-contract.v0.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -1600,11 +1782,13 @@ if (nexusNormalizationFixtures) validateNexusAdapterNormalizationFixtures(nexusN
 if (nexusImportPreflight) validateNexusImportAdapterPreflight(nexusImportPreflight);
 if (nexusSourcePinResolution) validateNexusSourcePinResolution(nexusSourcePinResolution);
 if (nexusPinnedSourcePreflight) validateNexusPinnedSourcePreflight(nexusPinnedSourcePreflight);
+if (nexusImportAdapterReportContract) validateNexusImportAdapterReportContract(nexusImportAdapterReportContract);
 validateNexusImportEnvironmentPreflightScript();
 validateLocalNexusImportAdapterScript();
 validateLocalNexusImportAdapterReportIfPresent();
 validateLocalNexusImportAdapterRegressionSuiteScript();
 validateLocalNexusImportAdapterRegressionReportIfPresent();
+validateNexusImportAdapterReportsScript();
 validateRequiredScriptFiles();
 validateRequiredDocFiles();
 

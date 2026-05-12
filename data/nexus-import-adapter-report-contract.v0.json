@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS Local NEXUS Import Adapter Report Contract",
+    "version": "0.1.0",
+    "track_phase": "3.19",
+    "status": "local_report_contract",
+    "integration_status_boundary": "local_import_adapter_reports_only",
+    "pinned_nexus_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "live_orchestration": false,
+    "public_ui_wiring": false,
+    "boundary": "Local report contract only. This does not create public runtime behavior, persistence, ledger behavior, backend behavior, authentication, database use, model execution, live orchestration, public UI wiring, production operation, or compliance certification."
+  },
+  "required_success_report_fields": [
+    "meta",
+    "nexus_boundary",
+    "source",
+    "adapter_input",
+    "nexus_payload",
+    "raw_nexus_result_boundary",
+    "normalized_interface_result",
+    "release_eligibility",
+    "trace_boundary",
+    "claim_boundary",
+    "deterministic_identity",
+    "stop_conditions"
+  ],
+  "required_regression_report_fields": [
+    "meta",
+    "nexus_boundary",
+    "suite_summary",
+    "fixture_results",
+    "deterministic_identity_summary",
+    "release_eligibility_summary",
+    "trace_boundary_summary",
+    "claim_boundary",
+    "stop_conditions"
+  ],
+  "required_failure_report_fields": [
+    "meta",
+    "failure_category",
+    "failure_reason",
+    "source",
+    "attempted_fixture_id",
+    "nexus_boundary",
+    "normalized_verdict",
+    "release_eligibility",
+    "trace_boundary",
+    "claim_boundary",
+    "stop_conditions",
+    "raw_error_boundary"
+  ],
+  "allowed_failure_categories": [
+    "nexus_path_missing",
+    "nexus_commit_mismatch",
+    "nexus_working_tree_dirty",
+    "fixture_mapping_missing",
+    "regulatory_context_missing",
+    "manifest_mapping_missing",
+    "nexus_execution_failure",
+    "malformed_nexus_result",
+    "unknown_nexus_verdict",
+    "unknown_risk_level",
+    "missing_omega_decision",
+    "nondeterministic_output",
+    "release_eligibility_incoherent",
+    "trace_boundary_violation",
+    "claim_boundary_violation"
+  ],
+  "release_eligibility_invariants": [
+    "fail/escalate verdict must never be release-eligible",
+    "unsupported mapping must never be release-eligible",
+    "execution failure must never be release-eligible",
+    "nondeterministic decision-relevant output must never be release-eligible",
+    "JSONL audit log must not imply ledger validity"
+  ],
+  "trace_boundary_invariants": {
+    "trace_status": "local_adapter_run_not_persistent_not_ledger",
+    "audit_log_output_boundary": "local audit-log output only",
+    "forbidden_trace_claims": [
+      "persistent ledger",
+      "immutable ledger",
+      "hash-chain ledger",
+      "database trace storage",
+      "production audit evidence"
+    ]
+  },
+  "claim_boundary_invariants": {
+    "public_runtime": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "public_ui_wiring": false,
+    "production_runtime": false,
+    "compliance_certification": false
+  }
+}

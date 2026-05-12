@@ -288,6 +288,7 @@ function buildSuiteReport(options, nexusStatus, fixtureResults) {
       stop_conditions: stopConditions
     },
     fixture_results: summaries,
+    stop_conditions: stopConditions,
     deterministic_identity_summary: {
       pass: summaries.filter(item => item.deterministic_identity === 'pass').length,
       fail: summaries.filter(item => item.deterministic_identity === 'fail').length,
