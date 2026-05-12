@@ -50,13 +50,15 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md',
   'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md',
   'docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md',
-  'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md'
+  'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md',
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md'
 ];
 
 const requiredScriptFiles = [
   'scripts/validate-nexus-adapter-normalizer-suite.mjs',
   'scripts/check-nexus-import-environment.mjs',
-  'scripts/run-nexus-import-adapter-local.mjs'
+  'scripts/run-nexus-import-adapter-local.mjs',
+  'scripts/run-nexus-import-adapter-regression-suite.mjs'
 ];
 
 const requiredDocFiles = [
@@ -64,7 +66,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md',
   'docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md',
   'docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md',
-  'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md'
+  'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md',
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -1317,6 +1320,160 @@ function validateLocalNexusImportAdapterReportIfPresent() {
   });
 }
 
+function validateLocalNexusImportAdapterRegressionSuiteScript() {
+  const file = 'scripts/run-nexus-import-adapter-regression-suite.mjs';
+  if (!existsSync(path.join(repoRoot, file))) {
+    addFailure(file, 'Local NEXUS import adapter regression suite', 'Regression suite script is missing');
+    return;
+  }
+
+  const text = readText(file);
+  [
+    ['pinned NEXUS commit check', /expectedNexusCommit\s*=\s*'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f'/],
+    ['local regression report output path', /\.track3-runs\/latest-nexus-import-adapter-regression-suite-report\.json/],
+    ['local adapter invocation', /scripts\/run-nexus-import-adapter-local\.mjs/],
+    ['public runtime boundary flag', /public_runtime:\s*false/],
+    ['persistence boundary flag', /persistence:\s*false/],
+    ['ledger boundary flag', /ledger:\s*false/],
+    ['model execution boundary flag', /model_execution:\s*false/],
+    ['backend boundary flag', /backend:\s*false/],
+    ['auth boundary flag', /auth:\s*false/],
+    ['database boundary flag', /database:\s*false/],
+    ['live orchestration boundary flag', /live_orchestration:\s*false/],
+    ['public UI wiring boundary flag', /public_ui_wiring:\s*false/],
+    ['local adapter trace boundary', /local_adapter_run_not_persistent_not_ledger/],
+    ['local pinned source execution scope', /local_pinned_source_only/]
+  ].forEach(([label, pattern]) => {
+    if (!pattern.test(text)) {
+      addFailure(file, 'Local NEXUS import adapter regression suite', `Script missing ${label}`);
+    }
+  });
+
+  const prohibitedPatterns = [
+    { label: 'dependency installation', pattern: /\b(?:pip3?|npm)\s+install\b|['"]install['"]/i },
+    { label: 'public UI wiring', pattern: /\bdocument\.|\bwindow\.|querySelector|addEventListener/i },
+    { label: 'public HTML modification target', pattern: /index\.html/i },
+    { label: 'production browser JS modification target', pattern: /js\/(?:app|docs|pipeline|grid|governance-engine|trace-viewer)\.js/i },
+    { label: 'network fetch', pattern: /\bfetch\s*\(|https?:\/\//i },
+    { label: 'model API environment assignment', pattern: /ANTHROPIC_API_KEY\s*=/i }
+  ];
+
+  prohibitedPatterns.forEach(({ label, pattern }) => {
+    if (pattern.test(text)) {
+      addFailure(file, 'Local NEXUS import adapter regression suite', `Script contains prohibited ${label}`);
+    }
+  });
+}
+
+function validateLocalNexusImportAdapterRegressionReportIfPresent() {
+  const file = '.track3-runs/latest-nexus-import-adapter-regression-suite-report.json';
+  const absolute = path.join(repoRoot, file);
+  if (!existsSync(absolute)) return;
+
+  let report;
+  try {
+    report = JSON.parse(readFileSync(absolute, 'utf8'));
+  } catch (error) {
+    addFailure(file, 'Local NEXUS import adapter regression report', error.message);
+    return;
+  }
+
+  const meta = report.meta || {};
+  if (meta.run_mode !== 'local_nexus_import_adapter_regression_suite') {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'meta.run_mode must be local_nexus_import_adapter_regression_suite');
+  }
+  [
+    'public_runtime',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'backend',
+    'auth',
+    'database',
+    'live_orchestration',
+    'public_ui_wiring'
+  ].forEach(flag => {
+    if (meta[flag] !== false) {
+      addFailure(file, 'Local NEXUS import adapter regression report', `meta.${flag} must be false`);
+    }
+  });
+
+  const nexusBoundary = report.nexus_boundary || {};
+  if (nexusBoundary.nexus_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'nexus_boundary.nexus_commit must match pinned NEXUS commit');
+  }
+  if (nexusBoundary.nexus_execution !== true) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'nexus_boundary.nexus_execution must be true for the local regression suite report');
+  }
+  if (nexusBoundary.nexus_execution_scope !== 'local_pinned_source_only') {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'nexus_boundary.nexus_execution_scope must be local_pinned_source_only');
+  }
+  if (nexusBoundary.python_execution !== true) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'nexus_boundary.python_execution must be true for the local regression suite report');
+  }
+  if (nexusBoundary.python_execution_scope !== 'local_adapter_subprocess_only') {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'nexus_boundary.python_execution_scope must be local_adapter_subprocess_only');
+  }
+  if (nexusBoundary.nexus_source_modified !== false) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'nexus_boundary.nexus_source_modified must be false');
+  }
+  if (nexusBoundary.dependency_installation_performed !== false) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'nexus_boundary.dependency_installation_performed must be false');
+  }
+
+  const summary = report.suite_summary || {};
+  if (summary.total_fixtures !== 5) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'suite_summary.total_fixtures must be 5');
+  }
+  if (summary.failed_cases !== 0) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'suite_summary.failed_cases must be 0');
+  }
+
+  const fixtureResults = Array.isArray(report.fixture_results) ? report.fixture_results : [];
+  if (fixtureResults.length !== 5) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'fixture_results must include five fixtures');
+  }
+  fixtureResults.forEach(result => {
+    if (result.trace_status !== 'local_adapter_run_not_persistent_not_ledger') {
+      addFailure(file, 'Local NEXUS import adapter regression report', `${result.fixture_id} trace_status must be local_adapter_run_not_persistent_not_ledger`);
+    }
+    if ((result.normalized_verdict === 'fail' || result.normalized_verdict === 'escalate') && result.release_eligible === true) {
+      addFailure(file, 'Local NEXUS import adapter regression report', `${result.fixture_id} has blocking verdict but release_eligible true`);
+    }
+    if (result.release_eligible === true && result.deterministic_identity === 'fail') {
+      addFailure(file, 'Local NEXUS import adapter regression report', `${result.fixture_id} is release-eligible with failed deterministic identity`);
+    }
+    const auditBoundary = JSON.stringify(result.audit_log_boundary || {}).toLowerCase();
+    if (auditBoundary.includes('persistent ledger') || auditBoundary.includes('production ledger')) {
+      addFailure(file, 'Local NEXUS import adapter regression report', `${result.fixture_id} audit boundary claims ledger behavior`);
+    }
+  });
+
+  const traceSummary = report.trace_boundary_summary || {};
+  if (traceSummary.trace_status !== 'local_adapter_run_not_persistent_not_ledger') {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'trace_boundary_summary.trace_status must be local_adapter_run_not_persistent_not_ledger');
+  }
+  if (traceSummary.all_local_non_persistent_non_ledger !== true) {
+    addFailure(file, 'Local NEXUS import adapter regression report', 'trace_boundary_summary.all_local_non_persistent_non_ledger must be true');
+  }
+
+  const claimBoundary = report.claim_boundary || {};
+  [
+    'not_public_runtime',
+    'not_persistent',
+    'not_ledger',
+    'not_backend',
+    'not_auth',
+    'not_model_execution',
+    'not_live_orchestration',
+    'not_production'
+  ].forEach(flag => {
+    if (claimBoundary[flag] !== true) {
+      addFailure(file, 'Local NEXUS import adapter regression report', `claim_boundary.${flag} must be true`);
+    }
+  });
+}
+
 function sentenceContext(lines, index) {
   return lines
     .slice(Math.max(0, index - 20), Math.min(lines.length, index + 3))
@@ -1446,6 +1603,8 @@ if (nexusPinnedSourcePreflight) validateNexusPinnedSourcePreflight(nexusPinnedSo
 validateNexusImportEnvironmentPreflightScript();
 validateLocalNexusImportAdapterScript();
 validateLocalNexusImportAdapterReportIfPresent();
+validateLocalNexusImportAdapterRegressionSuiteScript();
+validateLocalNexusImportAdapterRegressionReportIfPresent();
 validateRequiredScriptFiles();
 validateRequiredDocFiles();
 
