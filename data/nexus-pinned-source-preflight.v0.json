@@ -73,6 +73,29 @@
     "claim_boundary_status": "bounded",
     "authorization_note": "Readiness can be true while import-adapter authorization remains false. A future local NEXUS import-adapter prototype requires explicit user authorization."
   },
+  "track_3_17_authorization": {
+    "track_phase": "3.17",
+    "authorization_status": "explicitly_authorized_for_this_pass",
+    "authorization_scope": "local_only_pinned_source_import_adapter_prototype",
+    "authorized_nexus_source_path": "/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb",
+    "authorized_nexus_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "import_adapter_authorized_for_track_3_17": true,
+    "import_adapter_authorized": false,
+    "still_not_public_runtime": true,
+    "integration_status": "not_integrated",
+    "nexus_execution_scope": "local_pinned_source_only",
+    "python_execution_scope": "local_adapter_subprocess_only",
+    "public_runtime": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "live_orchestration": false,
+    "public_ui_wiring": false,
+    "claim_boundary_status": "bounded"
+  },
   "claim_boundary": {
     "allowed_after_track_3_15": [
       "clean pinned NEXUS source path prepared",
