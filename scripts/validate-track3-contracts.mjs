@@ -55,7 +55,8 @@ const track3TextFiles = [
   'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md',
-  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md'
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md'
 ];
 
 const requiredScriptFiles = [
@@ -75,7 +76,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md',
-  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md'
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -1667,12 +1669,15 @@ function validateNexusImportAdapterFailureInjectionScript() {
 
   const text = readText(file);
   [
-    ['Track 3.20 phase marker', /track_phase:\s*'3\.20'/],
+    ['Track 3.20 phase marker', /'3\.20'|3\.20-3\.21/],
     ['local suite report output path', /\.track3-runs\/latest-nexus-import-adapter-failure-injection-suite-report\.json/],
     ['individual failure report output pattern', /nexus-import-adapter-failure-injection-/],
     ['report contract input', /data\/nexus-import-adapter-report-contract\.v0\.json/],
     ['pinned NEXUS commit reference', /ab95cbbd24df5817c4e363d24b3b199ac8af6c6f/],
     ['local adapter trace boundary', /local_adapter_run_not_persistent_not_ledger/],
+    ['Track 3.21 completion marker', /3\.20-3\.21|tracksCompleted/],
+    ['manifest mapping missing injection', /manifest_mapping_missing/],
+    ['NEXUS execution failure injection', /nexus_execution_failure/],
     ['release eligibility incoherence injection', /release_eligibility_incoherent/],
     ['trace boundary violation injection', /trace_boundary_violation/],
     ['claim boundary violation injection', /claim_boundary_violation/],
@@ -1752,8 +1757,8 @@ function validateNexusImportAdapterFailureInjectionReportIfPresent() {
   }
 
   const summary = report.suite_summary || {};
-  if (summary.total_injections !== 13) {
-    addFailure(file, 'NEXUS import adapter failure injection report', 'suite_summary.total_injections must be 13');
+  if (summary.total_injections !== 15) {
+    addFailure(file, 'NEXUS import adapter failure injection report', 'suite_summary.total_injections must be 15');
   }
   if (summary.failed_injections !== 0) {
     addFailure(file, 'NEXUS import adapter failure injection report', 'suite_summary.failed_injections must be 0');
@@ -1766,6 +1771,8 @@ function validateNexusImportAdapterFailureInjectionReportIfPresent() {
     'nexus_working_tree_dirty',
     'fixture_mapping_missing',
     'regulatory_context_missing',
+    'manifest_mapping_missing',
+    'nexus_execution_failure',
     'malformed_nexus_result',
     'unknown_nexus_verdict',
     'unknown_risk_level',
@@ -1797,8 +1804,8 @@ function validateNexusImportAdapterFailureInjectionReportIfPresent() {
   }
 
   const results = Array.isArray(report.injection_results) ? report.injection_results : [];
-  if (results.length !== 13) {
-    addFailure(file, 'NEXUS import adapter failure injection report', 'injection_results must include 13 entries');
+  if (results.length !== 15) {
+    addFailure(file, 'NEXUS import adapter failure injection report', 'injection_results must include 15 entries');
   }
   results.forEach(result => {
     if (result.release_eligible !== false) {

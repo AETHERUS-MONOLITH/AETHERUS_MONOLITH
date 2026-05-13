@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -74,6 +74,28 @@ const injections = [
     observed: { regulatory_context_present: false }
   },
   {
+    id: 'missing_manifest_mapping',
+    failure_category: 'manifest_mapping_missing',
+    attempted_fixture_id: 'happy_path_valid_release',
+    failure_reason: 'Injected adapter input references no resolvable manifest mapping.',
+    track_phase: '3.21',
+    observed: {
+      manifest_mapping_present: false,
+      manifest_reference: 'injected_missing_manifest_mapping'
+    }
+  },
+  {
+    id: 'nexus_execution_failure',
+    failure_category: 'nexus_execution_failure',
+    attempted_fixture_id: 'happy_path_valid_release',
+    failure_reason: 'Injected controlled local NEXUS execution failure without running or modifying pinned NEXUS source.',
+    track_phase: '3.21',
+    observed: {
+      execution_status: 'simulated_subprocess_failure',
+      nexus_source_modified: false
+    }
+  },
+  {
     id: 'malformed_nexus_output',
     failure_category: 'malformed_nexus_result',
     attempted_fixture_id: 'happy_path_valid_release',
@@ -137,8 +159,11 @@ const injections = [
 ];
 
 const deferredCategories = [
-  'manifest_mapping_missing',
-  'nexus_execution_failure'
+];
+
+const tracksCompleted = [
+  '3.20',
+  '3.21'
 ];
 
 const failures = [];
@@ -157,6 +182,14 @@ function writeJson(relativePath, value) {
 
 function ensureOutputDir() {
   mkdirSync(path.join(repoRoot, outputDir), { recursive: true });
+}
+
+function clearPreviousInjectionReports() {
+  const absoluteOutputDir = path.join(repoRoot, outputDir);
+  if (!existsSync(absoluteOutputDir)) return;
+  readdirSync(absoluteOutputDir)
+    .filter(name => /^nexus-import-adapter-failure-injection-\d{2}-.+\.json$/.test(name))
+    .forEach(name => unlinkSync(path.join(absoluteOutputDir, name)));
 }
 
 function runCommand(command, args, cwd = repoRoot) {
@@ -192,7 +225,7 @@ function buildFailureReport(injection, contract, index) {
     meta: {
       generated_at: new Date().toISOString(),
       script_name: 'scripts/run-nexus-import-adapter-failure-injection-suite.mjs',
-      track_phase: '3.20',
+      track_phase: injection.track_phase || '3.20',
       run_mode: 'local_nexus_import_adapter_failure_injection',
       integration_status: 'local_import_adapter_failure_injection',
       ...falseBoundaryFlags()
@@ -306,7 +339,7 @@ function buildSuiteReport(reportSummaries) {
     meta: {
       generated_at: new Date().toISOString(),
       script_name: 'scripts/run-nexus-import-adapter-failure-injection-suite.mjs',
-      track_phase: '3.20',
+      track_phase: '3.20-3.21',
       run_mode: 'local_nexus_import_adapter_failure_injection_suite',
       integration_status: 'local_import_adapter_failure_injection_suite',
       ...falseBoundaryFlags()
@@ -326,6 +359,7 @@ function buildSuiteReport(reportSummaries) {
       failed_injections: failed.length,
       categories_covered: reportSummaries.map(item => item.failure_category),
       deferred_categories: deferredCategories,
+      tracks_completed: tracksCompleted,
       stop_conditions: reportSummaries.flatMap(item => item.stop_conditions)
     },
     injection_results: reportSummaries,
@@ -344,6 +378,7 @@ function buildSuiteReport(reportSummaries) {
 }
 
 ensureOutputDir();
+clearPreviousInjectionReports();
 
 const contract = readJson(contractFile);
 const reports = injections.map((injection, index) => buildFailureReport(injection, contract, index));
