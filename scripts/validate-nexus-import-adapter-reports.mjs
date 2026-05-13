@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,7 +10,8 @@ const repoRoot = path.resolve(__dirname, '..');
 const files = {
   contract: 'data/nexus-import-adapter-report-contract.v0.json',
   singleReport: '.track3-runs/latest-nexus-import-adapter-local-report.json',
-  regressionReport: '.track3-runs/latest-nexus-import-adapter-regression-suite-report.json'
+  regressionReport: '.track3-runs/latest-nexus-import-adapter-regression-suite-report.json',
+  failureInjectionSuiteReport: '.track3-runs/latest-nexus-import-adapter-failure-injection-suite-report.json'
 };
 
 const expectedNexusCommit = 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f';
@@ -275,6 +276,86 @@ function validateFailureReport(contract, report, file) {
   validateAuditBoundary(file, report.raw_error_boundary, 'raw_error_boundary');
 }
 
+function listFailureInjectionReports() {
+  const dir = path.join(repoRoot, '.track3-runs');
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter(name => /^nexus-import-adapter-failure-injection-\d{2}-.+\.json$/.test(name))
+    .sort()
+    .map(name => `.track3-runs/${name}`);
+}
+
+function validateFailureInjectionSuiteReport(contract, report) {
+  const file = files.failureInjectionSuiteReport;
+  if (!report) return;
+
+  [
+    'meta',
+    'nexus_boundary',
+    'suite_summary',
+    'injection_results',
+    'release_eligibility_summary',
+    'trace_boundary_summary',
+    'claim_boundary',
+    'stop_conditions'
+  ].forEach(field => {
+    if (!report[field]) {
+      addFailure('report_shape_failure', file, `Missing ${field}`);
+    }
+  });
+
+  requireFalseFlags(file, report.meta, 'meta');
+  requireClaimBoundary(file, report.claim_boundary);
+
+  const meta = report.meta || {};
+  if (meta.run_mode !== 'local_nexus_import_adapter_failure_injection_suite') {
+    addFailure('report_shape_failure', file, 'meta.run_mode must be local_nexus_import_adapter_failure_injection_suite');
+  }
+
+  const boundary = report.nexus_boundary || {};
+  if (boundary.nexus_execution !== false || boundary.python_execution !== false) {
+    addFailure('pinned_source_failure', file, 'failure-injection suite must not execute NEXUS or Python');
+  }
+  if (boundary.nexus_source_modified !== false || boundary.dependency_installation_performed !== false) {
+    addFailure('pinned_source_failure', file, 'failure-injection suite must not modify source or install dependencies');
+  }
+
+  const traceSummary = report.trace_boundary_summary || {};
+  if (traceSummary.trace_status !== traceStatus || traceSummary.all_local_non_persistent_non_ledger !== true) {
+    addFailure('trace_boundary_failure', file, 'trace_boundary_summary must be local/non-persistent/non-ledger');
+  }
+
+  const release = report.release_eligibility_summary || {};
+  if (release.all_blocked !== true || (Array.isArray(release.eligible) && release.eligible.length > 0)) {
+    addFailure('release_eligibility_failure', file, 'all injected failures must remain release-ineligible');
+  }
+
+  const summary = report.suite_summary || {};
+  if (summary.failed_injections !== 0) {
+    addFailure('report_shape_failure', file, 'suite_summary.failed_injections must be 0');
+  }
+
+  const allowed = new Set(contract.allowed_failure_categories || []);
+  const results = Array.isArray(report.injection_results) ? report.injection_results : [];
+  results.forEach(result => {
+    if (!allowed.has(result.failure_category)) {
+      addFailure('report_shape_failure', file, `${result.injection_id} uses unsupported failure category ${result.failure_category}`);
+    }
+    if (result.release_eligible !== false) {
+      addFailure('release_eligibility_failure', file, `${result.injection_id} must be release-ineligible`);
+    }
+    if (result.trace_status !== traceStatus) {
+      addFailure('trace_boundary_failure', file, `${result.injection_id} trace_status must be ${traceStatus}`);
+    }
+    if (result.claim_boundary_preserved !== true) {
+      addFailure('claim_boundary_failure', file, `${result.injection_id} must preserve claim boundary`);
+    }
+    if (result.passed !== true) {
+      addFailure('report_shape_failure', file, `${result.injection_id} did not pass fail-closed validation`);
+    }
+  });
+}
+
 const contract = readJson(files.contract, 'report_contract_missing');
 const singleReport = existsSync(path.join(repoRoot, files.singleReport))
   ? readJson(files.singleReport)
@@ -282,6 +363,12 @@ const singleReport = existsSync(path.join(repoRoot, files.singleReport))
 const regressionReport = existsSync(path.join(repoRoot, files.regressionReport))
   ? readJson(files.regressionReport)
   : null;
+const failureInjectionSuiteReport = existsSync(path.join(repoRoot, files.failureInjectionSuiteReport))
+  ? readJson(files.failureInjectionSuiteReport)
+  : null;
+const failureInjectionReports = listFailureInjectionReports()
+  .map(file => ({ file, report: readJson(file) }))
+  .filter(item => item.report);
 
 validateContract(contract);
 if (contract) {
@@ -293,6 +380,8 @@ if (contract) {
     }
   }
   if (regressionReport) validateRegressionReport(contract, regressionReport);
+  failureInjectionReports.forEach(({ file, report }) => validateFailureReport(contract, report, file));
+  if (failureInjectionSuiteReport) validateFailureInjectionSuiteReport(contract, failureInjectionSuiteReport);
 }
 
 console.log('NEXUS import adapter report validation');
@@ -301,6 +390,8 @@ console.log('Files validated:');
 console.log(`- ${files.contract}`);
 if (singleReport) console.log(`- ${files.singleReport}`);
 if (regressionReport) console.log(`- ${files.regressionReport}`);
+failureInjectionReports.forEach(({ file }) => console.log(`- ${file}`));
+if (failureInjectionSuiteReport) console.log(`- ${files.failureInjectionSuiteReport}`);
 console.log('');
 
 if (!failures.length) {
