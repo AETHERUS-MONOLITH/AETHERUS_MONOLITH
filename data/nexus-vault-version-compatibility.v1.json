@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Version Compatibility Policy",
+    "version": "1.0.0",
+    "track_phase": "3.24",
+    "status": "local_compatibility_policy",
+    "policy_scope": "Supported pinned Vault/NEXUS commit compatibility for Track 3 Conduit evidence",
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local compatibility policy only. This file does not create multi-Vault runtime support, public NEXUS runtime, backend behavior, persistence, ledger behavior, Palisade, Weave, production operation, customer deployment, or certification."
+  },
+  "current_supported_vault": {
+    "vault_name": "nexus-mvp",
+    "repository": "https://github.com/AETHERUS-MONOLITH/nexus-mvp",
+    "supported_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "source_path": "/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb",
+    "compatibility_state": "accepted",
+    "runtime_support": "local_pinned_source_only",
+    "is_only_supported_commit": true
+  },
+  "compatibility_matrix": [
+    {
+      "vault_name": "nexus-mvp",
+      "commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+      "state": "accepted",
+      "supported_for": [
+        "local import-adapter regression",
+        "local report validation",
+        "local failure injection",
+        "local ignored evidence export"
+      ],
+      "runtime_support": "local_pinned_source_only",
+      "public_runtime": false,
+      "multi_vault_runtime_support": false
+    }
+  ],
+  "unsupported_commit_policy": {
+    "default_state_for_unlisted_commits": "unsupported",
+    "no_other_vault_commit_supported_yet": true,
+    "must_not_infer_multi_vault_runtime_support": true,
+    "must_not_use_unlisted_commit_for_accepted_conduit_evidence": true
+  },
+  "future_vault_acceptance_requirements": [
+    "separate Operator authorization",
+    "source preflight against the candidate Vault commit",
+    "clean candidate Vault source working tree",
+    "adapter output contract comparison against the accepted Conduit surface",
+    "import-adapter regression suite pass",
+    "NEXUS import-adapter report validation pass",
+    "failure-injection suite pass",
+    "deterministic identity checks pass",
+    "trace boundary remains non-persistent and non-ledger",
+    "claim boundary remains bounded",
+    "generated .track3-runs/ artifacts remain ignored and uncommitted"
+  ],
+  "future_vault_stop_conditions": [
+    "NEXUS source commit mismatch",
+    "dirty pinned NEXUS source",
+    "adapter output contract drift",
+    "verdict enum drift",
+    "release eligibility incoherence",
+    "deterministic identity failure",
+    "trace boundary treated as persistent ledger",
+    "generated .track3-runs/ artifacts staged",
+    "public runtime claim escalation",
+    "Palisade runtime dependency introduced without authorization",
+    "Weave runtime dependency introduced without authorization",
+    "Facade runtime dependency introduced without authorization"
+  ],
+  "boundary_invariants": {
+    "compatibility_matrix_implies_multi_vault_runtime_support": false,
+    "compatibility_policy_authorizes_public_runtime": false,
+    "compatibility_policy_authorizes_backend": false,
+    "compatibility_policy_authorizes_persistence": false,
+    "compatibility_policy_authorizes_ledger": false,
+    "compatibility_policy_authorizes_palisade": false,
+    "compatibility_policy_authorizes_weave": false
+  }
+}

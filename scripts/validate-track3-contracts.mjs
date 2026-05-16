@@ -25,7 +25,9 @@ const dataFiles = [
   'data/interface-contract.v1.json',
   'data/nexus-adapter-contract.v1.json',
   'data/nexus-import-adapter-report-contract.v1.json',
-  'data/track3-local-report-export-manifest.v1.json'
+  'data/track3-local-report-export-manifest.v1.json',
+  'data/conduit-versioning-policy.v1.json',
+  'data/nexus-vault-version-compatibility.v1.json'
 ];
 
 const track3TextFiles = [
@@ -44,6 +46,8 @@ const track3TextFiles = [
   'data/nexus-adapter-contract.v1.json',
   'data/nexus-import-adapter-report-contract.v1.json',
   'data/track3-local-report-export-manifest.v1.json',
+  'data/conduit-versioning-policy.v1.json',
+  'data/nexus-vault-version-compatibility.v1.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -66,7 +70,8 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md',
   'docs/TRACK_3_CONTRACT_FREEZE_V1.md',
-  'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md'
+  'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md',
+  'docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md'
 ];
 
 const requiredScriptFiles = [
@@ -90,7 +95,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md',
   'docs/TRACK_3_CONTRACT_FREEZE_V1.md',
-  'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md'
+  'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md',
+  'docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -187,6 +193,16 @@ const expectedTrack322FailureCategories = [
   'release_eligibility_incoherent',
   'trace_boundary_violation',
   'claim_boundary_violation'
+];
+
+const expectedTrack324MigrationStates = [
+  'proposed',
+  'locally_validated',
+  'regression_validated',
+  'failure_injection_validated',
+  'accepted',
+  'deprecated',
+  'unsupported'
 ];
 
 function relPath(filePath) {
@@ -2058,6 +2074,213 @@ function validateTrack323ExportScript() {
   });
 }
 
+function validateTrack324PolicyMetadata(file, contract, expectedStatus, category) {
+  requirePath(contract, ['metadata'], file, category);
+  const metadata = contract.metadata || {};
+  if (metadata.version !== '1.0.0') {
+    addFailure(file, category, `metadata.version must be 1.0.0, found "${metadata.version}"`);
+  }
+  if (metadata.track_phase !== '3.24') {
+    addFailure(file, category, `metadata.track_phase must be 3.24, found "${metadata.track_phase}"`);
+  }
+  if (metadata.status !== expectedStatus) {
+    addFailure(file, category, `metadata.status must be ${expectedStatus}, found "${metadata.status}"`);
+  }
+  [
+    ...expectedTrack322BoundaryFalseFlags,
+    'multi_vault_runtime_support'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, category, `metadata.${flag} must be false`);
+    }
+  });
+}
+
+function validateConduitVersioningPolicy(policy) {
+  const file = 'data/conduit-versioning-policy.v1.json';
+  const category = 'Track 3.24 Conduit versioning policy';
+  validateTrack324PolicyMetadata(file, policy, 'local_contract_policy', category);
+
+  requirePath(policy, ['conduit_v1_surface'], file, category);
+  requirePath(policy, ['version_change_categories'], file, category);
+  requirePath(policy, ['migration_states'], file, category);
+  requirePath(policy, ['stop_conditions'], file, category);
+  requirePath(policy, ['non_goals'], file, category);
+
+  const surface = policy.conduit_v1_surface || {};
+  if (surface.surface_version !== '1.0.0') {
+    addFailure(file, category, 'conduit_v1_surface.surface_version must be 1.0.0');
+  }
+
+  const artifactPaths = new Set((surface.artifacts || []).map(item => item && item.path));
+  [
+    'data/interface-contract.v1.json',
+    'data/nexus-adapter-contract.v1.json',
+    'data/nexus-import-adapter-report-contract.v1.json',
+    'data/track3-local-report-export-manifest.v1.json'
+  ].forEach(artifact => {
+    if (!artifactPaths.has(artifact)) {
+      addFailure(file, category, `conduit_v1_surface.artifacts missing ${artifact}`);
+    }
+  });
+
+  const pinned = surface.pinned_vault_metadata || {};
+  if (pinned.supported_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'pinned_vault_metadata.supported_commit must match pinned NEXUS commit');
+  }
+  if (pinned.support_status !== 'accepted_single_pinned_commit') {
+    addFailure(file, category, 'pinned_vault_metadata.support_status must be accepted_single_pinned_commit');
+  }
+
+  const categories = policy.version_change_categories || {};
+  ['patch', 'minor', 'major'].forEach(changeCategory => {
+    if (!isObject(categories[changeCategory])) {
+      addFailure(file, category, `version_change_categories.${changeCategory} must be present`);
+    }
+  });
+  if (categories.patch && categories.patch.requires_new_major_version !== false) {
+    addFailure(file, category, 'version_change_categories.patch.requires_new_major_version must be false');
+  }
+  if (categories.minor && categories.minor.requires_new_major_version !== false) {
+    addFailure(file, category, 'version_change_categories.minor.requires_new_major_version must be false');
+  }
+  if (categories.major && categories.major.requires_new_major_version !== true) {
+    addFailure(file, category, 'version_change_categories.major.requires_new_major_version must be true');
+  }
+
+  const majorText = JSON.stringify(categories.major || {}).toLowerCase();
+  [
+    'breaking schema change',
+    'changed verdict semantics',
+    'changed release eligibility semantics',
+    'changed trace-boundary semantics',
+    'changed vault adapter assumptions'
+  ].forEach(phrase => {
+    if (!majorText.includes(phrase)) {
+      addFailure(file, category, `version_change_categories.major must include ${phrase}`);
+    }
+  });
+
+  const states = new Set((policy.migration_states || []).map(item => item && item.state));
+  expectedTrack324MigrationStates.forEach(state => {
+    if (!states.has(state)) {
+      addFailure(file, category, `migration_states missing ${state}`);
+    }
+  });
+
+  validateTrack324StopConditions(file, category, policy.stop_conditions || []);
+}
+
+function validateTrack324StopConditions(file, category, stopConditions) {
+  const text = Array.isArray(stopConditions) ? stopConditions.join(' ').toLowerCase() : '';
+  [
+    'nexus source commit mismatch',
+    'dirty pinned nexus source',
+    'adapter output contract drift',
+    'verdict enum drift',
+    'release eligibility incoherence',
+    'deterministic identity failure',
+    'trace boundary treated as persistent ledger',
+    'generated .track3-runs/ artifacts staged',
+    'public runtime claim escalation',
+    'palisade runtime dependency introduced without authorization',
+    'weave runtime dependency introduced without authorization',
+    'facade runtime dependency introduced without authorization'
+  ].forEach(phrase => {
+    if (!text.includes(phrase)) {
+      addFailure(file, category, `stop conditions missing ${phrase}`);
+    }
+  });
+}
+
+function validateNexusVaultCompatibilityPolicy(policy) {
+  const file = 'data/nexus-vault-version-compatibility.v1.json';
+  const category = 'Track 3.24 NEXUS Vault compatibility policy';
+  validateTrack324PolicyMetadata(file, policy, 'local_compatibility_policy', category);
+
+  requirePath(policy, ['current_supported_vault'], file, category);
+  requirePath(policy, ['compatibility_matrix'], file, category);
+  requirePath(policy, ['unsupported_commit_policy'], file, category);
+  requirePath(policy, ['future_vault_acceptance_requirements'], file, category);
+  requirePath(policy, ['future_vault_stop_conditions'], file, category);
+  requirePath(policy, ['boundary_invariants'], file, category);
+
+  const current = policy.current_supported_vault || {};
+  if (current.supported_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'current_supported_vault.supported_commit must match pinned NEXUS commit');
+  }
+  if (current.compatibility_state !== 'accepted') {
+    addFailure(file, category, 'current_supported_vault.compatibility_state must be accepted');
+  }
+  if (current.runtime_support !== 'local_pinned_source_only') {
+    addFailure(file, category, 'current_supported_vault.runtime_support must be local_pinned_source_only');
+  }
+  if (current.is_only_supported_commit !== true) {
+    addFailure(file, category, 'current_supported_vault.is_only_supported_commit must be true');
+  }
+
+  const matrix = policy.compatibility_matrix || [];
+  if (matrix.length !== 1) {
+    addFailure(file, category, 'compatibility_matrix must contain exactly one currently supported commit');
+  }
+  const entry = matrix[0] || {};
+  if (entry.commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'compatibility_matrix[0].commit must match pinned NEXUS commit');
+  }
+  if (entry.state !== 'accepted') {
+    addFailure(file, category, 'compatibility_matrix[0].state must be accepted');
+  }
+  if (entry.multi_vault_runtime_support !== false) {
+    addFailure(file, category, 'compatibility_matrix[0].multi_vault_runtime_support must be false');
+  }
+
+  const unsupported = policy.unsupported_commit_policy || {};
+  if (unsupported.default_state_for_unlisted_commits !== 'unsupported') {
+    addFailure(file, category, 'unsupported_commit_policy.default_state_for_unlisted_commits must be unsupported');
+  }
+  [
+    'no_other_vault_commit_supported_yet',
+    'must_not_infer_multi_vault_runtime_support',
+    'must_not_use_unlisted_commit_for_accepted_conduit_evidence'
+  ].forEach(flag => {
+    if (unsupported[flag] !== true) {
+      addFailure(file, category, `unsupported_commit_policy.${flag} must be true`);
+    }
+  });
+
+  const requirementsText = JSON.stringify(policy.future_vault_acceptance_requirements || []).toLowerCase();
+  [
+    'source preflight',
+    'import-adapter regression suite pass',
+    'nexus import-adapter report validation pass',
+    'failure-injection suite pass',
+    'deterministic identity checks pass',
+    'trace boundary remains non-persistent and non-ledger',
+    'claim boundary remains bounded'
+  ].forEach(phrase => {
+    if (!requirementsText.includes(phrase)) {
+      addFailure(file, category, `future_vault_acceptance_requirements missing ${phrase}`);
+    }
+  });
+
+  validateTrack324StopConditions(file, category, policy.future_vault_stop_conditions || []);
+
+  const boundary = policy.boundary_invariants || {};
+  [
+    'compatibility_matrix_implies_multi_vault_runtime_support',
+    'compatibility_policy_authorizes_public_runtime',
+    'compatibility_policy_authorizes_backend',
+    'compatibility_policy_authorizes_persistence',
+    'compatibility_policy_authorizes_ledger',
+    'compatibility_policy_authorizes_palisade',
+    'compatibility_policy_authorizes_weave'
+  ].forEach(flag => {
+    if (boundary[flag] !== false) {
+      addFailure(file, category, `boundary_invariants.${flag} must be false`);
+    }
+  });
+}
+
 function validateNexusImportAdapterReportsScript() {
   const file = 'scripts/validate-nexus-import-adapter-reports.mjs';
   if (!existsSync(path.join(repoRoot, file))) {
@@ -2377,6 +2600,8 @@ const interfaceContractV1 = parseJson('data/interface-contract.v1.json');
 const nexusAdapterContractV1 = parseJson('data/nexus-adapter-contract.v1.json');
 const nexusImportAdapterReportContractV1 = parseJson('data/nexus-import-adapter-report-contract.v1.json');
 const track3LocalReportExportManifest = parseJson('data/track3-local-report-export-manifest.v1.json');
+const conduitVersioningPolicy = parseJson('data/conduit-versioning-policy.v1.json');
+const nexusVaultVersionCompatibility = parseJson('data/nexus-vault-version-compatibility.v1.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -2412,6 +2637,8 @@ if (interfaceContractV1) validateInterfaceContractV1(interfaceContractV1);
 if (nexusAdapterContractV1) validateNexusAdapterContractV1(nexusAdapterContractV1);
 if (nexusImportAdapterReportContractV1) validateNexusImportAdapterReportContractV1(nexusImportAdapterReportContractV1);
 if (track3LocalReportExportManifest) validateTrack323ExportManifestContract(track3LocalReportExportManifest);
+if (conduitVersioningPolicy) validateConduitVersioningPolicy(conduitVersioningPolicy);
+if (nexusVaultVersionCompatibility) validateNexusVaultCompatibilityPolicy(nexusVaultVersionCompatibility);
 validateNexusImportEnvironmentPreflightScript();
 validateLocalNexusImportAdapterScript();
 validateLocalNexusImportAdapterReportIfPresent();

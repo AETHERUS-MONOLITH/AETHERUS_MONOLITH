@@ -1,0 +1,186 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS Conduit Versioning Policy",
+    "version": "1.0.0",
+    "track_phase": "3.24",
+    "status": "local_contract_policy",
+    "policy_scope": "Track 3 Conduit contract versioning and migration governance",
+    "source_contracts": [
+      "data/interface-contract.v1.json",
+      "data/nexus-adapter-contract.v1.json",
+      "data/nexus-import-adapter-report-contract.v1.json",
+      "data/track3-local-report-export-manifest.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local Conduit versioning policy only. This file does not create runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, ledger behavior, model execution, live orchestration, Palisade, Weave, multi-Vault runtime support, production operation, customer deployment, or certification."
+  },
+  "conduit_v1_surface": {
+    "surface_version": "1.0.0",
+    "artifacts": [
+      {
+        "id": "interface_contract",
+        "path": "data/interface-contract.v1.json",
+        "version": "1.0.0",
+        "role": "Interface Layer boundary, deterministic identity expectations, verdict and release eligibility semantics"
+      },
+      {
+        "id": "nexus_adapter_contract",
+        "path": "data/nexus-adapter-contract.v1.json",
+        "version": "1.0.0",
+        "role": "Local pinned NEXUS adapter boundary and fail-closed category surface"
+      },
+      {
+        "id": "import_adapter_report_contract",
+        "path": "data/nexus-import-adapter-report-contract.v1.json",
+        "version": "1.0.0",
+        "role": "Local report schema, failure category coverage, trace boundary, and claim boundary invariants"
+      },
+      {
+        "id": "local_report_export_manifest",
+        "path": "data/track3-local-report-export-manifest.v1.json",
+        "version": "1.0.0",
+        "role": "Ignored local evidence export selection and manifest requirements"
+      }
+    ],
+    "validator_expectations": [
+      "JSON policy and contract files must parse",
+      "v1 artifacts must retain false boundary flags for public runtime, public UI wiring, backend, authentication, database use, persistence, ledger behavior, model execution, live orchestration, Palisade, Weave, multi-Vault runtime support, and claim escalation",
+      "verdict semantics must remain pass, fail, and escalate unless a major migration is proposed and separately accepted",
+      "release eligibility must remain blocked for fail, escalate, stop conditions, unsupported mappings, deterministic identity failure, trace boundary violation, and claim boundary violation",
+      ".track3-runs/ artifacts must remain ignored and uncommitted"
+    ],
+    "pinned_vault_metadata": {
+      "vault_name": "nexus-mvp",
+      "repository": "https://github.com/AETHERUS-MONOLITH/nexus-mvp",
+      "supported_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+      "source_path": "/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb",
+      "support_status": "accepted_single_pinned_commit"
+    }
+  },
+  "version_change_categories": {
+    "patch": {
+      "description": "Clarifying documentation or validator checks that do not alter contract semantics.",
+      "allowed_examples": [
+        "clarify local-only wording",
+        "tighten validation of an existing invariant",
+        "fix typo or path reference without changing behavior"
+      ],
+      "forbidden_examples": [
+        "new verdict semantics",
+        "changed release eligibility semantics",
+        "new Vault adapter assumption"
+      ],
+      "requires_new_major_version": false
+    },
+    "minor": {
+      "description": "Additive contract fields or additive failure categories that preserve backward compatibility.",
+      "allowed_examples": [
+        "optional metadata field",
+        "new non-breaking manifest field",
+        "additional failure category that still fails closed"
+      ],
+      "requirements": [
+        "existing v1 reports and validators remain valid",
+        "new fields are optional or have bounded defaults",
+        "release eligibility and trace-boundary semantics are unchanged"
+      ],
+      "requires_new_major_version": false
+    },
+    "major": {
+      "description": "Breaking schema changes or semantic changes to the frozen Conduit contract surface.",
+      "triggers": [
+        "breaking schema change",
+        "changed verdict semantics",
+        "changed release eligibility semantics",
+        "changed trace-boundary semantics",
+        "changed Vault adapter assumptions",
+        "required field removal or rename",
+        "new supported Vault commit replacing the accepted pinned commit"
+      ],
+      "requirements": [
+        "separate Operator authorization",
+        "new compatibility assessment",
+        "source preflight",
+        "import-adapter regression",
+        "report validation",
+        "failure injection",
+        "deterministic identity checks",
+        "boundary checks"
+      ],
+      "requires_new_major_version": true
+    }
+  },
+  "migration_states": [
+    {
+      "state": "proposed",
+      "meaning": "A contract or Vault change is described but not yet validated."
+    },
+    {
+      "state": "locally_validated",
+      "meaning": "Static contract and local report validators pass for the proposed change."
+    },
+    {
+      "state": "regression_validated",
+      "meaning": "The local import-adapter regression suite passes against the proposed surface."
+    },
+    {
+      "state": "failure_injection_validated",
+      "meaning": "The failure-injection suite passes and all injected failures remain release-ineligible."
+    },
+    {
+      "state": "accepted",
+      "meaning": "The Operator has accepted the validated contract or Vault compatibility state."
+    },
+    {
+      "state": "deprecated",
+      "meaning": "A previously accepted surface is retained for reference but is no longer the preferred target."
+    },
+    {
+      "state": "unsupported",
+      "meaning": "The surface or Vault commit must not be used for accepted Conduit evidence."
+    }
+  ],
+  "stop_conditions": [
+    "NEXUS source commit mismatch",
+    "dirty pinned NEXUS source",
+    "adapter output contract drift",
+    "verdict enum drift",
+    "release eligibility incoherence",
+    "deterministic identity failure",
+    "trace boundary treated as persistent ledger",
+    "generated .track3-runs/ artifacts staged",
+    "public runtime claim escalation",
+    "Palisade runtime dependency introduced without authorization",
+    "Weave runtime dependency introduced without authorization",
+    "Facade runtime dependency introduced without authorization"
+  ],
+  "non_goals": [
+    "public UI wiring",
+    "backend service",
+    "authentication",
+    "database use",
+    "storage or persistence",
+    "ledger behavior",
+    "model or API execution",
+    "live orchestration",
+    "Palisade implementation",
+    "Weave implementation",
+    "multi-Vault runtime support",
+    "production runtime",
+    "enterprise deployment",
+    "customer deployment",
+    "certification"
+  ]
+}
