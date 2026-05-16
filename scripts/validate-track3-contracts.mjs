@@ -24,7 +24,8 @@ const dataFiles = [
   'data/nexus-import-adapter-report-contract.v0.json',
   'data/interface-contract.v1.json',
   'data/nexus-adapter-contract.v1.json',
-  'data/nexus-import-adapter-report-contract.v1.json'
+  'data/nexus-import-adapter-report-contract.v1.json',
+  'data/track3-local-report-export-manifest.v1.json'
 ];
 
 const track3TextFiles = [
@@ -42,6 +43,7 @@ const track3TextFiles = [
   'data/interface-contract.v1.json',
   'data/nexus-adapter-contract.v1.json',
   'data/nexus-import-adapter-report-contract.v1.json',
+  'data/track3-local-report-export-manifest.v1.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -63,7 +65,8 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md',
-  'docs/TRACK_3_CONTRACT_FREEZE_V1.md'
+  'docs/TRACK_3_CONTRACT_FREEZE_V1.md',
+  'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md'
 ];
 
 const requiredScriptFiles = [
@@ -72,7 +75,8 @@ const requiredScriptFiles = [
   'scripts/run-nexus-import-adapter-local.mjs',
   'scripts/run-nexus-import-adapter-regression-suite.mjs',
   'scripts/run-nexus-import-adapter-failure-injection-suite.mjs',
-  'scripts/validate-nexus-import-adapter-reports.mjs'
+  'scripts/validate-nexus-import-adapter-reports.mjs',
+  'scripts/export-track3-local-report-bundle.mjs'
 ];
 
 const requiredDocFiles = [
@@ -85,7 +89,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md',
-  'docs/TRACK_3_CONTRACT_FREEZE_V1.md'
+  'docs/TRACK_3_CONTRACT_FREEZE_V1.md',
+  'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -1902,6 +1907,157 @@ function validateNexusImportAdapterReportContractV1(contract) {
   }
 }
 
+function validateTrack323ExportManifestContract(contract) {
+  const file = 'data/track3-local-report-export-manifest.v1.json';
+  const category = 'Track 3.23 local report export manifest';
+
+  requirePath(contract, ['metadata'], file, category);
+  requirePath(contract, ['output_paths'], file, category);
+  requirePath(contract, ['stable_file_selection'], file, category);
+  requirePath(contract, ['manifest_requirements'], file, category);
+  requirePath(contract, ['pinned_source'], file, category);
+  requirePath(contract, ['boundary_invariants'], file, category);
+
+  const metadata = contract.metadata || {};
+  if (metadata.version !== '1.0.0') {
+    addFailure(file, category, `metadata.version must be 1.0.0, found "${metadata.version}"`);
+  }
+  if (metadata.track_phase !== '3.23') {
+    addFailure(file, category, `metadata.track_phase must be 3.23, found "${metadata.track_phase}"`);
+  }
+  if (metadata.status !== 'local_export_manifest_contract') {
+    addFailure(file, category, `metadata.status must be local_export_manifest_contract, found "${metadata.status}"`);
+  }
+  validateBoundaryFalseFlags(file, metadata, category);
+
+  const output = contract.output_paths || {};
+  if (output.archive_pattern !== '.track3-runs/track3-local-report-export-<timestamp>.tar.gz') {
+    addFailure(file, category, 'output_paths.archive_pattern must remain under ignored .track3-runs/');
+  }
+  if (output.latest_manifest !== '.track3-runs/latest-track3-local-report-export-manifest.json') {
+    addFailure(file, category, 'output_paths.latest_manifest must remain under ignored .track3-runs/');
+  }
+  if (output.latest_summary !== '.track3-runs/latest-track3-local-report-export-summary.json') {
+    addFailure(file, category, 'output_paths.latest_summary must remain under ignored .track3-runs/');
+  }
+
+  const selection = contract.stable_file_selection || {};
+  const required = new Set(selection.required_core_reports || []);
+  [
+    '.track3-runs/latest-nexus-import-adapter-local-report.json',
+    '.track3-runs/latest-nexus-import-adapter-regression-suite-report.json',
+    '.track3-runs/latest-nexus-import-adapter-failure-injection-suite-report.json'
+  ].forEach(report => {
+    if (!required.has(report)) {
+      addFailure(file, category, `stable_file_selection.required_core_reports missing ${report}`);
+    }
+  });
+
+  const detailPattern = Array.isArray(selection.required_detail_patterns)
+    ? selection.required_detail_patterns.find(item => item && item.pattern === '.track3-runs/nexus-import-adapter-failure-injection-*.json')
+    : null;
+  if (!detailPattern) {
+    addFailure(file, category, 'stable_file_selection.required_detail_patterns must include failure-injection details');
+  } else if (detailPattern.minimum_count !== 15) {
+    addFailure(file, category, 'failure-injection required_detail_patterns.minimum_count must be 15');
+  }
+
+  const excluded = new Set(selection.excluded_patterns || []);
+  [
+    '.track3-runs/track3-local-report-export-*.tar.gz',
+    '.track3-runs/latest-track3-local-report-export-manifest.json',
+    '.track3-runs/latest-track3-local-report-export-summary.json',
+    '.track3-runs/nexus-import-adapter-runner.py'
+  ].forEach(pattern => {
+    if (!excluded.has(pattern)) {
+      addFailure(file, category, `stable_file_selection.excluded_patterns missing ${pattern}`);
+    }
+  });
+
+  const requirements = contract.manifest_requirements || {};
+  [
+    'record_run_timestamp_separately_from_hashes',
+    'record_aetherus_commit',
+    'record_pinned_nexus_commit',
+    'record_pinned_nexus_source_path',
+    'record_file_paths',
+    'record_size_bytes',
+    'record_sha256',
+    'record_inclusion_category',
+    'record_validation_summary',
+    'record_boundary_summary'
+  ].forEach(flag => {
+    if (requirements[flag] !== true) {
+      addFailure(file, category, `manifest_requirements.${flag} must be true`);
+    }
+  });
+
+  const pinned = contract.pinned_source || {};
+  if (pinned.nexus_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'pinned_source.nexus_commit must match pinned NEXUS commit');
+  }
+
+  const boundary = contract.boundary_invariants || {};
+  [
+    'export_archive_committed',
+    'generated_manifest_committed',
+    'export_is_repository_source_of_truth',
+    'export_is_production_ledger',
+    'export_is_persistent_audit_infrastructure',
+    'export_makes_public_runtime_claims_claimable',
+    'conduit_fail_closed_behavior_is_palisade_work'
+  ].forEach(flag => {
+    if (boundary[flag] !== false) {
+      addFailure(file, category, `boundary_invariants.${flag} must be false`);
+    }
+  });
+}
+
+function validateTrack323ExportScript() {
+  const file = 'scripts/export-track3-local-report-bundle.mjs';
+  if (!existsSync(path.join(repoRoot, file))) {
+    addFailure(file, 'Track 3.23 local report exporter', 'Export script is missing');
+    return;
+  }
+
+  const text = readText(file);
+  [
+    ['export manifest contract input', /data\/track3-local-report-export-manifest\.v1\.json/],
+    ['archive output under ignored reports directory', /\.track3-runs\/track3-local-report-export-/],
+    ['latest export manifest output', /\.track3-runs\/latest-track3-local-report-export-manifest\.json/],
+    ['latest export summary output', /\.track3-runs\/latest-track3-local-report-export-summary\.json/],
+    ['SHA256 hashing', /sha256/],
+    ['pinned NEXUS commit reference', /ab95cbbd24df5817c4e363d24b3b199ac8af6c6f/],
+    ['pinned NEXUS source path', /nexus-mvp-pinned-ab95cbb/],
+    ['report validator capture', /validate-nexus-import-adapter-reports\.mjs/],
+    ['Track 3 contract validator capture', /validate-track3-contracts\.mjs/],
+    ['failure-injection detail minimum', /expected at least 15 failure-injection detail reports/],
+    ['local-only boundary output', /local evidence export only/],
+    ['Palisade boundary flag', /palisade:\s*false/],
+    ['Weave boundary flag', /weave:\s*false/],
+    ['claim escalation boundary flag', /claim_escalation:\s*false/]
+  ].forEach(([label, pattern]) => {
+    if (!pattern.test(text)) {
+      addFailure(file, 'Track 3.23 local report exporter', `Script missing ${label}`);
+    }
+  });
+
+  const prohibitedPatterns = [
+    { label: 'dependency installation', pattern: /\b(?:pip3?|npm)\s+install\b|['"]install['"]/i },
+    { label: 'public UI wiring', pattern: /\bdocument\.|\bwindow\.|querySelector|addEventListener/i },
+    { label: 'public HTML modification target', pattern: /index\.html/i },
+    { label: 'production browser JS modification target', pattern: /js\/(?:app|docs|pipeline|grid|governance-engine|trace-viewer)\.js/i },
+    { label: 'network fetch', pattern: /\bfetch\s*\(|https?:\/\//i },
+    { label: 'model API environment assignment', pattern: /ANTHROPIC_API_KEY\s*=/i }
+  ];
+
+  prohibitedPatterns.forEach(({ label, pattern }) => {
+    if (pattern.test(text)) {
+      addFailure(file, 'Track 3.23 local report exporter', `Script contains prohibited ${label}`);
+    }
+  });
+}
+
 function validateNexusImportAdapterReportsScript() {
   const file = 'scripts/validate-nexus-import-adapter-reports.mjs';
   if (!existsSync(path.join(repoRoot, file))) {
@@ -2220,6 +2376,7 @@ const nexusImportAdapterReportContract = parseJson('data/nexus-import-adapter-re
 const interfaceContractV1 = parseJson('data/interface-contract.v1.json');
 const nexusAdapterContractV1 = parseJson('data/nexus-adapter-contract.v1.json');
 const nexusImportAdapterReportContractV1 = parseJson('data/nexus-import-adapter-report-contract.v1.json');
+const track3LocalReportExportManifest = parseJson('data/track3-local-report-export-manifest.v1.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -2254,6 +2411,7 @@ if (nexusImportAdapterReportContract) validateNexusImportAdapterReportContract(n
 if (interfaceContractV1) validateInterfaceContractV1(interfaceContractV1);
 if (nexusAdapterContractV1) validateNexusAdapterContractV1(nexusAdapterContractV1);
 if (nexusImportAdapterReportContractV1) validateNexusImportAdapterReportContractV1(nexusImportAdapterReportContractV1);
+if (track3LocalReportExportManifest) validateTrack323ExportManifestContract(track3LocalReportExportManifest);
 validateNexusImportEnvironmentPreflightScript();
 validateLocalNexusImportAdapterScript();
 validateLocalNexusImportAdapterReportIfPresent();
@@ -2262,6 +2420,7 @@ validateLocalNexusImportAdapterRegressionReportIfPresent();
 validateNexusImportAdapterReportsScript();
 validateNexusImportAdapterFailureInjectionScript();
 validateNexusImportAdapterFailureInjectionReportIfPresent();
+validateTrack323ExportScript();
 validateRequiredScriptFiles();
 validateRequiredDocFiles();
 

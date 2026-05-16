@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS Track 3 Local Report Export Manifest Contract",
+    "version": "1.0.0",
+    "track_phase": "3.23",
+    "status": "local_export_manifest_contract",
+    "source_contracts": [
+      "data/interface-contract.v1.json",
+      "data/nexus-adapter-contract.v1.json",
+      "data/nexus-import-adapter-report-contract.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "claim_escalation": false,
+    "boundary": "Local export manifest contract only. This file does not create runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, ledger behavior, model execution, live orchestration, Palisade, Weave, production operation, enterprise deployment, customer deployment, or certification."
+  },
+  "output_paths": {
+    "archive_pattern": ".track3-runs/track3-local-report-export-<timestamp>.tar.gz",
+    "latest_manifest": ".track3-runs/latest-track3-local-report-export-manifest.json",
+    "latest_summary": ".track3-runs/latest-track3-local-report-export-summary.json"
+  },
+  "stable_file_selection": {
+    "required_core_reports": [
+      ".track3-runs/latest-nexus-import-adapter-local-report.json",
+      ".track3-runs/latest-nexus-import-adapter-regression-suite-report.json",
+      ".track3-runs/latest-nexus-import-adapter-failure-injection-suite-report.json"
+    ],
+    "required_detail_patterns": [
+      {
+        "pattern": ".track3-runs/nexus-import-adapter-failure-injection-*.json",
+        "minimum_count": 15
+      }
+    ],
+    "optional_evidence_files": [
+      ".track3-runs/latest-local-fixture-report.json",
+      ".track3-runs/latest-local-fixture-suite-report.json",
+      ".track3-runs/latest-nexus-import-environment-preflight.json",
+      ".track3-runs/latest-nexus-adapter-normalizer-stub-report.json"
+    ],
+    "optional_evidence_patterns": [
+      ".track3-runs/nexus-import-adapter-audit-*.jsonl"
+    ],
+    "excluded_patterns": [
+      ".track3-runs/track3-local-report-export-*.tar.gz",
+      ".track3-runs/latest-track3-local-report-export-manifest.json",
+      ".track3-runs/latest-track3-local-report-export-summary.json",
+      ".track3-runs/nexus-import-adapter-runner.py"
+    ]
+  },
+  "manifest_requirements": {
+    "record_run_timestamp_separately_from_hashes": true,
+    "record_aetherus_commit": true,
+    "record_pinned_nexus_commit": true,
+    "record_pinned_nexus_source_path": true,
+    "record_file_paths": true,
+    "record_size_bytes": true,
+    "record_sha256": true,
+    "record_inclusion_category": true,
+    "record_validation_summary": true,
+    "record_boundary_summary": true
+  },
+  "pinned_source": {
+    "nexus_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "nexus_source_path": "/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb"
+  },
+  "boundary_invariants": {
+    "export_archive_committed": false,
+    "generated_manifest_committed": false,
+    "export_is_repository_source_of_truth": false,
+    "export_is_production_ledger": false,
+    "export_is_persistent_audit_infrastructure": false,
+    "export_makes_public_runtime_claims_claimable": false,
+    "conduit_fail_closed_behavior_is_palisade_work": false
+  }
+}
