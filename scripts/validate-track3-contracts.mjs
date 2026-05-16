@@ -28,7 +28,9 @@ const dataFiles = [
   'data/track3-local-report-export-manifest.v1.json',
   'data/conduit-versioning-policy.v1.json',
   'data/nexus-vault-version-compatibility.v1.json',
-  'data/nexus-vault-compatibility-evaluation-fixtures.v1.json'
+  'data/nexus-vault-compatibility-evaluation-fixtures.v1.json',
+  'data/nexus-vault-compatibility-evidence-packet-contract.v1.json',
+  'data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json'
 ];
 
 const track3TextFiles = [
@@ -50,6 +52,8 @@ const track3TextFiles = [
   'data/conduit-versioning-policy.v1.json',
   'data/nexus-vault-version-compatibility.v1.json',
   'data/nexus-vault-compatibility-evaluation-fixtures.v1.json',
+  'data/nexus-vault-compatibility-evidence-packet-contract.v1.json',
+  'data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -74,7 +78,8 @@ const track3TextFiles = [
   'docs/TRACK_3_CONTRACT_FREEZE_V1.md',
   'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md',
   'docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md',
-  'docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md'
+  'docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md',
+  'docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md'
 ];
 
 const requiredScriptFiles = [
@@ -85,7 +90,8 @@ const requiredScriptFiles = [
   'scripts/run-nexus-import-adapter-failure-injection-suite.mjs',
   'scripts/validate-nexus-import-adapter-reports.mjs',
   'scripts/export-track3-local-report-bundle.mjs',
-  'scripts/evaluate-nexus-vault-compatibility-stub.mjs'
+  'scripts/evaluate-nexus-vault-compatibility-stub.mjs',
+  'scripts/validate-nexus-vault-compatibility-evidence-packet.mjs'
 ];
 
 const requiredDocFiles = [
@@ -101,7 +107,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_CONTRACT_FREEZE_V1.md',
   'docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md',
   'docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md',
-  'docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md'
+  'docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md',
+  'docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -228,6 +235,50 @@ const expectedTrack325Statuses = [
   'candidate_requires_full_evaluation',
   'incompatible',
   'invalid_fixture'
+];
+
+const expectedTrack326PacketFields = [
+  'candidate_vault_commit',
+  'candidate_source_status',
+  'source_cleanliness',
+  'source_origin_match',
+  'import_adapter_regression_result',
+  'failure_injection_result',
+  'report_contract_validation_result',
+  'deterministic_identity_result',
+  'verdict_semantics_result',
+  'release_eligibility_semantics_result',
+  'trace_boundary_result',
+  'ledger_boundary_result',
+  'generated_artifacts_boundary_result',
+  'public_claim_boundary_result',
+  'compatibility_decision',
+  'blocking_reasons',
+  'evaluator_notes'
+];
+
+const expectedTrack326Decisions = [
+  'accepted_current_supported',
+  'candidate_packet_valid_but_not_supported',
+  'candidate_packet_incomplete',
+  'candidate_blocked',
+  'candidate_incompatible',
+  'invalid_packet'
+];
+
+const expectedTrack326FixtureIds = [
+  'current_supported_vault_packet',
+  'complete_non_pinned_candidate_packet_not_supported',
+  'missing_regression_result',
+  'missing_failure_injection_result',
+  'deterministic_identity_failure',
+  'verdict_semantics_drift',
+  'release_eligibility_drift',
+  'trace_boundary_violation',
+  'ledger_boundary_violation',
+  'dirty_source_packet',
+  'generated_artifacts_staged',
+  'public_claim_escalation'
 ];
 
 function relPath(filePath) {
@@ -2471,6 +2522,199 @@ function validateTrack325VaultCompatibilityHarnessScript() {
   });
 }
 
+function validateTrack326EvidencePacketContract(contract) {
+  const file = 'data/nexus-vault-compatibility-evidence-packet-contract.v1.json';
+  const category = 'Track 3.26 Vault compatibility evidence packet contract';
+
+  requirePath(contract, ['metadata'], file, category);
+  requirePath(contract, ['supported_vault_commit'], file, category);
+  requirePath(contract, ['required_packet_fields'], file, category);
+  requirePath(contract, ['allowed_compatibility_decisions'], file, category);
+  requirePath(contract, ['passing_result_values'], file, category);
+  requirePath(contract, ['blocking_rules'], file, category);
+  requirePath(contract, ['report_output'], file, category);
+  requirePath(contract, ['boundary_invariants'], file, category);
+
+  const metadata = contract.metadata || {};
+  if (metadata.version !== '1.0.0') {
+    addFailure(file, category, `metadata.version must be 1.0.0, found "${metadata.version}"`);
+  }
+  if (metadata.track_phase !== '3.26') {
+    addFailure(file, category, `metadata.track_phase must be 3.26, found "${metadata.track_phase}"`);
+  }
+  if (metadata.status !== 'local_evidence_packet_contract') {
+    addFailure(file, category, `metadata.status must be local_evidence_packet_contract, found "${metadata.status}"`);
+  }
+  [
+    ...expectedTrack322BoundaryFalseFlags,
+    'alternate_vault_execution',
+    'active_vault_switch',
+    'multi_vault_runtime_support'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, category, `metadata.${flag} must be false`);
+    }
+  });
+
+  if (contract.supported_vault_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'supported_vault_commit must match accepted pinned Vault commit');
+  }
+  validateExpectedMembers(file, category, contract.required_packet_fields, expectedTrack326PacketFields, 'required_packet_fields');
+  validateExpectedMembers(file, category, contract.allowed_compatibility_decisions, expectedTrack326Decisions, 'allowed_compatibility_decisions');
+
+  const reportOutput = contract.report_output || {};
+  if (reportOutput.path !== '.track3-runs/latest-nexus-vault-compatibility-evidence-packet-validation-report.json') {
+    addFailure(file, category, 'report_output.path must remain under ignored .track3-runs/');
+  }
+  if (reportOutput.git_ignored !== true || reportOutput.must_not_be_committed !== true) {
+    addFailure(file, category, 'report_output must be ignored and not committed');
+  }
+
+  const boundary = contract.boundary_invariants || {};
+  [
+    'validates_metadata_shape_only',
+    'evaluates_alternate_vault_code',
+    'executes_alternate_vault_code',
+    'switches_active_vault',
+    'creates_multi_vault_runtime_support',
+    'authorizes_public_runtime',
+    'reclassifies_conduit_as_palisade'
+  ].forEach(flag => {
+    const expected = flag === 'validates_metadata_shape_only';
+    if (boundary[flag] !== expected) {
+      addFailure(file, category, `boundary_invariants.${flag} must be ${expected}`);
+    }
+  });
+}
+
+function validateTrack326EvidencePacketFixtures(suite, contract) {
+  const file = 'data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json';
+  const category = 'Track 3.26 Vault compatibility evidence packet fixtures';
+
+  requirePath(suite, ['metadata'], file, category);
+  requirePath(suite, ['supported_vault_commit'], file, category);
+  requirePath(suite, ['required_fixture_ids'], file, category);
+  requirePath(suite, ['fixtures'], file, category);
+
+  const metadata = suite.metadata || {};
+  if (metadata.version !== '1.0.0') {
+    addFailure(file, category, `metadata.version must be 1.0.0, found "${metadata.version}"`);
+  }
+  if (metadata.track_phase !== '3.26') {
+    addFailure(file, category, `metadata.track_phase must be 3.26, found "${metadata.track_phase}"`);
+  }
+  if (metadata.status !== 'local_evidence_packet_fixture_set') {
+    addFailure(file, category, `metadata.status must be local_evidence_packet_fixture_set, found "${metadata.status}"`);
+  }
+  [
+    ...expectedTrack322BoundaryFalseFlags,
+    'alternate_vault_execution',
+    'active_vault_switch',
+    'multi_vault_runtime_support'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, category, `metadata.${flag} must be false`);
+    }
+  });
+
+  if (suite.supported_vault_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'supported_vault_commit must match accepted pinned Vault commit');
+  }
+  if (contract && contract.supported_vault_commit && suite.supported_vault_commit !== contract.supported_vault_commit) {
+    addFailure(file, category, 'supported_vault_commit must match the evidence packet contract');
+  }
+  validateExpectedMembers(file, category, suite.required_fixture_ids, expectedTrack326FixtureIds, 'required_fixture_ids');
+
+  const allowedDecisions = new Set(contract && contract.allowed_compatibility_decisions || []);
+  const requiredFields = contract && contract.required_packet_fields || expectedTrack326PacketFields;
+  const fixtures = Array.isArray(suite.fixtures) ? suite.fixtures : [];
+  const fixtureIds = new Set();
+
+  fixtures.forEach((fixture, index) => {
+    const label = fixture.fixture_id || `fixtures[${index}]`;
+    fixtureIds.add(fixture.fixture_id);
+    requirePath(fixture, ['packet'], file, category);
+    requirePath(fixture, ['expected_decision'], file, category);
+    requirePath(fixture, ['expected_valid'], file, category);
+
+    const packet = fixture.packet || {};
+    requiredFields.forEach(field => {
+      if (packet[field] === undefined || packet[field] === null) {
+        addFailure(file, category, `${label} packet missing ${field}`);
+      }
+    });
+    if (!allowedDecisions.has(packet.compatibility_decision)) {
+      addFailure(file, category, `${label} uses unsupported compatibility_decision ${packet.compatibility_decision}`);
+    }
+    if (fixture.expected_decision !== packet.compatibility_decision) {
+      addFailure(file, category, `${label} expected_decision must match packet.compatibility_decision`);
+    }
+    if (packet.candidate_vault_commit !== suite.supported_vault_commit && packet.compatibility_decision === 'accepted_current_supported') {
+      addFailure(file, category, `${label} non-pinned candidate must not be accepted_current_supported`);
+    }
+    if (packet.candidate_vault_commit === suite.supported_vault_commit && packet.compatibility_decision !== 'accepted_current_supported') {
+      addFailure(file, category, `${label} pinned candidate must remain accepted_current_supported`);
+    }
+    if (packet.compatibility_decision !== 'accepted_current_supported' && (!Array.isArray(packet.blocking_reasons) || !packet.blocking_reasons.length)) {
+      addFailure(file, category, `${label} non-accepted packet must include blocking_reasons`);
+    }
+  });
+
+  expectedTrack326FixtureIds.forEach(fixtureId => {
+    if (!fixtureIds.has(fixtureId)) {
+      addFailure(file, category, `Missing fixture ${fixtureId}`);
+    }
+  });
+}
+
+function validateTrack326EvidencePacketValidatorScript() {
+  const file = 'scripts/validate-nexus-vault-compatibility-evidence-packet.mjs';
+  if (!existsSync(path.join(repoRoot, file))) {
+    addFailure(file, 'Track 3.26 evidence packet validator', 'Evidence packet validator script is missing');
+    return;
+  }
+
+  const text = readText(file);
+  [
+    ['contract input', /data\/nexus-vault-compatibility-evidence-packet-contract\.v1\.json/],
+    ['fixture input', /data\/nexus-vault-compatibility-evidence-packet-fixtures\.v1\.json/],
+    ['compatibility policy input', /data\/nexus-vault-version-compatibility\.v1\.json/],
+    ['ignored report output', /\.track3-runs\/latest-nexus-vault-compatibility-evidence-packet-validation-report\.json/],
+    ['accepted current supported decision', /accepted_current_supported/],
+    ['complete non-pinned not supported decision', /candidate_packet_valid_but_not_supported/],
+    ['candidate packet incomplete decision', /candidate_packet_incomplete/],
+    ['candidate blocked decision', /candidate_blocked/],
+    ['candidate incompatible decision', /candidate_incompatible/],
+    ['invalid packet decision', /invalid_packet/],
+    ['supported pinned Vault commit', /ab95cbbd24df5817c4e363d24b3b199ac8af6c6f/],
+    ['metadata-only boundary output', /metadata\/evidence-packet shape validation only/],
+    ['alternate Vault execution boundary flag', /alternate_vault_execution:\s*false/],
+    ['active Vault switch boundary flag', /active_vault_switch:\s*false/],
+    ['multi-Vault runtime support boundary flag', /multi_vault_runtime_support:\s*false/]
+  ].forEach(([label, pattern]) => {
+    if (!pattern.test(text)) {
+      addFailure(file, 'Track 3.26 evidence packet validator', `Script missing ${label}`);
+    }
+  });
+
+  const prohibitedPatterns = [
+    { label: 'NEXUS import execution', pattern: /from\s+['"].*nexus|import\s+.*nexus|python.*-c.*import/i },
+    { label: 'alternate clone', pattern: /\bgit\s+clone\b|['"]clone['"]/i },
+    { label: 'dependency installation', pattern: /\b(?:pip3?|npm)\s+install\b|['"]install['"]/i },
+    { label: 'public UI wiring', pattern: /\bdocument\.|\bwindow\.|querySelector|addEventListener/i },
+    { label: 'public HTML modification target', pattern: /index\.html/i },
+    { label: 'production browser JS modification target', pattern: /js\/(?:app|docs|pipeline|grid|governance-engine|trace-viewer)\.js/i },
+    { label: 'network fetch', pattern: /\bfetch\s*\(|https?:\/\//i },
+    { label: 'model API environment assignment', pattern: /ANTHROPIC_API_KEY\s*=/i }
+  ];
+
+  prohibitedPatterns.forEach(({ label, pattern }) => {
+    if (pattern.test(text)) {
+      addFailure(file, 'Track 3.26 evidence packet validator', `Script contains prohibited ${label}`);
+    }
+  });
+}
+
 function validateNexusImportAdapterReportsScript() {
   const file = 'scripts/validate-nexus-import-adapter-reports.mjs';
   if (!existsSync(path.join(repoRoot, file))) {
@@ -2793,6 +3037,8 @@ const track3LocalReportExportManifest = parseJson('data/track3-local-report-expo
 const conduitVersioningPolicy = parseJson('data/conduit-versioning-policy.v1.json');
 const nexusVaultVersionCompatibility = parseJson('data/nexus-vault-version-compatibility.v1.json');
 const nexusVaultCompatibilityEvaluationFixtures = parseJson('data/nexus-vault-compatibility-evaluation-fixtures.v1.json');
+const nexusVaultEvidencePacketContract = parseJson('data/nexus-vault-compatibility-evidence-packet-contract.v1.json');
+const nexusVaultEvidencePacketFixtures = parseJson('data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -2833,6 +3079,10 @@ if (nexusVaultVersionCompatibility) validateNexusVaultCompatibilityPolicy(nexusV
 if (nexusVaultCompatibilityEvaluationFixtures) {
   validateTrack325VaultCompatibilityFixtures(nexusVaultCompatibilityEvaluationFixtures, nexusVaultVersionCompatibility);
 }
+if (nexusVaultEvidencePacketContract) validateTrack326EvidencePacketContract(nexusVaultEvidencePacketContract);
+if (nexusVaultEvidencePacketFixtures) {
+  validateTrack326EvidencePacketFixtures(nexusVaultEvidencePacketFixtures, nexusVaultEvidencePacketContract);
+}
 validateNexusImportEnvironmentPreflightScript();
 validateLocalNexusImportAdapterScript();
 validateLocalNexusImportAdapterReportIfPresent();
@@ -2843,6 +3093,7 @@ validateNexusImportAdapterFailureInjectionScript();
 validateNexusImportAdapterFailureInjectionReportIfPresent();
 validateTrack323ExportScript();
 validateTrack325VaultCompatibilityHarnessScript();
+validateTrack326EvidencePacketValidatorScript();
 validateRequiredScriptFiles();
 validateRequiredDocFiles();
 

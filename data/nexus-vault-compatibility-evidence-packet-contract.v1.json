@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Compatibility Evidence Packet Contract",
+    "version": "1.0.0",
+    "track_phase": "3.26",
+    "status": "local_evidence_packet_contract",
+    "policy_inputs": [
+      "data/conduit-versioning-policy.v1.json",
+      "data/nexus-vault-version-compatibility.v1.json",
+      "data/nexus-vault-compatibility-evaluation-fixtures.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "alternate_vault_execution": false,
+    "active_vault_switch": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local evidence packet contract only. This file does not evaluate or execute alternate Vault code, switch the active Vault, create multi-Vault runtime support, or authorize public runtime behavior."
+  },
+  "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "required_packet_fields": [
+    "candidate_vault_commit",
+    "candidate_source_status",
+    "source_cleanliness",
+    "source_origin_match",
+    "import_adapter_regression_result",
+    "failure_injection_result",
+    "report_contract_validation_result",
+    "deterministic_identity_result",
+    "verdict_semantics_result",
+    "release_eligibility_semantics_result",
+    "trace_boundary_result",
+    "ledger_boundary_result",
+    "generated_artifacts_boundary_result",
+    "public_claim_boundary_result",
+    "compatibility_decision",
+    "blocking_reasons",
+    "evaluator_notes"
+  ],
+  "allowed_compatibility_decisions": [
+    "accepted_current_supported",
+    "candidate_packet_valid_but_not_supported",
+    "candidate_packet_incomplete",
+    "candidate_blocked",
+    "candidate_incompatible",
+    "invalid_packet"
+  ],
+  "passing_result_values": {
+    "candidate_source_status": "source_preflight_pass",
+    "source_cleanliness": "clean",
+    "source_origin_match": "matches_candidate_commit",
+    "import_adapter_regression_result": "pass",
+    "failure_injection_result": "pass",
+    "report_contract_validation_result": "pass",
+    "deterministic_identity_result": "pass",
+    "verdict_semantics_result": "matches_v1",
+    "release_eligibility_semantics_result": "matches_v1",
+    "trace_boundary_result": "local_non_persistent_non_ledger",
+    "ledger_boundary_result": "not_ledger",
+    "generated_artifacts_boundary_result": "not_staged",
+    "public_claim_boundary_result": "bounded"
+  },
+  "blocking_rules": [
+    {
+      "id": "only_pinned_commit_can_be_accepted_current_supported",
+      "description": "Only the supported pinned Vault commit may use accepted_current_supported."
+    },
+    {
+      "id": "non_pinned_complete_packet_not_supported",
+      "description": "A non-pinned candidate may have a complete packet, but it remains candidate_packet_valid_but_not_supported in this pass."
+    },
+    {
+      "id": "incomplete_packet_blocks",
+      "description": "Missing or incomplete evidence produces candidate_packet_incomplete."
+    },
+    {
+      "id": "deterministic_identity_failure_blocks",
+      "description": "Deterministic identity failure produces candidate_blocked."
+    },
+    {
+      "id": "verdict_or_release_semantics_drift_blocks",
+      "description": "Verdict or release eligibility semantics drift produces candidate_incompatible."
+    },
+    {
+      "id": "trace_or_ledger_boundary_violation_blocks",
+      "description": "Trace or ledger boundary violation produces candidate_incompatible."
+    },
+    {
+      "id": "generated_artifacts_staged_blocks",
+      "description": "Generated .track3-runs artifacts staged produces candidate_blocked."
+    },
+    {
+      "id": "public_claim_escalation_blocks",
+      "description": "Public runtime claim escalation produces candidate_blocked."
+    }
+  ],
+  "report_output": {
+    "path": ".track3-runs/latest-nexus-vault-compatibility-evidence-packet-validation-report.json",
+    "git_ignored": true,
+    "must_not_be_committed": true
+  },
+  "boundary_invariants": {
+    "validates_metadata_shape_only": true,
+    "evaluates_alternate_vault_code": false,
+    "executes_alternate_vault_code": false,
+    "switches_active_vault": false,
+    "creates_multi_vault_runtime_support": false,
+    "authorizes_public_runtime": false,
+    "reclassifies_conduit_as_palisade": false
+  }
+}
