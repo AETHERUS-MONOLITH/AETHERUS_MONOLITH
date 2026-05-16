@@ -1,0 +1,277 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Compatibility Evaluation Fixtures",
+    "version": "1.0.0",
+    "track_phase": "3.25",
+    "status": "local_harness_stub_fixtures",
+    "policy_inputs": [
+      "data/conduit-versioning-policy.v1.json",
+      "data/nexus-vault-version-compatibility.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "alternate_vault_execution": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local metadata evaluation fixtures only. This file does not create multi-Vault runtime support, switch the active Vault, import or execute alternate Vault sources, or authorize public runtime behavior."
+  },
+  "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "allowed_statuses": [
+    "supported_current",
+    "candidate_not_evaluated",
+    "candidate_blocked",
+    "candidate_requires_full_evaluation",
+    "incompatible",
+    "invalid_fixture"
+  ],
+  "required_categories": [
+    "current_pinned_vault_supported",
+    "unknown_candidate_commit",
+    "missing_regression_evidence",
+    "missing_failure_injection_evidence",
+    "deterministic_identity_failure",
+    "trace_boundary_violation",
+    "verdict_or_eligibility_semantics_drift",
+    "dirty_or_mismatched_source"
+  ],
+  "fixture_policy": {
+    "evaluate_metadata_only": true,
+    "must_not_import_nexus": true,
+    "must_not_execute_nexus": true,
+    "must_not_clone_alternate_vault_sources": true,
+    "must_not_switch_active_vault": true,
+    "unsupported_candidate_commits_require_complete_evaluation_packet": true,
+    "current_supported_commit_only": true
+  },
+  "fixtures": [
+    {
+      "fixture_id": "current_pinned_vault_supported",
+      "category": "current_pinned_vault_supported",
+      "candidate_vault": {
+        "commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+        "source_clean": true,
+        "commit_metadata_consistent": true,
+        "matches_supported_commit": true
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": true,
+        "source_preflight": "pass",
+        "import_adapter_regression": "pass",
+        "report_validation": "pass",
+        "failure_injection": "pass",
+        "deterministic_identity": "pass",
+        "trace_boundary": "local_non_persistent_non_ledger",
+        "release_eligibility_coherence": "pass",
+        "adapter_output_contract": "matches_v1",
+        "claim_boundary": "bounded"
+      },
+      "expected_status": "supported_current",
+      "expected_supported": true,
+      "expected_reasons": [
+        "candidate commit matches the accepted supported Vault commit",
+        "required local evidence is coherent"
+      ]
+    },
+    {
+      "fixture_id": "unknown_candidate_commit",
+      "category": "unknown_candidate_commit",
+      "candidate_vault": {
+        "commit": "0000000000000000000000000000000000000001",
+        "source_clean": true,
+        "commit_metadata_consistent": true,
+        "matches_supported_commit": false
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": false,
+        "source_preflight": "not_provided",
+        "import_adapter_regression": "not_provided",
+        "report_validation": "not_provided",
+        "failure_injection": "not_provided",
+        "deterministic_identity": "not_provided",
+        "trace_boundary": "not_provided",
+        "release_eligibility_coherence": "not_provided",
+        "adapter_output_contract": "not_provided",
+        "claim_boundary": "not_provided"
+      },
+      "expected_status": "candidate_requires_full_evaluation",
+      "expected_supported": false,
+      "expected_reasons": [
+        "candidate commit is not the accepted supported Vault commit",
+        "complete evaluation evidence packet is absent"
+      ]
+    },
+    {
+      "fixture_id": "missing_regression_evidence",
+      "category": "missing_regression_evidence",
+      "candidate_vault": {
+        "commit": "0000000000000000000000000000000000000002",
+        "source_clean": true,
+        "commit_metadata_consistent": true,
+        "matches_supported_commit": false
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": true,
+        "source_preflight": "pass",
+        "import_adapter_regression": "missing",
+        "report_validation": "pass",
+        "failure_injection": "pass",
+        "deterministic_identity": "pass",
+        "trace_boundary": "local_non_persistent_non_ledger",
+        "release_eligibility_coherence": "pass",
+        "adapter_output_contract": "matches_v1",
+        "claim_boundary": "bounded"
+      },
+      "expected_status": "candidate_blocked",
+      "expected_supported": false,
+      "expected_reasons": [
+        "import-adapter regression evidence is missing"
+      ]
+    },
+    {
+      "fixture_id": "missing_failure_injection_evidence",
+      "category": "missing_failure_injection_evidence",
+      "candidate_vault": {
+        "commit": "0000000000000000000000000000000000000003",
+        "source_clean": true,
+        "commit_metadata_consistent": true,
+        "matches_supported_commit": false
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": true,
+        "source_preflight": "pass",
+        "import_adapter_regression": "pass",
+        "report_validation": "pass",
+        "failure_injection": "missing",
+        "deterministic_identity": "pass",
+        "trace_boundary": "local_non_persistent_non_ledger",
+        "release_eligibility_coherence": "pass",
+        "adapter_output_contract": "matches_v1",
+        "claim_boundary": "bounded"
+      },
+      "expected_status": "candidate_blocked",
+      "expected_supported": false,
+      "expected_reasons": [
+        "failure-injection evidence is missing"
+      ]
+    },
+    {
+      "fixture_id": "deterministic_identity_failure",
+      "category": "deterministic_identity_failure",
+      "candidate_vault": {
+        "commit": "0000000000000000000000000000000000000004",
+        "source_clean": true,
+        "commit_metadata_consistent": true,
+        "matches_supported_commit": false
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": true,
+        "source_preflight": "pass",
+        "import_adapter_regression": "pass",
+        "report_validation": "pass",
+        "failure_injection": "pass",
+        "deterministic_identity": "fail",
+        "trace_boundary": "local_non_persistent_non_ledger",
+        "release_eligibility_coherence": "pass",
+        "adapter_output_contract": "matches_v1",
+        "claim_boundary": "bounded"
+      },
+      "expected_status": "candidate_blocked",
+      "expected_supported": false,
+      "expected_reasons": [
+        "deterministic identity check failed"
+      ]
+    },
+    {
+      "fixture_id": "trace_boundary_violation",
+      "category": "trace_boundary_violation",
+      "candidate_vault": {
+        "commit": "0000000000000000000000000000000000000005",
+        "source_clean": true,
+        "commit_metadata_consistent": true,
+        "matches_supported_commit": false
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": true,
+        "source_preflight": "pass",
+        "import_adapter_regression": "pass",
+        "report_validation": "pass",
+        "failure_injection": "pass",
+        "deterministic_identity": "pass",
+        "trace_boundary": "persistent_ledger_claim",
+        "release_eligibility_coherence": "pass",
+        "adapter_output_contract": "matches_v1",
+        "claim_boundary": "bounded"
+      },
+      "expected_status": "incompatible",
+      "expected_supported": false,
+      "expected_reasons": [
+        "trace boundary treats local audit/log output as persistent ledger"
+      ]
+    },
+    {
+      "fixture_id": "verdict_or_eligibility_semantics_drift",
+      "category": "verdict_or_eligibility_semantics_drift",
+      "candidate_vault": {
+        "commit": "0000000000000000000000000000000000000006",
+        "source_clean": true,
+        "commit_metadata_consistent": true,
+        "matches_supported_commit": false
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": true,
+        "source_preflight": "pass",
+        "import_adapter_regression": "pass",
+        "report_validation": "pass",
+        "failure_injection": "pass",
+        "deterministic_identity": "pass",
+        "trace_boundary": "local_non_persistent_non_ledger",
+        "release_eligibility_coherence": "drift",
+        "adapter_output_contract": "drift",
+        "claim_boundary": "bounded",
+        "verdict_enum": "drift"
+      },
+      "expected_status": "incompatible",
+      "expected_supported": false,
+      "expected_reasons": [
+        "verdict, release eligibility, or report-contract semantics drifted"
+      ]
+    },
+    {
+      "fixture_id": "dirty_or_mismatched_source",
+      "category": "dirty_or_mismatched_source",
+      "candidate_vault": {
+        "commit": "0000000000000000000000000000000000000007",
+        "observed_commit": "0000000000000000000000000000000000000008",
+        "source_clean": false,
+        "commit_metadata_consistent": false,
+        "matches_supported_commit": false
+      },
+      "evaluation_evidence": {
+        "complete_evaluation_packet": true,
+        "source_preflight": "fail",
+        "import_adapter_regression": "pass",
+        "report_validation": "pass",
+        "failure_injection": "pass",
+        "deterministic_identity": "pass",
+        "trace_boundary": "local_non_persistent_non_ledger",
+        "release_eligibility_coherence": "pass",
+        "adapter_output_contract": "matches_v1",
+        "claim_boundary": "bounded"
+      },
+      "expected_status": "candidate_blocked",
+      "expected_supported": false,
+      "expected_reasons": [
+        "candidate source is dirty or commit metadata is inconsistent"
+      ]
+    }
+  ]
+}
