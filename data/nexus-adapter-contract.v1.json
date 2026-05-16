@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Adapter Contract Freeze",
+    "version": "1.0.0",
+    "track_phase": "3.22",
+    "status": "frozen_contract_artifact",
+    "source_contract": "data/nexus-adapter-contract.stub.v0.json",
+    "source_documents": [
+      "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md",
+      "docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md",
+      "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md",
+      "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md",
+      "docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md"
+    ],
+    "integration_status": "local_only_not_public_runtime",
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "claim_escalation": false,
+    "boundary": "Frozen adapter contract artifact only. This file does not import, execute, integrate, expose, persist, or publicly wire NEXUS runtime behavior."
+  },
+  "pinned_vault_source_metadata": {
+    "source_kind": "pinned_local_nexus_source",
+    "repository": "https://github.com/AETHERUS-MONOLITH/nexus-mvp",
+    "pinned_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+    "pinned_source_path": "/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb",
+    "source_must_remain_unmodified": true,
+    "dependency_installation_authorized": false
+  },
+  "verified_nexus_surface": {
+    "readiness_level": "import_adapter_ready",
+    "execution_scope": "local_pinned_source_only",
+    "verified_imports": [
+      "alpha_operator",
+      "delta_operator",
+      "OmegaOperator",
+      "ARBOverlay",
+      "LEDGEROverlay"
+    ],
+    "input_contract": [
+      "query_string",
+      "regulatory_context_dict"
+    ],
+    "output_contract": [
+      "alpha_result_dict",
+      "delta_result_dict",
+      "omega_result_dict",
+      "jsonl_audit_log_output"
+    ],
+    "jsonl_boundary": "local audit-log output only; not persistent ledger evidence"
+  },
+  "adapter_boundary": {
+    "input_side": "AETHERUS Interface Layer fixture and contract objects",
+    "normalization_side": "local adapter normalization only",
+    "nexus_side": "pinned local NEXUS source only when separately authorized by Track 3 scope",
+    "output_side": "normalized AETHERUS Interface Layer-shaped local report",
+    "not_public_browser_javascript": true,
+    "not_backend_service": true,
+    "not_storage_layer": true
+  },
+  "deterministic_identity_expectations": {
+    "same_fixture_same_pinned_source_same_contracts": "Decision-relevant normalized output must remain identical.",
+    "decision_relevant_fields": [
+      "normalized_verdict",
+      "normalized_gate_results",
+      "normalized_release_eligibility",
+      "trace_boundary",
+      "claim_boundary"
+    ],
+    "failure_behavior": "Nondeterministic decision-relevant output is a stop condition and must block release eligibility."
+  },
+  "allowed_verdict_semantics": {
+    "allowed_normalized_verdicts": [
+      "pass",
+      "fail",
+      "escalate"
+    ],
+    "pass": "May be release-eligible only when all adapter checks are coherent and no stop condition is present.",
+    "fail": "Must be release-ineligible.",
+    "escalate": "Must be release-ineligible."
+  },
+  "allowed_failure_categories": [
+    "nexus_path_missing",
+    "nexus_commit_mismatch",
+    "nexus_working_tree_dirty",
+    "fixture_mapping_missing",
+    "regulatory_context_missing",
+    "manifest_mapping_missing",
+    "nexus_execution_failure",
+    "malformed_nexus_result",
+    "unknown_nexus_verdict",
+    "unknown_risk_level",
+    "missing_omega_decision",
+    "nondeterministic_output",
+    "release_eligibility_incoherent",
+    "trace_boundary_violation",
+    "claim_boundary_violation"
+  ],
+  "fail_closed_policy": {
+    "default_failure_verdict": "escalate",
+    "release_eligible_on_failure": false,
+    "stop_condition_required": true,
+    "trace_boundary_required": "local_adapter_run_not_persistent_not_ledger",
+    "claim_boundary_must_remain_bounded": true
+  },
+  "claim_boundary": {
+    "not_integrated_publicly": true,
+    "not_backend": true,
+    "not_authenticated": true,
+    "not_persistent": true,
+    "not_ledger": true,
+    "not_model_executing": true,
+    "not_public_runtime": true,
+    "not_palisade": true,
+    "not_weave": true
+  },
+  "non_goals": [
+    "public NEXUS runtime",
+    "public UI wiring",
+    "backend route or service wrapper",
+    "authentication",
+    "database or storage",
+    "persistent trace",
+    "ledger implementation",
+    "Palisade implementation",
+    "Weave implementation",
+    "production operation",
+    "enterprise deployment"
+  ],
+  "prohibited_interpretations": [
+    "This v1 adapter contract does not mean AETHERUS_MONOLITH runs NEXUS publicly.",
+    "This v1 adapter contract does not make NEXUS power the public interface.",
+    "This v1 adapter contract does not turn local JSONL output into a ledger.",
+    "This v1 adapter contract does not reclassify Conduit fail-closed behavior as Palisade work."
+  ]
+}

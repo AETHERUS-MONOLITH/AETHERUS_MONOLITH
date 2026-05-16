@@ -21,7 +21,10 @@ const dataFiles = [
   'data/nexus-import-adapter-preflight.v0.json',
   'data/nexus-source-pin-resolution.v0.json',
   'data/nexus-pinned-source-preflight.v0.json',
-  'data/nexus-import-adapter-report-contract.v0.json'
+  'data/nexus-import-adapter-report-contract.v0.json',
+  'data/interface-contract.v1.json',
+  'data/nexus-adapter-contract.v1.json',
+  'data/nexus-import-adapter-report-contract.v1.json'
 ];
 
 const track3TextFiles = [
@@ -36,6 +39,9 @@ const track3TextFiles = [
   'data/nexus-source-pin-resolution.v0.json',
   'data/nexus-pinned-source-preflight.v0.json',
   'data/nexus-import-adapter-report-contract.v0.json',
+  'data/interface-contract.v1.json',
+  'data/nexus-adapter-contract.v1.json',
+  'data/nexus-import-adapter-report-contract.v1.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -56,7 +62,8 @@ const track3TextFiles = [
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
-  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md'
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md',
+  'docs/TRACK_3_CONTRACT_FREEZE_V1.md'
 ];
 
 const requiredScriptFiles = [
@@ -77,7 +84,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md',
   'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md',
-  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md'
+  'docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md',
+  'docs/TRACK_3_CONTRACT_FREEZE_V1.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -141,6 +149,39 @@ const requiredClaimBoundaryFlags = [
   'not_nexus_integrated',
   'not_model_executing',
   'not_public_operational_behavior'
+];
+
+const expectedTrack322BoundaryFalseFlags = [
+  'public_runtime',
+  'public_ui_wiring',
+  'backend',
+  'auth',
+  'database',
+  'persistence',
+  'ledger',
+  'model_execution',
+  'live_orchestration',
+  'palisade',
+  'weave',
+  'claim_escalation'
+];
+
+const expectedTrack322FailureCategories = [
+  'nexus_path_missing',
+  'nexus_commit_mismatch',
+  'nexus_working_tree_dirty',
+  'fixture_mapping_missing',
+  'regulatory_context_missing',
+  'manifest_mapping_missing',
+  'nexus_execution_failure',
+  'malformed_nexus_result',
+  'unknown_nexus_verdict',
+  'unknown_risk_level',
+  'missing_omega_decision',
+  'nondeterministic_output',
+  'release_eligibility_incoherent',
+  'trace_boundary_violation',
+  'claim_boundary_violation'
 ];
 
 function relPath(filePath) {
@@ -1621,6 +1662,246 @@ function validateNexusImportAdapterReportContract(contract) {
   });
 }
 
+function validateBoundaryFalseFlags(file, metadata, category) {
+  expectedTrack322BoundaryFalseFlags.forEach(flag => {
+    if (metadata[flag] !== false) {
+      addFailure(file, category, `metadata.${flag} must be false`);
+    }
+  });
+}
+
+function validateExpectedMembers(file, category, values, expected, label) {
+  const actual = new Set(Array.isArray(values) ? values : []);
+  expected.forEach(value => {
+    if (!actual.has(value)) {
+      addFailure(file, category, `${label} missing ${value}`);
+    }
+  });
+  if (actual.size !== expected.length) {
+    addFailure(file, category, `${label} must contain exactly ${expected.length} entries`);
+  }
+}
+
+function validateTrack322FreezeMetadata(file, contract, expectedSourceContract) {
+  const category = 'Track 3.22 contract freeze';
+  requirePath(contract, ['metadata'], file, category);
+
+  const metadata = contract.metadata || {};
+  if (metadata.version !== '1.0.0') {
+    addFailure(file, category, `metadata.version must be 1.0.0, found "${metadata.version}"`);
+  }
+  if (metadata.track_phase !== '3.22') {
+    addFailure(file, category, `metadata.track_phase must be 3.22, found "${metadata.track_phase}"`);
+  }
+  if (metadata.status !== 'frozen_contract_artifact') {
+    addFailure(file, category, `metadata.status must be frozen_contract_artifact, found "${metadata.status}"`);
+  }
+  if (metadata.source_contract !== expectedSourceContract) {
+    addFailure(file, category, `metadata.source_contract must be ${expectedSourceContract}`);
+  }
+  validateBoundaryFalseFlags(file, metadata, category);
+}
+
+function validateInterfaceContractV1(contract) {
+  const file = 'data/interface-contract.v1.json';
+  const category = 'Track 3.22 interface freeze';
+  validateTrack322FreezeMetadata(file, contract, 'data/interface-contract.v0.json');
+
+  requirePath(contract, ['v0_evidence_chain'], file, category);
+  requirePath(contract, ['frozen_boundary'], file, category);
+  requirePath(contract, ['field_status_vocabulary'], file, category);
+  requirePath(contract, ['runtime_status_vocabulary'], file, category);
+  requirePath(contract, ['frozen_contract_objects'], file, category);
+  requirePath(contract, ['deterministic_identity_expectations'], file, category);
+  requirePath(contract, ['verdict_semantics'], file, category);
+  requirePath(contract, ['trace_boundary'], file, category);
+  requirePath(contract, ['non_goals'], file, category);
+  requirePath(contract, ['prohibited_interpretations'], file, category);
+
+  validateExpectedMembers(
+    file,
+    category,
+    contract.verdict_semantics && contract.verdict_semantics.allowed_verdict_statuses,
+    ['pass', 'fail', 'escalate'],
+    'verdict_semantics.allowed_verdict_statuses'
+  );
+
+  const boundary = contract.frozen_boundary || {};
+  [
+    'local_only',
+    'not_public_operational_behavior',
+    'not_nexus_integrated',
+    'not_backend',
+    'not_authenticated',
+    'not_persistent',
+    'not_ledger',
+    'not_model_executing'
+  ].forEach(flag => {
+    if (boundary[flag] !== true) {
+      addFailure(file, category, `frozen_boundary.${flag} must be true`);
+    }
+  });
+
+  const trace = contract.trace_boundary || {};
+  if (trace.current_interface_trace_status !== 'local_dry_run_not_persistent_not_ledger') {
+    addFailure(file, category, 'trace_boundary.current_interface_trace_status must be local_dry_run_not_persistent_not_ledger');
+  }
+  if (trace.adapter_trace_status !== 'local_adapter_run_not_persistent_not_ledger') {
+    addFailure(file, category, 'trace_boundary.adapter_trace_status must be local_adapter_run_not_persistent_not_ledger');
+  }
+  ['trace_is_persistent', 'trace_is_ledger', 'trace_is_database_record', 'trace_is_production_audit_evidence'].forEach(flag => {
+    if (trace[flag] !== false) {
+      addFailure(file, category, `trace_boundary.${flag} must be false`);
+    }
+  });
+}
+
+function validateNexusAdapterContractV1(contract) {
+  const file = 'data/nexus-adapter-contract.v1.json';
+  const category = 'Track 3.22 NEXUS adapter freeze';
+  validateTrack322FreezeMetadata(file, contract, 'data/nexus-adapter-contract.stub.v0.json');
+
+  requirePath(contract, ['pinned_vault_source_metadata'], file, category);
+  requirePath(contract, ['verified_nexus_surface'], file, category);
+  requirePath(contract, ['adapter_boundary'], file, category);
+  requirePath(contract, ['deterministic_identity_expectations'], file, category);
+  requirePath(contract, ['allowed_verdict_semantics'], file, category);
+  requirePath(contract, ['allowed_failure_categories'], file, category);
+  requirePath(contract, ['fail_closed_policy'], file, category);
+  requirePath(contract, ['claim_boundary'], file, category);
+  requirePath(contract, ['non_goals'], file, category);
+  requirePath(contract, ['prohibited_interpretations'], file, category);
+
+  const source = contract.pinned_vault_source_metadata || {};
+  if (source.pinned_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'pinned_vault_source_metadata.pinned_commit must match pinned NEXUS commit');
+  }
+  if (source.source_must_remain_unmodified !== true) {
+    addFailure(file, category, 'pinned_vault_source_metadata.source_must_remain_unmodified must be true');
+  }
+  if (source.dependency_installation_authorized !== false) {
+    addFailure(file, category, 'pinned_vault_source_metadata.dependency_installation_authorized must be false');
+  }
+
+  validateExpectedMembers(
+    file,
+    category,
+    contract.allowed_verdict_semantics && contract.allowed_verdict_semantics.allowed_normalized_verdicts,
+    ['pass', 'fail', 'escalate'],
+    'allowed_verdict_semantics.allowed_normalized_verdicts'
+  );
+  validateExpectedMembers(
+    file,
+    category,
+    contract.allowed_failure_categories,
+    expectedTrack322FailureCategories,
+    'allowed_failure_categories'
+  );
+
+  const policy = contract.fail_closed_policy || {};
+  if (policy.default_failure_verdict !== 'escalate') {
+    addFailure(file, category, 'fail_closed_policy.default_failure_verdict must be escalate');
+  }
+  if (policy.release_eligible_on_failure !== false) {
+    addFailure(file, category, 'fail_closed_policy.release_eligible_on_failure must be false');
+  }
+  if (policy.stop_condition_required !== true) {
+    addFailure(file, category, 'fail_closed_policy.stop_condition_required must be true');
+  }
+  if (policy.trace_boundary_required !== 'local_adapter_run_not_persistent_not_ledger') {
+    addFailure(file, category, 'fail_closed_policy.trace_boundary_required must be local_adapter_run_not_persistent_not_ledger');
+  }
+
+  const claim = contract.claim_boundary || {};
+  [
+    'not_integrated_publicly',
+    'not_backend',
+    'not_authenticated',
+    'not_persistent',
+    'not_ledger',
+    'not_model_executing',
+    'not_public_runtime',
+    'not_palisade',
+    'not_weave'
+  ].forEach(flag => {
+    if (claim[flag] !== true) {
+      addFailure(file, category, `claim_boundary.${flag} must be true`);
+    }
+  });
+}
+
+function validateNexusImportAdapterReportContractV1(contract) {
+  const file = 'data/nexus-import-adapter-report-contract.v1.json';
+  const category = 'Track 3.22 report contract freeze';
+  validateTrack322FreezeMetadata(file, contract, 'data/nexus-import-adapter-report-contract.v0.json');
+
+  requirePath(contract, ['required_success_report_fields'], file, category);
+  requirePath(contract, ['required_regression_report_fields'], file, category);
+  requirePath(contract, ['required_failure_report_fields'], file, category);
+  requirePath(contract, ['allowed_failure_categories'], file, category);
+  requirePath(contract, ['failure_category_coverage'], file, category);
+  requirePath(contract, ['release_eligibility_invariants'], file, category);
+  requirePath(contract, ['trace_boundary_invariants'], file, category);
+  requirePath(contract, ['claim_boundary_invariants'], file, category);
+  requirePath(contract, ['deterministic_identity_expectations'], file, category);
+  requirePath(contract, ['pinned_vault_source_metadata'], file, category);
+  requirePath(contract, ['prohibited_interpretations'], file, category);
+
+  const metadata = contract.metadata || {};
+  if (metadata.pinned_nexus_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'metadata.pinned_nexus_commit must match pinned NEXUS commit');
+  }
+
+  validateExpectedMembers(file, category, contract.allowed_failure_categories, expectedTrack322FailureCategories, 'allowed_failure_categories');
+
+  const coverage = contract.failure_category_coverage || {};
+  if (coverage.expected_count !== 15) {
+    addFailure(file, category, 'failure_category_coverage.expected_count must be 15');
+  }
+  if (coverage.coverage_status !== 'complete_15_of_15_after_track_3_21') {
+    addFailure(file, category, 'failure_category_coverage.coverage_status must be complete_15_of_15_after_track_3_21');
+  }
+
+  const trace = contract.trace_boundary_invariants || {};
+  if (trace.trace_status !== 'local_adapter_run_not_persistent_not_ledger') {
+    addFailure(file, category, 'trace_boundary_invariants.trace_status must be local_adapter_run_not_persistent_not_ledger');
+  }
+  if (trace.not_persistent !== true || trace.not_ledger !== true) {
+    addFailure(file, category, 'trace_boundary_invariants must state not_persistent and not_ledger');
+  }
+
+  const claim = contract.claim_boundary_invariants || {};
+  [
+    'public_runtime',
+    'public_ui_wiring',
+    'backend',
+    'auth',
+    'database',
+    'persistence',
+    'ledger',
+    'model_execution',
+    'live_orchestration',
+    'production_runtime',
+    'enterprise_deployment',
+    'compliance_certification',
+    'palisade',
+    'weave',
+    'claim_escalation'
+  ].forEach(flag => {
+    if (claim[flag] !== false) {
+      addFailure(file, category, `claim_boundary_invariants.${flag} must be false`);
+    }
+  });
+
+  const source = contract.pinned_vault_source_metadata || {};
+  if (source.pinned_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'pinned_vault_source_metadata.pinned_commit must match pinned NEXUS commit');
+  }
+  if (source.source_must_remain_unmodified !== true) {
+    addFailure(file, category, 'pinned_vault_source_metadata.source_must_remain_unmodified must be true');
+  }
+}
+
 function validateNexusImportAdapterReportsScript() {
   const file = 'scripts/validate-nexus-import-adapter-reports.mjs';
   if (!existsSync(path.join(repoRoot, file))) {
@@ -1936,6 +2217,9 @@ const nexusImportPreflight = parseJson('data/nexus-import-adapter-preflight.v0.j
 const nexusSourcePinResolution = parseJson('data/nexus-source-pin-resolution.v0.json');
 const nexusPinnedSourcePreflight = parseJson('data/nexus-pinned-source-preflight.v0.json');
 const nexusImportAdapterReportContract = parseJson('data/nexus-import-adapter-report-contract.v0.json');
+const interfaceContractV1 = parseJson('data/interface-contract.v1.json');
+const nexusAdapterContractV1 = parseJson('data/nexus-adapter-contract.v1.json');
+const nexusImportAdapterReportContractV1 = parseJson('data/nexus-import-adapter-report-contract.v1.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -1967,6 +2251,9 @@ if (nexusImportPreflight) validateNexusImportAdapterPreflight(nexusImportPreflig
 if (nexusSourcePinResolution) validateNexusSourcePinResolution(nexusSourcePinResolution);
 if (nexusPinnedSourcePreflight) validateNexusPinnedSourcePreflight(nexusPinnedSourcePreflight);
 if (nexusImportAdapterReportContract) validateNexusImportAdapterReportContract(nexusImportAdapterReportContract);
+if (interfaceContractV1) validateInterfaceContractV1(interfaceContractV1);
+if (nexusAdapterContractV1) validateNexusAdapterContractV1(nexusAdapterContractV1);
+if (nexusImportAdapterReportContractV1) validateNexusImportAdapterReportContractV1(nexusImportAdapterReportContractV1);
 validateNexusImportEnvironmentPreflightScript();
 validateLocalNexusImportAdapterScript();
 validateLocalNexusImportAdapterReportIfPresent();
