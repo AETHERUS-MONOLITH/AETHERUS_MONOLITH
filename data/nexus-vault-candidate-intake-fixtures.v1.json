@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Candidate Intake Fixtures",
+    "version": "1.0.0",
+    "track_phase": "3.27",
+    "status": "local_candidate_intake_gate_fixtures",
+    "policy_inputs": [
+      "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+      "data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json",
+      "data/nexus-vault-version-compatibility.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "alternate_vault_execution": false,
+    "active_vault_switch": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local candidate intake fixtures only. These packets do not execute alternate Vault code, switch the supported Vault, or create runtime multi-Vault support."
+  },
+  "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "allowed_intake_decisions": [
+    "accepted_current_supported",
+    "eligible_for_compatibility_evaluation",
+    "blocked_missing_evidence",
+    "blocked_failed_evidence",
+    "blocked_semantic_drift",
+    "blocked_boundary_violation",
+    "blocked_source_mismatch",
+    "invalid_intake_fixture"
+  ],
+  "required_fixture_ids": [
+    "current_supported_vault_intake",
+    "complete_non_pinned_candidate",
+    "missing_packet",
+    "incomplete_packet",
+    "failed_deterministic_identity",
+    "verdict_semantics_drift",
+    "eligibility_semantics_drift",
+    "trace_boundary_violation",
+    "ledger_boundary_violation",
+    "dirty_or_mismatched_source",
+    "public_claim_escalation"
+  ],
+  "fixture_policy": {
+    "evaluate_metadata_only": true,
+    "must_not_import_nexus": true,
+    "must_not_execute_nexus": true,
+    "must_not_use_network": true,
+    "must_not_mutate_pinned_vault": true,
+    "must_not_switch_active_vault": true,
+    "must_not_create_runtime_multi_vault_support": true,
+    "non_pinned_candidate_can_only_be_eligible": true,
+    "eligible_for_compatibility_evaluation_is_not_support_acceptance": true
+  },
+  "fixtures": [
+    {
+      "fixture_id": "current_supported_vault_intake",
+      "packet": {
+        "candidate_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "accepted_current_supported",
+        "blocking_reasons": [],
+        "evaluator_notes": "Current pinned Vault packet remains the only accepted supported Vault."
+      },
+      "expected_intake_decision": "accepted_current_supported",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": true
+    },
+    {
+      "fixture_id": "complete_non_pinned_candidate",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000201",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_packet_valid_but_not_supported",
+        "blocking_reasons": [
+          "non-pinned candidate is intake-eligible only, not supported"
+        ],
+        "evaluator_notes": "Complete non-pinned packet may proceed to compatibility evaluation but is not accepted support."
+      },
+      "expected_intake_decision": "eligible_for_compatibility_evaluation",
+      "expected_can_proceed_to_compatibility_evaluation": true,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "missing_packet",
+      "packet": null,
+      "expected_intake_decision": "blocked_missing_evidence",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "incomplete_packet",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000202",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "missing",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_packet_incomplete",
+        "blocking_reasons": [
+          "import-adapter regression result is missing"
+        ],
+        "evaluator_notes": "Incomplete packet cannot enter compatibility evaluation."
+      },
+      "expected_intake_decision": "blocked_missing_evidence",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "failed_deterministic_identity",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000203",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "fail",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_blocked",
+        "blocking_reasons": [
+          "deterministic identity failed"
+        ],
+        "evaluator_notes": "Failed deterministic identity blocks intake."
+      },
+      "expected_intake_decision": "blocked_failed_evidence",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "verdict_semantics_drift",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000204",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "drift",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_incompatible",
+        "blocking_reasons": [
+          "verdict semantics drifted"
+        ],
+        "evaluator_notes": "Verdict drift blocks intake before compatibility evaluation."
+      },
+      "expected_intake_decision": "blocked_semantic_drift",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "eligibility_semantics_drift",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000205",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "drift",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_incompatible",
+        "blocking_reasons": [
+          "release eligibility semantics drifted"
+        ],
+        "evaluator_notes": "Release eligibility drift blocks intake before compatibility evaluation."
+      },
+      "expected_intake_decision": "blocked_semantic_drift",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "trace_boundary_violation",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000206",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "persistent_ledger_claim",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_incompatible",
+        "blocking_reasons": [
+          "trace boundary treats local output as persistent"
+        ],
+        "evaluator_notes": "Trace boundary violation blocks intake."
+      },
+      "expected_intake_decision": "blocked_boundary_violation",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "ledger_boundary_violation",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000207",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "ledger_claim",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_incompatible",
+        "blocking_reasons": [
+          "ledger boundary violation"
+        ],
+        "evaluator_notes": "Ledger boundary violation blocks intake."
+      },
+      "expected_intake_decision": "blocked_boundary_violation",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "dirty_or_mismatched_source",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000208",
+        "candidate_source_status": "source_preflight_fail",
+        "source_cleanliness": "dirty",
+        "source_origin_match": "mismatch",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "bounded",
+        "compatibility_decision": "candidate_blocked",
+        "blocking_reasons": [
+          "candidate source is dirty or mismatched"
+        ],
+        "evaluator_notes": "Dirty or mismatched source metadata blocks intake."
+      },
+      "expected_intake_decision": "blocked_source_mismatch",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    },
+    {
+      "fixture_id": "public_claim_escalation",
+      "packet": {
+        "candidate_vault_commit": "0000000000000000000000000000000000000209",
+        "candidate_source_status": "source_preflight_pass",
+        "source_cleanliness": "clean",
+        "source_origin_match": "matches_candidate_commit",
+        "import_adapter_regression_result": "pass",
+        "failure_injection_result": "pass",
+        "report_contract_validation_result": "pass",
+        "deterministic_identity_result": "pass",
+        "verdict_semantics_result": "matches_v1",
+        "release_eligibility_semantics_result": "matches_v1",
+        "trace_boundary_result": "local_non_persistent_non_ledger",
+        "ledger_boundary_result": "not_ledger",
+        "generated_artifacts_boundary_result": "not_staged",
+        "public_claim_boundary_result": "escalated",
+        "compatibility_decision": "candidate_blocked",
+        "blocking_reasons": [
+          "public runtime claim escalation"
+        ],
+        "evaluator_notes": "Public claim escalation blocks intake."
+      },
+      "expected_intake_decision": "blocked_boundary_violation",
+      "expected_can_proceed_to_compatibility_evaluation": false,
+      "expected_supported": false
+    }
+  ]
+}
