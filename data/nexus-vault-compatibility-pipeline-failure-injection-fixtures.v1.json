@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Compatibility Pipeline Failure-Injection Fixtures",
+    "version": "1.0.0",
+    "track_phase": "3.30",
+    "status": "local_pipeline_failure_injection_fixtures",
+    "policy_inputs": [
+      "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+      "data/nexus-vault-compatibility-pipeline-report-contract.v1.json",
+      "data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "alternate_vault_execution": false,
+    "active_vault_switch": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local metadata-only failure injection for compatibility pipeline and report states. These fixtures do not execute alternate Vault code, switch the active Vault, or create runtime multi-Vault support."
+  },
+  "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "suite_version": "1.0.0",
+  "allowed_expected_outcomes": [
+    "injected_failure_blocked",
+    "injected_failure_rejected",
+    "invalid_injection_fixture",
+    "injection_expectation_failed"
+  ],
+  "required_categories": [
+    "non_pinned_candidate_marked_current_supported",
+    "unsupported_candidate_marked_supported",
+    "candidate_pipeline_eligible_treated_as_acceptance",
+    "skipped_packet_validation_stage",
+    "skipped_candidate_intake_stage",
+    "skipped_compatibility_evaluation_stage",
+    "invalid_stage_order",
+    "blocked_status_without_blocking_reasons",
+    "blocked_status_without_blocking_stage",
+    "wrong_supported_vault_commit",
+    "missing_supported_vault_commit",
+    "alternate_vault_execution_claim",
+    "active_vault_switch_claim",
+    "runtime_multi_vault_support_claim",
+    "public_runtime_wiring_claim",
+    "metadata_only_assertion_missing",
+    "generated_track3_runs_staged_claim",
+    "persistent_ledger_claim_from_local_report",
+    "verdict_semantics_drift_not_blocked",
+    "release_eligibility_drift_not_blocked",
+    "trace_boundary_violation_not_blocked",
+    "dirty_or_mismatched_source_not_blocked"
+  ],
+  "injection_policy": {
+    "evaluate_metadata_only": true,
+    "must_not_import_nexus": true,
+    "must_not_execute_nexus": true,
+    "must_not_use_network": true,
+    "must_not_clone_alternate_vault_sources": true,
+    "must_not_mutate_pinned_vault": true,
+    "must_not_switch_active_vault": true,
+    "must_not_create_runtime_multi_vault_support": true,
+    "candidate_pipeline_eligible_is_not_support_acceptance": true,
+    "non_pinned_candidate_cannot_be_supported": true,
+    "local_reports_are_not_persistent_ledger": true,
+    "generated_track3_runs_must_remain_ignored": true
+  },
+  "injections": [
+    {
+      "injection_id": "inject_non_pinned_candidate_marked_current_supported",
+      "category": "non_pinned_candidate_marked_current_supported",
+      "template": "non_pinned_eligible",
+      "invalid_state_summary": "A non-pinned candidate is promoted to current_supported_pass.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.final_pipeline_status",
+          "value": "current_supported_pass"
+        },
+        {
+          "op": "set",
+          "path": "fixture_results.0.supported",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_unsupported_candidate_marked_supported",
+      "category": "unsupported_candidate_marked_supported",
+      "template": "non_pinned_eligible",
+      "invalid_state_summary": "An unsupported non-pinned candidate is marked supported.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.final_pipeline_status",
+          "value": "unsupported_candidate"
+        },
+        {
+          "op": "set",
+          "path": "fixture_results.0.blocking_stage",
+          "value": "compatibility_evaluation"
+        },
+        {
+          "op": "set",
+          "path": "fixture_results.0.supported",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_candidate_pipeline_eligible_treated_as_acceptance",
+      "category": "candidate_pipeline_eligible_treated_as_acceptance",
+      "template": "non_pinned_eligible",
+      "invalid_state_summary": "candidate_pipeline_eligible is treated as support acceptance.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "boundary_summary.candidate_pipeline_eligible_is_support_acceptance",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_skipped_packet_validation_stage",
+      "category": "skipped_packet_validation_stage",
+      "template": "current_supported",
+      "invalid_state_summary": "The stage results skip packet_validation.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.stage_results",
+          "value": [
+            {
+              "stage": "candidate_intake",
+              "passed": true,
+              "supported": true
+            },
+            {
+              "stage": "compatibility_evaluation",
+              "passed": true,
+              "supported": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_skipped_candidate_intake_stage",
+      "category": "skipped_candidate_intake_stage",
+      "template": "current_supported",
+      "invalid_state_summary": "The stage results skip candidate_intake.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.stage_results",
+          "value": [
+            {
+              "stage": "packet_validation",
+              "passed": true
+            },
+            {
+              "stage": "compatibility_evaluation",
+              "passed": true,
+              "supported": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_skipped_compatibility_evaluation_stage",
+      "category": "skipped_compatibility_evaluation_stage",
+      "template": "current_supported",
+      "invalid_state_summary": "The stage results skip compatibility_evaluation.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.stage_results",
+          "value": [
+            {
+              "stage": "packet_validation",
+              "passed": true
+            },
+            {
+              "stage": "candidate_intake",
+              "passed": true,
+              "supported": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_invalid_stage_order",
+      "category": "invalid_stage_order",
+      "template": "current_supported",
+      "invalid_state_summary": "The report reverses packet_validation and candidate_intake.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "ordered_stages",
+          "value": [
+            "candidate_intake",
+            "packet_validation",
+            "compatibility_evaluation",
+            "final_pipeline_status"
+          ]
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_blocked_status_without_blocking_reasons",
+      "category": "blocked_status_without_blocking_reasons",
+      "template": "blocked_intake",
+      "invalid_state_summary": "A blocked status omits blocking_reasons.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.blocking_reasons",
+          "value": []
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_blocked_status_without_blocking_stage",
+      "category": "blocked_status_without_blocking_stage",
+      "template": "blocked_intake",
+      "invalid_state_summary": "A blocked status omits blocking_stage.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.blocking_stage",
+          "value": null
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_wrong_supported_vault_commit",
+      "category": "wrong_supported_vault_commit",
+      "template": "current_supported",
+      "invalid_state_summary": "The report records the wrong supported Vault commit.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "source.supported_vault_commit",
+          "value": "0000000000000000000000000000000000000000"
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_missing_supported_vault_commit",
+      "category": "missing_supported_vault_commit",
+      "template": "current_supported",
+      "invalid_state_summary": "The report omits the supported Vault commit.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "source.supported_vault_commit"
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_alternate_vault_execution_claim",
+      "category": "alternate_vault_execution_claim",
+      "template": "current_supported",
+      "invalid_state_summary": "The report claims alternate Vault execution.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "meta.alternate_vault_execution",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_active_vault_switch_claim",
+      "category": "active_vault_switch_claim",
+      "template": "current_supported",
+      "invalid_state_summary": "The report claims an active Vault switch.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "boundary_summary.switches_active_vault",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_runtime_multi_vault_support_claim",
+      "category": "runtime_multi_vault_support_claim",
+      "template": "current_supported",
+      "invalid_state_summary": "The report claims runtime multi-Vault support.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "boundary_summary.creates_multi_vault_runtime_support",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_public_runtime_wiring_claim",
+      "category": "public_runtime_wiring_claim",
+      "template": "current_supported",
+      "invalid_state_summary": "The report claims public runtime wiring.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "meta.public_ui_wiring",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_metadata_only_assertion_missing",
+      "category": "metadata_only_assertion_missing",
+      "template": "current_supported",
+      "invalid_state_summary": "The report omits the metadata-only assertion.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "boundary_summary.metadata_only_local_pipeline_orchestration"
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_generated_track3_runs_staged_claim",
+      "category": "generated_track3_runs_staged_claim",
+      "template": "current_supported",
+      "invalid_state_summary": "The generated .track3-runs report is marked committable.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "generated_output_boundary.must_not_be_committed",
+          "value": false
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_persistent_ledger_claim_from_local_report",
+      "category": "persistent_ledger_claim_from_local_report",
+      "template": "current_supported",
+      "invalid_state_summary": "The local report is incorrectly treated as durable ledger source-of-truth evidence.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "generated_output_boundary.source_of_truth",
+          "value": true
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_verdict_semantics_drift_not_blocked",
+      "category": "verdict_semantics_drift_not_blocked",
+      "template": "non_pinned_eligible",
+      "invalid_state_summary": "A verdict semantics drift marker is allowed through as candidate_pipeline_eligible.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.stage_results.1.verdict_semantics_result",
+          "value": "drifted"
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_release_eligibility_drift_not_blocked",
+      "category": "release_eligibility_drift_not_blocked",
+      "template": "non_pinned_eligible",
+      "invalid_state_summary": "A release eligibility semantics drift marker is allowed through as candidate_pipeline_eligible.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.stage_results.1.release_eligibility_semantics_result",
+          "value": "drifted"
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_trace_boundary_violation_not_blocked",
+      "category": "trace_boundary_violation_not_blocked",
+      "template": "non_pinned_eligible",
+      "invalid_state_summary": "A trace boundary violation marker is allowed through as candidate_pipeline_eligible.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.stage_results.1.trace_boundary_result",
+          "value": "persistent_ledger"
+        }
+      ]
+    },
+    {
+      "injection_id": "inject_dirty_or_mismatched_source_not_blocked",
+      "category": "dirty_or_mismatched_source_not_blocked",
+      "template": "non_pinned_eligible",
+      "invalid_state_summary": "A dirty or mismatched source marker is allowed through as candidate_pipeline_eligible.",
+      "expected_outcome": "injected_failure_rejected",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "fixture_results.0.stage_results.1.candidate_source_status",
+          "value": "source_preflight_failed"
+        }
+      ]
+    }
+  ]
+}

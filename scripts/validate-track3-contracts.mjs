@@ -34,7 +34,8 @@ const dataFiles = [
   'data/nexus-vault-candidate-intake-fixtures.v1.json',
   'data/nexus-vault-compatibility-pipeline-fixtures.v1.json',
   'data/nexus-vault-compatibility-pipeline-report-contract.v1.json',
-  'data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json'
+  'data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json',
+  'data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json'
 ];
 
 const track3TextFiles = [
@@ -62,6 +63,7 @@ const track3TextFiles = [
   'data/nexus-vault-compatibility-pipeline-fixtures.v1.json',
   'data/nexus-vault-compatibility-pipeline-report-contract.v1.json',
   'data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json',
+  'data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json',
   'docs/TRACK_3_INTERFACE_CONTRACTS.md',
   'docs/TRACK_3_SCHEMA_ALIGNMENT.md',
   'docs/TRACK_3_VALIDATION_HARNESS.md',
@@ -90,7 +92,8 @@ const track3TextFiles = [
   'docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md',
   'docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md',
   'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_STUB.md',
-  'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md'
+  'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md',
+  'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md'
 ];
 
 const requiredScriptFiles = [
@@ -105,7 +108,8 @@ const requiredScriptFiles = [
   'scripts/validate-nexus-vault-compatibility-evidence-packet.mjs',
   'scripts/run-nexus-vault-candidate-intake-gate-stub.mjs',
   'scripts/run-nexus-vault-compatibility-pipeline-stub.mjs',
-  'scripts/validate-nexus-vault-compatibility-pipeline-report.mjs'
+  'scripts/validate-nexus-vault-compatibility-pipeline-report.mjs',
+  'scripts/run-nexus-vault-compatibility-pipeline-failure-injection-suite.mjs'
 ];
 
 const requiredDocFiles = [
@@ -125,7 +129,8 @@ const requiredDocFiles = [
   'docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md',
   'docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md',
   'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_STUB.md',
-  'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md'
+  'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md',
+  'docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md'
 ];
 
 const approvedMaturityLabels = new Set([
@@ -366,6 +371,38 @@ const expectedTrack329ReportFixtureIds = [
   'invalid_claims_alternate_vault_execution',
   'invalid_claims_active_vault_switch',
   'invalid_claims_public_runtime_wiring'
+];
+
+const expectedTrack330FailureInjectionCategories = [
+  'non_pinned_candidate_marked_current_supported',
+  'unsupported_candidate_marked_supported',
+  'candidate_pipeline_eligible_treated_as_acceptance',
+  'skipped_packet_validation_stage',
+  'skipped_candidate_intake_stage',
+  'skipped_compatibility_evaluation_stage',
+  'invalid_stage_order',
+  'blocked_status_without_blocking_reasons',
+  'blocked_status_without_blocking_stage',
+  'wrong_supported_vault_commit',
+  'missing_supported_vault_commit',
+  'alternate_vault_execution_claim',
+  'active_vault_switch_claim',
+  'runtime_multi_vault_support_claim',
+  'public_runtime_wiring_claim',
+  'metadata_only_assertion_missing',
+  'generated_track3_runs_staged_claim',
+  'persistent_ledger_claim_from_local_report',
+  'verdict_semantics_drift_not_blocked',
+  'release_eligibility_drift_not_blocked',
+  'trace_boundary_violation_not_blocked',
+  'dirty_or_mismatched_source_not_blocked'
+];
+
+const expectedTrack330FailureInjectionOutcomes = [
+  'injected_failure_blocked',
+  'injected_failure_rejected',
+  'invalid_injection_fixture',
+  'injection_expectation_failed'
 ];
 
 function relPath(filePath) {
@@ -3363,6 +3400,145 @@ function validateTrack329PipelineReportValidatorScript() {
   });
 }
 
+function validateTrack330PipelineFailureInjectionFixtures(suite, reportContract) {
+  const file = 'data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json';
+  const category = 'Track 3.30 Vault compatibility pipeline failure injection fixtures';
+
+  [
+    'metadata',
+    'supported_vault_commit',
+    'suite_version',
+    'allowed_expected_outcomes',
+    'required_categories',
+    'injection_policy',
+    'injections'
+  ].forEach(key => requirePath(suite, [key], file, category));
+
+  const metadata = suite.metadata || {};
+  if (metadata.version !== '1.0.0') addFailure(file, category, 'metadata.version must be 1.0.0');
+  if (metadata.track_phase !== '3.30') addFailure(file, category, 'metadata.track_phase must be 3.30');
+  if (metadata.status !== 'local_pipeline_failure_injection_fixtures') {
+    addFailure(file, category, 'metadata.status must be local_pipeline_failure_injection_fixtures');
+  }
+  [
+    ...expectedTrack322BoundaryFalseFlags,
+    'alternate_vault_execution',
+    'active_vault_switch',
+    'multi_vault_runtime_support'
+  ].forEach(flag => {
+    if (metadata[flag] !== false) addFailure(file, category, `metadata.${flag} must be false`);
+  });
+
+  if (suite.supported_vault_commit !== 'ab95cbbd24df5817c4e363d24b3b199ac8af6c6f') {
+    addFailure(file, category, 'supported_vault_commit must match accepted pinned Vault commit');
+  }
+  if (reportContract && reportContract.supported_vault_commit && suite.supported_vault_commit !== reportContract.supported_vault_commit) {
+    addFailure(file, category, 'supported_vault_commit must match the pipeline report contract');
+  }
+  if (suite.suite_version !== '1.0.0') addFailure(file, category, 'suite_version must be 1.0.0');
+
+  validateExpectedMembers(file, category, suite.allowed_expected_outcomes, expectedTrack330FailureInjectionOutcomes, 'allowed_expected_outcomes');
+  validateExpectedMembers(file, category, suite.required_categories, expectedTrack330FailureInjectionCategories, 'required_categories');
+
+  const policy = suite.injection_policy || {};
+  [
+    'evaluate_metadata_only',
+    'must_not_import_nexus',
+    'must_not_execute_nexus',
+    'must_not_use_network',
+    'must_not_clone_alternate_vault_sources',
+    'must_not_mutate_pinned_vault',
+    'must_not_switch_active_vault',
+    'must_not_create_runtime_multi_vault_support',
+    'candidate_pipeline_eligible_is_not_support_acceptance',
+    'non_pinned_candidate_cannot_be_supported',
+    'local_reports_are_not_persistent_ledger',
+    'generated_track3_runs_must_remain_ignored'
+  ].forEach(flag => {
+    if (policy[flag] !== true) addFailure(file, category, `injection_policy.${flag} must be true`);
+  });
+
+  const allowedOutcomes = new Set(suite.allowed_expected_outcomes || []);
+  const requiredCategories = new Set(expectedTrack330FailureInjectionCategories);
+  const seenCategories = new Set();
+  const injections = Array.isArray(suite.injections) ? suite.injections : [];
+
+  injections.forEach((injection, index) => {
+    const label = injection.injection_id || `injections[${index}]`;
+    requirePath(injection, ['injection_id'], file, category);
+    requirePath(injection, ['category'], file, category);
+    requirePath(injection, ['template'], file, category);
+    requirePath(injection, ['invalid_state_summary'], file, category);
+    requirePath(injection, ['expected_outcome'], file, category);
+    requirePath(injection, ['mutations'], file, category);
+
+    seenCategories.add(injection.category);
+    if (!requiredCategories.has(injection.category)) {
+      addFailure(file, category, `${label} category ${injection.category} is not required by Track 3.30`);
+    }
+    if (!allowedOutcomes.has(injection.expected_outcome)) {
+      addFailure(file, category, `${label} expected_outcome ${injection.expected_outcome} is not allowed`);
+    }
+    if (injection.expected_outcome === 'injection_expectation_failed') {
+      addFailure(file, category, `${label} must not expect injection_expectation_failed`);
+    }
+    if (!Array.isArray(injection.mutations) || !injection.mutations.length) {
+      addFailure(file, category, `${label} mutations must be a non-empty array`);
+    }
+  });
+
+  expectedTrack330FailureInjectionCategories.forEach(categoryName => {
+    if (!seenCategories.has(categoryName)) addFailure(file, category, `Missing injection category ${categoryName}`);
+  });
+}
+
+function validateTrack330PipelineFailureInjectionScript() {
+  const file = 'scripts/run-nexus-vault-compatibility-pipeline-failure-injection-suite.mjs';
+  if (!existsSync(path.join(repoRoot, file))) {
+    addFailure(file, 'Track 3.30 pipeline failure injection', 'Pipeline failure-injection suite script is missing');
+    return;
+  }
+
+  const text = readText(file);
+  [
+    ['failure injection fixtures input', /data\/nexus-vault-compatibility-pipeline-failure-injection-fixtures\.v1\.json/],
+    ['pipeline fixtures input', /data\/nexus-vault-compatibility-pipeline-fixtures\.v1\.json/],
+    ['report contract input', /data\/nexus-vault-compatibility-pipeline-report-contract\.v1\.json/],
+    ['report fixtures input', /data\/nexus-vault-compatibility-pipeline-report-fixtures\.v1\.json/],
+    ['ignored failure injection output', /\.track3-runs\/latest-nexus-vault-compatibility-pipeline-failure-injection-report\.json/],
+    ['blocked outcome', /injected_failure_blocked/],
+    ['rejected outcome', /injected_failure_rejected/],
+    ['invalid injection fixture outcome', /invalid_injection_fixture/],
+    ['expectation failed outcome', /injection_expectation_failed/],
+    ['current supported pass status', /current_supported_pass/],
+    ['candidate pipeline eligible status', /candidate_pipeline_eligible/],
+    ['packet validation stage', /packet_validation/],
+    ['candidate intake stage', /candidate_intake/],
+    ['compatibility evaluation stage', /compatibility_evaluation/],
+    ['supported pinned Vault commit', /ab95cbbd24df5817c4e363d24b3b199ac8af6c6f/],
+    ['metadata-only failure injection boundary output', /metadata-only local failure injection/],
+    ['alternate Vault execution boundary flag', /alternate_vault_execution:\s*false/],
+    ['active Vault switch boundary flag', /active_vault_switch:\s*false/],
+    ['multi-Vault runtime support boundary flag', /multi_vault_runtime_support:\s*false/],
+    ['local report ledger boundary', /local_reports_are_persistent_ledger:\s*false/]
+  ].forEach(([label, pattern]) => {
+    if (!pattern.test(text)) addFailure(file, 'Track 3.30 pipeline failure injection', `Script missing ${label}`);
+  });
+
+  const prohibitedPatterns = [
+    { label: 'NEXUS import execution', pattern: /from\s+['"].*nexus|import\s+.*nexus|python.*-c.*import/i },
+    { label: 'dependency installation', pattern: /\b(?:pip3?|npm)\s+install\b|['"]install['"]/i },
+    { label: 'public UI wiring', pattern: /\bdocument\.|\bwindow\.|querySelector|addEventListener/i },
+    { label: 'public HTML modification target', pattern: /index\.html/i },
+    { label: 'production browser JS modification target', pattern: /js\/(?:app|docs|pipeline|grid|governance-engine|trace-viewer)\.js/i },
+    { label: 'network fetch', pattern: /\bfetch\s*\(|https?:\/\//i },
+    { label: 'model API environment assignment', pattern: /ANTHROPIC_API_KEY\s*=/i }
+  ];
+  prohibitedPatterns.forEach(({ label, pattern }) => {
+    if (pattern.test(text)) addFailure(file, 'Track 3.30 pipeline failure injection', `Script contains prohibited ${label}`);
+  });
+}
+
 function validateNexusImportAdapterReportsScript() {
   const file = 'scripts/validate-nexus-import-adapter-reports.mjs';
   if (!existsSync(path.join(repoRoot, file))) {
@@ -3691,6 +3867,7 @@ const nexusVaultCandidateIntakeFixtures = parseJson('data/nexus-vault-candidate-
 const nexusVaultCompatibilityPipelineFixtures = parseJson('data/nexus-vault-compatibility-pipeline-fixtures.v1.json');
 const nexusVaultCompatibilityPipelineReportContract = parseJson('data/nexus-vault-compatibility-pipeline-report-contract.v1.json');
 const nexusVaultCompatibilityPipelineReportFixtures = parseJson('data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json');
+const nexusVaultCompatibilityPipelineFailureInjectionFixtures = parseJson('data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json');
 
 validateAllDataJsonFilesParsed();
 
@@ -3747,6 +3924,9 @@ if (nexusVaultCompatibilityPipelineReportContract) {
 if (nexusVaultCompatibilityPipelineReportFixtures) {
   validateTrack329PipelineReportFixtures(nexusVaultCompatibilityPipelineReportFixtures, nexusVaultCompatibilityPipelineReportContract);
 }
+if (nexusVaultCompatibilityPipelineFailureInjectionFixtures) {
+  validateTrack330PipelineFailureInjectionFixtures(nexusVaultCompatibilityPipelineFailureInjectionFixtures, nexusVaultCompatibilityPipelineReportContract);
+}
 validateNexusImportEnvironmentPreflightScript();
 validateLocalNexusImportAdapterScript();
 validateLocalNexusImportAdapterReportIfPresent();
@@ -3761,6 +3941,7 @@ validateTrack326EvidencePacketValidatorScript();
 validateTrack327CandidateIntakeGateScript();
 validateTrack328CompatibilityPipelineScript();
 validateTrack329PipelineReportValidatorScript();
+validateTrack330PipelineFailureInjectionScript();
 validateRequiredScriptFiles();
 validateRequiredDocFiles();
 
