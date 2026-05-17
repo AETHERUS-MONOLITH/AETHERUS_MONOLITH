@@ -39,7 +39,7 @@ The local pipeline order is:
 1. `packet_validation`
 2. `candidate_intake`
 3. `compatibility_evaluation`
-4. `pipeline_status_report`
+4. `final_pipeline_status`
 
 Packet validation checks evidence packet shape and basic contract viability.
 

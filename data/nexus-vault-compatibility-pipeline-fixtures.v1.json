@@ -32,7 +32,7 @@
     "packet_validation",
     "candidate_intake",
     "compatibility_evaluation",
-    "pipeline_status_report"
+    "final_pipeline_status"
   ],
   "allowed_pipeline_statuses": [
     "current_supported_pass",

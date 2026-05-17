@@ -51,7 +51,7 @@ const orderedStages = [
   'packet_validation',
   'candidate_intake',
   'compatibility_evaluation',
-  'pipeline_status_report'
+  'final_pipeline_status'
 ];
 
 const allowedPipelineStatuses = new Set([
@@ -433,6 +433,7 @@ const fixtureResults = (pipelineFixtures.fixtures || []).map(fixture => {
 mkdirSync(path.join(repoRoot, '.track3-runs'), { recursive: true });
 
 const report = {
+  report_version: '1.0.0',
   meta: {
     generated_at: new Date().toISOString(),
     script_name: 'scripts/run-nexus-vault-compatibility-pipeline-stub.mjs',
@@ -460,6 +461,12 @@ const report = {
     unsupported_candidate_count: fixtureResults.filter(result => result.final_pipeline_status === 'unsupported_candidate').length
   },
   fixture_results: fixtureResults,
+  generated_output_boundary: {
+    path: outputFile,
+    git_ignored: true,
+    must_not_be_committed: true,
+    source_of_truth: false
+  },
   boundary_summary: {
     metadata_only_local_pipeline_orchestration: true,
     packet_validation_precedes_intake: true,

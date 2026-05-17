@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Compatibility Pipeline Report Contract",
+    "version": "1.0.0",
+    "track_phase": "3.29",
+    "status": "local_pipeline_report_contract",
+    "policy_inputs": [
+      "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+      "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+      "data/nexus-vault-candidate-intake-fixtures.v1.json",
+      "data/nexus-vault-version-compatibility.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "alternate_vault_execution": false,
+    "active_vault_switch": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local pipeline report contract only. This file validates report shape and boundary assertions; it does not execute alternate Vault code, switch the active Vault, or create runtime multi-Vault support."
+  },
+  "report_version": "1.0.0",
+  "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "generated_report": {
+    "path": ".track3-runs/latest-nexus-vault-compatibility-pipeline-report.json",
+    "git_ignored": true,
+    "must_not_be_committed": true,
+    "source_of_truth": false
+  },
+  "validation_report": {
+    "path": ".track3-runs/latest-nexus-vault-compatibility-pipeline-report-validation-report.json",
+    "git_ignored": true,
+    "must_not_be_committed": true,
+    "source_of_truth": false
+  },
+  "required_report_fields": [
+    "report_version",
+    "meta.generated_at",
+    "source.aetherus_commit",
+    "source.supported_vault_commit",
+    "summary.pipeline_fixture_count",
+    "summary.passed_count",
+    "summary.failed_count",
+    "fixture_results",
+    "boundary_summary",
+    "generated_output_boundary"
+  ],
+  "required_per_fixture_fields": [
+    "fixture_id",
+    "candidate_vault_commit",
+    "stage_results",
+    "final_pipeline_status",
+    "blocking_stage",
+    "blocking_reasons",
+    "supported",
+    "metadata_only"
+  ],
+  "allowed_final_pipeline_statuses": [
+    "current_supported_pass",
+    "candidate_pipeline_eligible",
+    "blocked_at_packet_validation",
+    "blocked_at_intake",
+    "blocked_at_compatibility_evaluation",
+    "unsupported_candidate",
+    "invalid_pipeline_fixture"
+  ],
+  "required_pipeline_stage_order": [
+    "packet_validation",
+    "candidate_intake",
+    "compatibility_evaluation",
+    "final_pipeline_status"
+  ],
+  "blocking_statuses": [
+    "blocked_at_packet_validation",
+    "blocked_at_intake",
+    "blocked_at_compatibility_evaluation",
+    "invalid_pipeline_fixture"
+  ],
+  "non_support_statuses": [
+    "candidate_pipeline_eligible",
+    "unsupported_candidate"
+  ],
+  "boundary_assertions": {
+    "metadata_only_local_pipeline_orchestration": true,
+    "compatibility_evaluation_executes_vault_code": false,
+    "imports_alternate_vault_code": false,
+    "switches_active_vault": false,
+    "creates_multi_vault_runtime_support": false,
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "candidate_pipeline_eligible_is_support_acceptance": false,
+    "generated_output_is_source_of_truth": false
+  }
+}
