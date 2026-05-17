@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Compatibility Pipeline Failure-Injection Report Contract",
+    "version": "1.0.0",
+    "track_phase": "3.31",
+    "status": "local_pipeline_failure_injection_report_contract",
+    "policy_inputs": [
+      "data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json",
+      "data/nexus-vault-compatibility-pipeline-report-contract.v1.json"
+    ],
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "alternate_vault_execution": false,
+    "active_vault_switch": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local failure-injection report contract only. This file validates report shape, fail-closed outcomes, and boundary assertions; it does not execute alternate Vault code, switch the active Vault, or create runtime multi-Vault support."
+  },
+  "report_version": "1.0.0",
+  "suite_version": "1.0.0",
+  "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "generated_report": {
+    "path": ".track3-runs/latest-nexus-vault-compatibility-pipeline-failure-injection-report.json",
+    "git_ignored": true,
+    "must_not_be_committed": true,
+    "source_of_truth": false
+  },
+  "validation_report": {
+    "path": ".track3-runs/latest-nexus-vault-compatibility-pipeline-failure-injection-report-validation-report.json",
+    "git_ignored": true,
+    "must_not_be_committed": true,
+    "source_of_truth": false
+  },
+  "required_report_fields": [
+    "report_version",
+    "suite_version",
+    "meta.generated_at",
+    "source.aetherus_commit",
+    "source.supported_vault_commit",
+    "summary.injection_count",
+    "summary.passed_count",
+    "summary.failed_count",
+    "injection_results",
+    "boundary_summary",
+    "generated_output_boundary"
+  ],
+  "required_per_injection_fields": [
+    "injection_id",
+    "category",
+    "invalid_state_summary",
+    "expected_outcome",
+    "actual_outcome",
+    "passed",
+    "blocking_reason",
+    "metadata_only"
+  ],
+  "allowed_injection_categories": [
+    "non_pinned_candidate_marked_current_supported",
+    "unsupported_candidate_marked_supported",
+    "candidate_pipeline_eligible_treated_as_acceptance",
+    "skipped_packet_validation_stage",
+    "skipped_candidate_intake_stage",
+    "skipped_compatibility_evaluation_stage",
+    "invalid_stage_order",
+    "blocked_status_without_blocking_reasons",
+    "blocked_status_without_blocking_stage",
+    "wrong_supported_vault_commit",
+    "missing_supported_vault_commit",
+    "alternate_vault_execution_claim",
+    "active_vault_switch_claim",
+    "runtime_multi_vault_support_claim",
+    "public_runtime_wiring_claim",
+    "metadata_only_assertion_missing",
+    "generated_track3_runs_staged_claim",
+    "persistent_ledger_claim_from_local_report",
+    "verdict_semantics_drift_not_blocked",
+    "release_eligibility_drift_not_blocked",
+    "trace_boundary_violation_not_blocked",
+    "dirty_or_mismatched_source_not_blocked"
+  ],
+  "allowed_expected_outcomes": [
+    "injected_failure_blocked",
+    "injected_failure_rejected",
+    "invalid_injection_fixture",
+    "injection_expectation_failed"
+  ],
+  "allowed_actual_outcomes": [
+    "injected_failure_blocked",
+    "injected_failure_rejected",
+    "invalid_injection_fixture",
+    "injection_expectation_failed"
+  ],
+  "passing_actual_outcomes": [
+    "injected_failure_blocked",
+    "injected_failure_rejected"
+  ],
+  "failing_actual_outcomes": [
+    "invalid_injection_fixture",
+    "injection_expectation_failed"
+  ],
+  "boundary_assertions": {
+    "metadata_only_local_failure_injection": true,
+    "evaluates_alternate_vault_code": false,
+    "executes_alternate_vault_code": false,
+    "switches_active_vault": false,
+    "creates_multi_vault_runtime_support": false,
+    "public_runtime_wiring_authorized": false,
+    "candidate_pipeline_eligible_is_support_acceptance": false,
+    "generated_track3_runs_reports_committed": false,
+    "local_reports_are_persistent_ledger": false,
+    "generated_output_is_source_of_truth": false
+  }
+}

@@ -394,6 +394,8 @@ if (trackedTrack3Runs) {
 mkdirSync(path.join(repoRoot, '.track3-runs'), { recursive: true });
 
 const report = {
+  report_version: '1.0.0',
+  suite_version: injections.suite_version,
   meta: {
     generated_at: new Date().toISOString(),
     script_name: 'scripts/run-nexus-vault-compatibility-pipeline-failure-injection-suite.mjs',

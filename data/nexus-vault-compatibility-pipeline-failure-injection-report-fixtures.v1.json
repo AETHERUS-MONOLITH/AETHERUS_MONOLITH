@@ -1,0 +1,290 @@
+{
+  "metadata": {
+    "contract_name": "AETHERUS NEXUS Vault Compatibility Pipeline Failure-Injection Report Fixtures",
+    "version": "1.0.0",
+    "track_phase": "3.31",
+    "status": "local_pipeline_failure_injection_report_contract_fixtures",
+    "contract": "data/nexus-vault-compatibility-pipeline-failure-injection-report-contract.v1.json",
+    "public_runtime": false,
+    "public_ui_wiring": false,
+    "backend": false,
+    "auth": false,
+    "database": false,
+    "persistence": false,
+    "ledger": false,
+    "model_execution": false,
+    "live_orchestration": false,
+    "palisade": false,
+    "weave": false,
+    "alternate_vault_execution": false,
+    "active_vault_switch": false,
+    "multi_vault_runtime_support": false,
+    "claim_escalation": false,
+    "boundary": "Local failure-injection report validation fixtures only. These reports do not execute alternate Vault code, switch the active Vault, or create runtime multi-Vault support."
+  },
+  "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f",
+  "required_fixture_ids": [
+    "valid_failure_injection_report",
+    "invalid_missing_supported_vault_commit",
+    "invalid_wrong_supported_vault_commit",
+    "invalid_injection_count_mismatch",
+    "invalid_pass_fail_count_mismatch",
+    "invalid_unblocked_injected_failure",
+    "invalid_missing_blocking_reason",
+    "invalid_allows_non_pinned_support",
+    "invalid_missing_metadata_only_assertion",
+    "invalid_claims_alternate_vault_execution",
+    "invalid_claims_active_vault_switch",
+    "invalid_claims_runtime_multi_vault_support",
+    "invalid_claims_public_runtime_wiring",
+    "invalid_treats_track3_runs_as_persistent_ledger",
+    "invalid_missing_generated_ignored_boundary"
+  ],
+  "report_templates": {
+    "valid_failure_injection": {
+      "report_version": "1.0.0",
+      "suite_version": "1.0.0",
+      "meta": {
+        "generated_at": "2026-05-17T00:00:00.000Z",
+        "public_runtime": false,
+        "public_ui_wiring": false,
+        "alternate_vault_execution": false,
+        "active_vault_switch": false,
+        "multi_vault_runtime_support": false
+      },
+      "source": {
+        "aetherus_commit": "359f37712bd1b490e651b7819815db98baa8a46d",
+        "supported_vault_commit": "ab95cbbd24df5817c4e363d24b3b199ac8af6c6f"
+      },
+      "summary": {
+        "injection_count": 2,
+        "passed_count": 2,
+        "failed_count": 0,
+        "injected_failure_blocked_count": 1,
+        "injected_failure_rejected_count": 1
+      },
+      "injection_results": [
+        {
+          "injection_id": "inject_non_pinned_candidate_marked_current_supported",
+          "category": "non_pinned_candidate_marked_current_supported",
+          "invalid_state_summary": "A non-pinned candidate is promoted to current_supported_pass.",
+          "expected_outcome": "injected_failure_rejected",
+          "actual_outcome": "injected_failure_rejected",
+          "passed": true,
+          "blocking_reason": "non-pinned candidate cannot end current_supported_pass",
+          "metadata_only": true
+        },
+        {
+          "injection_id": "inject_blocked_status_without_blocking_reasons",
+          "category": "blocked_status_without_blocking_reasons",
+          "invalid_state_summary": "A blocked status omits blocking_reasons.",
+          "expected_outcome": "injected_failure_blocked",
+          "actual_outcome": "injected_failure_blocked",
+          "passed": true,
+          "blocking_reason": "blocked status requires blocking_reasons",
+          "metadata_only": true
+        }
+      ],
+      "boundary_summary": {
+        "metadata_only_local_failure_injection": true,
+        "evaluates_alternate_vault_code": false,
+        "executes_alternate_vault_code": false,
+        "switches_active_vault": false,
+        "creates_multi_vault_runtime_support": false,
+        "public_runtime_wiring_authorized": false,
+        "candidate_pipeline_eligible_is_support_acceptance": false,
+        "generated_track3_runs_reports_committed": false,
+        "local_reports_are_persistent_ledger": false
+      },
+      "generated_output_boundary": {
+        "path": ".track3-runs/latest-nexus-vault-compatibility-pipeline-failure-injection-report.json",
+        "git_ignored": true,
+        "must_not_be_committed": true,
+        "source_of_truth": false
+      }
+    }
+  },
+  "fixtures": [
+    {
+      "fixture_id": "valid_failure_injection_report",
+      "template": "valid_failure_injection",
+      "expected_valid": true,
+      "mutations": []
+    },
+    {
+      "fixture_id": "invalid_missing_supported_vault_commit",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "source.supported_vault_commit"
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_wrong_supported_vault_commit",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "source.supported_vault_commit",
+          "value": "0000000000000000000000000000000000000000"
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_injection_count_mismatch",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "summary.injection_count",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_pass_fail_count_mismatch",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "summary.failed_count",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_unblocked_injected_failure",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "injection_results.0.actual_outcome",
+          "value": "injection_expectation_failed"
+        },
+        {
+          "op": "set",
+          "path": "injection_results.0.passed",
+          "value": false
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_missing_blocking_reason",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "injection_results.0.blocking_reason",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_allows_non_pinned_support",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "injection_results.0.actual_outcome",
+          "value": "injection_expectation_failed"
+        },
+        {
+          "op": "set",
+          "path": "injection_results.0.blocking_reason",
+          "value": "current_supported_pass accepted for non-pinned candidate"
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_missing_metadata_only_assertion",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "boundary_summary.metadata_only_local_failure_injection"
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_claims_alternate_vault_execution",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "meta.alternate_vault_execution",
+          "value": true
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_claims_active_vault_switch",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "boundary_summary.switches_active_vault",
+          "value": true
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_claims_runtime_multi_vault_support",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "boundary_summary.creates_multi_vault_runtime_support",
+          "value": true
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_claims_public_runtime_wiring",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "meta.public_ui_wiring",
+          "value": true
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_treats_track3_runs_as_persistent_ledger",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "set",
+          "path": "boundary_summary.local_reports_are_persistent_ledger",
+          "value": true
+        }
+      ]
+    },
+    {
+      "fixture_id": "invalid_missing_generated_ignored_boundary",
+      "template": "valid_failure_injection",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "generated_output_boundary.git_ignored"
+        }
+      ]
+    }
+  ]
+}
