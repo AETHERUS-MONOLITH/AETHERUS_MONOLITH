@@ -10,14 +10,14 @@
       "section": "governance",
       "status": "Conceptual architecture",
       "category": "System map",
-      "claim_supported": "AETHERUS has a coherent governance architecture for controlled LLM and agent execution.",
+      "claim_supported": "AETHERUS has a coherent governance architecture for controlled LLM and agent workflow concepts.",
       "evidence_type": "Architecture outline",
       "boundary": "Not a deployed product map, implementation audit, or certification package.",
       "related_pipeline_stage": "Whole system",
       "pipeline_stage_keys": ["WHOLE_SYSTEM", "INPUT_FRAME", "AUTHORITY_CHECK", "GATE_DECISION", "AUDIT_RELEASE"],
       "audience": "Technical evaluators and governance stakeholders",
       "cta_label": "Inspect architecture",
-      "body": "# System Overview\n\nObject status: **Conceptual architecture**.\n\nAETHERUS MONOLITH frames controlled LLM and agent execution through five concerns:\n\n- **Authority**: human permission and override boundaries.\n- **Governance Gates**: validation before downstream release.\n- **Pipeline State**: visible PASS, FAIL, FREEZE, REPAIR, ESCALATE, and AUDIT movement.\n- **Artifacts**: traceable schemas, templates, and deltas.\n- **Control Surface**: a planned interface direction for human review.\n\n## Scope\n\nThis is research and prototype-facing material. It is not presented as an already deployed enterprise SaaS platform."
+      "body": "# System Overview\n\nObject status: **Conceptual architecture**.\n\nAETHERUS MONOLITH frames controlled LLM and agent workflow concepts through five concerns:\n\n- **Authority**: human permission and override boundaries.\n- **Governance Gates**: validation before downstream release.\n- **Pipeline State**: visible PASS, FAIL, FREEZE, REPAIR, ESCALATE, and AUDIT movement.\n- **Artifacts**: traceable schemas, templates, and deltas.\n- **Control Surface**: a planned interface direction for human review.\n\n## Scope\n\nThis is research and prototype-facing material. It is not presented as an already deployed enterprise SaaS platform."
     },
     {
       "id": "AUTHORITY_MODEL",
@@ -29,7 +29,7 @@
       "section": "governance",
       "status": "Methodology",
       "category": "Authority model",
-      "claim_supported": "Agent execution should remain subordinate to explicit human authority and logged override rules.",
+      "claim_supported": "Agent workflow concepts should remain subordinate to explicit human authority and documented override rules.",
       "evidence_type": "Control procedure",
       "boundary": "Not proof of an active identity system, access-control backend, or organizational policy deployment.",
       "related_pipeline_stage": "Pre-pipeline authority check",
@@ -53,7 +53,7 @@
       "boundary": "Not a live changelog service, release management system, or enterprise audit ledger.",
       "related_pipeline_stage": "Release eligibility and consolidation",
       "pipeline_stage_keys": ["RECOVERY_PATH", "AUDIT_RELEASE", "S5"],
-      "audience": "Architecture reviewers and governance operators",
+      "audience": "Architecture reviewers and governance reviewers",
       "cta_label": "Inspect lifecycle",
       "body": "# Version Lifecycle\n\nObject status: **Research artefact**.\n\n## Two Modes\n\n### Incremental\nv4.0 → v4.1 → v4.1.1 → v4.1.2 → v4.2 → v4.3\nPatches and exceptions accumulate. Edge cases are documented.\n\n### Consolidated\nv5.0 absorbs prior deltas into a self-explaining baseline:\n- Reduced exception load\n- Unified semantics\n- Fewer conditional branches\n\n## Rule\nConsolidation is not cosmetic. Consolidation is a governance event that changes release eligibility."
     },
@@ -80,12 +80,12 @@
       "id": "PIPELINE_OVERVIEW",
       "layer": "PIPELINE",
       "card_variant": "pipeline-layer",
-      "title": "GOVERNED EXECUTION FLOW",
-      "description": "Prototype evidence for how intent, model work, validation, and artifact release can move through a gated pipeline.",
+      "title": "GOVERNED PROTOTYPE FLOW",
+      "description": "Prototype evidence for how intent, model work, validation, and artifact release can be represented through a gated pipeline.",
       "format": "Markdown",
       "section": "pipeline",
       "status": "Prototype evidence",
-      "category": "Execution trace",
+      "category": "Prototype trace",
       "claim_supported": "A governed agent flow can be represented as inspectable movement through actors, checkpoints, and audit states.",
       "evidence_type": "Interactive interface prototype",
       "boundary": "Not production orchestration, live model execution, or customer deployment proof.",
@@ -93,7 +93,7 @@
       "pipeline_stage_keys": ["INPUT_FRAME", "RISK_CLASSIFICATION", "G_IDEM", "S1", "S2", "S3", "S4", "S5"],
       "audience": "Technical evaluators and product/architecture reviewers",
       "cta_label": "Inspect flow",
-      "body": "# Pipeline Overview\n\nObject status: **Prototype evidence**.\n\n## Pre-Pipeline\nInputs:\n- session_state\n- context\n- authority boundary\n\nPre-step:\n- skeleton population\n- session state normalization\n- release condition registration\n\n## Main Pipeline (actors)\nS1 Communicator → S2 Mediator → S3 Drafter → S4 Refiner → S5 Origin\n\n## Outputs\n- updated_session_state\n- delta_brief (human-readable)\n- committed artifact(s)\n- audit state\n\n## Principle\nA joint does work. A gate validates work. They are never the same object."
+      "body": "# Pipeline Overview\n\nObject status: **Prototype evidence**.\n\n## Pre-Pipeline\nModeled inputs:\n- session_state\n- context\n- authority boundary\n\nPre-step concepts:\n- skeleton population\n- session state normalization\n- release condition registration\n\n## Main Pipeline (actors)\nS1 Communicator -> S2 Mediator -> S3 Drafter -> S4 Refiner -> S5 Origin\n\n## Modeled Outputs\n- updated_session_state\n- delta_brief (human-readable)\n- artifact reference(s)\n- audit state\n\n## Principle\nA joint represents work. A gate represents validation. They are never the same object."
     },
     {
       "id": "JOINT_SPECIFICATIONS",
@@ -119,7 +119,7 @@
       "layer": "PIPELINE",
       "card_variant": "pipeline-layer",
       "title": "GOVERNANCE GATE SPECIFICATIONS",
-      "description": "Conceptual checkpoints for stopping risky model behavior before it propagates downstream.",
+      "description": "Conceptual checkpoints for representing how risky model behavior should be stopped before downstream propagation.",
       "format": "Markdown",
       "section": "pipeline",
       "status": "Conceptual architecture",
@@ -131,14 +131,14 @@
       "pipeline_stage_keys": ["GATE_DECISION", "G_IDEM", "G1", "G1A", "G2", "G4"],
       "audience": "Governance architects and risk reviewers",
       "cta_label": "Inspect gates",
-      "body": "# Gate Specifications\n\nObject status: **Conceptual architecture**.\n\n| Gate  | Location         | Validates              | On Fail                  |\n|-------|------------------|------------------------|---------------------------|\n| G_IDEM | Pipeline entry  | composite_hash match   | return cached output      |\n| G1    | post-Communicator| execution_plan schema  | retry (max 2)             |\n| G1A   | post-Adapter     | XML validity           | escalate                  |\n| G2    | post-Mediator    | constraints_packet     | retry (max 2)             |\n| G4    | post-Refiner     | verdict validity       | route by verdict          |\n\n## UI Rule\nGate diamonds activate before their downstream joint. The checkpoint is the last visible boundary before execution passes through."
+      "body": "# Gate Specifications\n\nObject status: **Conceptual architecture**.\n\n| Gate  | Location         | Validates              | On Fail                  |\n|-------|------------------|------------------------|---------------------------|\n| G_IDEM | Pipeline entry  | composite_hash match   | return cached output      |\n| G1    | post-Communicator| execution_plan schema  | retry (max 2)             |\n| G1A   | post-Adapter     | XML validity           | escalate                  |\n| G2    | post-Mediator    | constraints_packet     | retry (max 2)             |\n| G4    | post-Refiner     | verdict validity       | route by verdict          |\n\n## UI Rule\nGate diamonds activate before their downstream joint. The checkpoint is the last visible boundary before the prototype represents progression."
     },
     {
       "id": "ORCHESTRATION_MANUAL",
       "layer": "PIPELINE",
       "card_variant": "pipeline-layer",
       "title": "HUMAN CONTROL SURFACE",
-      "description": "Planned interface direction for keeping authority, state, escalation, and release eligibility visible to a human operator.",
+      "description": "Planned interface direction for keeping authority, state, escalation, and release eligibility visible to a human reviewer.",
       "format": "Markdown",
       "section": "pipeline",
       "status": "Planned interface direction",
@@ -150,7 +150,7 @@
       "pipeline_stage_keys": ["AUTHORITY_CHECK", "RECOVERY_PATH", "AUDIT_RELEASE", "S5"],
       "audience": "Product strategists, governance leads, and interface reviewers",
       "cta_label": "Inspect interface",
-      "body": "# Orchestration Manual\n\nObject status: **Planned interface direction**.\n\n## Human Control Surface\nThe human authors session_state and selects routing. Agents do not self-author authority.\n\n## Procedure (high level)\n1) Human provides session_state + context\n2) System enters at G_IDEM\n3) Execute joints with gates enforcing schema\n4) Origin commits on pass\n5) Human receives delta_brief\n\n## Non-negotiable\nSession state is the contract boundary. Any mutation is logged and validated."
+      "body": "# Orchestration Manual\n\nObject status: **Planned interface direction**.\n\n## Human Control Surface\nThe human authors session_state and selects routing in the governance model. Agents do not self-author authority.\n\n## Modeled Procedure (high level)\n1) Human provides session_state + context\n2) System is represented as entering at G_IDEM\n3) Joints and gates are represented with schema constraints\n4) Origin commit semantics are modeled on pass\n5) Human receives delta_brief concept\n\n## Non-negotiable\nSession state is the contract boundary. Any future mutation would need to be logged and validated."
     },
     {
       "id": "ARTIFACT_CATALOG",
@@ -226,7 +226,7 @@
       "pipeline_stage_keys": ["GATE_DECISION", "G1", "G1A", "G2", "G4", "AUDIT_RELEASE"],
       "audience": "Platform architects and validation reviewers",
       "cta_label": "Inspect schema",
-      "body": "# Schema Definitions\n\nObject status: **Conceptual architecture**.\n\n## Inventory\n\n- session_state.xsd\n- execution_plan.xsd\n- constraints_packet.xsd\n- drafter_output.xsd\n- patchlist.xsd\n- origin_commit.xsd\n\n## Principle\nIf it cannot be validated, it cannot be executed."
+      "body": "# Schema Definitions\n\nObject status: **Conceptual architecture**.\n\n## Inventory\n\n- session_state.xsd\n- execution_plan.xsd\n- constraints_packet.xsd\n- drafter_output.xsd\n- patchlist.xsd\n- origin_commit.xsd\n\n## Principle\nIn the model, if it cannot be validated, it should not proceed."
     },
     {
       "id": "DELTA_BRIEF",
@@ -244,9 +244,9 @@
       "boundary": "Not a live audit log, compliance record, or customer deployment report.",
       "related_pipeline_stage": "S5 Origin and audit handoff",
       "pipeline_stage_keys": ["AUDIT_RELEASE", "S5"],
-      "audience": "Human reviewers and governance operators",
+      "audience": "Human reviewers and governance reviewers",
       "cta_label": "Inspect delta",
-      "body": "# delta_brief (Human Output)\n\nObject status: **Prototype evidence**.\n\n## Purpose\nSummarize the committed delta without ambiguity.\n\n## Required fields\n- What changed (scope)\n- Why it changed (justification)\n- What remains frozen (boundaries)\n- Verification required (if any)\n\n## Tone\nNo celebration. No apology. Clear finality."
+      "body": "# delta_brief (Human Output)\n\nObject status: **Prototype evidence**.\n\n## Purpose\nSummarize a modeled delta without ambiguity.\n\n## Required fields\n- What changed (scope)\n- Why it changed (justification)\n- What remains frozen (boundaries)\n- Verification required (if any)\n\n## Tone\nNo celebration. No apology. Clear finality."
     }
   ]
 }

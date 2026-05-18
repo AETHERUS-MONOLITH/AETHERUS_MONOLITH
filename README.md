@@ -1,10 +1,10 @@
 # AETHERUS MONOLITH
 
-AETHERUS MONOLITH is a static conceptual research and prototype-facing interface for an AI governance and model-behavior risk architecture. The current interface is centered on a Governance Stack Cutaway that explains how controlled LLM and agent pipelines can be framed through authority, evidence, risk classification, state decisions, auditability, and release eligibility.
+AETHERUS MONOLITH is a static, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent, prototype-facing, claim-bounded public artifact for an AI governance and model-behavior risk architecture. The current interface is centered on a Governance Stack Cutaway that explains how controlled LLM and agent workflow concepts can be framed through authority, evidence, risk classification, state decisions, auditability, and release eligibility.
 
 ## Current Status
 
-This repository is a conceptual research interface.
+This repository is a conceptual research interface and static prototype.
 
 - Static HTML/CSS/vanilla JS
 - No backend
@@ -16,9 +16,11 @@ This repository is a conceptual research interface.
 
 The site is designed to communicate an architecture and evidence model. It should not be interpreted as production software, a certified control framework, or proof of enterprise deployment.
 
+The public Facade is the static claim-bounded surface. Track 3 Conduit work remains local-only evidence and integration-contract work. The current Vault reference is the pinned NEXUS MVP source at `ab95cbbd24df5817c4e363d24b3b199ac8af6c6f`; it is not public NEXUS execution. Palisade is not instantiated, and Weave is specification only, not runnable.
+
 ## What The Interface Shows
 
-The interface presents a governance-oriented model for controlled AI behavior, including:
+The interface presents a governance-oriented model for controlled AI behavior concepts, including:
 
 - Governance Stack Cutaway
 - Authority boundaries
