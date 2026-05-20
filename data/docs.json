@@ -172,6 +172,25 @@
       "body": "# Direct UI Membrane Visual Spec\n\nObject status: **Concept-stage visual specification**.\n\n## Reference\n`docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md`\n\n## Scope\nFacade Reflection 0.4 documents the accepted visual direction for the planned Direct UI Membrane. It is documentation-only and non-operational.\n\nAETHERUS_MONOLITH / Section 1.1 remains the instantiated static public artifact. Section 1.2 Direct UI Membrane remains planned and specified only.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add runtime UI behavior, routes, authentication, backend routes, database behavior, persistence, billing, public NEXUS execution, Palisade, or Weave.\n\n## Explicit Non-Claims\n- not an implemented authenticated surface\n- no live AI execution\n- no customer data\n- no production deployment\n- no operational release authority\n- no compliance certification"
     },
     {
+      "id": "DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY",
+      "layer": "PIPELINE",
+      "card_variant": "pipeline-layer",
+      "title": "DIRECT UI MEMBRANE IA TAXONOMY",
+      "description": "Documentation-only IA and conceptual surface taxonomy for the planned Direct UI Membrane.",
+      "format": "Markdown",
+      "section": "pipeline",
+      "status": "Concept-stage IA specification",
+      "category": "Planned interface direction",
+      "claim_supported": "Facade Reflection 0.7 records the conceptual surfaces, navigation labels, state vocabulary, and boundary rules for a future controlled human-review membrane.",
+      "evidence_type": "IA surface taxonomy",
+      "boundary": "Documentation-only and non-operational; not an implemented authenticated or interactive surface, no live AI execution, no customer data, no persistence, no runtime monitoring, no operational release authority, no Palisade, no Weave, and no public NEXUS runtime.",
+      "related_pipeline_stage": "Planned Direct UI Membrane review concept",
+      "pipeline_stage_keys": ["AUTHORITY_CHECK", "RECOVERY_PATH", "AUDIT_RELEASE", "S5"],
+      "audience": "Product strategists, governance leads, interface reviewers, and documentation reviewers",
+      "cta_label": "Inspect IA taxonomy",
+      "body": "# Direct UI Membrane IA Taxonomy\n\nObject status: **Concept-stage IA specification**.\n\n## Reference\n`docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md`\n\n## Scope\nFacade Reflection 0.7 documents the information architecture and conceptual surface taxonomy for the planned Direct UI Membrane after the visual asset index.\n\nThe accepted conceptual surfaces are Access Boundary Membrane, Workspace Control Surface, Evidence / Artifact Review Surface, Release Review Chamber, and Escalation Review Surface.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add routes, runtime UI behavior, JavaScript behavior, CSS behavior, authentication, backend routes, database behavior, persistence, billing, public NEXUS execution, Palisade, Weave, or operational release authority.\n\n## Explicit Non-Claims\n- not an implemented authenticated or interactive surface\n- conceptual IA labels only, not implemented routes\n- no live AI execution\n- no customer data\n- no persistent audit ledger\n- no runtime monitoring\n- no production deployment\n- no operational release authority\n- no compliance certification"
+    },
+    {
       "id": "ARTIFACT_CATALOG",
       "layer": "ARTIFACTS",
       "card_variant": "artifact-layer",

@@ -49,6 +49,7 @@ The visual system is intended to support comprehension of the architecture, not 
 - `data/joint-workflow.manifest.json` - Normalized Joint-Workflow-derived architecture manifest.
 - `data/scenarios.json` - Deterministic scenario fixtures for prototype governance traces.
 - `docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md` - Documentation-only visual specification for the planned Direct UI Membrane.
+- `docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md` - Documentation-only IA and conceptual surface taxonomy for the planned Direct UI Membrane.
 
 ## Local Development
 
@@ -86,6 +87,8 @@ These fields distinguish conceptual architecture, prototype evidence, research a
 ## Facade Reflection Documentation
 
 Facade Reflection 0.4 documents the accepted visual direction for the planned Direct UI Membrane in `docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md`.
+
+Facade Reflection 0.7 documents the IA and conceptual surface taxonomy for the same planned membrane in `docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md`.
 
 This specification is concept-stage, documentation-only, and non-operational. It is not an implemented authenticated surface and does not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, or billing. It carries the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
 
