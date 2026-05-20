@@ -48,6 +48,7 @@ The visual system is intended to support comprehension of the architecture, not 
 - `data/docs.json` - Structured local artefact metadata and explanatory content for the research evidence model.
 - `data/joint-workflow.manifest.json` - Normalized Joint-Workflow-derived architecture manifest.
 - `data/scenarios.json` - Deterministic scenario fixtures for prototype governance traces.
+- `docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md` - Documentation-only visual specification for the planned Direct UI Membrane.
 
 ## Local Development
 
@@ -81,6 +82,14 @@ A local server is recommended so `data/docs.json` can be loaded through the brow
 - `cta_label`
 
 These fields distinguish conceptual architecture, prototype evidence, research artefacts, methodology, and planned interface direction. They also make explicit what each artefact should not be confused with.
+
+## Facade Reflection Documentation
+
+Facade Reflection 0.4 documents the accepted visual direction for the planned Direct UI Membrane in `docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md`.
+
+This specification is concept-stage, documentation-only, and non-operational. It is not an implemented authenticated surface and does not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, or billing. It carries the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
+
+AETHERUS_MONOLITH / §1.1 remains the instantiated static public artifact. The §1.2 Direct UI Membrane remains planned and specified only until a separate authorized implementation pass exists.
 
 ## AETHERUS Intelligence Layer v0
 
