@@ -210,6 +210,25 @@
       "body": "# Direct UI Membrane Interaction Flow Spec\n\nObject status: **Concept-stage flow specification**.\n\n## Reference\n`docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md`\n\n## Scope\nFacade Reflection 0.8 documents conceptual reviewer journeys for the planned Direct UI Membrane after the visual asset index and surface taxonomy.\n\nThe flows cover Access Boundary Entry, Workspace Orientation, Evidence / Artifact Review, Artifact Lineage Review, Release Review, Escalation Review, and return / unresolved-state logic.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add routes, runtime UI behavior, JavaScript behavior, CSS behavior, authentication, backend routes, database behavior, persistence, billing, public NEXUS execution, Palisade, Weave, session handling, or operational release authority.\n\n## Explicit Non-Claims\n- not implemented routes or live workflow logic\n- not an implemented authenticated or interactive surface\n- no session creation\n- no live AI execution\n- no customer data\n- no persistent audit ledger\n- no runtime monitoring\n- no production deployment\n- no operational release authority\n- no compliance certification"
     },
     {
+      "id": "DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT",
+      "layer": "PIPELINE",
+      "card_variant": "pipeline-layer",
+      "title": "DIRECT UI MEMBRANE COPY AUDIT",
+      "description": "Documentation-only copy and boundary-language audit for the planned Direct UI Membrane.",
+      "format": "Markdown",
+      "section": "pipeline",
+      "status": "Concept-stage copy boundary audit",
+      "category": "Planned interface direction",
+      "claim_supported": "Facade Reflection 0.9 records a documentation-only audit of accumulated Section 1.2-facing copy and boundary language.",
+      "evidence_type": "Copy boundary audit",
+      "boundary": "Documentation-only and non-operational; not an implemented authenticated or interactive surface, no runtime behavior, no persistence, no operational release authority, no public gallery behavior, no Palisade, no Weave, and no public NEXUS runtime.",
+      "related_pipeline_stage": "Planned Direct UI Membrane review concept",
+      "pipeline_stage_keys": ["AUTHORITY_CHECK", "RECOVERY_PATH", "AUDIT_RELEASE", "S5"],
+      "audience": "Product strategists, governance leads, interface reviewers, and documentation reviewers",
+      "cta_label": "Inspect copy audit",
+      "body": "# Direct UI Membrane Copy Boundary Audit\n\nObject status: **Concept-stage copy boundary audit**.\n\n## Reference\n`docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md`\n\n## Scope\nFacade Reflection 0.9 audits accumulated Section 1.2-facing copy after the visual specification, visual asset index, IA taxonomy, and interaction-flow specification.\n\nThe audit classifies boundary-risk language as safe / bounded, needs softening, must correct, acceptable as prohibited-language example, historical record / no edit, or false positive.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add routes, runtime UI behavior, JavaScript behavior, CSS behavior, authentication, backend routes, database behavior, persistence, billing, public gallery behavior, public NEXUS execution, Palisade, Weave, session handling, or operational release authority.\n\n## Explicit Non-Claims\n- not an implemented authenticated or interactive surface\n- no live AI execution\n- no customer data\n- no persistent audit ledger\n- no runtime monitoring\n- no production deployment\n- no operational release authority\n- no compliance certification"
+    },
+    {
       "id": "ARTIFACT_CATALOG",
       "layer": "ARTIFACTS",
       "card_variant": "artifact-layer",
