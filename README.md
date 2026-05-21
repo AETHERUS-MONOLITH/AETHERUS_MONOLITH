@@ -52,6 +52,7 @@ The visual system is intended to support comprehension of the architecture, not 
 - `docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md` - Documentation-only IA and conceptual surface taxonomy for the planned Direct UI Membrane.
 - `docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md` - Documentation-only conceptual interaction-flow specification for the planned Direct UI Membrane.
 - `docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md` - Documentation-only copy and boundary-language audit for the planned Direct UI Membrane.
+- `docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md` - Documentation-only static concept gallery public-display decision for the planned Direct UI Membrane.
 
 ## Local Development
 
@@ -95,6 +96,8 @@ Facade Reflection 0.7 documents the IA and conceptual surface taxonomy for the s
 Facade Reflection 0.8 documents conceptual reviewer journeys and non-operational flow boundaries in `docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md`.
 
 Facade Reflection 0.9 audits accumulated §1.2-facing copy and boundary language in `docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md`.
+
+Facade Reflection 0.10 records the static concept gallery public-display decision and required non-operational framing in `docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md`.
 
 This specification is concept-stage, documentation-only, and non-operational. It is not an implemented authenticated surface and does not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, or billing. It carries the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
 

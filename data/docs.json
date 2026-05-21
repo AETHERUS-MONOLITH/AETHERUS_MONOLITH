@@ -229,6 +229,25 @@
       "body": "# Direct UI Membrane Copy Boundary Audit\n\nObject status: **Concept-stage copy boundary audit**.\n\n## Reference\n`docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md`\n\n## Scope\nFacade Reflection 0.9 audits accumulated Section 1.2-facing copy after the visual specification, visual asset index, IA taxonomy, and interaction-flow specification.\n\nThe audit classifies boundary-risk language as safe / bounded, needs softening, must correct, acceptable as prohibited-language example, historical record / no edit, or false positive.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add routes, runtime UI behavior, JavaScript behavior, CSS behavior, authentication, backend routes, database behavior, persistence, billing, public gallery behavior, public NEXUS execution, Palisade, Weave, session handling, or operational release authority.\n\n## Explicit Non-Claims\n- not an implemented authenticated or interactive surface\n- no live AI execution\n- no customer data\n- no persistent audit ledger\n- no runtime monitoring\n- no production deployment\n- no operational release authority\n- no compliance certification"
     },
     {
+      "id": "DIRECT_UI_MEMBRANE_STATIC_CONCEPT_GALLERY_DECISION",
+      "layer": "PIPELINE",
+      "card_variant": "pipeline-layer",
+      "title": "DIRECT UI MEMBRANE GALLERY DECISION",
+      "description": "Documentation-only public-display decision and criteria for the planned Direct UI Membrane concept set.",
+      "format": "Markdown",
+      "section": "pipeline",
+      "status": "Concept-stage public-display decision",
+      "category": "Planned interface direction",
+      "claim_supported": "Facade Reflection 0.10 records that the accepted five-surface concept set is suitable for bounded static public display only with persistent concept and non-operational framing.",
+      "evidence_type": "Static concept display decision",
+      "boundary": "Documentation-only and non-operational; not a gallery implementation, not an implemented authenticated or interactive surface, no runtime behavior, no persistence, no operational release authority, no public NEXUS runtime, no Palisade, and no Weave.",
+      "related_pipeline_stage": "Planned Direct UI Membrane review concept",
+      "pipeline_stage_keys": ["AUTHORITY_CHECK", "RECOVERY_PATH", "AUDIT_RELEASE", "S5"],
+      "audience": "Product strategists, governance leads, interface reviewers, and documentation reviewers",
+      "cta_label": "Inspect gallery decision",
+      "body": "# Direct UI Membrane Static Concept Gallery Decision\n\nObject status: **Concept-stage public-display decision**.\n\n## Reference\n`docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md`\n\n## Scope\nFacade Reflection 0.10 evaluates whether the accepted Section 1.2 five-surface concept set is suitable for public/static display and defines the criteria for doing so.\n\nDecision: suitable for bounded static public display only if strong concept/non-operational framing remains persistent.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add a gallery, routes, runtime UI behavior, JavaScript behavior, CSS behavior, authentication, backend routes, database behavior, persistence, billing, public NEXUS execution, Palisade, Weave, session handling, or operational release authority.\n\n## Explicit Non-Claims\n- not a gallery implementation\n- not an implemented authenticated or interactive surface\n- no live AI execution\n- no customer data\n- no persistent audit ledger\n- no runtime monitoring\n- no production deployment\n- no operational release authority\n- no compliance certification"
+    },
+    {
       "id": "ARTIFACT_CATALOG",
       "layer": "ARTIFACTS",
       "card_variant": "artifact-layer",
