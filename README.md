@@ -53,6 +53,7 @@ The visual system is intended to support comprehension of the architecture, not 
 - `docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md` - Documentation-only conceptual interaction-flow specification for the planned Direct UI Membrane.
 - `docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md` - Documentation-only copy and boundary-language audit for the planned Direct UI Membrane.
 - `docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md` - Documentation-only static concept gallery public-display decision for the planned Direct UI Membrane.
+- `docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md` - Documentation-only backend, persistence, auth, tenant-isolation, and security architecture-planning baseline for the planned Direct UI Membrane.
 
 ## Local Development
 
@@ -99,7 +100,9 @@ Facade Reflection 0.9 audits accumulated §1.2-facing copy and boundary language
 
 Facade Reflection 0.10 records the static concept gallery public-display decision and required non-operational framing in `docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md`.
 
-This specification is concept-stage, documentation-only, and non-operational. It is not an implemented authenticated surface and does not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, or billing. It carries the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
+Option E 0.1 records the backend, persistence, auth, tenant-isolation, and security architecture-planning baseline required before any future §1.2 implementation work in `docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md`.
+
+These specifications are concept-stage, documentation-only, and non-operational. They are not an implemented authenticated surface and do not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, tenant infrastructure, or billing. They carry the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
 
 AETHERUS_MONOLITH / §1.1 remains the instantiated static public artifact. The §1.2 Direct UI Membrane remains planned and specified only until a separate authorized implementation pass exists.
 
