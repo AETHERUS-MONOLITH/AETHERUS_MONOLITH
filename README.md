@@ -55,6 +55,7 @@ The visual system is intended to support comprehension of the architecture, not 
 - `docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md` - Documentation-only static concept gallery public-display decision for the planned Direct UI Membrane.
 - `docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md` - Documentation-only backend, persistence, auth, tenant-isolation, and security architecture-planning baseline for the planned Direct UI Membrane.
 - `docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md` - Documentation-only threat model and data boundary register for future Direct UI Membrane backend, persistence, and auth planning.
+- `docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md` - Documentation-only backend service-tier decision matrix for future Direct UI Membrane implementation planning.
 
 ## Local Development
 
@@ -104,6 +105,8 @@ Facade Reflection 0.10 records the static concept gallery public-display decisio
 Option E 0.1 records the backend, persistence, auth, tenant-isolation, and security architecture-planning baseline required before any future §1.2 implementation work in `docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md`.
 
 Option E 0.2 records the threat model and data boundary register that future backend, persistence, auth, tenant-isolation, audit, billing, Palisade, Weave, and NEXUS runtime decisions must respect in `docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md`.
+
+Option E 0.3 records a backend service-tier decision matrix and recommends a hybrid managed-data plus explicit service-tier planning direction in `docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md`.
 
 These specifications are concept-stage, documentation-only, and non-operational. They are not an implemented authenticated surface and do not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, tenant infrastructure, or billing. They carry the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
 
