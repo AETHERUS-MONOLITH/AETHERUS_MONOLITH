@@ -267,6 +267,25 @@
       "body": "# Option E 0.1 Architecture Baseline\n\nObject status: **Architecture planning baseline**.\n\n## Reference\n`docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md`\n\n## Scope\nOption E 0.1 records the backend, persistence, authentication, authorization, tenant-isolation, audit logging, key-management, billing, Palisade, and Weave planning domains that must be specified before any future Section 1.2 implementation work.\n\nSection 1.2 remains not instantiated. No authenticated or interactive Direct UI Membrane exists yet. AETHERUS_MONOLITH / Section 1.1 remains the instantiated static public artifact.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add routes, runtime UI behavior, JavaScript behavior, CSS behavior, authentication, backend routes, database behavior, persistence, tenant infrastructure, billing, public NEXUS execution, Palisade, Weave, session handling, or operational release authority.\n\n## Explicit Non-Claims\n- not an implemented authenticated or interactive surface\n- no backend service tier\n- no auth or authorization implementation\n- no database or production persistence\n- no tenant infrastructure\n- no production audit ledger\n- no billing implementation\n- no Palisade or Weave runtime\n- no public NEXUS runtime"
     },
     {
+      "id": "OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER",
+      "layer": "PIPELINE",
+      "card_variant": "pipeline-layer",
+      "title": "OPTION E DATA BOUNDARY REGISTER",
+      "description": "Documentation-only threat model and data boundary register for future Direct UI Membrane backend, persistence, and auth planning.",
+      "format": "Markdown",
+      "section": "pipeline",
+      "status": "Threat model and data boundary planning",
+      "category": "Planned interface direction",
+      "claim_supported": "Option E 0.2 records future data classes, trust boundaries, threat sources, and failure modes that must be resolved before any future Section 1.2 authenticated or interactive implementation work.",
+      "evidence_type": "Threat model and data boundary register",
+      "boundary": "Documentation-only and non-operational; not an implemented authenticated or interactive surface, no backend, no auth, no database, no persistence, no tenant infrastructure, no billing, no production audit ledger, no Palisade, no Weave, and no public NEXUS runtime.",
+      "related_pipeline_stage": "Planned Direct UI Membrane architecture gate",
+      "pipeline_stage_keys": ["AUTHORITY_CHECK", "RECOVERY_PATH", "AUDIT_RELEASE", "S5"],
+      "audience": "Architecture reviewers, security reviewers, governance leads, and product strategists",
+      "cta_label": "Inspect boundaries",
+      "body": "# Option E 0.2 Threat Model / Data Boundary Register\n\nObject status: **Threat model and data boundary planning**.\n\n## Reference\n`docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md`\n\n## Scope\nOption E 0.2 records future data classes, data that must not be stored by default, trust boundaries, threat actors / misuse sources, primary failure modes, and boundary controls required before any future Section 1.2 implementation work.\n\nSection 1.2 remains not instantiated. No authenticated or interactive Direct UI Membrane exists yet. AETHERUS_MONOLITH / Section 1.1 remains the instantiated static public artifact.\n\n## Boundary\nThis card does not implement Section 1.2. It does not add routes, runtime UI behavior, JavaScript behavior, CSS behavior, authentication, backend routes, database behavior, persistence, tenant infrastructure, billing, public gallery behavior, public NEXUS execution, Palisade, Weave, session handling, audit-log infrastructure, or operational release authority.\n\n## Explicit Non-Claims\n- not an implemented authenticated or interactive surface\n- no backend service tier\n- no auth or authorization implementation\n- no database or production persistence\n- no tenant infrastructure\n- no production audit ledger\n- no billing implementation\n- no Palisade or Weave runtime\n- no public NEXUS runtime"
+    },
+    {
       "id": "ARTIFACT_CATALOG",
       "layer": "ARTIFACTS",
       "card_variant": "artifact-layer",
