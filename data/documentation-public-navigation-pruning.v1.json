@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0",
+  "generated_for_sub_pass": "Documentation Architecture Correction 0.3",
+  "baseline_commit": "98e0de2f7f5395ee0d00f416ccf76dee046e470d",
+  "source_routing_plan": "data/documentation-surface-routing-plan.v1.json",
+  "target_registry": "data/docs.json",
+  "purpose": "Record non-destructive public navigation pruning executed from the routing plan",
+  "no_destructive_action": true,
+  "docs_json_changed": true,
+  "docs_json_entry_count_before": 28,
+  "docs_json_entry_count_after": 13,
+  "removed_from_public_navigation": [
+    {
+      "id": "DIRECT_UI_MEMBRANE_VISUAL_SPEC",
+      "path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+      "title_or_label": "DIRECT UI MEMBRANE VISUAL SPEC",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY",
+      "path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+      "title_or_label": "DIRECT UI MEMBRANE IA TAXONOMY",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC",
+      "path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+      "title_or_label": "DIRECT UI MEMBRANE FLOW SPEC",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT",
+      "path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+      "title_or_label": "DIRECT UI MEMBRANE COPY AUDIT",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "needs_operator_review"
+    },
+    {
+      "id": "DIRECT_UI_MEMBRANE_STATIC_CONCEPT_GALLERY_DECISION",
+      "path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+      "title_or_label": "DIRECT UI MEMBRANE GALLERY DECISION",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "needs_operator_review"
+    },
+    {
+      "id": "OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE",
+      "path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+      "title_or_label": "OPTION E ARCHITECTURE BASELINE",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER",
+      "path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+      "title_or_label": "OPTION E DATA BOUNDARY REGISTER",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX",
+      "path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+      "title_or_label": "OPTION E SERVICE TIER MATRIX",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX",
+      "path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+      "title_or_label": "OPTION E AUTH TENANT MATRIX",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING",
+      "path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+      "title_or_label": "OPTION E PERSISTENCE AUDIT PLANNING",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE",
+      "path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+      "title_or_label": "OPTION E DATABASE RLS PLANNING",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT",
+      "path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+      "title_or_label": "OPTION E AUDIT EVENT DRAFT",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING",
+      "path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+      "title_or_label": "OPTION E SECRETS KEY PLANNING",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING",
+      "path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+      "title_or_label": "OPTION E BILLING STRIPE PLANNING",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "remove_from_public_navigation_later"
+    },
+    {
+      "id": "OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE",
+      "path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+      "title_or_label": "OPTION E READINESS GATE",
+      "routing_action": "remove_from_public_navigation_later",
+      "reason": "Listed in routing plan public-navigation removal set; underlying file remains preserved for traceability.",
+      "underlying_file_preserved": true,
+      "source_artifact_routing_action": "needs_operator_review"
+    }
+  ],
+  "left_in_public_navigation": [
+    {
+      "id": "README",
+      "path": "README.md",
+      "title_or_label": "GOVERNANCE ARCHITECTURE MAP",
+      "routing_action": "keep_public",
+      "reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now."
+    },
+    {
+      "id": "AUTHORITY_MODEL",
+      "path": null,
+      "title_or_label": "AUTHORITY CONTROL MODEL",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "VERSION_LIFECYCLE",
+      "path": null,
+      "title_or_label": "VERSION AND RELEASE LIFECYCLE",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "FREEZE_SEMANTICS",
+      "path": null,
+      "title_or_label": "FREEZE AND ESCALATION SEMANTICS",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "PIPELINE_OVERVIEW",
+      "path": null,
+      "title_or_label": "GOVERNED PROTOTYPE FLOW",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "JOINT_SPECIFICATIONS",
+      "path": null,
+      "title_or_label": "JOINT HANDOFF SPECIFICATIONS",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "GATE_SPECIFICATIONS",
+      "path": null,
+      "title_or_label": "GOVERNANCE GATE SPECIFICATIONS",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "ORCHESTRATION_MANUAL",
+      "path": null,
+      "title_or_label": "HUMAN CONTROL SURFACE",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "ARTIFACT_CATALOG",
+      "path": null,
+      "title_or_label": "AUDIT ARTIFACT CATALOG",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "PROTOCOL_CATALOG",
+      "path": null,
+      "title_or_label": "RISK PROTOCOL CATALOG",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "TEMPLATE_INDEX",
+      "path": null,
+      "title_or_label": "CONTROL TEMPLATE INDEX",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "SCHEMA_DEFINITIONS_OVERVIEW",
+      "path": null,
+      "title_or_label": "SCHEMA TRACEABILITY MODEL",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    },
+    {
+      "id": "DELTA_BRIEF",
+      "path": null,
+      "title_or_label": "DELTA BRIEF RECORD",
+      "routing_action": "keep_public",
+      "reason": "Retained by routing plan public-navigation keep set or not mapped to a docs file."
+    }
+  ],
+  "not_executed_in_this_pass": [
+    "document deletion",
+    "document rename",
+    "archive move",
+    "content consolidation",
+    "operator-review decisions",
+    "gallery implementation",
+    "Option E 0.11",
+    "Track 3.32",
+    "§1.2 implementation"
+  ]
+}

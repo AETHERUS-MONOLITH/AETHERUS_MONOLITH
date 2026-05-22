@@ -64,7 +64,9 @@ function sortedTopLevelFiles(directory, extension) {
 
 const postInventoryCorrectionArtifacts = new Set([
   "data/documentation-surface-routing-plan.v1.json",
-  "scripts/validate-documentation-surface-routing-plan.mjs"
+  "scripts/validate-documentation-surface-routing-plan.mjs",
+  "data/documentation-public-navigation-pruning.v1.json",
+  "scripts/validate-documentation-public-navigation-pruning.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

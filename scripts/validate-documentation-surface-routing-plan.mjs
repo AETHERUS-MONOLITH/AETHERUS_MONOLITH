@@ -3,6 +3,7 @@ import fs from "node:fs";
 const routingPlanPath = "data/documentation-surface-routing-plan.v1.json";
 const inventoryPath = "data/documentation-surface-inventory.v1.json";
 const docsJsonPath = "data/docs.json";
+const pruningReportPath = "data/documentation-public-navigation-pruning.v1.json";
 
 const allowedRoutingActions = new Set([
   "keep_public",
@@ -118,7 +119,21 @@ const docsEntries = docsJson.documents.map((doc) => ({
 const currentDocIds = docsEntries.map((entry) => entry.id);
 const keepIds = nav.recommended_keep_in_public_navigation.map((entry) => entry.id);
 const removeIds = nav.recommended_remove_from_public_navigation_later.map((entry) => entry.id);
-sameSet([...keepIds, ...removeIds], currentDocIds, "public navigation split");
+const pruningReportExists = fs.existsSync(pruningReportPath);
+const prunedIds = pruningReportExists
+  ? readJson(pruningReportPath).removed_from_public_navigation.map((entry) => entry.id)
+  : [];
+const reviewedDocIds = pruningReportExists ? [...currentDocIds, ...prunedIds] : currentDocIds;
+sameSet([...keepIds, ...removeIds], reviewedDocIds, "public navigation split");
+
+if (pruningReportExists) {
+  sameSet(currentDocIds, keepIds, "post-pruning public navigation");
+  for (const removeId of removeIds) {
+    if (currentDocIds.includes(removeId)) {
+      fail(`removed navigation id still present after pruning: ${removeId}`);
+    }
+  }
+}
 
 if (keepIds.length !== 13) fail(`expected 13 keep-navigation entries, found ${keepIds.length}`);
 if (removeIds.length !== 15) fail(`expected 15 remove-navigation entries, found ${removeIds.length}`);
