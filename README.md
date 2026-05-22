@@ -62,6 +62,7 @@ The visual system is intended to support comprehension of the architecture, not 
 - `docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md` - Documentation-only audit-log event contract draft for future Direct UI Membrane planning.
 - `docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md` - Documentation-only secrets and key-management boundary planning for future Direct UI Membrane architecture.
 - `docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md` - Documentation-only billing and Stripe boundary planning for future Direct UI Membrane architecture.
+- `docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md` - Documentation-only implementation-readiness gate for future Direct UI Membrane architecture decisions.
 
 ## Local Development
 
@@ -125,6 +126,8 @@ Option E 0.7 records a planning-only audit-log event contract draft and future e
 Option E 0.8 records secrets classes, key-management principles, tenant-aware key planning, and secret lifecycle boundaries in `docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md`.
 
 Option E 0.9 records billing and Stripe boundary assumptions, future billing data classes, webhook boundaries, tenant/billing relationships, and rejected billing patterns in `docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md`.
+
+Option E 0.10 records the implementation-readiness gate and concludes that §1.2 is not yet implementation-ready in `docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md`.
 
 These specifications are concept-stage, documentation-only, and non-operational. They are not an implemented authenticated surface and do not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, tenant infrastructure, or billing. They carry the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
 
