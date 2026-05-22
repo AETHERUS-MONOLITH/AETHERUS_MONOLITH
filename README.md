@@ -57,6 +57,7 @@ The visual system is intended to support comprehension of the architecture, not 
 - `docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md` - Documentation-only threat model and data boundary register for future Direct UI Membrane backend, persistence, and auth planning.
 - `docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md` - Documentation-only backend service-tier decision matrix for future Direct UI Membrane implementation planning.
 - `docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md` - Documentation-only authentication and tenant-isolation requirements matrix for future Direct UI Membrane planning.
+- `docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md` - Documentation-only persistence and audit-log schema planning baseline for future Direct UI Membrane planning.
 
 ## Local Development
 
@@ -110,6 +111,8 @@ Option E 0.2 records the threat model and data boundary register that future bac
 Option E 0.3 records a backend service-tier decision matrix and recommends a hybrid managed-data plus explicit service-tier planning direction in `docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md`.
 
 Option E 0.4 records authentication, MFA, session, RBAC, tenant identifier, tenant scoping, RLS, and cross-tenant isolation requirements in `docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md`.
+
+Option E 0.5 records persistence domains, audit-log separation, trace-record boundaries, retention/deletion/export planning, and future ledger boundaries in `docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md`.
 
 These specifications are concept-stage, documentation-only, and non-operational. They are not an implemented authenticated surface and do not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, tenant infrastructure, or billing. They carry the same explicit boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
 
