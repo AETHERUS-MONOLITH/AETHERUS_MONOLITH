@@ -1,0 +1,2210 @@
+{
+  "schema_version": "1.0",
+  "generated_for_sub_pass": "Documentation Architecture Correction 0.1",
+  "baseline_commit": "b90546a6d6d4b96080d26fdfb0ed7176fd54af8f",
+  "purpose": "Public documentation surface inventory and classification",
+  "document_admission_gate": {
+    "allowed_commit_reasons": [
+      "canonical_architecture_artifact",
+      "public_explanation_artifact",
+      "machine_validation_artifact",
+      "implementation_prerequisite"
+    ],
+    "handoff_only_reasons": [
+      "next_pass_reasoning",
+      "codex_instruction_residue",
+      "repeated_boundary_boilerplate",
+      "handoff_memory",
+      "do_not_start_x",
+      "operational_reflection",
+      "previous_prompt_recap",
+      "internal_orchestration_mechanics"
+    ]
+  },
+  "classification_dimensions": {
+    "audience": [
+      "public_reader",
+      "future_implementer",
+      "operator_memory",
+      "recipient_reasoning",
+      "codex_execution",
+      "machine_validator",
+      "historical_evidence"
+    ],
+    "artifact_type": [
+      "public_explanation",
+      "canonical_architecture_spec",
+      "implementation_prerequisite",
+      "machine_validation_artifact",
+      "historical_sub_pass_record",
+      "handoff_only_content",
+      "process_residue",
+      "public_navigation_metadata"
+    ],
+    "public_surface_status": [
+      "keep_public",
+      "keep_public_but_rename_later",
+      "consolidate_later",
+      "archive_later",
+      "remove_from_public_navigation_later",
+      "handoff_only_later",
+      "needs_operator_review"
+    ],
+    "risk_flags": [
+      "internal_process_language",
+      "codex_residue",
+      "next_pass_language",
+      "repeated_boundary_boilerplate",
+      "misleading_operational_label",
+      "overexposed_planning",
+      "public_discoverability_excess",
+      "old_path_reference",
+      "claim_boundary_risk"
+    ]
+  },
+  "summary_counts": {
+    "keep_public": 24,
+    "remove_from_public_navigation_later": 13,
+    "needs_operator_review": 4,
+    "consolidate_later": 9,
+    "archive_later": 15,
+    "keep_public_but_rename_later": 6,
+    "handoff_only_later": 10
+  },
+  "artifacts": [
+    {
+      "path": "README.md",
+      "exists": true,
+      "surface": "README",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "AETHERUS MONOLITH",
+      "series": "Other",
+      "audience": "public_reader",
+      "artifact_type": "public_explanation",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L14: - No compliance certification",
+        "L19: The public Facade is the static claim-bounded surface. Track 3 Conduit work remains local-only evidence and integration-contract work. The current Vault reference is the pinned NEXUS MVP source at `ab95cbbd24df5817c4e363",
+        "L100: ## Facade Reflection Documentation",
+        "L102: Facade Reflection 0.4 documents the accepted visual direction for the planned Direct UI Membrane in `docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md`.",
+        "L104: Facade Reflection 0.7 documents the IA and conceptual surface taxonomy for the same planned membrane in `docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md`."
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/docs.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Structured public artefact navigation metadata",
+      "series": "Other",
+      "audience": "public_reader",
+      "artifact_type": "public_navigation_metadata",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L165: \"claim_supported\": \"Facade Reflection 0.4 records the accepted visual direction for a future controlled human-review membrane.\",",
+        "L167: \"boundary\": \"Documentation-only and non-operational; not an implemented authenticated surface, no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certifi",
+        "L172: \"body\": \"# Direct UI Membrane Visual Spec\\n\\nObject status: **Concept-stage visual specification**.\\n\\n## Reference\\n`docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md`\\n\\n## Scope\\nFacade Reflection 0.4 docum",
+        "L184: \"claim_supported\": \"Facade Reflection 0.7 records the conceptual surfaces, navigation labels, state vocabulary, and boundary rules for a future controlled human-review membrane.\",",
+        "L186: \"boundary\": \"Documentation-only and non-operational; not an implemented authenticated or interactive surface, no live AI execution, no customer data, no persistence, no runtime monitoring, no operational release authorit"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Facade Reflection 0.10 Static Concept Gallery Decision",
+      "series": "Facade Reflection",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "needs_operator_review",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Facade Reflection 0.10 Static Concept Gallery Decision",
+        "L5: Facade Reflection 0.10 evaluates whether the accepted Section 1.2 Direct UI Membrane concept set is suitable for public/static display and defines the criteria for doing so.",
+        "L7: This is a documentation-only decision pass. It does not implement Section 1.2, does not create a gallery, does not add public gallery behavior, and does not authorize runtime UI behavior, authentication, backend routes, ",
+        "L36: These surfaces are concept-stage review surfaces for a planned controlled human-review membrane. They are not implemented routes, authenticated sessions, stored workspaces, live review queues, operational release gates, ",
+        "L44: However, the set is not suitable for unframed public presentation. Display without persistent concept-mode and non-operational framing would create material risk that viewers interpret the images as an implemented authen"
+      ],
+      "recommended_later_action": "Operator should decide whether this remains public, becomes implementer-only specification, or is archived/consolidated.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Facade Reflection 0.1 Documentation Boundary",
+      "series": "Facade Reflection",
+      "audience": "future_implementer",
+      "artifact_type": "implementation_prerequisite",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Facade Reflection 0.1 Documentation Boundary",
+        "L5: Facade Reflection 0.1 explains the current local Conduit evidence chain from the perspective of the public static Facade.",
+        "L7: AETHERUS_MONOLITH remains a static, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent, prototype-facing, claim-bounded public artifact. The public Facade communicates governance architec",
+        "L9: Track 3 Conduit work is local-only evidence and integration-contract work. It defines contracts, fixtures, validators, stubs, report shapes, and ignored local report outputs that can support future review. It does not ad",
+        "L15: | Facade | Public static claim-bounded surface. | Static browser artifact only; no backend, persistence, authentication, public NEXUS runtime, or operational deployment claim. |"
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Facade Reflection 0.4 Direct UI Membrane Visual Specification",
+      "series": "Facade Reflection",
+      "audience": "future_implementer",
+      "artifact_type": "implementation_prerequisite",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Facade Reflection 0.4 Direct UI Membrane Visual Specification",
+        "L5: Facade Reflection 0.4 records the accepted visual and conceptual direction for Section 1.2 Direct UI Membrane.",
+        "L7: This document is specification only. Section 1.2 Direct UI Membrane remains not instantiated. It is not implemented in AETHERUS_MONOLITH, not routed from the public site, not authenticated, not backed by a database, not ",
+        "L17: | Future relationship | Section 1.1 may link to Section 1.2 in a future authorized pass. | They remain separate objects. A future link would not by itself create runtime capability, authentication, persistence, Palisade,",
+        "L67: - No production deployment"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Facade Reflection 0.6 Direct UI Membrane Visual Asset Index",
+      "series": "Facade Reflection",
+      "audience": "future_implementer",
+      "artifact_type": "implementation_prerequisite",
+      "public_surface_status": "needs_operator_review",
+      "risk_flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Facade Reflection 0.6 Direct UI Membrane Visual Asset Index",
+        "L5: Facade Reflection 0.6 records the current accepted visual asset family for the Section 1.2 Direct UI Membrane concept set.",
+        "L7: This is a documentation-only asset index and acceptance matrix. It records surface roles, acceptance status, public-display safety, boundary risks, and required copy corrections for the current concept-stage anchors. It ",
+        "L46: - no production deployment",
+        "L48: - no compliance certification"
+      ],
+      "recommended_later_action": "Operator should decide whether this remains public, becomes implementer-only specification, or is archived/consolidated.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Facade Reflection 0.7 Direct UI Membrane IA Surface Taxonomy",
+      "series": "Facade Reflection",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Facade Reflection 0.7 Direct UI Membrane IA Surface Taxonomy",
+        "L5: Facade Reflection 0.7 formalizes the Section 1.2 Direct UI Membrane information architecture and conceptual surface taxonomy after the visual asset index recorded in Facade Reflection 0.6.",
+        "L9: This is documentation-only. It does not implement Section 1.2 and does not authorize runtime UI behavior, public gallery behavior, authentication, backend routes, database behavior, persistence, billing, public NEXUS exe",
+        "L179: - Palisade",
+        "L196: These labels are IA labels only. They are not implemented routes, not public links, not authenticated navigation, not sidebar behavior, and not evidence of a working Direct UI Membrane. Future routing, navigation behavio"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Facade Reflection 0.8 Direct UI Membrane Interaction Flow Specification",
+      "series": "Facade Reflection",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Facade Reflection 0.8 Direct UI Membrane Interaction Flow Specification",
+        "L5: Facade Reflection 0.8 formalizes conceptual interaction flows for the planned Section 1.2 Direct UI Membrane after the visual asset index and surface taxonomy.",
+        "L9: This is documentation-only. It is not route implementation, not authentication implementation, not session handling, not runtime behavior, and not workflow execution. It does not implement Section 1.2 and does not author",
+        "L19: The flows below are conceptual reviewer journeys, not implemented routes, not live workflow logic, not authenticated sessions, not persisted records, and not executable product behavior.",
+        "L126: - compliance certification"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Facade Reflection 0.9 Direct UI Membrane Copy Boundary Audit",
+      "series": "Facade Reflection",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "needs_operator_review",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Facade Reflection 0.9 Direct UI Membrane Copy Boundary Audit",
+        "L5: Facade Reflection 0.9 audits accumulated Section 1.2-facing language after the Direct UI Membrane visual specification, visual asset index, IA / surface taxonomy specification, and interaction-flow specification.",
+        "L7: The audit checks current copy and documentation for language that could imply Section 1.2 is implemented, authenticated, live, operational, production-ready, certified, tenant-ready, runtime-monitored, backed by Palisade",
+        "L9: This is a copy and documentation audit only. It does not implement Section 1.2 and does not authorize runtime UI behavior, public gallery behavior, authentication, backend routes, database behavior, persistence, billing,",
+        "L52: rg -n \"Direct UI Membrane|§1\\.2|authenticated|dashboard|release|escalation|evidence review|operational|runtime|production|compliance|certification|tenant|Palisade|Weave|NEXUS runtime|customer data|audit ledger|monitoring"
+      ],
+      "recommended_later_action": "Operator should decide whether this remains public, becomes implementer-only specification, or is archived/consolidated.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.10 Implementation Readiness Gate",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "needs_operator_review",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.10 Implementation Readiness Gate",
+        "L5: Option E 0.10 acts as the implementation-readiness gate after Option E 0.1-0.9.",
+        "L7: This pass consolidates the Option E backend, persistence, authentication, authorization, tenant isolation, audit, database/RLS, secrets/key-management, and billing planning chain. It determines whether Section 1.2 Direct",
+        "L9: This is a readiness assessment only. It does not implement Section 1.2 and does not authorize runtime UI behavior, backend routes, authentication, database behavior, persistence, billing, public gallery behavior, public ",
+        "L17: No backend, authentication system, database, persistence layer, billing implementation, tenant infrastructure, audit-log infrastructure, Palisade runtime, Weave runtime, or public NEXUS runtime exists."
+      ],
+      "recommended_later_action": "Operator should decide whether this remains public, becomes implementer-only specification, or is archived/consolidated.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.1 Backend / Persistence / Auth Architecture Baseline",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.1 Backend / Persistence / Auth Architecture Baseline",
+        "L5: Option E 0.1 establishes the architecture-planning baseline required before any future Section 1.2 Direct UI Membrane implementation work can responsibly begin.",
+        "L9: This is planning and specification only. It does not implement Section 1.2 and does not authorize runtime UI behavior, authentication, backend routes, database behavior, persistence, billing, public NEXUS execution, Pali",
+        "L21: ## Why Option E Is Required",
+        "L70: Current status: no authentication implementation exists."
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.2 Threat Model / Data Boundary Register",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.2 Threat Model / Data Boundary Register",
+        "L5: Option E 0.2 establishes a threat model and data boundary register before any future Section 1.2 Direct UI Membrane implementation work.",
+        "L7: This pass defines future data classes, data that must not be stored by default, trust boundaries, tenant-boundary risks, authentication and authorization risk surfaces, persistence and audit-log boundaries, trace/evidenc",
+        "L9: This is planning and specification only. It does not implement Section 1.2 and does not authorize runtime UI behavior, authentication, backend routes, database behavior, persistence, billing, public gallery behavior, pub",
+        "L17: No backend, authentication system, database, persistence layer, billing integration, Palisade runtime, Weave runtime, or public NEXUS runtime exists."
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.3 Backend Service Tier Decision Matrix",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.3 Backend Service Tier Decision Matrix",
+        "L5: Option E 0.3 evaluates backend service-tier options before any future Section 1.2 Direct UI Membrane implementation work.",
+        "L7: This pass identifies the likely planning direction for where server-side authority should live in a future Direct UI Membrane architecture. It does not select a final technology stack and does not implement any backend, ",
+        "L9: This is planning and specification only. It does not implement Section 1.2 and does not authorize runtime UI behavior, authentication, backend routes, database behavior, persistence, billing, public gallery behavior, pub",
+        "L17: No backend, authentication system, database, persistence layer, billing integration, Palisade runtime, Weave runtime, or public NEXUS runtime exists."
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.4 Auth / Tenant Isolation Requirements Matrix",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.4 Auth / Tenant Isolation Requirements Matrix",
+        "L5: Option E 0.4 defines authentication and tenant-isolation requirements before any future Section 1.2 Direct UI Membrane backend/auth implementation work.",
+        "L9: This is planning and specification only. It does not implement Section 1.2 and does not authorize runtime UI behavior, authentication, backend routes, database behavior, persistence, billing, public gallery behavior, pub",
+        "L17: No backend, authentication system, database, persistence layer, billing integration, Palisade runtime, Weave runtime, tenant infrastructure, or public NEXUS runtime exists.",
+        "L23: ## Relationship To Option E 0.1-0.3"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.5 Persistence / Audit Log Schema Planning",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.5 Persistence / Audit Log Schema Planning",
+        "L5: Option E 0.5 defines the planning baseline for persistence, audit-log separation, trace records, retention, deletion, export, and future ledger boundaries before any Section 1.2 Direct UI Membrane implementation work.",
+        "L9: This is planning and specification only. It does not implement Section 1.2 and does not authorize runtime UI behavior, authentication, backend routes, database behavior, persistence, billing, public gallery behavior, pub",
+        "L17: No backend, authentication system, database, persistence layer, billing integration, tenant infrastructure, audit-log infrastructure, Palisade runtime, Weave runtime, or public NEXUS runtime exists.",
+        "L23: ## Relationship To Option E 0.1-0.4"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.6 Database / RLS Policy Planning Baseline",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.6 Database / RLS Policy Planning Baseline",
+        "L5: Option E 0.6 defines the database and Row-Level Security planning baseline before any Section 1.2 Direct UI Membrane implementation work.",
+        "L9: This is planning and specification only. It does not implement Section 1.2 and does not authorize runtime UI behavior, authentication, backend routes, database behavior, persistence, billing, public gallery behavior, pub",
+        "L17: No backend, authentication system, database, persistence layer, billing integration, tenant infrastructure, RLS, audit-log infrastructure, Palisade runtime, Weave runtime, or public NEXUS runtime exists.",
+        "L23: ## Relationship To Option E 0.1-0.5"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.7 Audit Log Event Contract Draft",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.7 Audit Log Event Contract Draft",
+        "L5: Option E 0.7 is a planning-only audit-log event contract draft for future Section 1.2 Direct UI Membrane architecture.",
+        "L7: This pass refines the audit-log taxonomy introduced in Option E 0.5 into structured future event-contract expectations. It does not implement audit infrastructure, persistence, a ledger, backend services, authentication,",
+        "L15: No backend, authentication system, database, persistence layer, audit-log infrastructure, audit ledger, Palisade runtime, Weave runtime, or public NEXUS runtime exists.",
+        "L19: ## Relationship To Option E 0.5 And 0.6"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.8 Secrets / Key Management Boundary Planning",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.8 Secrets / Key Management Boundary Planning",
+        "L5: Option E 0.8 is planning-only boundary work for secrets and tenant-aware key management in future Section 1.2 Direct UI Membrane architecture.",
+        "L7: This pass defines future secret classes, non-secret configuration boundaries, tenant-aware key-management planning, secret lifecycle requirements, failure modes, and future controls. It does not implement secrets, encryp",
+        "L15: No backend, authentication system, database, persistence layer, billing integration, secrets manager, key-management implementation, Palisade runtime, Weave runtime, or public NEXUS runtime exists.",
+        "L19: ## Relationship To Option E 0.1-0.7"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": true,
+      "title_or_label": "Option E 0.9 Billing / Stripe Boundary Planning",
+      "series": "Option E",
+      "audience": "future_implementer",
+      "artifact_type": "process_residue",
+      "public_surface_status": "remove_from_public_navigation_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Option E 0.9 Billing / Stripe Boundary Planning",
+        "L5: Option E 0.9 is planning-only billing boundary work for future Section 1.2 Direct UI Membrane architecture.",
+        "L7: This pass defines future billing/Stripe assumptions, billing data classes, webhook boundaries, tenant/billing relationship requirements, failure modes, future controls, and rejected patterns. It does not implement billin",
+        "L15: No backend, authentication system, database, persistence layer, billing implementation, Stripe integration, tenant infrastructure, Palisade runtime, Weave runtime, or public NEXUS runtime exists.",
+        "L19: ## Relationship To Option E 0.1-0.8"
+      ],
+      "recommended_later_action": "Remove from README/data docs public navigation first; keep only if later consolidated into canonical public explanation or implementation specification.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.24 Conduit Versioning Story v1",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.24 Conduit Versioning Story v1",
+        "L5: Track 3.24 defines the v1 versioning and migration story for the Track 3 Conduit contract surface.",
+        "L7: Versioning is needed after the Track 3.22 freeze because the Conduit now has explicit v1 artifacts, validator expectations, report semantics, and a pinned Vault/NEXUS source boundary. Future changes need a shared policy ",
+        "L9: This pass is documentation and contract policy only. It does not add runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, ledger behavior, model execution, live orchestration, ",
+        "L13: Track 3.22 froze the v1 Conduit contracts:"
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_CONTRACT_FREEZE_V1.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.22 Conduit Contract Freeze v1",
+      "series": "Track 3",
+      "audience": "historical_evidence",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.22 Conduit Contract Freeze v1",
+        "L5: Track 3.22 freezes the existing Track 3 Conduit contract surface into v1 contract artifacts.",
+        "L7: This is a schema and contract freeze only. It does not add runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, ledger behavior, model execution, live orchestration, Palisade, ",
+        "L15: The v1 files consolidate the accepted v0 Interface contract, NEXUS adapter contract stub, local import-adapter report contract, failure-injection expectations, and Track 3.21 failure-category completion.",
+        "L42: path: /Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_CONTRACT_INVARIANTS.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3 Contract Invariants",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "keep_public_but_rename_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3 Contract Invariants",
+        "L5: This document defines hard invariants for the local Track 3 contract system. These invariants protect future implementation work from contract drift and claim drift before any runtime, adapter, backend, persistence, or N",
+        "L7: The current Track 3 system remains a local, deterministic, fixture-driven scaffold. These invariants do not implement runtime behavior, backend services, authentication, database persistence, model execution, NEXUS integ",
+        "L11: Current Track 3 fixture/runtime outputs must remain:",
+        "L132: - Deterministic local dry-run over Track 3 interface fixtures."
+      ],
+      "recommended_later_action": "Keep the stable contract/spec content public, but rename or reframe process labels in a later correction.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_FIXTURE_SUITE.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3 Fixture Suite",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3 Fixture Suite",
+        "L5: The Track 3 fixture suite expands the single Track 3.4 local dry-run into a deterministic local suite over all current Intelligence Layer scenarios. It improves contract coverage while preserving the same object boundary",
+        "L97: - Deterministic local dry-run over Track 3 fixtures.",
+        "L109: ## Next Candidate"
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.12 NEXUS Import Adapter Preflight",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.12 NEXUS Import Adapter Preflight",
+        "L12: - Track 3.7 classified the verified surface as `import_adapter_ready`.",
+        "L19: - No Python execution exists in AETHERUS_MONOLITH Track 3 scripts.",
+        "L85: - Existing Track 3 validators are not weakened.",
+        "L178: Allowed after Track 3.12:"
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.13 NEXUS Import Environment Preflight",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.13 NEXUS Import Environment Preflight",
+        "L9: ## Relationship To Track 3.12",
+        "L11: Track 3.12 defined the authorization gates for a future local import adapter.",
+        "L13: Track 3.13 checks the local repository, optional NEXUS source path, dependency declarations, command availability, generated-output boundary, and stop conditions against those gates. It remains preflight-only.",
+        "L26: - Track 3 preflight JSON existence and parse validity."
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_INTERFACE_CONTRACTS.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3 Interface Contracts",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3 Interface Contracts",
+        "L7: It is a contract-planning document only. The current repository does not implement backend runtime, authentication, database persistence, model calls, live orchestration, NEXUS execution, or an operational audit ledger.",
+        "L60: | `patchlist` | `ArtifactReference`, `Verdict`, `HandoffReceipt` | Not implemented as an artifact; referenced in scenarios and manifest. | Candidate after patchlist schema, diff semantics, and refiner output validation a",
+        "L61: | `origin_commit` | `ArtifactReference`, `ReleaseEligibility`, `TraceEvent` | Not implemented as a commit artifact; referenced in scenarios and manifest. | Candidate after commit contract, immutability policy, and reprod",
+        "L90: No public interface wording should imply NEXUS integration until those facts are verified and implementation evidence exists in this repository."
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3 Local Fixture Runtime",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3 Local Fixture Runtime",
+        "L5: The Track 3 local fixture runtime is a local dry-run scaffold for the Interface Layer contract. It is the first executable bridge after contract validation, but it remains deterministic, fixture-driven, local-only, non-p",
+        "L7: The scaffold reads the Track 3 example fixture and produces a deterministic report that shows how a future Interface Layer runtime might move from fixture input to gate readout, verdict summary, release eligibility, and ",
+        "L104: - Deterministic local dry-run over Track 3 interface fixture.",
+        "L118: ## Next Candidate"
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.17 Local NEXUS Import Adapter",
+      "series": "Track 3",
+      "audience": "historical_evidence",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.17 Local NEXUS Import Adapter",
+        "L5: Track 3.17 adds a local-only import-adapter prototype for the pinned NEXUS MVP source.",
+        "L9: This pass does not change public site behavior. It does not add public runtime wiring, backend behavior, authentication, persistence, ledger behavior, model execution, live orchestration, production operation, enterprise",
+        "L13: The user explicitly authorized Track 3.17 only for this local pinned source:",
+        "L15: - NEXUS source path: `/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb`"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.23 Local Report Export Bundle",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.23 Local Report Export Bundle",
+        "L5: Track 3.23 adds a reproducible local-only export process for ignored Track 3 reports and evidence outputs.",
+        "L7: The export process packages local Conduit evidence under `.track3-runs/` into a non-committed archive. It does not change runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, l",
+        "L37: - report-validator and Track 3 contract-validator command summaries generated during export,",
+        "L54: Run the standard Track 3 suites first, then run:"
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.25 Multi-Vault Compatibility Evaluation Harness Stub",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.25 Multi-Vault Compatibility Evaluation Harness Stub",
+        "L5: Track 3.25 adds a local-only compatibility-evaluation harness stub for candidate Vault/NEXUS versions.",
+        "L7: The harness follows the Track 3.24 Conduit versioning story. It evaluates committed metadata fixtures against the versioning and Vault compatibility policy. It does not import NEXUS, execute NEXUS, clone alternate Vault ",
+        "L65: Unsupported candidate commits cannot be marked supported by this harness. A complete evidence packet can only move an alternate commit into evaluation posture; it does not create acceptance while Track 3.24 still states ",
+        "L89: - public NEXUS runtime,"
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.8 NEXUS Adapter Contract Stub",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.8 NEXUS Adapter Contract Stub",
+        "L9: ## Verified NEXUS Surface From Track 3.7",
+        "L11: Track 3.7 inspected `AETHERUS-MONOLITH/nexus-mvp` at commit `ab95cbbd24df5817c4e363d24b3b199ac8af6c6f`.",
+        "L39: - Track 3.7 verified that hash-chaining is not implemented.",
+        "L56: - The adapter is not implemented."
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.9 NEXUS Adapter Mismatch Tests",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.9 NEXUS Adapter Mismatch Tests",
+        "L9: ## Relationship To Track 3.8",
+        "L11: Track 3.8 defined the NEXUS adapter contract stub and its `mismatch_policy` in `data/nexus-adapter-contract.stub.v0.json`.",
+        "L13: Track 3.9 turns that mismatch policy into fixture-backed validation:",
+        "L50: The broader Track 3 validator also parses the mismatch fixtures and invokes the mismatch validator."
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.10 NEXUS Adapter Normalizer Stub",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.10 NEXUS Adapter Normalizer Stub",
+        "L11: - Track 3.7 verified NEXUS MVP as an external adapter candidate.",
+        "L12: - Track 3.8 defined the NEXUS adapter contract stub.",
+        "L13: - Track 3.9 defined mismatch and fail-closed behavior.",
+        "L14: - Track 3.10 defines successful and bounded normalization behavior over simulated NEXUS-like objects."
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.11 NEXUS Adapter Normalizer Suite",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.11 NEXUS Adapter Normalizer Suite",
+        "L11: - Track 3.7 verified NEXUS MVP as an external adapter candidate.",
+        "L12: - Track 3.8 defined the adapter contract stub.",
+        "L13: - Track 3.9 defined fail-closed mismatch behavior.",
+        "L14: - Track 3.10 defined local normalization behavior over simulated NEXUS-like objects."
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.21 NEXUS Import Adapter Failure Category Completion",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.21 NEXUS Import Adapter Failure Category Completion",
+        "L5: Track 3.21 completes the deferred local NEXUS import-adapter failure categories from Track 3.20.",
+        "L9: ## Relationship to Track 3.20",
+        "L11: Track 3.20 covered thirteen failure-injection categories and intentionally deferred:",
+        "L16: Track 3.21 adds those two categories to the same local failure-injection runner so the report contract covers all currently listed failure categories."
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.20 NEXUS Import Adapter Failure Injection",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.20 NEXUS Import Adapter Failure Injection",
+        "L5: Track 3.20 adds a local-only failure-injection validation pass for the NEXUS import adapter report contract.",
+        "L7: The pass intentionally constructs selected adapter failure conditions and verifies that each generated report remains fail-closed under the Track 3.19 report contract. It does not execute NEXUS, modify NEXUS source files",
+        "L9: ## Relationship to Track 3.19",
+        "L11: Track 3.19 defined the stable local report contract for successful adapter reports, regression-suite reports, fail-closed failure reports, and stop-condition reports."
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.18 NEXUS Import Adapter Regression Suite",
+      "series": "Track 3",
+      "audience": "historical_evidence",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.18 NEXUS Import Adapter Regression Suite",
+        "L5: Track 3.18 adds a local-only regression suite for the Track 3.17 local NEXUS import adapter.",
+        "L9: ## Relationship to Track 3.17",
+        "L11: Track 3.17 proved that one AETHERUS fixture-derived input could be mapped into the pinned local NEXUS Alpha, Delta, and Omega execution surface, captured, normalized, and reported with explicit boundaries.",
+        "L13: Track 3.18 runs the same bounded adapter over the current fixture set and records a combined local regression report."
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.19 NEXUS Import Adapter Report Contract",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "keep_public_but_rename_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.19 NEXUS Import Adapter Report Contract",
+        "L5: Track 3.19 defines a stable local report contract for the NEXUS import adapter.",
+        "L11: Track 3.17 created the first local-only adapter run against the pinned NEXUS source.",
+        "L13: Track 3.18 created a local-only regression suite across all five current AETHERUS fixtures.",
+        "L15: Track 3.19 standardizes the report and failure contract those local scripts must preserve before any future adapter expansion."
+      ],
+      "recommended_later_action": "Keep the stable contract/spec content public, but rename or reframe process labels in a later correction.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_MVP_VERIFICATION.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.7 NEXUS MVP Verification",
+      "series": "Track 3",
+      "audience": "historical_evidence",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.7 NEXUS MVP Verification",
+        "L14: - Local path: `/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/AETHERUS_MONOLITH`",
+        "L37: - Local clone inspected: `/Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp`",
+        "L59: NEXUS MVP is not verified here as an integrated AETHERUS_MONOLITH runtime. It is not wired into the public site, not called by browser JavaScript, not exposed as an HTTP service, and not part of the current local Track 3",
+        "L137: Important boundary: NEXUS documentation states hash-chaining is not implemented. The current output is append-only JSONL audit-log behavior with input hashing, not a production ledger under the AETHERUS Track 3 invariant"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.14 NEXUS Source Pin Resolution",
+      "series": "Track 3",
+      "audience": "historical_evidence",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.14 NEXUS Source Pin Resolution",
+        "L20: /Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp",
+        "L36: /Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp",
+        "L83: Recommended practical path if Codex can create or read an archive safely without modifying the current NEXUS path.",
+        "L92: Keep the current local path treated as non-authoritative unless it is explicitly accepted for import-adapter work. Even though the observed tree is equivalent to the pinned commit tree, the commit object differs, and Tra"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.15 Pinned NEXUS Source Preflight",
+      "series": "Track 3",
+      "audience": "historical_evidence",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.15 Pinned NEXUS Source Preflight",
+        "L20: /Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp",
+        "L29: Track 3.14 confirmed that the previous path had a matching tree but a different commit object. That made the path non-authoritative for import-adapter work.",
+        "L38: /Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb",
+        "L56: node scripts/check-nexus-import-environment.mjs --nexus-path /Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb --require-python"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.16 Post-Commit Import Readiness",
+      "series": "Track 3",
+      "audience": "historical_evidence",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.16 Post-Commit Import Readiness",
+        "L5: This pass records the post-commit rerun of the environment and source preflight after the Track 3.15 source-path work was committed.",
+        "L7: It resolves the stale Track 3.15 authoring condition where the clean pinned NEXUS source path was valid, but the AETHERUS working tree was dirty while documentation and validator changes were being authored.",
+        "L9: This pass does not authorize an import adapter. It does not import NEXUS, execute NEXUS, execute Python code from NEXUS, install dependencies, or change public site behavior.",
+        "L15: - Clean pinned source path: `/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb`"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_SCHEMA_ALIGNMENT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3 Schema Alignment",
+      "series": "Track 3",
+      "audience": "operator_memory",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "handoff_only_later",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3 Schema Alignment",
+        "L7: This pass does not implement runtime behavior. It does not add backend services, authentication, persistence, API calls, model execution, live orchestration, ledger behavior, or NEXUS runtime integration.",
+        "L31: The future `Scenario` contract should not replace the current scenarios yet. The current fixture shape is stable and drives the accepted public v0.1 interface. Track 3 alignment should remain additive until a dedicated m",
+        "L96: - `enterprise_capable_governance_system`: production deployment architecture, operational controls, customer/deployment evidence if claimed, validation suite, retention model, security review, and compliance/legal review",
+        "L107: The schema and example fixture added in Track 3.2 do not claim:"
+      ],
+      "recommended_later_action": "Convert next-pass reasoning and authorization breadcrumbs to handoff/session memory or issue-tracker context; retain only stable contract content if needed.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VALIDATION_HARNESS.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3 Validation Harness",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "keep_public_but_rename_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3 Validation Harness",
+        "L5: The Track 3 validation harness checks the static Interface Layer contract and fixture-alignment files before any future runtime prototype is built. It is intended to make contract drift visible while the project remains ",
+        "L47: - Potential unbounded operational claims in Track 3 JSON and documentation files."
+      ],
+      "recommended_later_action": "Keep the stable contract/spec content public, but rename or reframe process labels in a later correction.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.27 Vault Candidate Intake Gate Stub",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.27 Vault Candidate Intake Gate Stub",
+        "L5: Track 3.27 adds a local-only Vault candidate intake gate stub.",
+        "L7: This follows Track 3.25 and Track 3.26. Track 3.25 defined the compatibility evaluation discipline, and Track 3.26 defined the evidence packet contract. Track 3.27 connects them by checking whether a candidate packet is ",
+        "L23: The Track 3 contract validator checks the fixture shape, required intake decisions, required fixture coverage, script boundary, documentation presence, and ignored generated-report boundary.",
+        "L39: The intake gate reads committed fixture packets and validates them against the Track 3.26 evidence packet contract. It decides whether a packet is missing evidence, has failed evidence, drifts from v1 semantics, violates"
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.26 Vault Compatibility Evidence Packet Contract",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "keep_public_but_rename_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.26 Vault Compatibility Evidence Packet Contract",
+        "L5: Track 3.26 defines the evidence packet shape required before any future non-pinned Vault/NEXUS candidate may be considered by the Track 3 compatibility evaluation harness.",
+        "L7: This follows Track 3.25. The harness can classify candidate metadata, but it needs a stable packet contract that says which evidence must exist before a candidate can even enter meaningful compatibility review.",
+        "L24: The Track 3 contract validator also checks these files and their boundary invariants.",
+        "L71: During Track 3.26, a non-pinned candidate with all required evidence can only be classified as `candidate_packet_valid_but_not_supported`. The current compatibility policy still supports only the pinned Vault commit. Any"
+      ],
+      "recommended_later_action": "Keep the stable contract/spec content public, but rename or reframe process labels in a later correction.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.30 Vault Compatibility Pipeline Failure Injection",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.30 Vault Compatibility Pipeline Failure Injection",
+        "L5: Track 3.30 adds a local-only failure-injection suite for the Track 3.28 Vault compatibility pipeline stub and the Track 3.29 compatibility pipeline report contract.",
+        "L7: This follows Track 3.29. The report contract freezes the generated pipeline report shape, allowed statuses, stage ordering, blocking semantics, supported Vault pinning, and local-only boundary assertions. Track 3.30 inje",
+        "L21: The Track 3 contract validator checks the fixture coverage, allowed expected outcomes, script boundary, documentation presence, supported Vault pin, and ignored generated-report boundary.",
+        "L60: `candidate_pipeline_eligible` remains a non-supporting status. It only means metadata has passed the local intake shape required to proceed through the compatibility discipline. It does not switch the active Vault, does "
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION_REPORT_CONTRACT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.31 Vault Compatibility Pipeline Failure-Injection Report Contract",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "keep_public_but_rename_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.31 Vault Compatibility Pipeline Failure-Injection Report Contract",
+        "L5: Track 3.31 adds a committed report contract and validator for the Track 3.30 Vault compatibility pipeline failure-injection report.",
+        "L7: This follows Track 3.30. The failure-injection suite already injects invalid compatibility pipeline and report states. Track 3.31 freezes the generated report shape and adds a validator for injection categories, expected",
+        "L22: The Track 3 contract validator checks the contract, fixtures, validator script, documentation, category coverage, outcome enums, supported Vault pin, and ignored generated-report boundary.",
+        "L57: Allowed injection categories are the Track 3.30 categories, including non-pinned support promotion, skipped pipeline stages, stage order failures, missing blocking information, supported Vault pin drift, alternate Vault "
+      ],
+      "recommended_later_action": "Keep the stable contract/spec content public, but rename or reframe process labels in a later correction.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.29 Vault Compatibility Pipeline Report Contract",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "keep_public_but_rename_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.29 Vault Compatibility Pipeline Report Contract",
+        "L5: Track 3.29 adds a committed report contract and validator for the Track 3.28 Vault compatibility pipeline report.",
+        "L7: This follows Track 3.28. The pipeline stub already composes packet validation, candidate intake, compatibility evaluation, and final status reporting. Track 3.29 freezes the generated report shape and adds a validator fo",
+        "L22: The Track 3 contract validator checks the contract, fixtures, validator script, documentation, status enum, stage order, and ignored generated-report boundary.",
+        "L84: The validator proves that the generated report and committed report fixtures conform to the Track 3.29 report contract."
+      ],
+      "recommended_later_action": "Keep the stable contract/spec content public, but rename or reframe process labels in a later correction.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_STUB.md",
+      "exists": true,
+      "surface": "docs",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Track 3.28 Vault Compatibility Pipeline Stub",
+      "series": "Track 3",
+      "audience": "future_implementer",
+      "artifact_type": "canonical_architecture_spec",
+      "public_surface_status": "consolidate_later",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L1: # Track 3.28 Vault Compatibility Pipeline Stub",
+        "L5: Track 3.28 adds a local-only Vault compatibility pipeline stub.",
+        "L7: This follows Track 3.25, Track 3.26, and Track 3.27. Track 3.25 defined compatibility evaluation metadata. Track 3.26 froze the evidence packet contract. Track 3.27 added the candidate intake gate. Track 3.28 composes th",
+        "L23: The Track 3 contract validator checks the fixture shape, required pipeline statuses, required fixture coverage, ordered stages, script boundary, documentation presence, and ignored generated-report boundary.",
+        "L85: Future real multi-Vault support would require separate Operator authorization, candidate source preflight, clean source state, evidence packet validation, intake gate passage, compatibility evaluation, import-adapter reg"
+      ],
+      "recommended_later_action": "Consolidate stable content into a smaller canonical architecture or implementation spec before creating adjacent documents.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/conduit-versioning-policy.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "conduit-versioning-policy.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L7: \"policy_scope\": \"Track 3 Conduit contract versioning and migration governance\",",
+        "L23: \"palisade\": false,",
+        "L24: \"weave\": false,",
+        "L27: \"boundary\": \"Local Conduit versioning policy only. This file does not create runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, ledger behavior, model execution, live orchest",
+        "L59: \"v1 artifacts must retain false boundary flags for public runtime, public UI wiring, backend, authentication, database use, persistence, ledger behavior, model execution, live orchestration, Palisade, Weave, multi-Vault "
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/documentation-surface-inventory.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Documentation Surface Inventory v1",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [],
+      "evidence_snippets": [],
+      "recommended_later_action": "Keep as a machine-readable correction input; do not add a public docs card or relationship-to-next-pass framing.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/interface-contract.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "interface-contract.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L9: \"boundary\": \"This file defines static contract shapes for future Interface Layer alignment. It does not implement backend runtime, authentication, persistence, model calls, live orchestration, NEXUS integration, or ledge",
+        "L474: \"compliance certification\","
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/interface-contract.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "interface-contract.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L20: \"palisade\": false,",
+        "L21: \"weave\": false,",
+        "L23: \"boundary\": \"Frozen contract artifact only. This file does not add runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, ledger behavior, model execution, live orchestration, Pa",
+        "L130: \"Palisade implementation\",",
+        "L131: \"Weave implementation\","
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/interface-fixture.example.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "interface-fixture.example.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/interface-fixtures.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "interface-fixtures.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/joint-workflow.manifest.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "AETHERUS Intelligence Layer v0",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L785: \"No compliance certification\","
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-adapter-contract.stub.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-adapter-contract.stub.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L118: \"maps_from\": \"adapter_input_stub plus Track 3 boundary flags\",",
+        "L240: \"compliance certification\""
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-adapter-contract.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-adapter-contract.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L25: \"palisade\": false,",
+        "L26: \"weave\": false,",
+        "L34: \"pinned_source_path\": \"/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb\",",
+        "L63: \"nexus_side\": \"pinned local NEXUS source only when separately authorized by Track 3 scope\",",
+        "L122: \"not_palisade\": true,"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-adapter-mismatch-fixtures.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-adapter-mismatch-fixtures.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-adapter-normalization-fixtures.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-adapter-normalization-fixtures.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-adapter-readiness.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-adapter-readiness.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L13: \"local_path\": \"/Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp\",",
+        "L94: \"boundary\": \"Not a persistent AETHERUS ledger and not a production ledger. NEXUS documentation states hash-chaining is not implemented.\"",
+        "L98: \"next_pass\": \"Track 3.8 adapter contract stub\","
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-import-adapter-preflight.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-import-adapter-preflight.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L17: \"boundary\": \"Preflight checklist only. This file does not authorize or perform NEXUS import, NEXUS execution, Python execution, public runtime wiring, persistence, ledger behavior, backend behavior, authentication, datab",
+        "L77: \"Existing Track 3 validators not weakened.\","
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-import-adapter-report-contract.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-import-adapter-report-contract.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L18: \"boundary\": \"Local report contract only. This does not create public runtime behavior, persistence, ledger behavior, backend behavior, authentication, database use, model execution, live orchestration, public UI wiring, "
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-import-adapter-report-contract.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-import-adapter-report-contract.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L24: \"palisade\": false,",
+        "L25: \"weave\": false,",
+        "L27: \"boundary\": \"Frozen local report contract artifact only. This does not create public runtime behavior, persistence, ledger behavior, backend behavior, authentication, database use, model execution, live orchestration, pu",
+        "L124: \"palisade\": false,",
+        "L125: \"weave\": false,"
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-pinned-source-preflight.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-pinned-source-preflight.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L17: \"boundary\": \"Pinned source preflight only. This file does not authorize or perform NEXUS import, NEXUS execution, Python execution of NEXUS code, dependency installation, public runtime wiring, persistence, ledger behavi",
+        "L20: \"previous_non_authoritative_path\": \"/Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp\",",
+        "L23: \"clean_source_path\": \"/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb\",",
+        "L34: \"command\": \"node scripts/check-nexus-import-environment.mjs --nexus-path /Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb --require-python\",",
+        "L45: \"authoring_note\": \"The preflight command was run while AETHERUS Track 3.15 files were uncommitted, so the script reported the AETHERUS working tree as not clean. The NEXUS source-path stop condition itself was resolved.\""
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-source-pin-resolution.v0.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-source-pin-resolution.v0.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L17: \"boundary\": \"Source pin resolution only. This file does not authorize or perform NEXUS import, NEXUS execution, Python execution, dependency installation, public runtime wiring, persistence, ledger behavior, backend beha",
+        "L20: \"observed_nexus_path\": \"/Users/camilocarlone/Documents/Codex/2026-05-06/repository-nexus-mvp-task-audit-only/nexus-mvp\","
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-candidate-intake-fixtures.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-candidate-intake-fixtures.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L21: \"palisade\": false,",
+        "L22: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evaluation-fixtures.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-evaluation-fixtures.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L20: \"palisade\": false,",
+        "L21: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-evidence-packet-contract.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L21: \"palisade\": false,",
+        "L22: \"weave\": false,",
+        "L118: \"reclassifies_conduit_as_palisade\": false"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-evidence-packet-fixtures.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L17: \"palisade\": false,",
+        "L18: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L21: \"palisade\": false,",
+        "L22: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-report-contract.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-pipeline-failure-injection-report-contract.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L20: \"palisade\": false,",
+        "L21: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-report-fixtures.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-pipeline-failure-injection-report-fixtures.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L17: \"palisade\": false,",
+        "L18: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-pipeline-fixtures.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L22: \"palisade\": false,",
+        "L23: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-report-contract.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-pipeline-report-contract.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L22: \"palisade\": false,",
+        "L23: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-compatibility-pipeline-report-fixtures.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L17: \"palisade\": false,",
+        "L18: \"weave\": false,"
+      ],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/nexus-vault-version-compatibility.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "nexus-vault-version-compatibility.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L7: \"policy_scope\": \"Supported pinned Vault/NEXUS commit compatibility for Track 3 Conduit evidence\",",
+        "L17: \"palisade\": false,",
+        "L18: \"weave\": false,",
+        "L21: \"boundary\": \"Local compatibility policy only. This file does not create multi-Vault runtime support, public NEXUS runtime, backend behavior, persistence, ledger behavior, Palisade, Weave, production operation, customer d",
+        "L27: \"source_path\": \"/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb\","
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/scenarios.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": true,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "AETHERUS Intelligence Layer v0 Scenarios",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [],
+      "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/track3-local-report-export-manifest.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "track3-local-report-export-manifest.v1.json",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "historical_sub_pass_record",
+      "public_surface_status": "archive_later",
+      "risk_flags": [
+        "internal_process_language",
+        "codex_residue",
+        "old_path_reference",
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L3: \"contract_name\": \"AETHERUS Track 3 Local Report Export Manifest Contract\",",
+        "L21: \"palisade\": false,",
+        "L22: \"weave\": false,",
+        "L24: \"boundary\": \"Local export manifest contract only. This file does not create runtime behavior, public UI wiring, backend behavior, authentication, database use, persistence, ledger behavior, model execution, live orchestr",
+        "L73: \"nexus_source_path\": \"/Users/camilocarlone/Documents/Codex/2026-05-08/repository-orientation-gpt-handoff-analysis-only/nexus-mvp-pinned-ab95cbb\""
+      ],
+      "recommended_later_action": "Move historical path, preflight, and pass-record material out of the public documentation surface in a later authorized cleanup.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "scripts/validate-documentation-surface-inventory.mjs",
+      "exists": true,
+      "surface": "script",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "Documentation Surface Inventory Validator",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "internal_process_language",
+        "next_pass_language"
+      ],
+      "evidence_snippets": [
+        "L139: \"Option E 0.11\",",
+        "L140: \"additional Option E planning docs\",",
+        "L142: \"Track 3.32\","
+      ],
+      "recommended_later_action": "Keep only as package-free validation for the inventory schema and coverage.",
+      "destructive_change_required_now": false
+    }
+  ],
+  "blocked_follow_on_work_until_operator_or_correction": [
+    "Option E 0.11",
+    "additional Option E planning docs",
+    "static gallery implementation",
+    "Track 3.32",
+    "§1.2 implementation",
+    "public runtime wiring"
+  ]
+}
