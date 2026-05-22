@@ -1,0 +1,2896 @@
+{
+  "schema_version": "1.0",
+  "generated_for_sub_pass": "Documentation Architecture Correction 0.2",
+  "baseline_commit": "2f27a815010866a6894551baeec35b97c2577bf2",
+  "source_inventory": "data/documentation-surface-inventory.v1.json",
+  "purpose": "Deterministic routing plan for public documentation surface curation",
+  "routing_principle": {
+    "public_surface_rule": "Public-facing documentation should explain stable public objects, canonical architecture, and bounded evidence. Internal process mechanics, Codex instructions, handoff reasoning, sequencing breadcrumbs, and repeated boundary boilerplate should not remain public-facing by default.",
+    "no_destructive_action_in_this_pass": true,
+    "routing_only": true
+  },
+  "routing_actions": [
+    "keep_public",
+    "remove_from_public_navigation_later",
+    "consolidate_later",
+    "archive_later",
+    "handoff_only_later",
+    "keep_public_but_rename_later",
+    "needs_operator_review"
+  ],
+  "routing_rules": {
+    "keep_public": [
+      "Explains what AETHERUS is",
+      "Defines a stable public architecture object",
+      "Supports external reader comprehension",
+      "Does not expose internal execution mechanics as primary content"
+    ],
+    "remove_from_public_navigation_later": [
+      "May remain in repository but should not be surfaced as public conceptual documentation",
+      "Primarily supports traceability or implementation history",
+      "Creates directory-wall or process-wall effect if publicly listed"
+    ],
+    "consolidate_later": [
+      "Contains useful content but duplicates other public docs",
+      "Should be merged into a canonical evidence rollup or architecture page"
+    ],
+    "archive_later": [
+      "Historical sub-pass record",
+      "No longer needed as active public explanation",
+      "Preserved for traceability but moved out of primary public docs later"
+    ],
+    "handoff_only_later": [
+      "Belongs in session checkpoint, operator memory, or Codex instruction context",
+      "Contains sequencing rationale, prompt residue, or internal process ordering"
+    ],
+    "keep_public_but_rename_later": [
+      "Content is useful but title implies implementation, operational status, or excessive internal process detail"
+    ],
+    "needs_operator_review": [
+      "Materially ambiguous public value",
+      "Could affect positioning or public claim boundaries",
+      "Requires human decision before navigation, archive, or consolidation"
+    ]
+  },
+  "summary_counts": {
+    "keep_public": 26,
+    "remove_from_public_navigation_later": 13,
+    "needs_operator_review": 4,
+    "consolidate_later": 9,
+    "archive_later": 15,
+    "keep_public_but_rename_later": 6,
+    "handoff_only_later": 10
+  },
+  "public_navigation_plan": {
+    "data_docs_json_current_entries_reviewed": true,
+    "recommended_keep_in_public_navigation": [
+      {
+        "id": "README",
+        "title": "GOVERNANCE ARCHITECTURE MAP",
+        "reference_path": "README.md",
+        "status": "Conceptual architecture",
+        "category": "System map"
+      },
+      {
+        "id": "AUTHORITY_MODEL",
+        "title": "AUTHORITY CONTROL MODEL",
+        "reference_path": null,
+        "status": "Methodology",
+        "category": "Authority model"
+      },
+      {
+        "id": "VERSION_LIFECYCLE",
+        "title": "VERSION AND RELEASE LIFECYCLE",
+        "reference_path": null,
+        "status": "Research artefact",
+        "category": "Version governance"
+      },
+      {
+        "id": "FREEZE_SEMANTICS",
+        "title": "FREEZE AND ESCALATION SEMANTICS",
+        "reference_path": null,
+        "status": "Conceptual architecture",
+        "category": "State semantics"
+      },
+      {
+        "id": "PIPELINE_OVERVIEW",
+        "title": "GOVERNED PROTOTYPE FLOW",
+        "reference_path": null,
+        "status": "Prototype evidence",
+        "category": "Prototype trace"
+      },
+      {
+        "id": "JOINT_SPECIFICATIONS",
+        "title": "JOINT HANDOFF SPECIFICATIONS",
+        "reference_path": null,
+        "status": "Methodology",
+        "category": "Handoff control"
+      },
+      {
+        "id": "GATE_SPECIFICATIONS",
+        "title": "GOVERNANCE GATE SPECIFICATIONS",
+        "reference_path": null,
+        "status": "Conceptual architecture",
+        "category": "Gate model"
+      },
+      {
+        "id": "ORCHESTRATION_MANUAL",
+        "title": "HUMAN CONTROL SURFACE",
+        "reference_path": null,
+        "status": "Planned interface direction",
+        "category": "Operator surface"
+      },
+      {
+        "id": "ARTIFACT_CATALOG",
+        "title": "AUDIT ARTIFACT CATALOG",
+        "reference_path": null,
+        "status": "Research artefact",
+        "category": "Artifact inventory"
+      },
+      {
+        "id": "PROTOCOL_CATALOG",
+        "title": "RISK PROTOCOL CATALOG",
+        "reference_path": null,
+        "status": "Research artefact",
+        "category": "Protocol index"
+      },
+      {
+        "id": "TEMPLATE_INDEX",
+        "title": "CONTROL TEMPLATE INDEX",
+        "reference_path": null,
+        "status": "Methodology",
+        "category": "Template control"
+      },
+      {
+        "id": "SCHEMA_DEFINITIONS_OVERVIEW",
+        "title": "SCHEMA TRACEABILITY MODEL",
+        "reference_path": null,
+        "status": "Conceptual architecture",
+        "category": "Schema model"
+      },
+      {
+        "id": "DELTA_BRIEF",
+        "title": "DELTA BRIEF RECORD",
+        "reference_path": null,
+        "status": "Prototype evidence",
+        "category": "Human audit record"
+      }
+    ],
+    "recommended_remove_from_public_navigation_later": [
+      {
+        "id": "DIRECT_UI_MEMBRANE_VISUAL_SPEC",
+        "title": "DIRECT UI MEMBRANE VISUAL SPEC",
+        "reference_path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+        "status": "Concept-stage visual specification",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY",
+        "title": "DIRECT UI MEMBRANE IA TAXONOMY",
+        "reference_path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+        "status": "Concept-stage IA specification",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC",
+        "title": "DIRECT UI MEMBRANE FLOW SPEC",
+        "reference_path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+        "status": "Concept-stage flow specification",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT",
+        "title": "DIRECT UI MEMBRANE COPY AUDIT",
+        "reference_path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+        "status": "Concept-stage copy boundary audit",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "DIRECT_UI_MEMBRANE_STATIC_CONCEPT_GALLERY_DECISION",
+        "title": "DIRECT UI MEMBRANE GALLERY DECISION",
+        "reference_path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+        "status": "Concept-stage public-display decision",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE",
+        "title": "OPTION E ARCHITECTURE BASELINE",
+        "reference_path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+        "status": "Architecture planning baseline",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER",
+        "title": "OPTION E DATA BOUNDARY REGISTER",
+        "reference_path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+        "status": "Threat model and data boundary planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX",
+        "title": "OPTION E SERVICE TIER MATRIX",
+        "reference_path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+        "status": "Backend service-tier planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX",
+        "title": "OPTION E AUTH TENANT MATRIX",
+        "reference_path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+        "status": "Auth and tenant-isolation planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING",
+        "title": "OPTION E PERSISTENCE AUDIT PLANNING",
+        "reference_path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+        "status": "Persistence and audit-log planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE",
+        "title": "OPTION E DATABASE RLS PLANNING",
+        "reference_path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+        "status": "Database and RLS planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT",
+        "title": "OPTION E AUDIT EVENT DRAFT",
+        "reference_path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+        "status": "Audit-log event contract planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING",
+        "title": "OPTION E SECRETS KEY PLANNING",
+        "reference_path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+        "status": "Secrets and key-management boundary planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING",
+        "title": "OPTION E BILLING STRIPE PLANNING",
+        "reference_path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+        "status": "Billing and Stripe boundary planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE",
+        "title": "OPTION E READINESS GATE",
+        "reference_path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+        "status": "Implementation-readiness assessment",
+        "category": "Planned interface direction"
+      }
+    ],
+    "recommended_consolidate_before_navigation": [
+      {
+        "id": "DIRECT_UI_MEMBRANE_VISUAL_SPEC",
+        "title": "DIRECT UI MEMBRANE VISUAL SPEC",
+        "reference_path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+        "status": "Concept-stage visual specification",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY",
+        "title": "DIRECT UI MEMBRANE IA TAXONOMY",
+        "reference_path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+        "status": "Concept-stage IA specification",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC",
+        "title": "DIRECT UI MEMBRANE FLOW SPEC",
+        "reference_path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+        "status": "Concept-stage flow specification",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE",
+        "title": "OPTION E ARCHITECTURE BASELINE",
+        "reference_path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+        "status": "Architecture planning baseline",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER",
+        "title": "OPTION E DATA BOUNDARY REGISTER",
+        "reference_path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+        "status": "Threat model and data boundary planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX",
+        "title": "OPTION E SERVICE TIER MATRIX",
+        "reference_path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+        "status": "Backend service-tier planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX",
+        "title": "OPTION E AUTH TENANT MATRIX",
+        "reference_path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+        "status": "Auth and tenant-isolation planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING",
+        "title": "OPTION E PERSISTENCE AUDIT PLANNING",
+        "reference_path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+        "status": "Persistence and audit-log planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE",
+        "title": "OPTION E DATABASE RLS PLANNING",
+        "reference_path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+        "status": "Database and RLS planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT",
+        "title": "OPTION E AUDIT EVENT DRAFT",
+        "reference_path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+        "status": "Audit-log event contract planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING",
+        "title": "OPTION E SECRETS KEY PLANNING",
+        "reference_path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+        "status": "Secrets and key-management boundary planning",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING",
+        "title": "OPTION E BILLING STRIPE PLANNING",
+        "reference_path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+        "status": "Billing and Stripe boundary planning",
+        "category": "Planned interface direction"
+      }
+    ],
+    "recommended_operator_review_before_navigation_change": [
+      {
+        "id": "DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT",
+        "title": "DIRECT UI MEMBRANE COPY AUDIT",
+        "reference_path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+        "status": "Concept-stage copy boundary audit",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "DIRECT_UI_MEMBRANE_STATIC_CONCEPT_GALLERY_DECISION",
+        "title": "DIRECT UI MEMBRANE GALLERY DECISION",
+        "reference_path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+        "status": "Concept-stage public-display decision",
+        "category": "Planned interface direction"
+      },
+      {
+        "id": "OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE",
+        "title": "OPTION E READINESS GATE",
+        "reference_path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+        "status": "Implementation-readiness assessment",
+        "category": "Planned interface direction"
+      }
+    ]
+  },
+  "canonical_rollup_candidates": [
+    {
+      "proposed_rollup": "Conduit Evidence Rollup",
+      "purpose": "Replace a wall of Track 3 sub-pass documents with a curated public evidence summary.",
+      "source_paths": [
+        "docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md",
+        "docs/TRACK_3_CONTRACT_FREEZE_V1.md",
+        "docs/TRACK_3_CONTRACT_INVARIANTS.md",
+        "docs/TRACK_3_FIXTURE_SUITE.md",
+        "docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md",
+        "docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md",
+        "docs/TRACK_3_INTERFACE_CONTRACTS.md",
+        "docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md",
+        "docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md",
+        "docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md",
+        "docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md",
+        "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md",
+        "docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md",
+        "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md",
+        "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md",
+        "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md",
+        "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md",
+        "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md",
+        "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md",
+        "docs/TRACK_3_NEXUS_MVP_VERIFICATION.md",
+        "docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md",
+        "docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md",
+        "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md",
+        "docs/TRACK_3_SCHEMA_ALIGNMENT.md",
+        "docs/TRACK_3_VALIDATION_HARNESS.md",
+        "docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md",
+        "docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md",
+        "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md",
+        "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION_REPORT_CONTRACT.md",
+        "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md",
+        "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_STUB.md"
+      ],
+      "later_action": "create_rollup_then_remove_source_docs_from_public_navigation"
+    },
+    {
+      "proposed_rollup": "Direct UI Membrane Concept Set",
+      "purpose": "Represent the accepted Section 1.2 concept surfaces without exposing every Facade Reflection sub-pass.",
+      "source_paths": [
+        "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+        "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+        "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+        "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+        "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+        "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+        "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md"
+      ],
+      "later_action": "create_or_update_public_concept_page_then_remove_process_docs_from_public_navigation"
+    },
+    {
+      "proposed_rollup": "Backend/Auth/Persistence Architecture Boundary",
+      "purpose": "Compress Option E planning into a stable architecture boundary document rather than a sequence of planning records.",
+      "source_paths": [
+        "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+        "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+        "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+        "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+        "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+        "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+        "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+        "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+        "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+        "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md"
+      ],
+      "later_action": "create_consolidated_option_e_boundary_then_archive_or_unlist_sequence_docs"
+    }
+  ],
+  "handoff_only_candidates": [
+    {
+      "path": "docs/TRACK_3_FIXTURE_SUITE.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_INTERFACE_CONTRACTS.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "codex_residue",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/TRACK_3_SCHEMA_ALIGNMENT.md",
+      "reason": "Inventory classified this artifact as public process sequencing or next-step residue.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    }
+  ],
+  "rename_or_replace_review_candidates": [
+    {
+      "path": "README.md",
+      "current_title_or_label": "AETHERUS MONOLITH",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "data/docs.json",
+      "current_title_or_label": "Structured public artefact navigation metadata",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+      "current_title_or_label": "Facade Reflection 0.10 Static Concept Gallery Decision",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+      "current_title_or_label": "Facade Reflection 0.1 Documentation Boundary",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+      "current_title_or_label": "Facade Reflection 0.4 Direct UI Membrane Visual Specification",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+      "current_title_or_label": "Facade Reflection 0.6 Direct UI Membrane Visual Asset Index",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+      "current_title_or_label": "Facade Reflection 0.7 Direct UI Membrane IA Surface Taxonomy",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+      "current_title_or_label": "Facade Reflection 0.8 Direct UI Membrane Interaction Flow Specification",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+      "current_title_or_label": "Facade Reflection 0.9 Direct UI Membrane Copy Boundary Audit",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+      "current_title_or_label": "Option E 0.10 Implementation Readiness Gate",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+      "current_title_or_label": "Option E 0.1 Backend / Persistence / Auth Architecture Baseline",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+      "current_title_or_label": "Option E 0.2 Threat Model / Data Boundary Register",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+      "current_title_or_label": "Option E 0.3 Backend Service Tier Decision Matrix",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+      "current_title_or_label": "Option E 0.4 Auth / Tenant Isolation Requirements Matrix",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+      "current_title_or_label": "Option E 0.5 Persistence / Audit Log Schema Planning",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+      "current_title_or_label": "Option E 0.6 Database / RLS Policy Planning Baseline",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+      "current_title_or_label": "Option E 0.7 Audit Log Event Contract Draft",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+      "current_title_or_label": "Option E 0.8 Secrets / Key Management Boundary Planning",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+      "current_title_or_label": "Option E 0.9 Billing / Stripe Boundary Planning",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md",
+      "current_title_or_label": "Track 3.24 Conduit Versioning Story v1",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_CONTRACT_FREEZE_V1.md",
+      "current_title_or_label": "Track 3.22 Conduit Contract Freeze v1",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_CONTRACT_INVARIANTS.md",
+      "current_title_or_label": "Track 3 Contract Invariants",
+      "reason": "Useful content with process-heavy or implementation-implying naming."
+    },
+    {
+      "path": "docs/TRACK_3_FIXTURE_SUITE.md",
+      "current_title_or_label": "Track 3 Fixture Suite",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md",
+      "current_title_or_label": "Track 3.12 NEXUS Import Adapter Preflight",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md",
+      "current_title_or_label": "Track 3.13 NEXUS Import Environment Preflight",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_INTERFACE_CONTRACTS.md",
+      "current_title_or_label": "Track 3 Interface Contracts",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md",
+      "current_title_or_label": "Track 3 Local Fixture Runtime",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md",
+      "current_title_or_label": "Track 3.17 Local NEXUS Import Adapter",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md",
+      "current_title_or_label": "Track 3.23 Local Report Export Bundle",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md",
+      "current_title_or_label": "Track 3.25 Multi-Vault Compatibility Evaluation Harness Stub",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md",
+      "current_title_or_label": "Track 3.8 NEXUS Adapter Contract Stub",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md",
+      "current_title_or_label": "Track 3.9 NEXUS Adapter Mismatch Tests",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md",
+      "current_title_or_label": "Track 3.10 NEXUS Adapter Normalizer Stub",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md",
+      "current_title_or_label": "Track 3.11 NEXUS Adapter Normalizer Suite",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md",
+      "current_title_or_label": "Track 3.21 NEXUS Import Adapter Failure Category Completion",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md",
+      "current_title_or_label": "Track 3.20 NEXUS Import Adapter Failure Injection",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md",
+      "current_title_or_label": "Track 3.18 NEXUS Import Adapter Regression Suite",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md",
+      "current_title_or_label": "Track 3.19 NEXUS Import Adapter Report Contract",
+      "reason": "Useful content with process-heavy or implementation-implying naming."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_MVP_VERIFICATION.md",
+      "current_title_or_label": "Track 3.7 NEXUS MVP Verification",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md",
+      "current_title_or_label": "Track 3.14 NEXUS Source Pin Resolution",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md",
+      "current_title_or_label": "Track 3.15 Pinned NEXUS Source Preflight",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md",
+      "current_title_or_label": "Track 3.16 Post-Commit Import Readiness",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_SCHEMA_ALIGNMENT.md",
+      "current_title_or_label": "Track 3 Schema Alignment",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_VALIDATION_HARNESS.md",
+      "current_title_or_label": "Track 3 Validation Harness",
+      "reason": "Useful content with process-heavy or implementation-implying naming."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md",
+      "current_title_or_label": "Track 3.27 Vault Candidate Intake Gate Stub",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md",
+      "current_title_or_label": "Track 3.26 Vault Compatibility Evidence Packet Contract",
+      "reason": "Useful content with process-heavy or implementation-implying naming."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md",
+      "current_title_or_label": "Track 3.30 Vault Compatibility Pipeline Failure Injection",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION_REPORT_CONTRACT.md",
+      "current_title_or_label": "Track 3.31 Vault Compatibility Pipeline Failure-Injection Report Contract",
+      "reason": "Useful content with process-heavy or implementation-implying naming."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md",
+      "current_title_or_label": "Track 3.29 Vault Compatibility Pipeline Report Contract",
+      "reason": "Useful content with process-heavy or implementation-implying naming."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_STUB.md",
+      "current_title_or_label": "Track 3.28 Vault Compatibility Pipeline Stub",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "data/joint-workflow.manifest.json",
+      "current_title_or_label": "AETHERUS Intelligence Layer v0",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    },
+    {
+      "path": "data/scenarios.json",
+      "current_title_or_label": "AETHERUS Intelligence Layer v0 Scenarios",
+      "reason": "Inventory flagged operationally loaded terminology that should be reviewed before public routing."
+    }
+  ],
+  "operator_review_queue": [
+    {
+      "path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+      "reason": "Operator decision required before public navigation, archive, or consolidation route is executed.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+      "reason": "Operator decision required before public navigation, archive, or consolidation route is executed.",
+      "flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+      "reason": "Operator decision required before public navigation, archive, or consolidation route is executed.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+      "reason": "Operator decision required before public navigation, archive, or consolidation route is executed.",
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    }
+  ],
+  "canonical_public_architecture_artifacts": [
+    {
+      "path": "README.md",
+      "artifact_type": "public_explanation",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/documentation-surface-inventory.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/interface-contract.v0.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/interface-contract.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/interface-fixture.example.v0.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/interface-fixtures.v0.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/joint-workflow.manifest.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-adapter-contract.stub.v0.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-adapter-mismatch-fixtures.v0.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-adapter-normalization-fixtures.v0.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-import-adapter-report-contract.v0.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-candidate-intake-fixtures.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evaluation-fixtures.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-report-contract.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-report-fixtures.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-report-contract.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "data/scenarios.json",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    },
+    {
+      "path": "scripts/validate-documentation-surface-inventory.mjs",
+      "artifact_type": "machine_validation_artifact",
+      "reason": "Inventory classified this as stable public explanation, canonical architecture, or validation material."
+    }
+  ],
+  "public_navigation_removal_priority": [
+    {
+      "path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+      "routing_action": "needs_operator_review",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+      "routing_action": "needs_operator_review",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+      "routing_action": "needs_operator_review",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "next_pass_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": true,
+      "flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    },
+    {
+      "path": "data/docs.json",
+      "routing_action": "remove_from_public_navigation_later",
+      "from_readme": true,
+      "from_data_docs_json": false,
+      "flags": [
+        "internal_process_language",
+        "repeated_boundary_boilerplate",
+        "misleading_operational_label",
+        "overexposed_planning",
+        "public_discoverability_excess",
+        "claim_boundary_risk"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence",
+        "coordinate_with_readme_reference_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/docs.json",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": false
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_readme_reference_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+      "source_inventory_status": "needs_operator_review",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "needs_operator_review",
+      "routing_reason": "The artifact has ambiguous public value or public-claim implications and needs human decision before navigation, consolidation, or archive action.",
+      "later_execution_requirements": [
+        "operator_decision_required_before_navigation_change",
+        "classify_as_public_doc_or_internal_history",
+        "approve_any_archive_or_consolidation_route",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": true,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+      "source_inventory_status": "needs_operator_review",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "needs_operator_review",
+      "routing_reason": "The artifact has ambiguous public value or public-claim implications and needs human decision before navigation, consolidation, or archive action.",
+      "later_execution_requirements": [
+        "operator_decision_required_before_navigation_change",
+        "classify_as_public_doc_or_internal_history",
+        "approve_any_archive_or_consolidation_route"
+      ],
+      "operator_review_required": true,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+      "source_inventory_status": "needs_operator_review",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "needs_operator_review",
+      "routing_reason": "The artifact has ambiguous public value or public-claim implications and needs human decision before navigation, consolidation, or archive action.",
+      "later_execution_requirements": [
+        "operator_decision_required_before_navigation_change",
+        "classify_as_public_doc_or_internal_history",
+        "approve_any_archive_or_consolidation_route",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": true,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+      "source_inventory_status": "needs_operator_review",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "needs_operator_review",
+      "routing_reason": "The artifact has ambiguous public value or public-claim implications and needs human decision before navigation, consolidation, or archive action.",
+      "later_execution_requirements": [
+        "operator_decision_required_before_navigation_change",
+        "classify_as_public_doc_or_internal_history",
+        "approve_any_archive_or_consolidation_route",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": true,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+      "source_inventory_status": "remove_from_public_navigation_later",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": true
+      },
+      "routing_action": "remove_from_public_navigation_later",
+      "routing_reason": "The artifact should stop being surfaced as public conceptual documentation before a later curated surface is promoted.",
+      "later_execution_requirements": [
+        "remove_public_navigation_reference_later",
+        "verify_no_broken_public_links",
+        "preserve_file_until_consolidation_or_archive_decision",
+        "coordinate_with_data_docs_json_navigation_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_CONTRACT_FREEZE_V1.md",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_CONTRACT_INVARIANTS.md",
+      "source_inventory_status": "keep_public_but_rename_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public_but_rename_later",
+      "routing_reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels.",
+      "later_execution_requirements": [
+        "perform_title_and_filename_review",
+        "replace_track_or_operational_label_with_stable_artifact_name",
+        "verify_public_claim_boundary"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_FIXTURE_SUITE.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_INTERFACE_CONTRACTS.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md",
+      "source_inventory_status": "keep_public_but_rename_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public_but_rename_later",
+      "routing_reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels.",
+      "later_execution_requirements": [
+        "perform_title_and_filename_review",
+        "replace_track_or_operational_label_with_stable_artifact_name",
+        "verify_public_claim_boundary"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_MVP_VERIFICATION.md",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_SCHEMA_ALIGNMENT.md",
+      "source_inventory_status": "handoff_only_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "handoff_only_later",
+      "routing_reason": "Next-step reasoning, process sequencing, or execution-memory residue belongs in operator/session context rather than public documentation.",
+      "later_execution_requirements": [
+        "move_process_sequencing_to_operator_memory",
+        "remove_public_next_step_breadcrumbs_later",
+        "retain_only_stable_contract_content_if_needed"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VALIDATION_HARNESS.md",
+      "source_inventory_status": "keep_public_but_rename_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public_but_rename_later",
+      "routing_reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels.",
+      "later_execution_requirements": [
+        "perform_title_and_filename_review",
+        "replace_track_or_operational_label_with_stable_artifact_name",
+        "verify_public_claim_boundary"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md",
+      "source_inventory_status": "keep_public_but_rename_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public_but_rename_later",
+      "routing_reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels.",
+      "later_execution_requirements": [
+        "perform_title_and_filename_review",
+        "replace_track_or_operational_label_with_stable_artifact_name",
+        "verify_public_claim_boundary"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION_REPORT_CONTRACT.md",
+      "source_inventory_status": "keep_public_but_rename_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public_but_rename_later",
+      "routing_reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels.",
+      "later_execution_requirements": [
+        "perform_title_and_filename_review",
+        "replace_track_or_operational_label_with_stable_artifact_name",
+        "verify_public_claim_boundary"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md",
+      "source_inventory_status": "keep_public_but_rename_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public_but_rename_later",
+      "routing_reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels.",
+      "later_execution_requirements": [
+        "perform_title_and_filename_review",
+        "replace_track_or_operational_label_with_stable_artifact_name",
+        "verify_public_claim_boundary"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_STUB.md",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing.",
+      "later_execution_requirements": [
+        "select_canonical_rollup_target",
+        "extract_stable_content",
+        "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/conduit-versioning-policy.v1.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/documentation-surface-inventory.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/interface-contract.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/interface-contract.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/interface-fixture.example.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/interface-fixtures.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/joint-workflow.manifest.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence",
+        "coordinate_with_readme_reference_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-adapter-contract.stub.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-adapter-contract.v1.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-adapter-mismatch-fixtures.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-adapter-normalization-fixtures.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-adapter-readiness.v0.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-import-adapter-preflight.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-import-adapter-report-contract.v0.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-import-adapter-report-contract.v1.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-pinned-source-preflight.v0.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-source-pin-resolution.v0.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-candidate-intake-fixtures.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evaluation-fixtures.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-evidence-packet-fixtures.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-report-contract.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-failure-injection-report-fixtures.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-report-contract.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-compatibility-pipeline-report-fixtures.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/nexus-vault-version-compatibility.v1.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/scenarios.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": true,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence",
+        "coordinate_with_readme_reference_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/track3-local-report-export-manifest.v1.json",
+      "source_inventory_status": "archive_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "archive_later",
+      "routing_reason": "Historical pass records and local path evidence should be preserved for traceability but moved out of active public documentation later.",
+      "later_execution_requirements": [
+        "select_archive_location_later",
+        "preserve_historical_traceability",
+        "remove_public_navigation_after_archive_decision"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": true,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "scripts/validate-documentation-surface-inventory.mjs",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Stable public explanation, canonical architecture, bounded evidence, or machine validation material can remain visible in the repository without routing action now.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_runtime_or_implementation_evidence"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/documentation-surface-routing-plan.v1.json",
+      "source_inventory_status": "not_in_source_inventory",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Machine validation or routing artifact created by this pass; keep in repository but do not promote through public documentation navigation.",
+      "later_execution_requirements": [
+        "keep_out_of_data_docs_json_public_cards",
+        "validate_schema_before_commit"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "scripts/validate-documentation-surface-routing-plan.mjs",
+      "source_inventory_status": "not_in_source_inventory",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Machine validation or routing artifact created by this pass; keep in repository but do not promote through public documentation navigation.",
+      "later_execution_requirements": [
+        "keep_out_of_data_docs_json_public_cards",
+        "validate_schema_before_commit"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    }
+  ],
+  "blocked_follow_on_work_until_routing_plan_is_accepted": [
+    "Option E 0.11",
+    "additional Option E planning docs",
+    "static gallery implementation",
+    "Track 3.32",
+    "§1.2 implementation",
+    "public runtime wiring"
+  ]
+}

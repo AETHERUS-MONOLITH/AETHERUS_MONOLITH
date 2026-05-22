@@ -62,6 +62,11 @@ function sortedTopLevelFiles(directory, extension) {
     .sort();
 }
 
+const postInventoryCorrectionArtifacts = new Set([
+  "data/documentation-surface-routing-plan.v1.json",
+  "scripts/validate-documentation-surface-routing-plan.mjs"
+]);
+
 const inventory = readJson(inventoryPath);
 
 if (inventory.schema_version !== "1.0") fail("schema_version must be 1.0");
@@ -84,7 +89,9 @@ const requiredArtifacts = [
   "scripts/validate-documentation-surface-inventory.mjs",
   ...sortedTopLevelFiles("docs", ".md"),
   ...sortedTopLevelFiles("data", ".json")
-].sort();
+]
+  .filter((artifactPath) => !postInventoryCorrectionArtifacts.has(artifactPath))
+  .sort();
 
 const seen = new Set();
 for (const artifact of inventory.artifacts) {
