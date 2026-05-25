@@ -79,7 +79,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-static-shell-content.v0.json",
   "data/direct-ui-membrane-preview-workspace.v0.json",
   "data/direct-ui-membrane-auth-backend-boundary.v0.json",
-  "scripts/validate-direct-ui-membrane-preview-workspace.mjs"
+  "scripts/validate-direct-ui-membrane-preview-workspace.mjs",
+  "data/direct-ui-membrane-auth-route-boundary.v0.json",
+  "scripts/validate-direct-ui-membrane-auth-route-boundary.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

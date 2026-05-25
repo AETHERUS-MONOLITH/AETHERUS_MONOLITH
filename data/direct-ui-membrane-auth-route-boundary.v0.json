@@ -1,0 +1,71 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Authenticated Shell Architecture 0.1 — Route/Auth Boundary Skeleton",
+  "baseline_commit": "1891b2a818a0b9bc438886758104e913c311cfb7",
+  "object_status": "auth_route_boundary_skeleton",
+  "section": "§1.2 Direct UI Membrane",
+  "authenticated_shell_born": false,
+  "auth_implemented": false,
+  "backend_implemented": false,
+  "database_implemented": false,
+  "persistence_implemented": false,
+  "tenant_isolation_implemented": false,
+  "billing_implemented": false,
+  "customer_workspace_implemented": false,
+  "route_boundary": {
+    "public_entry": "index.html",
+    "direct_ui_membrane_static_preview": "membrane.html",
+    "unauthenticated_preview_workspace": "workspace.html",
+    "reserved_authenticated_boundary": "auth-boundary.html"
+  },
+  "current_claimable_state": [
+    "Direct UI Membrane has an unauthenticated interactive preview workspace",
+    "Preview workspace is browser-side and non-persistent",
+    "Authenticated shell route boundary is reserved but not active"
+  ],
+  "not_claimable": [
+    "login exists",
+    "signup exists",
+    "authenticated dashboard exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "Palisade exists",
+    "Weave exists",
+    "public NEXUS runtime exists",
+    "production SaaS exists"
+  ],
+  "next_authorized_layer_required_for": [
+    "real login",
+    "real signup",
+    "session management",
+    "server-side authorization",
+    "database persistence",
+    "tenant isolation",
+    "customer workspace"
+  ],
+  "forbidden_capabilities_absent": [
+    "auth",
+    "login",
+    "signup",
+    "forms",
+    "backend",
+    "database",
+    "persistence",
+    "local_storage",
+    "session_storage",
+    "cookies",
+    "billing",
+    "tenant_infrastructure",
+    "customer_workspace",
+    "palisade",
+    "weave",
+    "public_nexus_runtime",
+    "model_api_calls",
+    "operational_dashboard",
+    "runtime_monitoring"
+  ]
+}

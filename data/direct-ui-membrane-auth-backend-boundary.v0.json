@@ -11,6 +11,14 @@
     "tenant_isolation": "not_implemented",
     "billing": "not_implemented"
   },
+  "route_boundary_awareness": {
+    "unauthenticated_preview_workspace_exists": true,
+    "unauthenticated_preview_workspace": "workspace.html",
+    "auth_route_boundary_skeleton_exists": true,
+    "reserved_authenticated_boundary": "auth-boundary.html",
+    "auth_backend_database_persistence_remain_not_implemented": true,
+    "next_implementation_layer_requires_separate_authorization": true
+  },
   "next_step_architecture": {
     "auth_surface": "email_password_baseline_with_mfa_direction",
     "backend_boundary": "server_side_authorization_required_before_persistence",
