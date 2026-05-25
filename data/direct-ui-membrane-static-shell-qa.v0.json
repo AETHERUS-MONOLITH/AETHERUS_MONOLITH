@@ -3,6 +3,7 @@
   "generated_for_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.2",
   "baseline_commit": "799ada826b47b44e615ad0b772ceedb4a3d0bd22",
   "object_status": "static_pre_birth_preview_shell_hardened",
+  "latest_content_refinement_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.3",
   "birth_condition_not_met": true,
   "qa_scope": [
     "copy_boundary",
@@ -37,18 +38,26 @@
       "finding": "No forms, active buttons, runtime hooks, persistence strings, or console errors were observed on the static shell.",
       "severity": "low",
       "resolved": true
+    },
+    {
+      "area": "surface_content",
+      "finding": "Each required surface card now separates object status, purpose, reviewer function, and boundary language.",
+      "severity": "low",
+      "resolved": true
     }
   ],
   "changes_applied": [
     "Changed the membrane surface grid to auto-fit wider concept cards instead of forcing five narrow desktop columns.",
     "Reduced static card minimum height after widening cards to keep the page dense without fake dashboard metrics.",
     "Strengthened the static shell validator for QA report parsing, forbidden label scans, form/button bans, runtime hook bans, and public docs registry promotion checks.",
-    "Recorded the 0.2 boundary-hardening state in the static shell record."
+    "Recorded the 0.2 boundary-hardening state in the static shell record.",
+    "Refined the five surface cards with explicit object-status, purpose, reviewer-function, and boundary copy."
   ],
   "visual_verification": {
     "membrane_html_renders": true,
     "navigation_reaches_page": true,
     "five_surfaces_visible": true,
+    "refined_surface_card_structure_visible": true,
     "required_boundary_copy_visible": true,
     "mobile_viewport_usable": true,
     "console_errors": false,

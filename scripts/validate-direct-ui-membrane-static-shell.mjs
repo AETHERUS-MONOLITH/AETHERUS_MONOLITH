@@ -2,9 +2,10 @@ import fs from "node:fs";
 
 const recordPath = "data/direct-ui-membrane-static-shell.v0.json";
 const qaReportPath = "data/direct-ui-membrane-static-shell-qa.v0.json";
+const contentRecordPath = "data/direct-ui-membrane-static-shell-content.v0.json";
 const docsJsonPath = "data/docs.json";
 const publicShellFiles = ["membrane.html", "index.html", "css/style.css"];
-const runtimeBoundaryFiles = [...publicShellFiles, recordPath, qaReportPath];
+const runtimeBoundaryFiles = [...publicShellFiles, recordPath, qaReportPath, contentRecordPath];
 
 const requiredSurfaces = [
   "Access Boundary Membrane",
@@ -72,7 +73,12 @@ const allowedStaticLabels = [
   "Inspect Concept",
   "Review Boundary",
   "View Static Model",
-  "Concept Only"
+  "Concept Only",
+  "Static concept",
+  "Concept boundary",
+  "Reviewer model",
+  "Preview surface",
+  "Boundary note"
 ];
 
 function fail(message) {
@@ -95,6 +101,7 @@ function assertIncludesAll(actual, expected, label) {
 
 const record = readJson(recordPath);
 const qaReport = fs.existsSync(qaReportPath) ? readJson(qaReportPath) : null;
+const contentRecord = fs.existsSync(contentRecordPath) ? readJson(contentRecordPath) : null;
 const docsJson = readJson(docsJsonPath);
 
 if (record.schema_version !== "0.1") fail("schema_version must be 0.1");
@@ -110,6 +117,12 @@ if (record.latest_qa_sub_pass !== "§1.2 Pre-Birth Static Membrane Shell 0.2") {
 }
 if (record.qa_hardening_status !== "boundary_hardened_static_shell") {
   fail("qa_hardening_status mismatch");
+}
+if (record.latest_content_sub_pass !== "§1.2 Pre-Birth Static Membrane Shell 0.3") {
+  fail("latest_content_sub_pass must record the 0.3 content refinement pass");
+}
+if (record.content_refinement_status !== "surface_cards_refined") {
+  fail("content_refinement_status mismatch");
 }
 if (record.birth_condition_not_met !== true) fail("birth_condition_not_met must be true");
 assertIncludesAll(record.surfaces_represented || [], requiredSurfaces, "surfaces_represented");
@@ -142,17 +155,40 @@ for (const filePath of publicShellFiles) {
   if (!fs.existsSync(filePath)) fail(`${filePath} is missing`);
 }
 if (!fs.existsSync(qaReportPath)) fail(`${qaReportPath} is missing`);
+if (!fs.existsSync(contentRecordPath)) fail(`${contentRecordPath} is missing`);
 
 const membraneText = readText("membrane.html");
 const normalizedMembraneText = membraneText.replace(/&mdash;/g, "-");
 assertIncludesAll(normalizedMembraneText, requiredBoundaryPhrases, "membrane.html boundary copy");
 assertIncludesAll(normalizedMembraneText, requiredSurfaces, "membrane.html surfaces");
+assertIncludesAll(
+  normalizedMembraneText,
+  ["Object status:", "Purpose:", "Reviewer function:", "Boundary:"],
+  "membrane.html surface card structure"
+);
 
 if ((normalizedMembraneText.match(/<h1\b/gi) || []).length !== 1) {
   fail("membrane.html must have exactly one h1");
 }
-for (const label of allowedStaticLabels) {
-  if (normalizedMembraneText.includes(label)) continue;
+
+const articleMatches = normalizedMembraneText.match(/<article\b[\s\S]*?<\/article>/gi) || [];
+if (articleMatches.length !== requiredSurfaces.length) {
+  fail(`membrane.html must contain exactly ${requiredSurfaces.length} static surface cards`);
+}
+for (const surface of requiredSurfaces) {
+  const card = articleMatches.find((article) => article.includes(`<h3>${surface}</h3>`));
+  if (!card) fail(`membrane.html: missing card for ${surface}`);
+  for (const required of [
+    "Object status: Static concept surface",
+    "<strong>Purpose:</strong>",
+    "<strong>Reviewer function:</strong>",
+    "<strong>Boundary:</strong>"
+  ]) {
+    if (!card.includes(required)) fail(`${surface}: missing ${required}`);
+  }
+  if (!allowedStaticLabels.some((label) => card.includes(label))) {
+    fail(`${surface}: missing allowed static concept label`);
+  }
 }
 if (/<form\b/i.test(membraneText)) fail("membrane.html must not contain forms");
 if (/<(?:input|textarea|select)\b/i.test(membraneText)) {
@@ -209,6 +245,9 @@ if (qaReport) {
   if (qaReport.generated_for_sub_pass !== "§1.2 Pre-Birth Static Membrane Shell 0.2") {
     fail("QA report generated_for_sub_pass mismatch");
   }
+  if (qaReport.latest_content_refinement_sub_pass !== "§1.2 Pre-Birth Static Membrane Shell 0.3") {
+    fail("QA report latest_content_refinement_sub_pass mismatch");
+  }
   if (qaReport.baseline_commit !== "799ada826b47b44e615ad0b772ceedb4a3d0bd22") {
     fail("QA report baseline_commit mismatch");
   }
@@ -247,10 +286,65 @@ if (qaReport) {
   }
 }
 
+if (contentRecord) {
+  if (contentRecord.schema_version !== "0.1") fail("Content record schema_version must be 0.1");
+  if (contentRecord.generated_for_sub_pass !== "§1.2 Pre-Birth Static Membrane Shell 0.3") {
+    fail("Content record generated_for_sub_pass mismatch");
+  }
+  if (contentRecord.baseline_commit !== "d3834ff7a9f90dd21cf7b61ed3dc90d1e9110b90") {
+    fail("Content record baseline_commit mismatch");
+  }
+  if (contentRecord.object_status !== "static_pre_birth_content_refinement") {
+    fail("Content record object_status mismatch");
+  }
+  if (contentRecord.birth_condition_not_met !== true) {
+    fail("Content record birth_condition_not_met must be true");
+  }
+  assertIncludesAll(
+    contentRecord.content_scope || [],
+    [
+      "surface_card_purpose_lines",
+      "reviewer_function_lines",
+      "boundary_lines",
+      "object_status_language"
+    ],
+    "Content record content_scope"
+  );
+  assertIncludesAll(contentRecord.surfaces_refined || [], requiredSurfaces, "Content record surfaces_refined");
+  assertIncludesAll(
+    contentRecord.surface_structure_required || [],
+    ["object_status", "purpose", "reviewer_function", "boundary"],
+    "Content record surface_structure_required"
+  );
+  assertIncludesAll(
+    contentRecord.forbidden_capabilities_absent || [],
+    [
+      "auth",
+      "login",
+      "signup",
+      "forms",
+      "active_buttons",
+      "backend",
+      "database",
+      "persistence",
+      "billing",
+      "tenant_infrastructure",
+      "palisade",
+      "weave",
+      "public_nexus_runtime",
+      "model_api_calls",
+      "operational_dashboard",
+      "runtime_monitoring"
+    ],
+    "Content record forbidden_capabilities_absent"
+  );
+}
+
 const docsJsonText = JSON.stringify(docsJson);
 for (const forbiddenRegistryRef of [
   "direct-ui-membrane-static-shell",
   "direct-ui-membrane-static-shell-qa",
+  "direct-ui-membrane-static-shell-content",
   "validate-direct-ui-membrane-static-shell"
 ]) {
   if (docsJsonText.includes(forbiddenRegistryRef)) {

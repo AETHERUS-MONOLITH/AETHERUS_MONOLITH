@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.3",
+  "baseline_commit": "d3834ff7a9f90dd21cf7b61ed3dc90d1e9110b90",
+  "object_status": "static_pre_birth_content_refinement",
+  "birth_condition_not_met": true,
+  "content_scope": [
+    "surface_card_purpose_lines",
+    "reviewer_function_lines",
+    "boundary_lines",
+    "object_status_language"
+  ],
+  "surfaces_refined": [
+    "Access Boundary Membrane",
+    "Workspace Control Surface",
+    "Evidence / Artifact Review Surface",
+    "Release Review Chamber",
+    "Escalation Review Surface"
+  ],
+  "surface_structure_required": [
+    "object_status",
+    "purpose",
+    "reviewer_function",
+    "boundary"
+  ],
+  "forbidden_capabilities_absent": [
+    "auth",
+    "login",
+    "signup",
+    "forms",
+    "active_buttons",
+    "backend",
+    "database",
+    "persistence",
+    "billing",
+    "tenant_infrastructure",
+    "palisade",
+    "weave",
+    "public_nexus_runtime",
+    "model_api_calls",
+    "operational_dashboard",
+    "runtime_monitoring"
+  ]
+}

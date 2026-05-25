@@ -1961,7 +1961,7 @@ main {
 
 .membrane-surface-card {
   --surface-accent: var(--blue);
-  min-height: 310px;
+  min-height: 360px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -2014,12 +2014,19 @@ main {
   color: color-mix(in srgb, var(--surface-accent) 72%, white);
   font-size: 8px;
   letter-spacing: 0.13em;
+  text-transform: uppercase;
 }
 
 .membrane-surface-card p:not(.membrane-object-status) {
   margin: 0;
   font-size: 12px;
   line-height: 1.55;
+}
+
+.membrane-card-field strong,
+.membrane-surface-card small strong {
+  color: rgba(230, 245, 250, 0.74);
+  font-weight: 500;
 }
 
 .membrane-surface-card small {
