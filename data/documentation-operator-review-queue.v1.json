@@ -1,0 +1,1007 @@
+{
+  "schema_version": "1.0",
+  "generated_for_sub_pass": "Documentation Architecture Correction 0.4",
+  "baseline_commit": "770f71891832be09a07888b19167db3a9108fd2d",
+  "source_inventory": "data/documentation-surface-inventory.v1.json",
+  "source_routing_plan": "data/documentation-surface-routing-plan.v1.json",
+  "source_pruning_report": "data/documentation-public-navigation-pruning.v1.json",
+  "purpose": "Operator decision queue for ambiguous documentation-surface artifacts",
+  "classification_only": true,
+  "no_repository_action_authorized": true,
+  "review_categories": [
+    "public_value_ambiguous",
+    "claim_boundary_sensitive",
+    "architecture_identity_sensitive",
+    "implementation_status_ambiguous",
+    "positioning_sensitive",
+    "possible_archive_candidate",
+    "possible_consolidation_candidate",
+    "possible_public_navigation_candidate"
+  ],
+  "operator_decision_values": [
+    "keep_public",
+    "remove_from_public_navigation",
+    "consolidate",
+    "archive",
+    "rename",
+    "handoff_only",
+    "defer"
+  ],
+  "items": [
+    {
+      "path": "data/docs.json#ARTIFACT_CATALOG",
+      "current_public_discoverability": {
+        "from_data_docs_json": true,
+        "from_readme": false
+      },
+      "current_routing_action": "keep_public",
+      "review_category": [
+        "public_value_ambiguous",
+        "positioning_sensitive"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because AUDIT ARTIFACT CATALOG has high rename or routing sensitivity and categories: public_value_ambiguous, positioning_sensitive.",
+      "decision_question": "Should AUDIT ARTIFACT CATALOG remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Still public-facing through data/docs.json after 0.3."
+    },
+    {
+      "path": "data/docs.json#AUTHORITY_MODEL",
+      "current_public_discoverability": {
+        "from_data_docs_json": true,
+        "from_readme": false
+      },
+      "current_routing_action": "keep_public",
+      "review_category": [
+        "public_value_ambiguous",
+        "implementation_status_ambiguous",
+        "positioning_sensitive"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because AUTHORITY CONTROL MODEL has high rename or routing sensitivity and categories: public_value_ambiguous, implementation_status_ambiguous, positioning_sensitive.",
+      "decision_question": "Should AUTHORITY CONTROL MODEL remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Still public-facing through data/docs.json after 0.3."
+    },
+    {
+      "path": "data/docs.json#GATE_SPECIFICATIONS",
+      "current_public_discoverability": {
+        "from_data_docs_json": true,
+        "from_readme": false
+      },
+      "current_routing_action": "keep_public",
+      "review_category": [
+        "public_value_ambiguous",
+        "positioning_sensitive"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because GOVERNANCE GATE SPECIFICATIONS has high rename or routing sensitivity and categories: public_value_ambiguous, positioning_sensitive.",
+      "decision_question": "Should GOVERNANCE GATE SPECIFICATIONS remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Still public-facing through data/docs.json after 0.3."
+    },
+    {
+      "path": "data/docs.json#JOINT_SPECIFICATIONS",
+      "current_public_discoverability": {
+        "from_data_docs_json": true,
+        "from_readme": false
+      },
+      "current_routing_action": "keep_public",
+      "review_category": [
+        "public_value_ambiguous"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because JOINT HANDOFF SPECIFICATIONS has low rename or routing sensitivity and categories: public_value_ambiguous.",
+      "decision_question": "Should JOINT HANDOFF SPECIFICATIONS remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "rename",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Still public-facing through data/docs.json after 0.3."
+    },
+    {
+      "path": "data/docs.json#ORCHESTRATION_MANUAL",
+      "current_public_discoverability": {
+        "from_data_docs_json": true,
+        "from_readme": false
+      },
+      "current_routing_action": "keep_public",
+      "review_category": [
+        "public_value_ambiguous",
+        "positioning_sensitive"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because HUMAN CONTROL SURFACE has high rename or routing sensitivity and categories: public_value_ambiguous, positioning_sensitive.",
+      "decision_question": "Should HUMAN CONTROL SURFACE remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Still public-facing through data/docs.json after 0.3."
+    },
+    {
+      "path": "data/docs.json#PIPELINE_OVERVIEW",
+      "current_public_discoverability": {
+        "from_data_docs_json": true,
+        "from_readme": false
+      },
+      "current_routing_action": "keep_public",
+      "review_category": [
+        "public_value_ambiguous",
+        "implementation_status_ambiguous",
+        "positioning_sensitive"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because GOVERNED PROTOTYPE FLOW has high rename or routing sensitivity and categories: public_value_ambiguous, implementation_status_ambiguous, positioning_sensitive.",
+      "decision_question": "Should GOVERNED PROTOTYPE FLOW remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Still public-facing through data/docs.json after 0.3."
+    },
+    {
+      "path": "data/docs.json#VERSION_LIFECYCLE",
+      "current_public_discoverability": {
+        "from_data_docs_json": true,
+        "from_readme": false
+      },
+      "current_routing_action": "keep_public",
+      "review_category": [
+        "public_value_ambiguous",
+        "positioning_sensitive"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because VERSION AND RELEASE LIFECYCLE has high rename or routing sensitivity and categories: public_value_ambiguous, positioning_sensitive.",
+      "decision_question": "Should VERSION AND RELEASE LIFECYCLE remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Still public-facing through data/docs.json after 0.3."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "needs_operator_review",
+      "review_category": [
+        "claim_boundary_sensitive",
+        "positioning_sensitive",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because DIRECT UI MEMBRANE GALLERY DECISION has high rename or routing sensitivity and categories: claim_boundary_sensitive, positioning_sensitive, possible_public_navigation_candidate.",
+      "decision_question": "Should DIRECT UI MEMBRANE GALLERY DECISION remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "defer",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": false
+      },
+      "current_routing_action": "consolidate_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "positioning_sensitive",
+        "possible_consolidation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because Facade Reflection 0.1 Documentation Boundary has high rename or routing sensitivity and categories: architecture_identity_sensitive, positioning_sensitive, possible_consolidation_candidate.",
+      "decision_question": "Should Facade Reflection 0.1 Documentation Boundary remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Not currently public-facing through data/docs.json."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "claim_boundary_sensitive",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because DIRECT UI MEMBRANE VISUAL SPEC has high rename or routing sensitivity and categories: claim_boundary_sensitive, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should DIRECT UI MEMBRANE VISUAL SPEC remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": false
+      },
+      "current_routing_action": "needs_operator_review",
+      "review_category": [
+        "claim_boundary_sensitive",
+        "architecture_identity_sensitive",
+        "positioning_sensitive",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because Facade Reflection 0.6 Direct UI Membrane Visual Asset Index has high rename or routing sensitivity and categories: claim_boundary_sensitive, architecture_identity_sensitive, positioning_sensitive, possible_public_navigation_candidate.",
+      "decision_question": "Should Facade Reflection 0.6 Direct UI Membrane Visual Asset Index remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "defer",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Not currently public-facing through data/docs.json."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "claim_boundary_sensitive",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because DIRECT UI MEMBRANE IA TAXONOMY has high rename or routing sensitivity and categories: claim_boundary_sensitive, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should DIRECT UI MEMBRANE IA TAXONOMY remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "claim_boundary_sensitive",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because DIRECT UI MEMBRANE FLOW SPEC has high rename or routing sensitivity and categories: claim_boundary_sensitive, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should DIRECT UI MEMBRANE FLOW SPEC remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "needs_operator_review",
+      "review_category": [
+        "claim_boundary_sensitive",
+        "positioning_sensitive",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because DIRECT UI MEMBRANE COPY AUDIT has high rename or routing sensitivity and categories: claim_boundary_sensitive, positioning_sensitive, possible_public_navigation_candidate.",
+      "decision_question": "Should DIRECT UI MEMBRANE COPY AUDIT remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "defer",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "needs_operator_review",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E READINESS GATE has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E READINESS GATE remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "defer",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E ARCHITECTURE BASELINE has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E ARCHITECTURE BASELINE remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E DATA BOUNDARY REGISTER has high rename or routing sensitivity and categories: architecture_identity_sensitive, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E DATA BOUNDARY REGISTER remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E SERVICE TIER MATRIX has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E SERVICE TIER MATRIX remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E AUTH TENANT MATRIX has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E AUTH TENANT MATRIX remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E PERSISTENCE AUDIT PLANNING has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E PERSISTENCE AUDIT PLANNING remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E DATABASE RLS PLANNING has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E DATABASE RLS PLANNING remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E AUDIT EVENT DRAFT has high rename or routing sensitivity and categories: architecture_identity_sensitive, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E AUDIT EVENT DRAFT remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E SECRETS KEY PLANNING has high rename or routing sensitivity and categories: architecture_identity_sensitive, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E SECRETS KEY PLANNING remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": true
+      },
+      "current_routing_action": "remove_from_public_navigation_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_consolidation_candidate",
+        "possible_public_navigation_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because OPTION E BILLING STRIPE PLANNING has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_consolidation_candidate, possible_public_navigation_candidate.",
+      "decision_question": "Should OPTION E BILLING STRIPE PLANNING remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Removed from public navigation in 0.3; underlying file remains preserved."
+    },
+    {
+      "path": "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md",
+      "current_public_discoverability": {
+        "from_data_docs_json": false,
+        "from_readme": false
+      },
+      "current_routing_action": "archive_later",
+      "review_category": [
+        "architecture_identity_sensitive",
+        "implementation_status_ambiguous",
+        "positioning_sensitive",
+        "possible_archive_candidate"
+      ],
+      "why_operator_review_is_required": "Operator decision is required because Track 3.16 Post-Commit Import Readiness has high rename or routing sensitivity and categories: architecture_identity_sensitive, implementation_status_ambiguous, positioning_sensitive, possible_archive_candidate.",
+      "decision_question": "Should Track 3.16 Post-Commit Import Readiness remain public-facing later, be renamed, be consolidated into a rollup, archived, or deferred?",
+      "default_recommendation": "consolidate",
+      "allowed_operator_decisions": [
+        "keep_public",
+        "remove_from_public_navigation",
+        "consolidate",
+        "archive",
+        "rename",
+        "handoff_only",
+        "defer"
+      ],
+      "blocked_without_operator_decision": true,
+      "destructive_action_allowed_now": false,
+      "notes": "Not currently public-facing through data/docs.json."
+    }
+  ],
+  "documents_requiring_operator_decision_before_archive_move_consolidation": [
+    "data/docs.json#ARTIFACT_CATALOG",
+    "data/docs.json#AUTHORITY_MODEL",
+    "data/docs.json#GATE_SPECIFICATIONS",
+    "data/docs.json#JOINT_SPECIFICATIONS",
+    "data/docs.json#ORCHESTRATION_MANUAL",
+    "data/docs.json#PIPELINE_OVERVIEW",
+    "data/docs.json#VERSION_LIFECYCLE",
+    "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+    "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+    "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+    "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+    "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+    "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+    "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+    "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+    "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+    "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+    "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+    "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+    "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+    "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+    "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+    "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+    "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+    "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md"
+  ],
+  "documents_not_to_touch_without_operator_decision": [
+    "data/docs.json#ARTIFACT_CATALOG",
+    "data/docs.json#AUTHORITY_MODEL",
+    "data/docs.json#GATE_SPECIFICATIONS",
+    "data/docs.json#JOINT_SPECIFICATIONS",
+    "data/docs.json#ORCHESTRATION_MANUAL",
+    "data/docs.json#PIPELINE_OVERVIEW",
+    "data/docs.json#VERSION_LIFECYCLE",
+    "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+    "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+    "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+    "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+    "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+    "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+    "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+    "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+    "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+    "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+    "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+    "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+    "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+    "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+    "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+    "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+    "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+    "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md"
+  ],
+  "safest_future_consolidation_candidates": [
+    {
+      "path": "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    },
+    {
+      "path": "docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    },
+    {
+      "path": "docs/TRACK_3_CONTRACT_INVARIANTS.md",
+      "routing_action": "keep_public_but_rename_later",
+      "reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels."
+    },
+    {
+      "path": "docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    },
+    {
+      "path": "docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    },
+    {
+      "path": "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md",
+      "routing_action": "keep_public_but_rename_later",
+      "reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels."
+    },
+    {
+      "path": "docs/TRACK_3_VALIDATION_HARNESS.md",
+      "routing_action": "keep_public_but_rename_later",
+      "reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md",
+      "routing_action": "keep_public_but_rename_later",
+      "reason": "The content has public value, but its title or filename should be reviewed because it exposes track/process naming or operationally loaded labels."
+    },
+    {
+      "path": "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md",
+      "routing_action": "consolidate_later",
+      "reason": "Useful stable content should be extracted into a canonical rollup or architecture artifact before duplicate process documents remain public-facing."
+    }
+  ],
+  "documents_to_replace_by_canonical_rollup_rather_than_rename_individually": [
+    "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+    "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+    "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+    "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+    "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+    "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+    "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+    "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+    "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+    "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+    "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+    "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+    "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+    "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+    "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+    "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+    "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+    "docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md",
+    "docs/TRACK_3_CONTRACT_FREEZE_V1.md",
+    "docs/TRACK_3_CONTRACT_INVARIANTS.md",
+    "docs/TRACK_3_FIXTURE_SUITE.md",
+    "docs/TRACK_3_IMPORT_ADAPTER_PREFLIGHT.md",
+    "docs/TRACK_3_IMPORT_ENVIRONMENT_PREFLIGHT.md",
+    "docs/TRACK_3_INTERFACE_CONTRACTS.md",
+    "docs/TRACK_3_LOCAL_FIXTURE_RUNTIME.md",
+    "docs/TRACK_3_LOCAL_NEXUS_IMPORT_ADAPTER.md",
+    "docs/TRACK_3_LOCAL_REPORT_EXPORT_BUNDLE.md",
+    "docs/TRACK_3_MULTI_VAULT_COMPATIBILITY_EVALUATION_HARNESS_STUB.md",
+    "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md",
+    "docs/TRACK_3_NEXUS_ADAPTER_MISMATCH_TESTS.md",
+    "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_STUB.md",
+    "docs/TRACK_3_NEXUS_ADAPTER_NORMALIZER_SUITE.md",
+    "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_CATEGORY_COMPLETION.md",
+    "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_FAILURE_INJECTION.md",
+    "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REGRESSION_SUITE.md",
+    "docs/TRACK_3_NEXUS_IMPORT_ADAPTER_REPORT_CONTRACT.md",
+    "docs/TRACK_3_NEXUS_MVP_VERIFICATION.md",
+    "docs/TRACK_3_NEXUS_SOURCE_PIN_RESOLUTION.md",
+    "docs/TRACK_3_PINNED_NEXUS_SOURCE_PREFLIGHT.md",
+    "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md",
+    "docs/TRACK_3_SCHEMA_ALIGNMENT.md",
+    "docs/TRACK_3_VALIDATION_HARNESS.md",
+    "docs/TRACK_3_VAULT_CANDIDATE_INTAKE_GATE_STUB.md",
+    "docs/TRACK_3_VAULT_COMPATIBILITY_EVIDENCE_PACKET_CONTRACT.md",
+    "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION.md",
+    "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_FAILURE_INJECTION_REPORT_CONTRACT.md",
+    "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_REPORT_CONTRACT.md",
+    "docs/TRACK_3_VAULT_COMPATIBILITY_PIPELINE_STUB.md"
+  ],
+  "legitimate_public_architecture_artifacts": [
+    {
+      "path": "README.md",
+      "title_or_label": "GOVERNANCE ARCHITECTURE MAP",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#AUTHORITY_MODEL",
+      "title_or_label": "AUTHORITY CONTROL MODEL",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#VERSION_LIFECYCLE",
+      "title_or_label": "VERSION AND RELEASE LIFECYCLE",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#FREEZE_SEMANTICS",
+      "title_or_label": "FREEZE AND ESCALATION SEMANTICS",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#PIPELINE_OVERVIEW",
+      "title_or_label": "GOVERNED PROTOTYPE FLOW",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#JOINT_SPECIFICATIONS",
+      "title_or_label": "JOINT HANDOFF SPECIFICATIONS",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#GATE_SPECIFICATIONS",
+      "title_or_label": "GOVERNANCE GATE SPECIFICATIONS",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#ORCHESTRATION_MANUAL",
+      "title_or_label": "HUMAN CONTROL SURFACE",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#ARTIFACT_CATALOG",
+      "title_or_label": "AUDIT ARTIFACT CATALOG",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#PROTOCOL_CATALOG",
+      "title_or_label": "RISK PROTOCOL CATALOG",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#TEMPLATE_INDEX",
+      "title_or_label": "CONTROL TEMPLATE INDEX",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#SCHEMA_DEFINITIONS_OVERVIEW",
+      "title_or_label": "SCHEMA TRACEABILITY MODEL",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    },
+    {
+      "path": "data/docs.json#DELTA_BRIEF",
+      "title_or_label": "DELTA BRIEF RECORD",
+      "reason": "Still present in data/docs.json after 0.3 pruning."
+    }
+  ],
+  "blocked_until_operator_decision": [
+    "data/docs.json#ARTIFACT_CATALOG",
+    "data/docs.json#AUTHORITY_MODEL",
+    "data/docs.json#GATE_SPECIFICATIONS",
+    "data/docs.json#JOINT_SPECIFICATIONS",
+    "data/docs.json#ORCHESTRATION_MANUAL",
+    "data/docs.json#PIPELINE_OVERVIEW",
+    "data/docs.json#VERSION_LIFECYCLE",
+    "docs/FACADE_REFLECTION_0_10_STATIC_CONCEPT_GALLERY_DECISION.md",
+    "docs/FACADE_REFLECTION_0_1_DOCUMENTATION_BOUNDARY.md",
+    "docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md",
+    "docs/FACADE_REFLECTION_0_6_DIRECT_UI_MEMBRANE_VISUAL_ASSET_INDEX.md",
+    "docs/FACADE_REFLECTION_0_7_DIRECT_UI_MEMBRANE_IA_SURFACE_TAXONOMY.md",
+    "docs/FACADE_REFLECTION_0_8_DIRECT_UI_MEMBRANE_INTERACTION_FLOW_SPEC.md",
+    "docs/FACADE_REFLECTION_0_9_DIRECT_UI_MEMBRANE_COPY_BOUNDARY_AUDIT.md",
+    "docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md",
+    "docs/OPTION_E_0_1_BACKEND_PERSISTENCE_AUTH_ARCHITECTURE_BASELINE.md",
+    "docs/OPTION_E_0_2_THREAT_MODEL_DATA_BOUNDARY_REGISTER.md",
+    "docs/OPTION_E_0_3_BACKEND_SERVICE_TIER_DECISION_MATRIX.md",
+    "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+    "docs/OPTION_E_0_5_PERSISTENCE_AUDIT_LOG_SCHEMA_PLANNING.md",
+    "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md",
+    "docs/OPTION_E_0_7_AUDIT_LOG_EVENT_CONTRACT_DRAFT.md",
+    "docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md",
+    "docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md",
+    "docs/TRACK_3_POST_COMMIT_IMPORT_READINESS.md"
+  ]
+}

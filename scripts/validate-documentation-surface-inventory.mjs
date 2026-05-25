@@ -66,7 +66,11 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/documentation-surface-routing-plan.v1.json",
   "scripts/validate-documentation-surface-routing-plan.mjs",
   "data/documentation-public-navigation-pruning.v1.json",
-  "scripts/validate-documentation-public-navigation-pruning.mjs"
+  "scripts/validate-documentation-public-navigation-pruning.mjs",
+  "data/documentation-operator-review-queue.v1.json",
+  "scripts/validate-documentation-operator-review-queue.mjs",
+  "data/documentation-rename-risk-register.v1.json",
+  "scripts/validate-documentation-rename-risk-register.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);
