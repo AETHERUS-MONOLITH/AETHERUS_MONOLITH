@@ -7,6 +7,12 @@
   "qa_hardening_status": "boundary_hardened_static_shell",
   "latest_content_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.3",
   "content_refinement_status": "surface_cards_refined",
+  "linked_interactive_workspace": {
+    "href": "workspace.html",
+    "label": "Enter Preview Workspace",
+    "object_status": "unauthenticated_interactive_preview_workspace",
+    "birth_condition_met_by_workspace": true
+  },
   "section": "§1.2 Direct UI Membrane",
   "birth_condition_not_met": true,
   "why_birth_condition_not_met": [
@@ -21,7 +27,9 @@
     "css/style.css",
     "index.html",
     "data/direct-ui-membrane-static-shell-qa.v0.json",
-    "data/direct-ui-membrane-static-shell-content.v0.json"
+    "data/direct-ui-membrane-static-shell-content.v0.json",
+    "workspace.html",
+    "js/preview-workspace.js"
   ],
   "navigation_update": {
     "file": "index.html",

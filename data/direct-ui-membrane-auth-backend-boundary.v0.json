@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Birth — Parallel Auth/Backend Boundary 0.1",
+  "baseline_commit": "a218be2c3e597809593040facc71dcf18fe6873f",
+  "purpose": "Define the immediate next boundary from unauthenticated preview workspace to authenticated shell and backend/auth/persistence direction",
+  "implementation_status": {
+    "auth": "not_implemented",
+    "backend": "not_implemented",
+    "database": "not_implemented",
+    "persistence": "not_implemented",
+    "tenant_isolation": "not_implemented",
+    "billing": "not_implemented"
+  },
+  "next_step_architecture": {
+    "auth_surface": "email_password_baseline_with_mfa_direction",
+    "backend_boundary": "server_side_authorization_required_before_persistence",
+    "database_boundary": "RLS_required_before_tenant_data",
+    "persistence_boundary": "no_user_or_tenant_data_persistence_until_auth_and_rls_boundary_exists",
+    "audit_boundary": "audit_log_contract_required_before_persistent_review_actions"
+  },
+  "must_not_rebuild_preview_later": true,
+  "preview_to_authenticated_shell_requirements": [
+    "route structure can accept authenticated workspace later",
+    "surface model remains stable",
+    "preview state remains separate from future persisted state",
+    "controls use bounded naming compatible with later authorization",
+    "no fake auth placeholder pretending to function"
+  ],
+  "blocked_until_separately_authorized": [
+    "auth implementation",
+    "backend implementation",
+    "database implementation",
+    "persistence implementation",
+    "tenant isolation implementation",
+    "billing implementation"
+  ]
+}

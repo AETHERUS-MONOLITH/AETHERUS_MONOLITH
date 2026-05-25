@@ -1,0 +1,74 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Birth — Unauthenticated Interactive Preview Workspace 0.1",
+  "baseline_commit": "a218be2c3e597809593040facc71dcf18fe6873f",
+  "object_status": "unauthenticated_interactive_preview_workspace",
+  "section": "§1.2 Direct UI Membrane",
+  "birth_condition_met": true,
+  "birth_condition_met_by": "unauthenticated_interactive_surface",
+  "authenticated_shell_born": false,
+  "backend_born": false,
+  "persistence_born": false,
+  "tenant_system_born": false,
+  "first_journey": "Visitor opens Direct UI Membrane, sees conceptual surfaces, and enters a controlled preview workspace.",
+  "surfaces_represented": [
+    "Access Boundary Membrane",
+    "Workspace Control Surface",
+    "Evidence / Artifact Review Surface",
+    "Release Review Chamber",
+    "Escalation Review Surface"
+  ],
+  "workspace_files": [
+    "workspace.html",
+    "js/preview-workspace.js",
+    "css/style.css",
+    "membrane.html"
+  ],
+  "allowed_interactions": [
+    "surface_selection",
+    "preview_panel_switching",
+    "boundary_inspection",
+    "transient_in_memory_preview_state",
+    "preview_reset"
+  ],
+  "forbidden_capabilities_absent": [
+    "auth",
+    "login",
+    "signup",
+    "account_creation",
+    "forms",
+    "backend",
+    "database",
+    "persistence",
+    "local_storage",
+    "session_storage",
+    "cookies",
+    "billing",
+    "tenant_infrastructure",
+    "palisade",
+    "weave",
+    "public_nexus_runtime",
+    "model_api_calls",
+    "operational_dashboard",
+    "runtime_monitoring",
+    "customer_data"
+  ],
+  "claim_boundary": {
+    "claimable": [
+      "unauthenticated interactive preview workspace exists",
+      "Direct UI Membrane has first real interactive surface",
+      "preview interactions are browser-side and non-persistent"
+    ],
+    "not_claimable": [
+      "authenticated dashboard exists",
+      "backend exists",
+      "persistence exists",
+      "tenant isolation exists",
+      "customer workspace exists",
+      "public NEXUS runtime exists",
+      "Palisade exists",
+      "Weave exists",
+      "production SaaS exists"
+    ]
+  }
+}
