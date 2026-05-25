@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0",
+  "generated_for_sub_pass": "Documentation Architecture Correction 0.5",
+  "baseline_commit": "3e9402f8a6246363ce06ed6002517224a3c0027b",
+  "source_rename_risk_register": "data/documentation-rename-risk-register.v1.json",
+  "source_operator_review_queue": "data/documentation-operator-review-queue.v1.json",
+  "source_routing_plan": "data/documentation-surface-routing-plan.v1.json",
+  "source_pruning_report": "data/documentation-public-navigation-pruning.v1.json",
+  "target_registry": "data/docs.json",
+  "purpose": "Decision and audit record for risky public registry labels",
+  "scope": "public registry labels only",
+  "no_file_rename_authorized": true,
+  "no_document_rewrite_authorized": true,
+  "no_public_navigation_addition_authorized": true,
+  "no_public_navigation_removal_authorized": true,
+  "items": [
+    {
+      "registry_id": "ARTIFACT_CATALOG",
+      "old_label": "AUDIT ARTIFACT CATALOG",
+      "path": "data/docs.json#ARTIFACT_CATALOG",
+      "current_public_status": "public_via_data_docs_json",
+      "risk_dimensions": [
+        "operational_maturity_implication"
+      ],
+      "decision": "safe_label_patch_now",
+      "new_label": "EVIDENCE INDEX",
+      "patch_applied": true,
+      "reason": "The entry remains useful as public registry evidence, but the old label could imply a complete authoritative artifact system. The replacement keeps the public object bounded as an index.",
+      "operator_review_required": false,
+      "operator_review_source_status": "listed_in_0_4_queue; resolved_by_0_5_label_only_authorization",
+      "registry_body_inline": true,
+      "underlying_file_renamed": false,
+      "underlying_document_rewritten": false
+    },
+    {
+      "registry_id": "AUTHORITY_MODEL",
+      "old_label": "AUTHORITY CONTROL MODEL",
+      "path": "data/docs.json#AUTHORITY_MODEL",
+      "current_public_status": "public_via_data_docs_json",
+      "risk_dimensions": [
+        "implementation_implication",
+        "operational_maturity_implication"
+      ],
+      "decision": "safe_label_patch_now",
+      "new_label": "AUTHORITY BOUNDARY MODEL",
+      "patch_applied": true,
+      "reason": "The entry remains a legitimate public governance concept, but the old label could overstate active control or implementation maturity. The replacement emphasizes boundary modeling.",
+      "operator_review_required": false,
+      "operator_review_source_status": "listed_in_0_4_queue; resolved_by_0_5_label_only_authorization",
+      "registry_body_inline": true,
+      "underlying_file_renamed": false,
+      "underlying_document_rewritten": false
+    },
+    {
+      "registry_id": "GATE_SPECIFICATIONS",
+      "old_label": "GOVERNANCE GATE SPECIFICATIONS",
+      "path": "data/docs.json#GATE_SPECIFICATIONS",
+      "current_public_status": "public_via_data_docs_json",
+      "risk_dimensions": [
+        "operational_maturity_implication"
+      ],
+      "decision": "safe_label_patch_now",
+      "new_label": "GOVERNANCE CHECKPOINT SPECIFICATIONS",
+      "patch_applied": true,
+      "reason": "The entry remains useful as a conceptual checkpoint specification, but the old label could read like operational enforcement. The replacement softens the public label without changing the modeled object.",
+      "operator_review_required": false,
+      "operator_review_source_status": "listed_in_0_4_queue; resolved_by_0_5_label_only_authorization",
+      "registry_body_inline": true,
+      "underlying_file_renamed": false,
+      "underlying_document_rewritten": false
+    },
+    {
+      "registry_id": "ORCHESTRATION_MANUAL",
+      "old_label": "HUMAN CONTROL SURFACE",
+      "path": "data/docs.json#ORCHESTRATION_MANUAL",
+      "current_public_status": "public_via_data_docs_json",
+      "risk_dimensions": [
+        "operational_maturity_implication"
+      ],
+      "decision": "safe_label_patch_now",
+      "new_label": "HUMAN REVIEW BOUNDARY",
+      "patch_applied": true,
+      "reason": "The registry entry can remain public as a planned interface direction, but the old label could imply an active operational surface. The replacement keeps the label at review-boundary status.",
+      "operator_review_required": false,
+      "operator_review_source_status": "listed_in_0_4_queue; resolved_by_0_5_label_only_authorization",
+      "registry_body_inline": true,
+      "underlying_file_renamed": false,
+      "underlying_document_rewritten": false
+    },
+    {
+      "registry_id": "PIPELINE_OVERVIEW",
+      "old_label": "GOVERNED PROTOTYPE FLOW",
+      "path": "data/docs.json#PIPELINE_OVERVIEW",
+      "current_public_status": "public_via_data_docs_json",
+      "risk_dimensions": [
+        "runtime_implication",
+        "evidence_wall_effect"
+      ],
+      "decision": "safe_label_patch_now",
+      "new_label": "SCENARIO GOVERNANCE FLOW",
+      "patch_applied": true,
+      "reason": "The entry remains useful as a public scenario-level explanation, but the old label could imply a broader prototype runtime. The replacement narrows the label to scenario governance.",
+      "operator_review_required": false,
+      "operator_review_source_status": "listed_in_0_4_queue; resolved_by_0_5_label_only_authorization",
+      "registry_body_inline": true,
+      "underlying_file_renamed": false,
+      "underlying_document_rewritten": false
+    },
+    {
+      "registry_id": "VERSION_LIFECYCLE",
+      "old_label": "VERSION AND RELEASE LIFECYCLE",
+      "path": "data/docs.json#VERSION_LIFECYCLE",
+      "current_public_status": "public_via_data_docs_json",
+      "risk_dimensions": [
+        "operational_maturity_implication"
+      ],
+      "decision": "safe_label_patch_now",
+      "new_label": "VERSIONING BOUNDARY NOTES",
+      "patch_applied": true,
+      "reason": "The entry remains useful as a public governance note, but the old label could imply mature release-management operation. The replacement frames the content as versioning boundary notes.",
+      "operator_review_required": false,
+      "operator_review_source_status": "listed_in_0_4_queue; resolved_by_0_5_label_only_authorization",
+      "registry_body_inline": true,
+      "underlying_file_renamed": false,
+      "underlying_document_rewritten": false
+    }
+  ],
+  "summary": {
+    "labels_reviewed": 6,
+    "labels_patched": 6,
+    "operator_decision_required": 0,
+    "removed_from_navigation": 0,
+    "files_renamed": 0,
+    "documents_rewritten": 0,
+    "paths_or_hrefs_changed": false,
+    "risky_labels_still_public_after_patch": []
+  }
+}
