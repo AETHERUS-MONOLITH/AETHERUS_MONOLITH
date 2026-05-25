@@ -3,6 +3,8 @@
   "generated_for_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.1",
   "baseline_commit": "3ba6c5c110e10b468923ce853c645bc4e0636675",
   "object_status": "static_pre_birth_preview_shell",
+  "latest_qa_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.2",
+  "qa_hardening_status": "boundary_hardened_static_shell",
   "section": "§1.2 Direct UI Membrane",
   "birth_condition_not_met": true,
   "why_birth_condition_not_met": [
@@ -15,7 +17,8 @@
   "static_shell_files": [
     "membrane.html",
     "css/style.css",
-    "index.html"
+    "index.html",
+    "data/direct-ui-membrane-static-shell-qa.v0.json"
   ],
   "navigation_update": {
     "file": "index.html",
@@ -70,5 +73,15 @@
     "fake_metrics",
     "runtime_monitoring",
     "customer_dashboard"
+  ],
+  "qa_hardening_checks": [
+    "desktop_layout_reviewed",
+    "mobile_layout_reviewed",
+    "navigation_reaches_static_preview",
+    "required_boundary_copy_visible",
+    "no_forms_or_active_buttons",
+    "no_horizontal_overflow_observed",
+    "no_console_errors_observed",
+    "validator_forbidden_label_scan_strengthened"
   ]
 }

@@ -1893,7 +1893,7 @@ main {
 
 .membrane-layout {
   display: grid;
-  grid-template-columns: minmax(190px, 0.28fr) minmax(0, 1fr) minmax(220px, 0.34fr);
+  grid-template-columns: minmax(180px, 0.24fr) minmax(0, 1fr) minmax(210px, 0.3fr);
   gap: 12px;
   align-items: stretch;
 }
@@ -1955,13 +1955,13 @@ main {
 
 .membrane-surface-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 10px;
 }
 
 .membrane-surface-card {
   --surface-accent: var(--blue);
-  min-height: 350px;
+  min-height: 310px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -2197,6 +2197,11 @@ main {
 
   .membrane-surface-card {
     min-height: 0;
+  }
+
+  .membrane-status-strip span,
+  .membrane-static-label {
+    max-width: 100%;
   }
 
   .compact-controls {

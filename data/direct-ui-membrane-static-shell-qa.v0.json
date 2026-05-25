@@ -1,0 +1,82 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.2",
+  "baseline_commit": "799ada826b47b44e615ad0b772ceedb4a3d0bd22",
+  "object_status": "static_pre_birth_preview_shell_hardened",
+  "birth_condition_not_met": true,
+  "qa_scope": [
+    "copy_boundary",
+    "layout",
+    "responsive_behavior",
+    "visual_continuity",
+    "forbidden_label_scan",
+    "navigation_placement",
+    "accessibility_basics"
+  ],
+  "findings": [
+    {
+      "area": "desktop_layout",
+      "finding": "Five-column surface layout rendered all concept cards but made individual cards too narrow on desktop.",
+      "severity": "medium",
+      "resolved": true
+    },
+    {
+      "area": "copy_boundary",
+      "finding": "Required static-preview and no-runtime boundary copy was present and visible near the page introduction.",
+      "severity": "low",
+      "resolved": true
+    },
+    {
+      "area": "responsive_behavior",
+      "finding": "Mobile layout stacked cards without horizontal overflow; boundary chips wrapped cleanly.",
+      "severity": "low",
+      "resolved": true
+    },
+    {
+      "area": "runtime_boundary",
+      "finding": "No forms, active buttons, runtime hooks, persistence strings, or console errors were observed on the static shell.",
+      "severity": "low",
+      "resolved": true
+    }
+  ],
+  "changes_applied": [
+    "Changed the membrane surface grid to auto-fit wider concept cards instead of forcing five narrow desktop columns.",
+    "Reduced static card minimum height after widening cards to keep the page dense without fake dashboard metrics.",
+    "Strengthened the static shell validator for QA report parsing, forbidden label scans, form/button bans, runtime hook bans, and public docs registry promotion checks.",
+    "Recorded the 0.2 boundary-hardening state in the static shell record."
+  ],
+  "visual_verification": {
+    "membrane_html_renders": true,
+    "navigation_reaches_page": true,
+    "five_surfaces_visible": true,
+    "required_boundary_copy_visible": true,
+    "mobile_viewport_usable": true,
+    "console_errors": false,
+    "horizontal_overflow": false,
+    "forms_buttons_or_runtime_hooks": false
+  },
+  "forbidden_capabilities_absent": [
+    "auth",
+    "login",
+    "signup",
+    "forms",
+    "backend",
+    "database",
+    "persistence",
+    "billing",
+    "tenant_infrastructure",
+    "palisade",
+    "weave",
+    "public_nexus_runtime",
+    "model_api_calls",
+    "operational_dashboard",
+    "runtime_monitoring"
+  ],
+  "surfaces_verified": [
+    "Access Boundary Membrane",
+    "Workspace Control Surface",
+    "Evidence / Artifact Review Surface",
+    "Release Review Chamber",
+    "Escalation Review Surface"
+  ]
+}
