@@ -72,7 +72,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/documentation-rename-risk-register.v1.json",
   "scripts/validate-documentation-rename-risk-register.mjs",
   "data/documentation-public-registry-label-decision.v1.json",
-  "scripts/validate-documentation-public-registry-label-decision.mjs"
+  "scripts/validate-documentation-public-registry-label-decision.mjs",
+  "data/direct-ui-membrane-static-shell.v0.json",
+  "scripts/validate-direct-ui-membrane-static-shell.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

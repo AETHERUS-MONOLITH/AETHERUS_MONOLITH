@@ -1,0 +1,74 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Pre-Birth Static Membrane Shell 0.1",
+  "baseline_commit": "3ba6c5c110e10b468923ce853c645bc4e0636675",
+  "object_status": "static_pre_birth_preview_shell",
+  "section": "§1.2 Direct UI Membrane",
+  "birth_condition_not_met": true,
+  "why_birth_condition_not_met": [
+    "no authentication",
+    "no interactive user account surface",
+    "no backend",
+    "no persistence",
+    "no operational workflow execution"
+  ],
+  "static_shell_files": [
+    "membrane.html",
+    "css/style.css",
+    "index.html"
+  ],
+  "navigation_update": {
+    "file": "index.html",
+    "label": "Static Membrane Preview",
+    "href": "membrane.html",
+    "bounded_as_conceptual_preview": true
+  },
+  "surfaces_represented": [
+    "Access Boundary Membrane",
+    "Workspace Control Surface",
+    "Evidence / Artifact Review Surface",
+    "Release Review Chamber",
+    "Escalation Review Surface"
+  ],
+  "forbidden_capabilities_absent": [
+    "auth",
+    "backend",
+    "database",
+    "persistence",
+    "billing",
+    "tenant_infrastructure",
+    "palisade",
+    "weave",
+    "public_nexus_runtime",
+    "model_api_calls",
+    "operational_dashboard"
+  ],
+  "public_copy_boundary": {
+    "static_preview": true,
+    "conceptual_interface_scaffold": true,
+    "no_authentication": true,
+    "no_backend": true,
+    "no_persistence": true,
+    "no_live_ai_execution": true,
+    "no_public_nexus_runtime": true,
+    "no_operational_release_authority": true,
+    "no_compliance_certification": true,
+    "no_customer_data": true
+  },
+  "non_authorized_capabilities": [
+    "login_form",
+    "signup_form",
+    "password_fields",
+    "mfa",
+    "session_management",
+    "api_calls",
+    "model_calls",
+    "nexus_execution",
+    "local_storage",
+    "session_storage",
+    "cookies",
+    "fake_metrics",
+    "runtime_monitoring",
+    "customer_dashboard"
+  ]
+}
