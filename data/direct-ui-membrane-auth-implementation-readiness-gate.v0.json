@@ -1,0 +1,115 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Authenticated Shell Architecture 0.2 — Auth Implementation Readiness Gate",
+  "baseline_commit": "60cd7044000d82ed33a1dda9ae6131a9db4847e4",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "auth_implementation_readiness_gate",
+  "readiness_verdict": "backend_first_required_before_auth_ui",
+  "auth_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "backend_implemented": false,
+  "database_implemented": false,
+  "persistence_implemented": false,
+  "tenant_isolation_implemented": false,
+  "billing_implemented": false,
+  "customer_workspace_implemented": false,
+  "current_routes": {
+    "public_entry": "index.html",
+    "direct_ui_membrane_static_preview": "membrane.html",
+    "unauthenticated_preview_workspace": "workspace.html",
+    "reserved_auth_boundary": "auth-boundary.html"
+  },
+  "future_authenticated_routes": {
+    "authenticated_shell": "/app",
+    "workspace": "/app/workspace",
+    "settings": "/app/settings",
+    "billing": "/app/billing",
+    "admin": "/app/admin"
+  },
+  "selected_or_recommended_path": {
+    "primary": "backend_first_required_before_auth_ui",
+    "secondary_candidate": "supabase_candidate_selected_for_next_evaluation",
+    "alternatives_recorded": [
+      "auth_provider_selection_required",
+      "clerk_candidate_selected_for_next_evaluation",
+      "custom_auth_deferred"
+    ],
+    "rejected_for_now": [
+      "static_fake_login",
+      "custom_auth_without_security_review",
+      "client_only_auth",
+      "credential_capture_without_backend"
+    ],
+    "reasoning": [
+      "The current site is static and has no server-side authorization boundary.",
+      "A truthful SaaS auth path requires backend session verification before any credential capture.",
+      "Supabase remains a candidate for later evaluation because auth, Postgres, and RLS can align with tenant isolation discipline.",
+      "No provider, package, credential, secret, or runtime integration is introduced in this pass."
+    ]
+  },
+  "minimum_backend_boundary_before_real_login": [
+    "server-side auth session verification",
+    "server-side authorization boundary",
+    "environment variable strategy",
+    "no secrets in static client",
+    "protected route enforcement",
+    "audit event contract for auth events",
+    "rate-limit and abuse consideration",
+    "MFA path decision before production auth"
+  ],
+  "minimum_database_boundary_before_persistence": [
+    "Postgres or equivalent managed database decision",
+    "RLS discipline before tenant data",
+    "tenant_id scoping model",
+    "migration strategy",
+    "audit log separation from application logs",
+    "no customer data until tenant boundary exists"
+  ],
+  "data_that_must_not_persist_yet": [
+    "user credentials",
+    "email addresses",
+    "tenant identifiers",
+    "customer workspace content",
+    "review actions",
+    "release decisions",
+    "escalation notes",
+    "NEXUS outputs",
+    "audit logs claiming immutability"
+  ],
+  "validator_guardrails_required": [
+    "no login or signup form before backend boundary exists",
+    "no credential fields before auth provider and backend are selected",
+    "no local_storage or session_storage persistence",
+    "no API calls without backend contract",
+    "no tenant or customer copy before tenant boundary exists",
+    "no dashboard claim before authenticated shell is born"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Backend/Auth Boundary 0.1 — Stack Decision Matrix",
+    "purpose": "Select the backend/auth/persistence stack boundary before login UI implementation.",
+    "must_not_implement": [
+      "real login",
+      "credential capture",
+      "database persistence",
+      "tenant isolation"
+    ]
+  },
+  "claimable_after_this_pass": [
+    "auth implementation readiness gate exists",
+    "auth route boundary remains reserved",
+    "backend/auth/persistence requirements are defined before real login"
+  ],
+  "not_claimable_after_this_pass": [
+    "login exists",
+    "signup exists",
+    "authenticated shell exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ]
+}
