@@ -115,6 +115,21 @@
     "persistence_direction": "no persistence until auth and RLS boundary are explicitly implemented",
     "audit_direction": "auth and workspace audit events require separate contract before persistence"
   },
+  "supabase_project_boundary": {
+    "path": "data/direct-ui-membrane-supabase-project-boundary.v0.json",
+    "object_status": "supabase_project_boundary_contract",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "supabase_project_created": false,
+    "supabase_dependency_installed": false,
+    "auth_implemented": false,
+    "backend_implemented": false,
+    "database_schema_implemented": false,
+    "persistence_implemented": false,
+    "rls_implemented": false,
+    "tenant_isolation_implemented": false,
+    "customer_workspace_implemented": false
+  },
   "preconditions_before_real_login_ui": [
     "project environment strategy defined",
     "no secrets in static client",

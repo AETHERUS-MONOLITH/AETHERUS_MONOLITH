@@ -40,6 +40,21 @@
     "persistence_remains_not_implemented": true,
     "tenant_isolation_remains_not_implemented": true
   },
+  "supabase_project_boundary": {
+    "path": "data/direct-ui-membrane-supabase-project-boundary.v0.json",
+    "object_status": "supabase_project_boundary_contract",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "supabase_project_created": false,
+    "supabase_dependency_installed": false,
+    "auth_implemented": false,
+    "backend_implemented": false,
+    "database_schema_implemented": false,
+    "persistence_implemented": false,
+    "rls_implemented": false,
+    "tenant_isolation_implemented": false,
+    "customer_workspace_implemented": false
+  },
   "next_step_architecture": {
     "auth_surface": "email_password_baseline_with_mfa_direction",
     "backend_boundary": "server_side_authorization_required_before_persistence",

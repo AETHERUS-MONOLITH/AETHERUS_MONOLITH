@@ -106,6 +106,21 @@
     "persistence_implemented": false,
     "tenant_isolation_implemented": false
   },
+  "supabase_project_boundary": {
+    "path": "data/direct-ui-membrane-supabase-project-boundary.v0.json",
+    "object_status": "supabase_project_boundary_contract",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "supabase_project_created": false,
+    "supabase_dependency_installed": false,
+    "auth_implemented": false,
+    "backend_implemented": false,
+    "database_schema_implemented": false,
+    "persistence_implemented": false,
+    "rls_implemented": false,
+    "tenant_isolation_implemented": false,
+    "customer_workspace_implemented": false
+  },
   "claimable_after_this_pass": [
     "auth implementation readiness gate exists",
     "auth route boundary remains reserved",
