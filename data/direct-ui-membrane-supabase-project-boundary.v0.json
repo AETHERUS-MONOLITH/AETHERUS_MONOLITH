@@ -20,7 +20,7 @@
   "customer_workspace_implemented": false,
   "environment_boundary": {
     "env_file_created": false,
-    "env_example_created": false,
+    "env_example_created": true,
     "secrets_committed": false,
     "future_environment_variables": [
       {
@@ -73,7 +73,10 @@
     "data/direct-ui-membrane-backend-auth-stack-decision-matrix.v0.json",
     "data/direct-ui-membrane-auth-implementation-readiness-gate.v0.json",
     "scripts/validate-direct-ui-membrane-backend-auth-stack-decision-matrix.mjs",
-    "scripts/validate-direct-ui-membrane-auth-implementation-readiness-gate.mjs"
+    "scripts/validate-direct-ui-membrane-auth-implementation-readiness-gate.mjs",
+    "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json",
+    "scripts/validate-direct-ui-membrane-env-secret-hygiene-gate.mjs",
+    ".env.example"
   ],
   "files_not_allowed_to_reference_supabase_yet": [
     "index.html",
@@ -124,6 +127,24 @@
     "NEXUS outputs",
     "audit logs claiming immutability"
   ],
+  "env_secret_hygiene_gate": {
+    "path": "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json",
+    "object_status": "env_secret_hygiene_gate",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "supabase_project_created": false,
+    "supabase_dependency_installed": false,
+    "supabase_client_initialized": false,
+    "auth_implemented": false,
+    "backend_implemented": false,
+    "database_schema_implemented": false,
+    "persistence_implemented": false,
+    "rls_implemented": false,
+    "tenant_isolation_implemented": false,
+    "env_example_created": true,
+    "env_files_created": false,
+    "secrets_committed": false
+  },
   "smallest_truthful_next_commit": {
     "name": "§1.2 Backend/Auth Boundary 0.3 — Environment Variable Contract / Secret Hygiene Gate",
     "purpose": "Create env.example-style non-secret naming contract and secret-hygiene validator without real credentials or Supabase implementation.",

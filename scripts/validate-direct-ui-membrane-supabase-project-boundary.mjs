@@ -10,6 +10,8 @@ const matrixPath = "data/direct-ui-membrane-backend-auth-stack-decision-matrix.v
 const readinessPath = "data/direct-ui-membrane-auth-implementation-readiness-gate.v0.json";
 const authBackendPath = "data/direct-ui-membrane-auth-backend-boundary.v0.json";
 const docsJsonPath = "data/docs.json";
+const envSecretHygieneGatePath = "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json";
+const envExamplePath = ".env.example";
 
 const falseFlags = [
   "implementation_performed",
@@ -38,6 +40,8 @@ const requiredServerSecrets = [
   "SUPABASE_SERVICE_ROLE_KEY",
   "SUPABASE_JWT_SECRET"
 ];
+
+const allowedEnvExampleNames = new Set(requiredFutureEnvVariables);
 
 const packageOrEnvFiles = [
   ".env",
@@ -180,6 +184,26 @@ async function assertNoSupabaseDependencyIntroduced() {
   }
 }
 
+async function assertEnvExampleIsNamesOnly() {
+  if (!(await exists(envExamplePath))) fail(".env.example must exist when env_example_created is true");
+
+  const text = await readText(envExamplePath);
+  const lines = text.split(/\r?\n/).filter((line) => line.length > 0);
+  const seen = new Set();
+
+  for (const line of lines) {
+    if (!line.includes("=")) fail(".env.example lines must be assignments");
+    const [name, ...rest] = line.split("=");
+    const value = rest.join("=");
+    if (!allowedEnvExampleNames.has(name)) fail(`.env.example contains disallowed variable ${name}`);
+    if (seen.has(name)) fail(`.env.example duplicates ${name}`);
+    seen.add(name);
+    if (value !== "") fail(`.env.example ${name} must have an empty value`);
+  }
+
+  assertIncludesAll([...seen], requiredFutureEnvVariables, ".env.example");
+}
+
 async function assertNoCredentialUiInReservedAuthSurfaces() {
   for (const filePath of ["workspace.html", "auth-boundary.html", "js/preview-workspace.js"]) {
     const text = await readText(filePath);
@@ -294,8 +318,13 @@ assertFalseBooleans(boundary, falseFlags, "supabase project boundary");
 if (boundary.environment_boundary?.env_file_created !== false) {
   fail("environment_boundary.env_file_created must be false");
 }
-if (boundary.environment_boundary?.env_example_created !== false) {
-  fail("environment_boundary.env_example_created must be false");
+if (![true, false].includes(boundary.environment_boundary?.env_example_created)) {
+  fail("environment_boundary.env_example_created must be a boolean");
+}
+if (boundary.environment_boundary?.env_example_created === true) {
+  await assertEnvExampleIsNamesOnly();
+} else if (await exists(envExamplePath)) {
+  fail(".env.example exists but environment_boundary.env_example_created is not true");
 }
 if (boundary.environment_boundary?.secrets_committed !== false) {
   fail("environment_boundary.secrets_committed must be false");
@@ -314,7 +343,13 @@ assertIncludesAll(
 );
 assertIncludesAll(
   boundary.files_allowed_to_reference_supabase_now || [],
-  [boundaryPath, "scripts/validate-direct-ui-membrane-supabase-project-boundary.mjs", matrixPath, readinessPath, authBackendPath],
+  [
+    boundaryPath,
+    "scripts/validate-direct-ui-membrane-supabase-project-boundary.mjs",
+    matrixPath,
+    readinessPath,
+    authBackendPath
+  ],
   "files_allowed_to_reference_supabase_now"
 );
 
@@ -398,6 +433,32 @@ for (const [key, value] of Object.entries(authBackend.implementation_status || {
 assertRecordReferences(matrix, "stack decision matrix");
 assertRecordReferences(readiness, "auth readiness gate");
 assertRecordReferences(authBackend, "auth backend boundary");
+
+const envGateReference = boundary.env_secret_hygiene_gate || {};
+if (envGateReference.path !== envSecretHygieneGatePath) {
+  fail("Supabase boundary must reference the env secret hygiene gate");
+}
+for (const key of [
+  "implementation_performed",
+  "supabase_project_created",
+  "supabase_dependency_installed",
+  "supabase_client_initialized",
+  "auth_implemented",
+  "backend_implemented",
+  "database_schema_implemented",
+  "persistence_implemented",
+  "rls_implemented",
+  "tenant_isolation_implemented",
+  "env_files_created",
+  "secrets_committed"
+]) {
+  if (envGateReference[key] !== false) {
+    fail(`env_secret_hygiene_gate.${key} must be false`);
+  }
+}
+if (envGateReference.env_example_created !== boundary.environment_boundary?.env_example_created) {
+  fail("env_secret_hygiene_gate.env_example_created must match environment boundary");
+}
 
 await assertMissingFiles(packageOrEnvFiles);
 await assertActiveFilesHaveNoSupabaseReferences(boundary);
