@@ -1,0 +1,168 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Backend/Auth Boundary 0.1 — Stack Decision Matrix",
+  "baseline_commit": "00cbfde1a2c69d99b0741aba70819f1cfe71db87",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "backend_auth_stack_decision_matrix",
+  "decision_status": "selected",
+  "selected_stack_boundary": "supabase_full_boundary",
+  "implementation_performed": false,
+  "auth_implemented": false,
+  "backend_implemented": false,
+  "database_implemented": false,
+  "persistence_implemented": false,
+  "tenant_isolation_implemented": false,
+  "billing_implemented": false,
+  "customer_workspace_implemented": false,
+  "evaluation_context": {
+    "current_site_model": "static_browser_site_with_unauthenticated_preview_workspace",
+    "current_interaction_model": "browser_side_in_memory_preview_only",
+    "readiness_gate_verdict": "backend_first_required_before_auth_ui",
+    "secondary_candidate_from_readiness_gate": "supabase_candidate_selected_for_next_evaluation"
+  },
+  "candidates": [
+    {
+      "candidate_id": "supabase_full_boundary",
+      "description": "Supabase Auth plus Postgres/RLS direction for auth, persistence, and tenant isolation boundary.",
+      "fits_static_current_repo": "requires_next_stack_transition",
+      "supports_real_auth_direction": true,
+      "supports_server_side_authorization_direction": true,
+      "supports_database_rls_direction": true,
+      "supports_persistence_direction": true,
+      "supports_tenant_isolation_direction": true,
+      "supports_audit_log_direction": true,
+      "implementation_burden": "medium",
+      "security_burden": "medium",
+      "rebuild_risk": "low",
+      "claim_risk": "manageable_if_not_implemented_yet",
+      "decision": "selected",
+      "why_selected_or_rejected": "Selected as the coherent next boundary because it keeps auth, Postgres, RLS, persistence, and tenant isolation direction in one stack evaluation while still requiring a separate implementation pass before any credential or data surface exists."
+    },
+    {
+      "candidate_id": "clerk_plus_separate_backend",
+      "description": "Clerk for auth plus a separate backend, database, RLS, persistence, and tenant isolation layer.",
+      "fits_static_current_repo": "requires_next_stack_transition",
+      "supports_real_auth_direction": true,
+      "supports_server_side_authorization_direction": true,
+      "supports_database_rls_direction": false,
+      "supports_persistence_direction": "requires_separate_database_decision",
+      "supports_tenant_isolation_direction": "requires_separate_rls_or_authorization_model",
+      "supports_audit_log_direction": "requires_separate_contract",
+      "implementation_burden": "medium_high",
+      "security_burden": "medium",
+      "rebuild_risk": "medium",
+      "claim_risk": "manageable_if_database_boundary_is_not_overclaimed",
+      "decision": "candidate_for_later",
+      "why_selected_or_rejected": "Kept as a later candidate for a strong auth shell path, but not selected because it leaves the persistence, database, and tenant-isolation boundary split across additional decisions."
+    },
+    {
+      "candidate_id": "custom_backend_auth",
+      "description": "Custom backend and authentication implementation owned directly by the project.",
+      "fits_static_current_repo": "requires_new_backend_and_security_program",
+      "supports_real_auth_direction": true,
+      "supports_server_side_authorization_direction": true,
+      "supports_database_rls_direction": "depends_on_database_selection",
+      "supports_persistence_direction": "depends_on_database_selection",
+      "supports_tenant_isolation_direction": "depends_on_database_and_policy_model",
+      "supports_audit_log_direction": "requires_separate_contract",
+      "implementation_burden": "high",
+      "security_burden": "high",
+      "rebuild_risk": "medium_high",
+      "claim_risk": "high_if_started_before_security_review",
+      "decision": "deferred",
+      "why_selected_or_rejected": "Deferred because custom auth would add a security burden too early and would require a broader backend, threat-model, and operational review before any truthful implementation."
+    },
+    {
+      "candidate_id": "static_fake_auth",
+      "description": "Static or client-only auth simulation in the current browser site.",
+      "fits_static_current_repo": true,
+      "supports_real_auth_direction": false,
+      "supports_server_side_authorization_direction": false,
+      "supports_database_rls_direction": false,
+      "supports_persistence_direction": false,
+      "supports_tenant_isolation_direction": false,
+      "supports_audit_log_direction": false,
+      "implementation_burden": "low",
+      "security_burden": "unacceptable_claim_boundary",
+      "rebuild_risk": "high",
+      "claim_risk": "unacceptable",
+      "decision": "rejected",
+      "why_selected_or_rejected": "Rejected because client-only credential or account simulation would create a false auth claim and would need to be replaced before real SaaS work."
+    },
+    {
+      "candidate_id": "backend_first_no_provider_selected",
+      "description": "Continue defining backend contracts and route boundaries while deferring provider selection.",
+      "fits_static_current_repo": "compatible_as_planning_only",
+      "supports_real_auth_direction": "indirect",
+      "supports_server_side_authorization_direction": true,
+      "supports_database_rls_direction": "deferred",
+      "supports_persistence_direction": "deferred",
+      "supports_tenant_isolation_direction": "deferred",
+      "supports_audit_log_direction": "deferred",
+      "implementation_burden": "low_medium",
+      "security_burden": "low_now_medium_later",
+      "rebuild_risk": "medium",
+      "claim_risk": "low_if_kept_as_planning",
+      "decision": "deferred",
+      "why_selected_or_rejected": "Deferred because the readiness gate already established that backend-first work is required, and this pass can now select a concrete provider boundary for the next non-implementation contract."
+    }
+  ],
+  "selected_stack_boundary_details": {
+    "auth_provider_direction": "Supabase Auth",
+    "database_direction": "Supabase Postgres",
+    "tenant_isolation_direction": "Postgres Row-Level Security",
+    "server_boundary_direction": "server-side authorization boundary required before protected actions",
+    "persistence_direction": "no persistence until auth and RLS boundary are explicitly implemented",
+    "audit_direction": "auth and workspace audit events require separate contract before persistence"
+  },
+  "preconditions_before_real_login_ui": [
+    "project environment strategy defined",
+    "no secrets in static client",
+    "auth provider project and config boundary created",
+    "server-side session verification strategy defined",
+    "protected route behavior defined",
+    "validator updated to distinguish real auth implementation from reserved boundary"
+  ],
+  "preconditions_before_persistence": [
+    "database schema boundary selected",
+    "RLS tenant scoping model defined",
+    "migration strategy defined",
+    "audit log contract defined",
+    "no customer data until tenant boundary is implemented"
+  ],
+  "preconditions_before_tenant_claims": [
+    "tenant_id model defined",
+    "RLS policies implemented and tested",
+    "server-side tenant context enforcement implemented",
+    "cross-tenant access tests defined",
+    "audit logging for tenant data access defined"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Backend/Auth Boundary 0.2 — Supabase Project Boundary Contract",
+    "purpose": "Define Supabase project/config/environment boundary without credentials, dependencies, auth UI, database schema, or persistence implementation.",
+    "must_not_implement": [
+      "real login",
+      "credential capture",
+      "database persistence",
+      "tenant isolation",
+      "customer workspace"
+    ]
+  },
+  "claimable_after_this_pass": [
+    "backend/auth stack decision matrix exists",
+    "Supabase full boundary is selected as implementation direction",
+    "real auth/backend/persistence remain unimplemented"
+  ],
+  "not_claimable_after_this_pass": [
+    "login exists",
+    "signup exists",
+    "authenticated shell exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ]
+}

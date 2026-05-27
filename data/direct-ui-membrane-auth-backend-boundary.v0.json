@@ -29,6 +29,17 @@
     "tenant_isolation_remains_not_implemented": true,
     "next_stack_decision_required_before_login_ui": true
   },
+  "stack_decision_matrix": {
+    "path": "data/direct-ui-membrane-backend-auth-stack-decision-matrix.v0.json",
+    "decision_status": "selected",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "auth_remains_not_implemented": true,
+    "backend_remains_not_implemented": true,
+    "database_remains_not_implemented": true,
+    "persistence_remains_not_implemented": true,
+    "tenant_isolation_remains_not_implemented": true
+  },
   "next_step_architecture": {
     "auth_surface": "email_password_baseline_with_mfa_direction",
     "backend_boundary": "server_side_authorization_required_before_persistence",

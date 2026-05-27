@@ -95,6 +95,17 @@
       "tenant isolation"
     ]
   },
+  "stack_decision_matrix": {
+    "path": "data/direct-ui-membrane-backend-auth-stack-decision-matrix.v0.json",
+    "decision_status": "selected",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "auth_implemented": false,
+    "backend_implemented": false,
+    "database_implemented": false,
+    "persistence_implemented": false,
+    "tenant_isolation_implemented": false
+  },
   "claimable_after_this_pass": [
     "auth implementation readiness gate exists",
     "auth route boundary remains reserved",
