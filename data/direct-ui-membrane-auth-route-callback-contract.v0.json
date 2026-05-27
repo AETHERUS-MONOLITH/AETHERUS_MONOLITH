@@ -1,0 +1,183 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Backend/Auth Boundary 0.5 — Auth Route Contract / Callback Boundary",
+  "baseline_commit": "3ef8cae41b037d8cec7a53102fe20cff4f0350eb",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "auth_route_callback_contract",
+  "selected_stack_boundary": "supabase_full_boundary",
+  "implementation_performed": false,
+  "supabase_project_created": false,
+  "supabase_dependency_installed": false,
+  "supabase_client_initialized": false,
+  "auth_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "auth_callback_implemented": false,
+  "protected_routes_implemented": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "current_routes": [
+    {
+      "route": "index.html",
+      "status": "public_static",
+      "implemented": true,
+      "requires_auth": false
+    },
+    {
+      "route": "membrane.html",
+      "status": "public_static_membrane_preview",
+      "implemented": true,
+      "requires_auth": false
+    },
+    {
+      "route": "workspace.html",
+      "status": "unauthenticated_interactive_preview_workspace",
+      "implemented": true,
+      "requires_auth": false,
+      "persistence": false
+    },
+    {
+      "route": "auth-boundary.html",
+      "status": "reserved_auth_boundary",
+      "implemented": true,
+      "requires_auth": false,
+      "active_auth": false
+    }
+  ],
+  "future_auth_routes": [
+    {
+      "route": "/auth/callback",
+      "future_file_or_handler": "not_created",
+      "purpose": "Handle Supabase auth callback later.",
+      "implemented_now": false,
+      "requires_supabase_client": true,
+      "requires_backend_boundary": true
+    },
+    {
+      "route": "/app",
+      "future_file_or_handler": "not_created",
+      "purpose": "Future authenticated shell entry.",
+      "implemented_now": false,
+      "requires_auth": true,
+      "requires_session_verification": true
+    },
+    {
+      "route": "/app/workspace",
+      "future_file_or_handler": "not_created",
+      "purpose": "Future authenticated workspace.",
+      "implemented_now": false,
+      "requires_auth": true,
+      "requires_session_verification": true,
+      "requires_persistence_boundary_before_customer_data": true
+    }
+  ],
+  "future_callback_behavior": {
+    "on_success": [
+      "verify session through approved Supabase client/server boundary",
+      "redirect to future authenticated shell route",
+      "do not persist customer workspace data until RLS and tenant boundary exist"
+    ],
+    "on_error": [
+      "return to auth boundary or login surface with bounded error state",
+      "do not expose secret details",
+      "do not create persistent error logs until audit boundary exists"
+    ],
+    "unauthenticated_protected_route_visit": [
+      "redirect to login route after real login UI exists",
+      "until login UI exists, protected routes remain uncreated or reserved"
+    ]
+  },
+  "route_classification": {
+    "public_routes": [
+      "index.html",
+      "membrane.html"
+    ],
+    "unauthenticated_preview_routes": [
+      "workspace.html"
+    ],
+    "reserved_boundary_routes": [
+      "auth-boundary.html"
+    ],
+    "future_callback_routes": [
+      "/auth/callback"
+    ],
+    "future_protected_routes": [
+      "/app",
+      "/app/workspace",
+      "/app/settings"
+    ],
+    "future_tenant_scoped_routes": [
+      "/app/workspaces/:workspaceId",
+      "/app/evidence/:artifactId"
+    ]
+  },
+  "preconditions_before_callback_implementation": [
+    "Supabase client initialization separately authorized",
+    "auth provider/project configured outside repository",
+    "environment values supplied outside repository",
+    "callback error-state contract defined",
+    "validator allows callback route only after implementation authorization"
+  ],
+  "preconditions_before_protected_routes": [
+    "session verification boundary implemented",
+    "real login UI implemented",
+    "server-side authorization strategy defined",
+    "no protected customer data before persistence/RLS/tenant boundary exists"
+  ],
+  "preconditions_before_tenant_scoped_routes": [
+    "tenant model contract exists",
+    "database schema exists",
+    "RLS policies implemented and tested",
+    "tenant context enforcement implemented",
+    "cross-tenant access tests exist"
+  ],
+  "blocked_until_separately_authorized": [
+    "auth callback route creation",
+    "protected route creation",
+    "login UI",
+    "Supabase client file",
+    "Supabase dependency install",
+    "session management",
+    "database schema",
+    "persistence",
+    "tenant isolation"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Backend/Auth Boundary 0.6 — Protected Route Guard Contract",
+    "purpose": "Define protected route guard semantics before real route or auth implementation.",
+    "must_not_implement": [
+      "real login",
+      "auth callback handler",
+      "Supabase dependency install",
+      "database schema",
+      "persistence",
+      "tenant isolation",
+      "customer workspace"
+    ]
+  },
+  "claimable_after_this_pass": [
+    "auth route/callback contract exists",
+    "future callback/protected-route behavior is defined",
+    "auth callback and protected routes remain unimplemented"
+  ],
+  "not_claimable_after_this_pass": [
+    "auth callback exists",
+    "protected app route exists",
+    "Supabase client exists",
+    "login exists",
+    "signup exists",
+    "authenticated shell exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ]
+}

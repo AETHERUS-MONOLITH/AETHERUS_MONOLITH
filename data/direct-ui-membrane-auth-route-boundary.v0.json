@@ -18,6 +18,20 @@
     "unauthenticated_preview_workspace": "workspace.html",
     "reserved_authenticated_boundary": "auth-boundary.html"
   },
+  "auth_route_callback_contract": {
+    "path": "data/direct-ui-membrane-auth-route-callback-contract.v0.json",
+    "object_status": "auth_route_callback_contract",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "auth_callback_implemented": false,
+    "protected_routes_implemented": false,
+    "auth_remains_not_implemented": true,
+    "backend_remains_not_implemented": true,
+    "database_schema_remains_not_implemented": true,
+    "persistence_remains_not_implemented": true,
+    "rls_remains_not_implemented": true,
+    "tenant_isolation_remains_not_implemented": true
+  },
   "current_claimable_state": [
     "Direct UI Membrane has an unauthenticated interactive preview workspace",
     "Preview workspace is browser-side and non-persistent",

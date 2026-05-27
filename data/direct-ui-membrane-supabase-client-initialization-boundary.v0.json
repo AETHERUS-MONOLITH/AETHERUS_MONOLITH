@@ -34,6 +34,17 @@
   "future_allowed_client_initialization_files": [
     "js/supabase-client.js"
   ],
+  "auth_route_callback_contract": {
+    "path": "data/direct-ui-membrane-auth-route-callback-contract.v0.json",
+    "object_status": "auth_route_callback_contract",
+    "implementation_performed": false,
+    "auth_callback_implemented": false,
+    "protected_routes_implemented": false,
+    "supabase_client_initialized": false,
+    "auth_implemented": false,
+    "login_ui_implemented": false,
+    "signup_ui_implemented": false
+  },
   "active_files_not_allowed_to_initialize_supabase_yet": [
     "index.html",
     "membrane.html",

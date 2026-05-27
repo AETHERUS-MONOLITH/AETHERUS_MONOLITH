@@ -78,6 +78,8 @@
     "scripts/validate-direct-ui-membrane-env-secret-hygiene-gate.mjs",
     "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json",
     "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs",
+    "data/direct-ui-membrane-auth-route-callback-contract.v0.json",
+    "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs",
     ".env.example"
   ],
   "files_not_allowed_to_reference_supabase_yet": [
