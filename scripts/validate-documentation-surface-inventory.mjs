@@ -93,7 +93,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json",
   "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs",
   "data/direct-ui-membrane-auth-route-callback-contract.v0.json",
-  "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs"
+  "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs",
+  "data/direct-ui-membrane-protected-route-guard-contract.v0.json",
+  "scripts/validate-direct-ui-membrane-protected-route-guard-contract.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

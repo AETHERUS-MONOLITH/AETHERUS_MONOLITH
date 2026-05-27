@@ -1,0 +1,149 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Backend/Auth Boundary 0.6 — Protected Route Guard Contract",
+  "baseline_commit": "d1483052bc9da66a77a5050073b1be8f4b01f675",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "protected_route_guard_contract",
+  "selected_stack_boundary": "supabase_full_boundary",
+  "implementation_performed": false,
+  "supabase_project_created": false,
+  "supabase_dependency_installed": false,
+  "supabase_client_initialized": false,
+  "auth_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "auth_callback_implemented": false,
+  "protected_routes_implemented": false,
+  "protected_route_guard_implemented": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "route_classes": {
+    "public_static": [
+      "index.html",
+      "membrane.html"
+    ],
+    "unauthenticated_preview": [
+      "workspace.html"
+    ],
+    "reserved_boundary": [
+      "auth-boundary.html"
+    ],
+    "future_auth_callback": [
+      "/auth/callback"
+    ],
+    "future_protected": [
+      "/app",
+      "/app/workspace",
+      "/app/settings"
+    ],
+    "future_tenant_scoped": [
+      "/app/workspaces/:workspaceId",
+      "/app/evidence/:artifactId"
+    ]
+  },
+  "future_guard_decision_model": {
+    "authenticated": {
+      "later_behavior": [
+        "allow access to protected shell only after session verification",
+        "load no customer data until persistence and tenant boundary exist",
+        "enforce server-side authorization before protected actions"
+      ],
+      "implemented_now": false
+    },
+    "unauthenticated": {
+      "later_behavior": [
+        "redirect to login route only after real login UI exists",
+        "until login exists, protected routes remain uncreated or reserved"
+      ],
+      "implemented_now": false
+    },
+    "unknown_or_loading": {
+      "later_behavior": [
+        "show bounded verifying state",
+        "perform no protected action",
+        "load no customer data"
+      ],
+      "implemented_now": false
+    },
+    "auth_error": {
+      "later_behavior": [
+        "return to bounded auth surface with non-sensitive error",
+        "do not expose secrets or provider internals",
+        "do not persist error logs until audit boundary exists"
+      ],
+      "implemented_now": false
+    }
+  },
+  "preconditions_before_guard_implementation": [
+    "Supabase client initialization separately authorized",
+    "auth callback route separately authorized",
+    "session verification semantics implemented",
+    "login UI separately authorized",
+    "no protected route file exists before guard validator permits it"
+  ],
+  "preconditions_before_customer_data": [
+    "database schema boundary exists",
+    "RLS policies implemented and tested",
+    "tenant context enforcement implemented",
+    "audit event contract exists",
+    "customer data classification exists"
+  ],
+  "preconditions_before_tenant_scoped_routes": [
+    "tenant model contract exists",
+    "tenant_id route binding model exists",
+    "cross-tenant access tests exist",
+    "server-side tenant authorization exists"
+  ],
+  "blocked_until_separately_authorized": [
+    "protected route file creation",
+    "protected route guard implementation",
+    "auth callback route creation",
+    "login UI",
+    "Supabase client file",
+    "Supabase dependency install",
+    "session management",
+    "database schema",
+    "persistence",
+    "tenant isolation"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Backend/Auth Boundary 0.7 — Login Surface Contract / Credential Capture Boundary",
+    "purpose": "Define login surface and credential-capture boundary before any real login UI or Supabase client implementation.",
+    "must_not_implement": [
+      "real login",
+      "credential capture",
+      "auth callback handler",
+      "Supabase dependency install",
+      "database schema",
+      "persistence",
+      "tenant isolation",
+      "customer workspace"
+    ]
+  },
+  "claimable_after_this_pass": [
+    "protected-route guard contract exists",
+    "future protected route guard semantics are defined",
+    "protected routes and guard behavior remain unimplemented"
+  ],
+  "not_claimable_after_this_pass": [
+    "protected route exists",
+    "protected route guard exists",
+    "auth callback exists",
+    "Supabase client exists",
+    "login exists",
+    "signup exists",
+    "authenticated shell exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ]
+}

@@ -1,15 +1,12 @@
 import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
-import path from "node:path";
 import { promisify } from "node:util";
 
 const runFile = promisify(execFile);
 
-const contractPath = "data/direct-ui-membrane-auth-route-callback-contract.v0.json";
-const protectedRouteGuardContractPath =
-  "data/direct-ui-membrane-protected-route-guard-contract.v0.json";
-const supabaseClientBoundaryValidator =
-  "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs";
+const contractPath = "data/direct-ui-membrane-protected-route-guard-contract.v0.json";
+const authRouteCallbackValidator =
+  "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs";
 const envExamplePath = ".env.example";
 
 const falseFlags = [
@@ -22,6 +19,7 @@ const falseFlags = [
   "signup_ui_implemented",
   "auth_callback_implemented",
   "protected_routes_implemented",
+  "protected_route_guard_implemented",
   "backend_implemented",
   "database_schema_implemented",
   "persistence_implemented",
@@ -30,23 +28,24 @@ const falseFlags = [
   "customer_workspace_implemented"
 ];
 
-const requiredCurrentRoutes = [
-  "index.html",
-  "membrane.html",
-  "workspace.html",
-  "auth-boundary.html"
+const requiredFutureProtectedRoutes = [
+  "/app",
+  "/app/workspace",
+  "/app/settings"
 ];
 
-const requiredFutureAuthRoutes = [
-  "/auth/callback",
-  "/app"
+const requiredGuardBranches = [
+  "authenticated",
+  "unauthenticated",
+  "unknown_or_loading",
+  "auth_error"
 ];
 
 const forbiddenRouteFiles = [
+  "app.html",
+  "protected-route.html",
   "auth-callback.html",
   "callback.html",
-  "protected-route.html",
-  "app.html",
   "auth/callback.html",
   "auth/callback/index.html",
   "app/index.html",
@@ -54,6 +53,17 @@ const forbiddenRouteFiles = [
   "app/workspace/index.html",
   "app/settings.html",
   "app/settings/index.html"
+];
+
+const forbiddenRouteGuardFiles = [
+  "js/route-guard.js",
+  "js/protected-route-guard.js",
+  "js/auth-guard.js",
+  "js/session-guard.js",
+  "auth/guard.js",
+  "app/guard.js",
+  "app/route-guard.js",
+  "app/protected-route-guard.js"
 ];
 
 const forbiddenSupabaseClientFiles = [
@@ -133,6 +143,17 @@ const activeAuthLabels = [
   "Save"
 ];
 
+const protectedBehaviorPatterns = [
+  /\brequireAuth\b/,
+  /\bprotectedRoute\b/,
+  /\bprotected route guard\b/i,
+  /\bsession verification\b/i,
+  /\bredirectToLogin\b/,
+  /\bgetSession\s*\(/,
+  /\bonAuthStateChange\b/,
+  /\bauth\.getSession\b/
+];
+
 const negatedBoundaryPhrases = [
   "No login implementation",
   "No signup implementation",
@@ -151,6 +172,8 @@ const newApiCallPatterns = [
 ];
 
 const existingValidators = [
+  authRouteCallbackValidator,
+  "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs",
   "scripts/validate-direct-ui-membrane-env-secret-hygiene-gate.mjs",
   "scripts/validate-direct-ui-membrane-supabase-project-boundary.mjs",
   "scripts/validate-direct-ui-membrane-backend-auth-stack-decision-matrix.mjs",
@@ -247,7 +270,7 @@ async function assertEnvExampleEmptyOnly() {
   assertIncludesAll([...seen], expectedEnvExampleNames, ".env.example");
 }
 
-async function assertActiveFilesHaveNoAuthImplementationSurface() {
+async function assertActiveFilesHaveNoProtectedRouteSurface() {
   for (const filePath of activeHtmlJsFiles.concat(optionalActiveJsFiles)) {
     if (!(await exists(filePath))) continue;
     const text = await readText(filePath);
@@ -261,11 +284,14 @@ async function assertActiveFilesHaveNoAuthImplementationSurface() {
     for (const { label, pattern } of activeSurfacePatterns) {
       if (pattern.test(text)) fail(`${filePath} must not contain ${label}`);
     }
+    for (const pattern of protectedBehaviorPatterns) {
+      if (pattern.test(text)) fail(`${filePath} must not contain protected-route guard behavior`);
+    }
     if (filePath.endsWith(".html")) assertNoActiveAuthLabel(filePath, text);
   }
 }
 
-async function assertNoNewActiveApiCallsOrAuthSurface() {
+async function assertNoNewActiveApiCallsOrGuardSurface() {
   const diffTargets = activeHtmlJsFiles.concat(optionalActiveJsFiles);
   let stdout = "";
   try {
@@ -279,6 +305,7 @@ async function assertNoNewActiveApiCallsOrAuthSurface() {
 
   const forbiddenDiffPatterns = supabaseImportOrInitPatterns
     .concat(activeSurfacePatterns.map((item) => item.pattern))
+    .concat(protectedBehaviorPatterns)
     .concat(newApiCallPatterns);
 
   for (const line of stdout.split(/\r?\n/)) {
@@ -288,7 +315,7 @@ async function assertNoNewActiveApiCallsOrAuthSurface() {
     }
     for (const pattern of forbiddenDiffPatterns) {
       if (pattern.test(line)) {
-        fail(`active HTML/JS diff introduces forbidden callback/auth/API surface: ${line.trim()}`);
+        fail(`active HTML/JS diff introduces forbidden protected/auth/API surface: ${line.trim()}`);
       }
     }
   }
@@ -307,71 +334,49 @@ const contract = await readJson(contractPath);
 if (contract.schema_version !== "0.1") fail("schema_version must be 0.1");
 if (
   contract.generated_for_sub_pass !==
-  "§1.2 Backend/Auth Boundary 0.5 — Auth Route Contract / Callback Boundary"
+  "§1.2 Backend/Auth Boundary 0.6 — Protected Route Guard Contract"
 ) {
   fail("generated_for_sub_pass mismatch");
 }
-if (contract.baseline_commit !== "3ef8cae41b037d8cec7a53102fe20cff4f0350eb") {
+if (contract.baseline_commit !== "d1483052bc9da66a77a5050073b1be8f4b01f675") {
   fail("baseline_commit mismatch");
 }
-if (contract.object_status !== "auth_route_callback_contract") {
-  fail("object_status must be auth_route_callback_contract");
+if (contract.object_status !== "protected_route_guard_contract") {
+  fail("object_status must be protected_route_guard_contract");
 }
 if (contract.selected_stack_boundary !== "supabase_full_boundary") {
   fail("selected_stack_boundary must be supabase_full_boundary");
 }
 
-assertFalseBooleans(contract, falseFlags, "auth route callback contract");
+assertFalseBooleans(contract, falseFlags, "protected route guard contract");
+assertIncludesAll(
+  contract.route_classes?.future_protected || [],
+  requiredFutureProtectedRoutes,
+  "route_classes.future_protected"
+);
 
-const currentRoutes = (contract.current_routes || []).map((entry) => entry.route);
-assertIncludesAll(currentRoutes, requiredCurrentRoutes, "current_routes");
-
-const futureAuthRoutes = (contract.future_auth_routes || []).map((entry) => entry.route);
-assertIncludesAll(futureAuthRoutes, requiredFutureAuthRoutes, "future_auth_routes");
-
-for (const entry of contract.future_auth_routes || []) {
-  if (entry.implemented_now !== false) {
-    fail(`future_auth_routes ${entry.route} must have implemented_now false`);
+for (const branch of requiredGuardBranches) {
+  const model = contract.future_guard_decision_model?.[branch];
+  if (!model) fail(`future_guard_decision_model.${branch} is required`);
+  if (model.implemented_now !== false) {
+    fail(`future_guard_decision_model.${branch}.implemented_now must be false`);
+  }
+  if (!Array.isArray(model.later_behavior) || model.later_behavior.length === 0) {
+    fail(`future_guard_decision_model.${branch}.later_behavior must be a non-empty array`);
   }
 }
 
-assertIncludesAll(
-  contract.route_classification?.future_callback_routes || [],
-  ["/auth/callback"],
-  "route_classification.future_callback_routes"
-);
-assertIncludesAll(
-  contract.route_classification?.future_protected_routes || [],
-  ["/app", "/app/workspace", "/app/settings"],
-  "route_classification.future_protected_routes"
-);
-
-const protectedRouteGuardContract = contract.protected_route_guard_contract || {};
-if (protectedRouteGuardContract.path !== protectedRouteGuardContractPath) {
-  fail(`protected_route_guard_contract.path must be ${protectedRouteGuardContractPath}`);
-}
-for (const key of [
-  "implementation_performed",
-  "protected_routes_implemented",
-  "protected_route_guard_implemented",
-  "auth_callback_implemented"
-]) {
-  if (protectedRouteGuardContract[key] !== false) {
-    fail(`protected_route_guard_contract.${key} must be false`);
-  }
-}
-
-await assertMissing(forbiddenRouteFiles, "forbidden callback/protected route file");
+await assertMissing(forbiddenRouteFiles, "forbidden app/callback/protected route file");
+await assertMissing(forbiddenRouteGuardFiles, "forbidden route guard JS file");
 await assertMissing(forbiddenSupabaseClientFiles, "forbidden Supabase client file");
 await assertMissing(forbiddenPackageFiles, "forbidden package/dependency file");
 await assertMissing(forbiddenEnvFiles, "forbidden env file");
 await assertEnvExampleEmptyOnly();
-await assertActiveFilesHaveNoAuthImplementationSurface();
-await assertNoNewActiveApiCallsOrAuthSurface();
+await assertActiveFilesHaveNoProtectedRouteSurface();
+await assertNoNewActiveApiCallsOrGuardSurface();
 
-await runValidator(supabaseClientBoundaryValidator);
 for (const validator of existingValidators) {
   await runValidator(validator);
 }
 
-console.log("direct ui membrane auth route callback contract ok (callback/protected routes not implemented)");
+console.log("direct ui membrane protected route guard contract ok (protected routes/guards not implemented)");
