@@ -89,7 +89,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-supabase-project-boundary.v0.json",
   "scripts/validate-direct-ui-membrane-supabase-project-boundary.mjs",
   "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json",
-  "scripts/validate-direct-ui-membrane-env-secret-hygiene-gate.mjs"
+  "scripts/validate-direct-ui-membrane-env-secret-hygiene-gate.mjs",
+  "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json",
+  "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

@@ -6,6 +6,7 @@ const runFile = promisify(execFile);
 
 const gatePath = "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json";
 const supabaseBoundaryPath = "data/direct-ui-membrane-supabase-project-boundary.v0.json";
+const supabaseClientBoundaryPath = "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json";
 const docsJsonPath = "data/docs.json";
 const envExamplePath = ".env.example";
 
@@ -336,15 +337,45 @@ assertIncludesAll(
 const nextCommit = gate.smallest_truthful_next_commit || {};
 if (
   nextCommit.name !==
-  "§1.2 Backend/Auth Boundary 0.4 — Supabase Client Initialization Boundary"
+  "§1.2 Backend/Auth Boundary 0.5 — Auth Route Contract / Callback Boundary"
 ) {
   fail("smallest_truthful_next_commit.name mismatch");
 }
 assertIncludesAll(
   nextCommit.must_not_implement || [],
-  ["real login", "credential capture", "database schema", "persistence", "tenant isolation", "customer workspace"],
+  [
+    "real login",
+    "credential capture",
+    "Supabase dependency install",
+    "database schema",
+    "persistence",
+    "tenant isolation",
+    "customer workspace"
+  ],
   "smallest_truthful_next_commit.must_not_implement"
 );
+
+const clientBoundaryReference = gate.supabase_client_initialization_boundary || {};
+if (clientBoundaryReference.path !== supabaseClientBoundaryPath) {
+  fail("env hygiene gate must reference Supabase client initialization boundary");
+}
+for (const key of [
+  "implementation_performed",
+  "supabase_project_created",
+  "supabase_dependency_installed",
+  "supabase_client_initialized",
+  "supabase_client_file_created",
+  "auth_implemented",
+  "backend_implemented",
+  "database_schema_implemented",
+  "persistence_implemented",
+  "rls_implemented",
+  "tenant_isolation_implemented"
+]) {
+  if (clientBoundaryReference[key] !== false) {
+    fail(`supabase_client_initialization_boundary.${key} must be false`);
+  }
+}
 
 if (supabaseBoundary.env_secret_hygiene_gate?.path !== gatePath) {
   fail("Supabase project boundary must reference env secret hygiene gate");

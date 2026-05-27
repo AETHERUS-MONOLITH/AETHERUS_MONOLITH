@@ -76,6 +76,8 @@
     "scripts/validate-direct-ui-membrane-auth-implementation-readiness-gate.mjs",
     "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json",
     "scripts/validate-direct-ui-membrane-env-secret-hygiene-gate.mjs",
+    "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json",
+    "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs",
     ".env.example"
   ],
   "files_not_allowed_to_reference_supabase_yet": [
@@ -144,6 +146,22 @@
     "env_example_created": true,
     "env_files_created": false,
     "secrets_committed": false
+  },
+  "supabase_client_initialization_boundary": {
+    "path": "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json",
+    "object_status": "supabase_client_initialization_boundary",
+    "selected_stack_boundary": "supabase_full_boundary",
+    "implementation_performed": false,
+    "supabase_project_created": false,
+    "supabase_dependency_installed": false,
+    "supabase_client_initialized": false,
+    "supabase_client_file_created": false,
+    "auth_implemented": false,
+    "backend_implemented": false,
+    "database_schema_implemented": false,
+    "persistence_implemented": false,
+    "rls_implemented": false,
+    "tenant_isolation_implemented": false
   },
   "smallest_truthful_next_commit": {
     "name": "§1.2 Backend/Auth Boundary 0.3 — Environment Variable Contract / Secret Hygiene Gate",

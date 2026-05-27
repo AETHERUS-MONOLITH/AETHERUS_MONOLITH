@@ -1,0 +1,99 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Backend/Auth Boundary 0.4 — Supabase Client Initialization Boundary",
+  "baseline_commit": "c69c7f08067d351399238119351d0db2d7172cc4",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "supabase_client_initialization_boundary",
+  "selected_stack_boundary": "supabase_full_boundary",
+  "implementation_performed": false,
+  "supabase_project_created": false,
+  "supabase_dependency_installed": false,
+  "supabase_client_initialized": false,
+  "supabase_client_file_created": false,
+  "auth_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "environment_source": {
+    "env_example_exists": true,
+    "env_values_required_now": false,
+    "allowed_future_browser_env": [
+      "SUPABASE_URL",
+      "SUPABASE_ANON_KEY"
+    ],
+    "forbidden_browser_env": [
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "SUPABASE_JWT_SECRET"
+    ]
+  },
+  "future_allowed_client_initialization_files": [
+    "js/supabase-client.js"
+  ],
+  "active_files_not_allowed_to_initialize_supabase_yet": [
+    "index.html",
+    "membrane.html",
+    "workspace.html",
+    "auth-boundary.html",
+    "js/app.js",
+    "js/docs.js",
+    "js/pipeline.js",
+    "js/preview-workspace.js"
+  ],
+  "future_client_initialization_requirements": [
+    "Supabase project exists outside repository",
+    "public client config is supplied through approved environment strategy",
+    "service-role and JWT secrets remain server-only",
+    "client initialization uses only public config",
+    "auth route contract exists before login UI uses the client",
+    "RLS dependency remains documented before persistence",
+    "validator permits initialization only in authorized client file"
+  ],
+  "blocked_until_separately_authorized": [
+    "package dependency installation",
+    "Supabase client file creation",
+    "Supabase client initialization",
+    "real login UI",
+    "auth callback route",
+    "database schema",
+    "persistence",
+    "tenant isolation"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Backend/Auth Boundary 0.5 — Auth Route Contract / Callback Boundary",
+    "purpose": "Define auth callback and protected-route behavior before installing Supabase or creating login UI.",
+    "must_not_implement": [
+      "real login",
+      "credential capture",
+      "Supabase dependency install",
+      "database schema",
+      "persistence",
+      "tenant isolation",
+      "customer workspace"
+    ]
+  },
+  "claimable_after_this_pass": [
+    "Supabase client initialization boundary exists",
+    "future client initialization constraints are defined",
+    "Supabase client remains unimplemented"
+  ],
+  "not_claimable_after_this_pass": [
+    "Supabase client exists",
+    "Supabase project exists",
+    "login exists",
+    "signup exists",
+    "authenticated shell exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ]
+}

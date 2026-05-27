@@ -11,6 +11,7 @@ const readinessPath = "data/direct-ui-membrane-auth-implementation-readiness-gat
 const authBackendPath = "data/direct-ui-membrane-auth-backend-boundary.v0.json";
 const docsJsonPath = "data/docs.json";
 const envSecretHygieneGatePath = "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json";
+const supabaseClientBoundaryPath = "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json";
 const envExamplePath = ".env.example";
 
 const falseFlags = [
@@ -458,6 +459,28 @@ for (const key of [
 }
 if (envGateReference.env_example_created !== boundary.environment_boundary?.env_example_created) {
   fail("env_secret_hygiene_gate.env_example_created must match environment boundary");
+}
+
+const clientBoundaryReference = boundary.supabase_client_initialization_boundary || {};
+if (clientBoundaryReference.path !== supabaseClientBoundaryPath) {
+  fail("Supabase boundary must reference Supabase client initialization boundary");
+}
+for (const key of [
+  "implementation_performed",
+  "supabase_project_created",
+  "supabase_dependency_installed",
+  "supabase_client_initialized",
+  "supabase_client_file_created",
+  "auth_implemented",
+  "backend_implemented",
+  "database_schema_implemented",
+  "persistence_implemented",
+  "rls_implemented",
+  "tenant_isolation_implemented"
+]) {
+  if (clientBoundaryReference[key] !== false) {
+    fail(`supabase_client_initialization_boundary.${key} must be false`);
+  }
 }
 
 await assertMissingFiles(packageOrEnvFiles);
