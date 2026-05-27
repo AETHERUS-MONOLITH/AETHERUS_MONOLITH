@@ -4,10 +4,9 @@ import { promisify } from "node:util";
 
 const runFile = promisify(execFile);
 
-const contractPath = "data/direct-ui-membrane-protected-route-guard-contract.v0.json";
-const loginSurfaceContractPath = "data/direct-ui-membrane-login-surface-contract.v0.json";
-const authRouteCallbackValidator =
-  "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs";
+const contractPath = "data/direct-ui-membrane-login-surface-contract.v0.json";
+const protectedRouteGuardValidator =
+  "scripts/validate-direct-ui-membrane-protected-route-guard-contract.mjs";
 const envExamplePath = ".env.example";
 
 const falseFlags = [
@@ -16,8 +15,10 @@ const falseFlags = [
   "supabase_dependency_installed",
   "supabase_client_initialized",
   "auth_implemented",
+  "login_surface_implemented",
   "login_ui_implemented",
   "signup_ui_implemented",
+  "credential_capture_implemented",
   "auth_callback_implemented",
   "protected_routes_implemented",
   "protected_route_guard_implemented",
@@ -29,24 +30,23 @@ const falseFlags = [
   "customer_workspace_implemented"
 ];
 
-const requiredFutureProtectedRoutes = [
-  "/app",
-  "/app/workspace",
-  "/app/settings"
-];
+const requiredCredentialFields = ["email", "password"];
+const requiredOptionalFlows = ["signup", "password_reset", "mfa"];
 
-const requiredGuardBranches = [
-  "authenticated",
-  "unauthenticated",
-  "unknown_or_loading",
-  "auth_error"
+const requiredPreconditions = [
+  "Supabase client initialization separately authorized",
+  "login surface implementation separately authorized",
+  "auth callback route implementation separately authorized",
+  "protected route guard implementation separately authorized",
+  "credential capture validator updated to permit email/password only in the login surface",
+  "no signup/account creation unless separately authorized"
 ];
 
 const forbiddenRouteFiles = [
-  "app.html",
   "login.html",
   "signin.html",
   "signup.html",
+  "app.html",
   "protected-route.html",
   "auth-callback.html",
   "callback.html",
@@ -84,22 +84,9 @@ const forbiddenLoginJsFiles = [
   "auth/signup.js"
 ];
 
-const forbiddenSupabaseClientFiles = [
-  "js/supabase-client.js"
-];
-
-const forbiddenPackageFiles = [
-  "package.json",
-  "package-lock.json",
-  "yarn.lock",
-  "pnpm-lock.yaml"
-];
-
-const forbiddenEnvFiles = [
-  ".env",
-  ".env.local",
-  ".env.production"
-];
+const forbiddenSupabaseClientFiles = ["js/supabase-client.js"];
+const forbiddenPackageFiles = ["package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml"];
+const forbiddenEnvFiles = [".env", ".env.local", ".env.production"];
 
 const expectedEnvExampleNames = [
   "SUPABASE_URL",
@@ -119,10 +106,7 @@ const activeHtmlJsFiles = [
   "js/preview-workspace.js"
 ];
 
-const optionalActiveJsFiles = [
-  "js/governance-engine.js",
-  "js/trace-viewer.js"
-];
+const optionalActiveJsFiles = ["js/governance-engine.js", "js/trace-viewer.js"];
 
 const supabaseImportOrInitPatterns = [
   /@supabase\/supabase-js/,
@@ -152,6 +136,7 @@ const activeSurfacePatterns = [
 const activeAuthLabels = [
   "Login",
   "Sign in",
+  "Signin",
   "Signup",
   "Register",
   "Create account",
@@ -161,7 +146,7 @@ const activeAuthLabels = [
   "Save"
 ];
 
-const protectedBehaviorPatterns = [
+const protectedOrLoginBehaviorPatterns = [
   /\brequireAuth\b/,
   /\bprotectedRoute\b/,
   /\bprotected route guard\b/i,
@@ -169,7 +154,11 @@ const protectedBehaviorPatterns = [
   /\bredirectToLogin\b/,
   /\bgetSession\s*\(/,
   /\bonAuthStateChange\b/,
-  /\bauth\.getSession\b/
+  /\bauth\.getSession\b/,
+  /\bsignInWithPassword\b/,
+  /\bsignUp\s*\(/,
+  /\bresetPasswordForEmail\b/,
+  /\bcredential capture\b/i
 ];
 
 const negatedBoundaryPhrases = [
@@ -183,14 +172,11 @@ const negatedBoundaryPhrases = [
   "requires separate authorization"
 ];
 
-const newApiCallPatterns = [
-  /\bfetch\s*\(/,
-  /\bXMLHttpRequest\b/,
-  /\/api\//
-];
+const newApiCallPatterns = [/\bfetch\s*\(/, /\bXMLHttpRequest\b/, /\/api\//];
 
 const existingValidators = [
-  authRouteCallbackValidator,
+  protectedRouteGuardValidator,
+  "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs",
   "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs",
   "scripts/validate-direct-ui-membrane-env-secret-hygiene-gate.mjs",
   "scripts/validate-direct-ui-membrane-supabase-project-boundary.mjs",
@@ -252,7 +238,7 @@ function normalizedHtmlText(text) {
 }
 
 function textNear(text, matchIndex) {
-  return text.slice(Math.max(0, matchIndex - 110), Math.min(text.length, matchIndex + 160));
+  return text.slice(Math.max(0, matchIndex - 120), Math.min(text.length, matchIndex + 170));
 }
 
 function assertNoActiveAuthLabel(filePath, text) {
@@ -288,7 +274,7 @@ async function assertEnvExampleEmptyOnly() {
   assertIncludesAll([...seen], expectedEnvExampleNames, ".env.example");
 }
 
-async function assertActiveFilesHaveNoProtectedRouteSurface() {
+async function assertActiveFilesHaveNoLoginSurface() {
   for (const filePath of activeHtmlJsFiles.concat(optionalActiveJsFiles)) {
     if (!(await exists(filePath))) continue;
     const text = await readText(filePath);
@@ -302,14 +288,14 @@ async function assertActiveFilesHaveNoProtectedRouteSurface() {
     for (const { label, pattern } of activeSurfacePatterns) {
       if (pattern.test(text)) fail(`${filePath} must not contain ${label}`);
     }
-    for (const pattern of protectedBehaviorPatterns) {
-      if (pattern.test(text)) fail(`${filePath} must not contain protected-route guard behavior`);
+    for (const pattern of protectedOrLoginBehaviorPatterns) {
+      if (pattern.test(text)) fail(`${filePath} must not contain login/protected-route behavior`);
     }
     if (filePath.endsWith(".html")) assertNoActiveAuthLabel(filePath, text);
   }
 }
 
-async function assertNoNewActiveApiCallsOrGuardSurface() {
+async function assertNoNewActiveApiCallsOrLoginSurface() {
   const diffTargets = activeHtmlJsFiles.concat(optionalActiveJsFiles);
   let stdout = "";
   try {
@@ -323,7 +309,7 @@ async function assertNoNewActiveApiCallsOrGuardSurface() {
 
   const forbiddenDiffPatterns = supabaseImportOrInitPatterns
     .concat(activeSurfacePatterns.map((item) => item.pattern))
-    .concat(protectedBehaviorPatterns)
+    .concat(protectedOrLoginBehaviorPatterns)
     .concat(newApiCallPatterns);
 
   for (const line of stdout.split(/\r?\n/)) {
@@ -333,7 +319,7 @@ async function assertNoNewActiveApiCallsOrGuardSurface() {
     }
     for (const pattern of forbiddenDiffPatterns) {
       if (pattern.test(line)) {
-        fail(`active HTML/JS diff introduces forbidden protected/auth/API surface: ${line.trim()}`);
+        fail(`active HTML/JS diff introduces forbidden login/auth/API surface: ${line.trim()}`);
       }
     }
   }
@@ -352,64 +338,66 @@ const contract = await readJson(contractPath);
 if (contract.schema_version !== "0.1") fail("schema_version must be 0.1");
 if (
   contract.generated_for_sub_pass !==
-  "§1.2 Backend/Auth Boundary 0.6 — Protected Route Guard Contract"
+  "§1.2 Backend/Auth Boundary 0.7 — Login Surface Contract / Credential Capture Boundary"
 ) {
   fail("generated_for_sub_pass mismatch");
 }
-if (contract.baseline_commit !== "d1483052bc9da66a77a5050073b1be8f4b01f675") {
+if (contract.baseline_commit !== "4ab9a5d185bc4c00097db97f9b14ca4771c151db") {
   fail("baseline_commit mismatch");
 }
-if (contract.object_status !== "protected_route_guard_contract") {
-  fail("object_status must be protected_route_guard_contract");
-}
+if (contract.object_status !== "login_surface_contract") fail("object_status must be login_surface_contract");
 if (contract.selected_stack_boundary !== "supabase_full_boundary") {
   fail("selected_stack_boundary must be supabase_full_boundary");
 }
 
-assertFalseBooleans(contract, falseFlags, "protected route guard contract");
+assertFalseBooleans(contract, falseFlags, "login surface contract");
+
+const loginSurface = contract.future_login_surface || {};
+if (loginSurface.future_route !== "/login") fail("future_login_surface.future_route must be /login");
+if (loginSurface.future_file_or_handler !== "not_created") {
+  fail("future_login_surface.future_file_or_handler must be not_created");
+}
+if (loginSurface.implemented_now !== false) fail("future_login_surface.implemented_now must be false");
+
+const credentialFields = new Map(
+  (contract.future_permitted_credential_fields || []).map((field) => [field.field, field])
+);
+assertIncludesAll([...credentialFields.keys()], requiredCredentialFields, "future_permitted_credential_fields");
+for (const fieldName of requiredCredentialFields) {
+  const field = credentialFields.get(fieldName);
+  if (field.future_allowed !== true) fail(`${fieldName}.future_allowed must be true`);
+  if (field.allowed_now !== false) fail(`${fieldName}.allowed_now must be false`);
+}
+
+const optionalFlows = new Map((contract.future_optional_auth_flows || []).map((flow) => [flow.flow, flow]));
+assertIncludesAll([...optionalFlows.keys()], requiredOptionalFlows, "future_optional_auth_flows");
+for (const flowName of requiredOptionalFlows) {
+  const flow = optionalFlows.get(flowName);
+  if (flow.future_allowed !== true) fail(`${flowName}.future_allowed must be true`);
+  if (flow.allowed_now !== false) fail(`${flowName}.allowed_now must be false`);
+  if (flow.requires_separate_authorization !== true) {
+    fail(`${flowName}.requires_separate_authorization must be true`);
+  }
+}
+
 assertIncludesAll(
-  contract.route_classes?.future_protected || [],
-  requiredFutureProtectedRoutes,
-  "route_classes.future_protected"
+  contract.preconditions_before_login_surface_creation || [],
+  requiredPreconditions,
+  "preconditions_before_login_surface_creation"
 );
 
-for (const branch of requiredGuardBranches) {
-  const model = contract.future_guard_decision_model?.[branch];
-  if (!model) fail(`future_guard_decision_model.${branch} is required`);
-  if (model.implemented_now !== false) {
-    fail(`future_guard_decision_model.${branch}.implemented_now must be false`);
-  }
-  if (!Array.isArray(model.later_behavior) || model.later_behavior.length === 0) {
-    fail(`future_guard_decision_model.${branch}.later_behavior must be a non-empty array`);
-  }
-}
-
-const loginSurfaceContract = contract.login_surface_contract || {};
-if (loginSurfaceContract.path !== loginSurfaceContractPath) {
-  fail(`login_surface_contract.path must be ${loginSurfaceContractPath}`);
-}
-for (const key of [
-  "implementation_performed",
-  "login_surface_implemented",
-  "login_ui_implemented",
-  "signup_ui_implemented",
-  "credential_capture_implemented"
-]) {
-  if (loginSurfaceContract[key] !== false) fail(`login_surface_contract.${key} must be false`);
-}
-
-await assertMissing(forbiddenRouteFiles, "forbidden app/callback/protected route file");
+await assertMissing(forbiddenRouteFiles, "forbidden login/app/callback/protected route file");
 await assertMissing(forbiddenRouteGuardFiles, "forbidden route guard JS file");
 await assertMissing(forbiddenLoginJsFiles, "forbidden login JS file");
 await assertMissing(forbiddenSupabaseClientFiles, "forbidden Supabase client file");
 await assertMissing(forbiddenPackageFiles, "forbidden package/dependency file");
 await assertMissing(forbiddenEnvFiles, "forbidden env file");
 await assertEnvExampleEmptyOnly();
-await assertActiveFilesHaveNoProtectedRouteSurface();
-await assertNoNewActiveApiCallsOrGuardSurface();
+await assertActiveFilesHaveNoLoginSurface();
+await assertNoNewActiveApiCallsOrLoginSurface();
 
 for (const validator of existingValidators) {
   await runValidator(validator);
 }
 
-console.log("direct ui membrane protected route guard contract ok (protected routes/guards not implemented)");
+console.log("direct ui membrane login surface contract ok (login/credential capture not implemented)");

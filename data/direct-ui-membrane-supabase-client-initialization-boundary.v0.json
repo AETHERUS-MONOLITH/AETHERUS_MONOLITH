@@ -56,6 +56,17 @@
     "login_ui_implemented": false,
     "signup_ui_implemented": false
   },
+  "login_surface_contract": {
+    "path": "data/direct-ui-membrane-login-surface-contract.v0.json",
+    "object_status": "login_surface_contract",
+    "implementation_performed": false,
+    "login_surface_implemented": false,
+    "login_ui_implemented": false,
+    "signup_ui_implemented": false,
+    "credential_capture_implemented": false,
+    "supabase_client_initialized": false,
+    "auth_implemented": false
+  },
   "active_files_not_allowed_to_initialize_supabase_yet": [
     "index.html",
     "membrane.html",

@@ -82,6 +82,8 @@
     "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs",
     "data/direct-ui-membrane-protected-route-guard-contract.v0.json",
     "scripts/validate-direct-ui-membrane-protected-route-guard-contract.mjs",
+    "data/direct-ui-membrane-login-surface-contract.v0.json",
+    "scripts/validate-direct-ui-membrane-login-surface-contract.mjs",
     ".env.example"
   ],
   "files_not_allowed_to_reference_supabase_yet": [

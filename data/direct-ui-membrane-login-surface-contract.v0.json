@@ -1,0 +1,175 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Backend/Auth Boundary 0.7 — Login Surface Contract / Credential Capture Boundary",
+  "baseline_commit": "4ab9a5d185bc4c00097db97f9b14ca4771c151db",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "login_surface_contract",
+  "selected_stack_boundary": "supabase_full_boundary",
+  "implementation_performed": false,
+  "supabase_project_created": false,
+  "supabase_dependency_installed": false,
+  "supabase_client_initialized": false,
+  "auth_implemented": false,
+  "login_surface_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "credential_capture_implemented": false,
+  "auth_callback_implemented": false,
+  "protected_routes_implemented": false,
+  "protected_route_guard_implemented": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "future_login_surface": {
+    "future_route": "/login",
+    "future_file_or_handler": "not_created",
+    "purpose": "Future entry point for real Supabase-backed authentication.",
+    "implemented_now": false,
+    "requires_supabase_client": true,
+    "requires_auth_callback_contract": true,
+    "requires_protected_route_guard_contract": true,
+    "requires_env_secret_hygiene_gate": true
+  },
+  "future_permitted_credential_fields": [
+    {
+      "field": "email",
+      "future_allowed": true,
+      "allowed_now": false,
+      "requires": [
+        "real auth implementation authorization",
+        "Supabase client initialization",
+        "auth callback behavior",
+        "credential handling validator"
+      ]
+    },
+    {
+      "field": "password",
+      "future_allowed": true,
+      "allowed_now": false,
+      "requires": [
+        "real auth implementation authorization",
+        "Supabase client initialization",
+        "secure credential handling boundary",
+        "no persistence outside auth provider"
+      ]
+    }
+  ],
+  "future_optional_auth_flows": [
+    {
+      "flow": "signup",
+      "future_allowed": true,
+      "allowed_now": false,
+      "requires_separate_authorization": true,
+      "boundary_note": "Signup creates account state and must not precede real auth/provider setup."
+    },
+    {
+      "flow": "password_reset",
+      "future_allowed": true,
+      "allowed_now": false,
+      "requires_separate_authorization": true
+    },
+    {
+      "flow": "mfa",
+      "future_allowed": true,
+      "allowed_now": false,
+      "requires_separate_authorization": true,
+      "boundary_note": "MFA path must be defined before production authentication claims."
+    }
+  ],
+  "future_login_states": [
+    "idle",
+    "submitting",
+    "authenticating",
+    "authenticated",
+    "auth_error",
+    "session_unknown"
+  ],
+  "future_success_behavior": [
+    "verify session through authorized Supabase client/session boundary",
+    "route to future protected shell only after guard permits access",
+    "load no customer data until persistence/RLS/tenant boundary exists"
+  ],
+  "future_failure_behavior": [
+    "display bounded non-sensitive error",
+    "do not expose provider internals or secrets",
+    "do not persist error logs until audit boundary exists"
+  ],
+  "preconditions_before_login_surface_creation": [
+    "Supabase client initialization separately authorized",
+    "login surface implementation separately authorized",
+    "auth callback route implementation separately authorized",
+    "protected route guard implementation separately authorized",
+    "credential capture validator updated to permit email/password only in the login surface",
+    "no signup/account creation unless separately authorized"
+  ],
+  "preconditions_before_signup": [
+    "account creation policy defined",
+    "user profile schema boundary defined",
+    "email verification behavior defined",
+    "tenant assignment policy defined",
+    "audit event contract defined"
+  ],
+  "preconditions_before_mfa": [
+    "MFA provider behavior confirmed",
+    "recovery behavior defined",
+    "suspicious activity policy defined",
+    "production auth claim boundary updated"
+  ],
+  "blocked_until_separately_authorized": [
+    "login route creation",
+    "login UI",
+    "email input",
+    "password input",
+    "credential capture",
+    "signup UI",
+    "password reset UI",
+    "MFA UI",
+    "Supabase client file",
+    "Supabase dependency install",
+    "auth callback route",
+    "protected routes",
+    "session management",
+    "database schema",
+    "persistence",
+    "tenant isolation"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Backend/Auth Boundary 0.8 — Auth Event Contract / Audit Boundary",
+    "purpose": "Define future auth event and audit boundary before real login implementation emits auth events.",
+    "must_not_implement": [
+      "real login",
+      "credential capture",
+      "auth callback handler",
+      "Supabase dependency install",
+      "database schema",
+      "persistence",
+      "tenant isolation",
+      "customer workspace"
+    ]
+  },
+  "claimable_after_this_pass": [
+    "login surface contract exists",
+    "credential-capture boundary is defined",
+    "login surface and credential capture remain unimplemented"
+  ],
+  "not_claimable_after_this_pass": [
+    "login exists",
+    "signup exists",
+    "credential capture exists",
+    "auth callback exists",
+    "protected route exists",
+    "Supabase client exists",
+    "authenticated shell exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ]
+}

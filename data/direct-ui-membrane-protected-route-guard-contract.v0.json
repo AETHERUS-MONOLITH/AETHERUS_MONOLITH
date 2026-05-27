@@ -110,6 +110,22 @@
     "persistence",
     "tenant isolation"
   ],
+  "login_surface_contract": {
+    "path": "data/direct-ui-membrane-login-surface-contract.v0.json",
+    "object_status": "login_surface_contract",
+    "implementation_performed": false,
+    "login_surface_implemented": false,
+    "login_ui_implemented": false,
+    "signup_ui_implemented": false,
+    "credential_capture_implemented": false,
+    "auth_remains_not_implemented": true,
+    "protected_routes_remain_not_implemented": true,
+    "protected_route_guard_remains_not_implemented": true,
+    "backend_remains_not_implemented": true,
+    "database_schema_remains_not_implemented": true,
+    "persistence_remains_not_implemented": true,
+    "tenant_isolation_remains_not_implemented": true
+  },
   "smallest_truthful_next_commit": {
     "name": "§1.2 Backend/Auth Boundary 0.7 — Login Surface Contract / Credential Capture Boundary",
     "purpose": "Define login surface and credential-capture boundary before any real login UI or Supabase client implementation.",
