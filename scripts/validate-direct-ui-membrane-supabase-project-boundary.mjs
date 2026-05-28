@@ -12,6 +12,8 @@ const authBackendPath = "data/direct-ui-membrane-auth-backend-boundary.v0.json";
 const docsJsonPath = "data/docs.json";
 const envSecretHygieneGatePath = "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json";
 const supabaseClientBoundaryPath = "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json";
+const supabaseClientScaffoldValidator =
+  "scripts/validate-direct-ui-membrane-supabase-client-scaffold.mjs";
 const envExamplePath = ".env.example";
 
 const falseFlags = [
@@ -33,6 +35,7 @@ const falseFlags = [
 const requiredFutureEnvVariables = [
   "SUPABASE_URL",
   "SUPABASE_ANON_KEY",
+  "SUPABASE_PUBLISHABLE_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
   "SUPABASE_JWT_SECRET"
 ];
@@ -259,7 +262,7 @@ function assertFutureEnvironmentVariables(boundary) {
     }
   }
 
-  for (const name of ["SUPABASE_URL", "SUPABASE_ANON_KEY"]) {
+  for (const name of ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_PUBLISHABLE_KEY"]) {
     const variable = byName.get(name);
     if (variable.allowed_in_static_client_later !== true) {
       fail(`${name} must be public-client eligible later`);
@@ -334,7 +337,7 @@ if (boundary.environment_boundary?.secrets_committed !== false) {
 assertFutureEnvironmentVariables(boundary);
 assertIncludesAll(
   boundary.allowed_future_client_references || [],
-  ["SUPABASE_URL", "SUPABASE_ANON_KEY"],
+  ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_PUBLISHABLE_KEY"],
   "allowed_future_client_references"
 );
 assertIncludesAll(
@@ -484,6 +487,11 @@ for (const key of [
 }
 
 await assertMissingFiles(packageOrEnvFiles);
+if (await exists("js/supabase-client.js")) {
+  await runFile("node", [supabaseClientScaffoldValidator], {
+    stdio: "inherit"
+  });
+}
 await assertActiveFilesHaveNoSupabaseReferences(boundary);
 await assertNoSupabaseDependencyIntroduced();
 await assertNoCredentialUiInReservedAuthSurfaces();

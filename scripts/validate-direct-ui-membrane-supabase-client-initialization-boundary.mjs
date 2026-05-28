@@ -10,10 +10,13 @@ const supabaseBoundaryPath = "data/direct-ui-membrane-supabase-project-boundary.
 const docsJsonPath = "data/docs.json";
 const envExamplePath = ".env.example";
 const futureClientFile = "js/supabase-client.js";
+const supabaseClientScaffoldValidator =
+  "scripts/validate-direct-ui-membrane-supabase-client-scaffold.mjs";
 
 const publicBrowserEnv = [
   "SUPABASE_URL",
-  "SUPABASE_ANON_KEY"
+  "SUPABASE_ANON_KEY",
+  "SUPABASE_PUBLISHABLE_KEY"
 ];
 
 const forbiddenBrowserEnv = [
@@ -373,7 +376,11 @@ if (envGate.smallest_truthful_next_commit?.name !== nextCommit.name) {
 assertBoundaryReferences(envGate, "env hygiene gate");
 assertBoundaryReferences(supabaseBoundary, "Supabase project boundary");
 
-await assertMissing([futureClientFile], "forbidden Supabase client file");
+if (await exists(futureClientFile)) {
+  await runFile("node", [supabaseClientScaffoldValidator], {
+    stdio: "inherit"
+  });
+}
 await assertMissing(forbiddenPackageFiles, "forbidden package files");
 await assertMissing(forbiddenEnvFiles, "forbidden env files");
 await assertEnvExampleEmpty();

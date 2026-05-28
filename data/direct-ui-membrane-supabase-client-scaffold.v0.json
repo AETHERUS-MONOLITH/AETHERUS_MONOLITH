@@ -1,0 +1,88 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Implementation 0.1 — Client Initialization Scaffold",
+  "baseline_commit": "b2f509222f6ac1a3761be39fd057526416d50f07",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "supabase_client_boundary_scaffold",
+  "external_supabase_project_exists": true,
+  "external_project_name": "AETHERUS_MONOLITH",
+  "external_region": "EU",
+  "values_committed": false,
+  "secrets_committed": false,
+  "supabase_dependency_installed": false,
+  "supabase_client_file_created": true,
+  "supabase_client_initialized_live": false,
+  "auth_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "credential_capture_implemented": false,
+  "auth_callback_implemented": false,
+  "protected_routes_implemented": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "allowed_public_config_names": [
+    "SUPABASE_URL",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_PUBLISHABLE_KEY"
+  ],
+  "forbidden_client_config_names": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_JWT_SECRET",
+    "service_role",
+    "jwt_secret"
+  ],
+  "scaffold_behavior": [
+    "defines public config boundary",
+    "does not contain real values",
+    "does not contain fake values",
+    "does not import Supabase dependency",
+    "does not call Supabase auth",
+    "does not call Supabase database",
+    "does not persist state",
+    "does not wire into login UI"
+  ],
+  "preconditions_before_live_client_initialization": [
+    "dependency installation separately authorized",
+    "approved public config injection strategy implemented",
+    "service-role and JWT secrets remain absent from browser files",
+    "auth callback route implementation separately authorized",
+    "login UI separately authorized"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Supabase Implementation 0.2 — Dependency and Public Config Injection Decision",
+    "purpose": "Decide whether to add Supabase JS dependency or use CDN/import strategy, and define how public config reaches the client without secrets.",
+    "must_not_implement": [
+      "login UI",
+      "credential capture",
+      "database schema",
+      "persistence",
+      "tenant isolation",
+      "customer workspace"
+    ]
+  },
+  "claimable_after_this_pass": [
+    "Supabase client scaffold exists",
+    "repo contains a bounded client initialization interface",
+    "external Supabase project exists outside repo",
+    "live Supabase client remains uninitialized"
+  ],
+  "not_claimable_after_this_pass": [
+    "Supabase dependency is installed",
+    "live Supabase client is initialized",
+    "login exists",
+    "signup exists",
+    "authenticated shell exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ]
+}

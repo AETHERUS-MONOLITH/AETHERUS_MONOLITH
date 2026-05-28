@@ -8,6 +8,8 @@ const contractPath = "data/direct-ui-membrane-protected-route-guard-contract.v0.
 const loginSurfaceContractPath = "data/direct-ui-membrane-login-surface-contract.v0.json";
 const authRouteCallbackValidator =
   "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs";
+const supabaseClientScaffoldValidator =
+  "scripts/validate-direct-ui-membrane-supabase-client-scaffold.mjs";
 const envExamplePath = ".env.example";
 
 const falseFlags = [
@@ -104,6 +106,7 @@ const forbiddenEnvFiles = [
 const expectedEnvExampleNames = [
   "SUPABASE_URL",
   "SUPABASE_ANON_KEY",
+  "SUPABASE_PUBLISHABLE_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
   "SUPABASE_JWT_SECRET"
 ];
@@ -136,6 +139,7 @@ const supabaseImportOrInitPatterns = [
 const supabaseEnvOrSecretTerms = [
   "SUPABASE_URL",
   "SUPABASE_ANON_KEY",
+  "SUPABASE_PUBLISHABLE_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
   "SUPABASE_JWT_SECRET",
   "service_role",
@@ -345,6 +349,11 @@ async function runValidator(filePath) {
   });
 }
 
+async function assertSupabaseClientFileIsScaffoldOnly() {
+  if (!(await exists("js/supabase-client.js"))) return;
+  await runValidator(supabaseClientScaffoldValidator);
+}
+
 if (!(await exists(contractPath))) fail(`${contractPath} is missing`);
 
 const contract = await readJson(contractPath);
@@ -401,7 +410,7 @@ for (const key of [
 await assertMissing(forbiddenRouteFiles, "forbidden app/callback/protected route file");
 await assertMissing(forbiddenRouteGuardFiles, "forbidden route guard JS file");
 await assertMissing(forbiddenLoginJsFiles, "forbidden login JS file");
-await assertMissing(forbiddenSupabaseClientFiles, "forbidden Supabase client file");
+await assertSupabaseClientFileIsScaffoldOnly();
 await assertMissing(forbiddenPackageFiles, "forbidden package/dependency file");
 await assertMissing(forbiddenEnvFiles, "forbidden env file");
 await assertEnvExampleEmptyOnly();

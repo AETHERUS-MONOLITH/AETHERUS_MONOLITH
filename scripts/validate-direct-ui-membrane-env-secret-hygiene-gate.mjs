@@ -7,19 +7,23 @@ const runFile = promisify(execFile);
 const gatePath = "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json";
 const supabaseBoundaryPath = "data/direct-ui-membrane-supabase-project-boundary.v0.json";
 const supabaseClientBoundaryPath = "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json";
+const supabaseClientScaffoldValidator =
+  "scripts/validate-direct-ui-membrane-supabase-client-scaffold.mjs";
 const docsJsonPath = "data/docs.json";
 const envExamplePath = ".env.example";
 
 const requiredEnvNames = [
   "SUPABASE_URL",
   "SUPABASE_ANON_KEY",
+  "SUPABASE_PUBLISHABLE_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
   "SUPABASE_JWT_SECRET"
 ];
 
 const publicEnvNames = [
   "SUPABASE_URL",
-  "SUPABASE_ANON_KEY"
+  "SUPABASE_ANON_KEY",
+  "SUPABASE_PUBLISHABLE_KEY"
 ];
 
 const serverSecretEnvNames = [
@@ -393,6 +397,11 @@ if (supabaseBoundary.environment_boundary?.secrets_committed !== false) {
 await assertMissing(forbiddenEnvFiles, "forbidden env files");
 await assertMissing(forbiddenPackageFiles, "forbidden package files");
 await assertEnvExample(gate);
+if (await exists("js/supabase-client.js")) {
+  await runFile("node", [supabaseClientScaffoldValidator], {
+    stdio: "inherit"
+  });
+}
 await assertActiveFilesClean(gate);
 await assertNoNewForbiddenActiveDiff();
 

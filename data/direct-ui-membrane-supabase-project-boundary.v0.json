@@ -39,6 +39,14 @@
         "boundary_note": "Only safe when RLS and policy boundaries are respected."
       },
       {
+        "name": "SUPABASE_PUBLISHABLE_KEY",
+        "classification": "public_client_config_with_rls_dependency",
+        "allowed_in_static_client_later": true,
+        "required_before_real_auth": true,
+        "value_present_now": false,
+        "boundary_note": "Preferred browser-safe public key name when available; still not a committed value."
+      },
+      {
         "name": "SUPABASE_SERVICE_ROLE_KEY",
         "classification": "server_secret",
         "allowed_in_static_client_later": false,
@@ -58,7 +66,8 @@
   },
   "allowed_future_client_references": [
     "SUPABASE_URL",
-    "SUPABASE_ANON_KEY"
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_PUBLISHABLE_KEY"
   ],
   "forbidden_client_references": [
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -84,6 +93,9 @@
     "scripts/validate-direct-ui-membrane-protected-route-guard-contract.mjs",
     "data/direct-ui-membrane-login-surface-contract.v0.json",
     "scripts/validate-direct-ui-membrane-login-surface-contract.mjs",
+    "data/direct-ui-membrane-supabase-client-scaffold.v0.json",
+    "scripts/validate-direct-ui-membrane-supabase-client-scaffold.mjs",
+    "js/supabase-client.js",
     ".env.example"
   ],
   "files_not_allowed_to_reference_supabase_yet": [
