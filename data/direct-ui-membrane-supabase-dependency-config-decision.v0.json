@@ -1,0 +1,223 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Implementation 0.2 — Dependency and Public Config Injection Decision",
+  "baseline_commit": "9999e5178e6ab7558fce63571863d05221b51170",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "supabase_dependency_public_config_decision",
+  "implementation_performed": false,
+  "supabase_dependency_installed": false,
+  "supabase_client_initialized": false,
+  "supabase_import_added": false,
+  "create_client_call_added": false,
+  "auth_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "credential_capture_implemented": false,
+  "auth_callback_implemented": false,
+  "protected_routes_implemented": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "billing_implemented": false,
+  "palisade_implemented": false,
+  "weave_runtime_implemented": false,
+  "public_nexus_runtime_implemented": false,
+  "selected_dependency_strategy": {
+    "name": "deferred_version_pinned_browser_esm_import",
+    "selected": true,
+    "dependency_installation_authorized_now": false,
+    "dependency_installation_deferred": true,
+    "package_installation_selected": false,
+    "cdn_or_esm_import_selected_for_future": true,
+    "static_compatible": true,
+    "no_build_step_preserved": true,
+    "rationale": [
+      "The current Direct UI Membrane is a static GitHub Pages preview workspace with no package manifest, lockfile, or build step.",
+      "A future version-pinned browser ESM import can load the Supabase browser library without adding package files or changing repository architecture.",
+      "No dependency URL, import statement, package file, install command, or live client initialization is added in this pass."
+    ],
+    "package_strategy_boundary": [
+      "A package-based Supabase dependency remains a future architecture change only.",
+      "Adding package.json, a lockfile, or npm installation requires separate Operator authorization.",
+      "Package installation is not authorized by this decision pass."
+    ]
+  },
+  "selected_public_config_injection_strategy": {
+    "name": "deferred_generated_runtime_public_config_object",
+    "selected": true,
+    "public_values_committed_now": false,
+    "real_values_committed_now": false,
+    "fake_values_committed_now": false,
+    "placeholder_values_committed_now": false,
+    "non_empty_env_assignment_committed_now": false,
+    "future_browser_config_source": "A deployment or operator-controlled runtime config object may be generated outside committed source and loaded before js/supabase-client.js.",
+    "future_browser_global_name": "AETHERUS_SUPABASE_PUBLIC_CONFIG",
+    "future_runtime_config_file": "js/supabase-public-config.runtime.js",
+    "future_runtime_config_file_created_now": false,
+    "supabase_url_delivery": {
+      "name": "SUPABASE_URL",
+      "classification": "public_browser_config",
+      "future_delivery": "Read from the generated runtime public config object after deployment/operator injection.",
+      "committed_value_allowed": false,
+      "required_before_live_client_initialization": true
+    },
+    "supabase_publishable_key_delivery": {
+      "name": "SUPABASE_PUBLISHABLE_KEY",
+      "classification": "public_browser_config_with_rls_dependency",
+      "preferred_future_public_key": true,
+      "future_delivery": "Read from the generated runtime public config object after deployment/operator injection.",
+      "committed_value_allowed": false,
+      "required_before_live_client_initialization": true
+    },
+    "supabase_anon_key_legacy_fallback": {
+      "name": "SUPABASE_ANON_KEY",
+      "classification": "legacy_compatible_public_browser_config_with_rls_dependency",
+      "fallback_only": true,
+      "future_delivery": "May be read from the same generated runtime public config object when SUPABASE_PUBLISHABLE_KEY is absent.",
+      "committed_value_allowed": false,
+      "required_before_live_client_initialization": false
+    },
+    "absent_config_behavior_before_live_initialization": [
+      "js/supabase-client.js may continue to resolve absent_config without network calls.",
+      "Absent public config must keep live client initialization unauthorized.",
+      "No UI may collect credentials as a substitute for missing public config."
+    ]
+  },
+  "secret_boundary": {
+    "values_committed": false,
+    "secrets_committed": false,
+    "server_secret_names": [
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "SUPABASE_JWT_SECRET"
+    ],
+    "forbidden_client_string_patterns": [
+      "service_role",
+      "jwt_secret"
+    ],
+    "service_role_key_boundary": "SUPABASE_SERVICE_ROLE_KEY remains server-secret only and must not appear in browser/client implementation files.",
+    "jwt_secret_boundary": "SUPABASE_JWT_SECRET remains forbidden in browser/client files.",
+    "bounded_reference_policy": "Server-secret names and forbidden string patterns may appear only in bounded validators and data records that name them as forbidden terms.",
+    "forbidden_committed_value_classes": [
+      "real Supabase URL",
+      "real publishable key",
+      "real anon key",
+      "fake key",
+      "placeholder key value",
+      "service-role key",
+      "JWT secret",
+      "non-empty env assignment"
+    ]
+  },
+  "referenced_boundaries": {
+    "client_scaffold": {
+      "path": "data/direct-ui-membrane-supabase-client-scaffold.v0.json",
+      "object_status": "supabase_client_boundary_scaffold",
+      "supabase_dependency_installed": false,
+      "supabase_client_initialized_live": false,
+      "auth_implemented": false,
+      "credential_capture_implemented": false
+    },
+    "client_initialization_boundary": {
+      "path": "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json",
+      "object_status": "supabase_client_initialization_boundary",
+      "implementation_performed": false,
+      "supabase_dependency_installed": false,
+      "supabase_client_initialized": false,
+      "auth_implemented": false,
+      "login_ui_implemented": false
+    },
+    "env_secret_hygiene_gate": {
+      "path": "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json",
+      "object_status": "env_secret_hygiene_gate",
+      "env_files_created": false,
+      "secrets_committed": false,
+      "supabase_client_initialized": false
+    },
+    "supabase_project_boundary": {
+      "path": "data/direct-ui-membrane-supabase-project-boundary.v0.json",
+      "object_status": "supabase_project_boundary_contract",
+      "implementation_performed": false,
+      "supabase_dependency_installed": false,
+      "auth_implemented": false
+    }
+  },
+  "next_threshold": {
+    "name": "§1.2 Supabase Implementation 0.3 — Live Client Initialization",
+    "may_initialize_live_client_only_after": [
+      "version-pinned browser ESM dependency loading is explicitly represented in the authorized client file",
+      "runtime public config injection is represented safely without committed real, fake, or placeholder values",
+      "SUPABASE_URL is available from the approved public config source",
+      "SUPABASE_PUBLISHABLE_KEY is available from the approved public config source, or SUPABASE_ANON_KEY is available as a legacy-compatible fallback",
+      "server-secret names and forbidden string patterns remain absent from browser/client implementation files except bounded forbidden-term validators or records",
+      "package installation remains unperformed unless separately authorized by the Operator"
+    ],
+    "still_must_not_implement_without_separate_authorization": [
+      "login UI",
+      "signup UI",
+      "credential capture",
+      "auth callback route",
+      "protected route",
+      "backend/server",
+      "database schema",
+      "persistence",
+      "RLS implementation",
+      "tenant isolation",
+      "customer workspace",
+      "billing",
+      "Palisade",
+      "Weave runtime",
+      "public NEXUS runtime"
+    ],
+    "explicit_authorization_boundary": "0.3 may initialize a live Supabase browser client only after the selected dependency and public config strategy is satisfied, and still without login UI unless separately authorized."
+  },
+  "claimable_after_this_pass": [
+    "Supabase dependency and public config injection decision exists",
+    "future dependency loading strategy is selected for the static no-build architecture",
+    "future browser-safe public config injection strategy is selected without committed values",
+    "dependency installation remains deferred",
+    "live Supabase client initialization remains deferred"
+  ],
+  "not_claimable_after_this_pass": [
+    "Supabase dependency is installed",
+    "Supabase import exists",
+    "live Supabase client is initialized",
+    "real Supabase config exists in committed files",
+    "login exists",
+    "signup exists",
+    "credential capture exists",
+    "auth callback exists",
+    "protected route exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ],
+  "smallest_truthful_next_commit": {
+    "name": "§1.2 Supabase Implementation 0.3 — Live Client Initialization",
+    "purpose": "Add the authorized static dependency loading and runtime public config wiring needed to initialize only the browser client, without login UI or credential capture.",
+    "must_not_implement": [
+      "login UI",
+      "signup UI",
+      "credential capture",
+      "auth callback route",
+      "protected route",
+      "backend/server",
+      "database schema",
+      "persistence",
+      "RLS implementation",
+      "tenant isolation",
+      "customer workspace",
+      "billing",
+      "Palisade",
+      "Weave runtime",
+      "public NEXUS runtime"
+    ]
+  }
+}
