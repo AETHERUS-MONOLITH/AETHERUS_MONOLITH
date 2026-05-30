@@ -1,0 +1,112 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Implementation 0.5 — Provider Login Initiation Surface",
+  "baseline_commit": "0972922e5e1dc546df11aa01af0f2f6d08d9cd39",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "provider_login_initiation_surface",
+  "implementation_performed": true,
+  "conditional_supabase_client_initialization_required": true,
+  "auth_callback_precondition_required": true,
+  "provider_login_initiation_implemented": true,
+  "provider_login_surface_implemented": true,
+  "selected_provider": "github",
+  "permitted_supabase_auth_methods": [
+    "signInWithOAuth",
+    "exchangeCodeForSession",
+    "getSession"
+  ],
+  "credential_flow_handling_started": true,
+  "credential_flow_handling_scope": "provider_login_initiation_plus_callback_session_precondition",
+  "credential_capture_implemented": false,
+  "password_login_implemented": false,
+  "signup_ui_implemented": false,
+  "sign_up_implemented": false,
+  "email_password_form_implemented": false,
+  "auth_callback_precondition_implemented": true,
+  "session_guard_precondition_implemented": true,
+  "session_detection_implemented": true,
+  "protected_route_implemented": false,
+  "protected_shell_entry_implemented": false,
+  "authenticated_surfaces_born": false,
+  "authenticated_workspace_implemented": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "database_access_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "billing_implemented": false,
+  "palisade_implemented": false,
+  "weave_runtime_implemented": false,
+  "public_nexus_runtime_implemented": false,
+  "component_births_after_this_pass": [
+    "bounded GitHub provider login initiation utility",
+    "bounded provider login initiation page",
+    "bounded provider login initiation page script"
+  ],
+  "shell_birth_status": {
+    "authenticated_surfaces_born": false,
+    "protected_shell_entry_implemented": false,
+    "authenticated_workspace_implemented": false
+  },
+  "login_initiation_behavior": {
+    "login_utility_file": "js/supabase-login-initiation.js",
+    "login_surface_file": "auth-login.html",
+    "login_surface_script": "js/supabase-login-surface.js",
+    "selected_provider": "github",
+    "provider_login_scope": "signInWithOAuth may be called only when public runtime config exists, the conditional client initializes, the allowed provider is supplied, and the function is explicitly invoked.",
+    "callback_route_created": false,
+    "credential_capture_scope": "No repository credential fields, password login, signup, or account registration are implemented."
+  },
+  "claimable_after_this_pass": [
+    "A bounded provider login initiation surface exists; the repo can initiate a Supabase OAuth provider flow when externally supplied public config is present."
+  ],
+  "not_claimable_after_this_pass": [
+    "password login exists",
+    "signup exists",
+    "credential capture exists",
+    "callback route exists",
+    "protected route exists",
+    "protected shell entry exists",
+    "authenticated shell exists",
+    "authenticated workspace exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ],
+  "next_threshold": {
+    "name": "§1.2 Supabase Implementation 0.6 — Callback Route or Protected Shell Authorization Boundary",
+    "purpose": "Separately authorize a callback route or protected shell boundary without conflating provider login initiation with Authenticated Surfaces birth.",
+    "must_not_implement": [
+      "password login",
+      "signup UI",
+      "credential capture",
+      "protected shell entry",
+      "authenticated workspace",
+      "backend/server",
+      "database schema",
+      "database access",
+      "persistence layer",
+      "RLS implementation",
+      "tenant isolation",
+      "customer workspace",
+      "billing",
+      "Palisade",
+      "Weave runtime",
+      "public NEXUS runtime"
+    ]
+  },
+  "hard_boundaries_preserved": [
+    "Provider initiation uses GitHub OAuth through Supabase and does not collect repository credentials.",
+    "No password login, signup UI, account registration, protected route entry, protected shell entry, authenticated workspace, backend, database access, persistence layer, RLS, tenant isolation, customer workspace, billing, Palisade, Weave runtime, or public NEXUS runtime is implemented.",
+    "No callback route is created in this pass.",
+    "No Supabase runtime public config values or package files are committed.",
+    "Server-secret names remain bounded to validators and data records as forbidden terms."
+  ]
+}

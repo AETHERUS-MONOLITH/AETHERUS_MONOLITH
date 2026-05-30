@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Login Initiation - AETHERUS MONOLITH</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/supabase-login-surface.js"></script>
+</head>
+<body class="auth-login-page">
+  <div class="scan-line" aria-hidden="true"></div>
+
+  <header class="site-header" role="banner">
+    <a href="index.html" class="brand-lockup" aria-label="AETHERUS MONOLITH home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-copy">
+        <span class="brand-name">AETHERUS <b>&middot;</b> MONOLITH</span>
+        <span class="brand-subtitle">AI Governance &amp; Model-Behavior Risk Architecture</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Provider login initiation navigation">
+      <a href="workspace.html">Preview Workspace</a>
+      <a href="auth-boundary.html">Auth Boundary</a>
+      <a href="membrane.html">Static Membrane</a>
+    </nav>
+    <span class="interface-chip">Provider Initiation</span>
+  </header>
+
+  <main class="auth-login-shell" aria-labelledby="auth-login-title">
+    <section class="auth-login-hero panel-frame">
+      <div>
+        <span class="panel-kicker">Section 1.2 Provider Login Initiation</span>
+        <h1 id="auth-login-title">Provider authentication initiation</h1>
+        <p class="auth-login-lede">
+          This bounded surface can start a GitHub provider flow when external
+          public runtime config is present. It does not create an authenticated
+          workspace or shell entry.
+        </p>
+        <div class="auth-login-status-strip" aria-label="Provider login boundary">
+          <span>Provider initiation only</span>
+          <span>No repository credential fields</span>
+          <span>No signup surface</span>
+          <span>No shell entry</span>
+          <span>No database</span>
+          <span>No persistence layer</span>
+        </div>
+      </div>
+
+      <aside class="auth-login-card" aria-label="Provider login action">
+        <span class="section-kicker">Selected Provider</span>
+        <strong>GitHub</strong>
+        <p data-login-status data-state="provider_login_initiation_unavailable">Provider initiation unavailable</p>
+        <button class="auth-login-provider-button" type="button" data-login-provider>
+          Continue with GitHub
+        </button>
+      </aside>
+    </section>
+
+    <section class="auth-login-boundary-grid" aria-label="Provider login boundary">
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Scope</span>
+        <h2>Initiation boundary</h2>
+        <p>
+          The action starts an external provider flow through Supabase only after
+          browser-safe public config is supplied outside committed source.
+        </p>
+      </article>
+
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Not Born</span>
+        <h2>Shell boundary</h2>
+        <p>
+          Returning from the provider can be classified by the callback/session
+          precondition, but this page does not enter an authenticated workspace.
+        </p>
+      </article>
+
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Return</span>
+        <h2>Preview context</h2>
+        <p>
+          The unauthenticated preview remains available as the public inspection
+          workspace for Direct UI Membrane surfaces.
+        </p>
+        <a class="auth-login-return-link" href="workspace.html">Return to Preview Workspace</a>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
