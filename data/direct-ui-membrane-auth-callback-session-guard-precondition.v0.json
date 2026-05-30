@@ -1,0 +1,102 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Implementation 0.4 — Auth Callback and Session Guard Precondition",
+  "baseline_commit": "57ebe65ed4dd82faa5ea9cb2c7a5b8ebdecab25e",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "auth_callback_session_guard_precondition",
+  "implementation_performed": true,
+  "conditional_supabase_client_initialization_required": true,
+  "auth_callback_precondition_implemented": true,
+  "session_guard_precondition_implemented": true,
+  "credential_flow_handling_started": true,
+  "credential_capture_implemented": false,
+  "login_ui_implemented": false,
+  "signup_ui_implemented": false,
+  "provider_login_initiation_implemented": false,
+  "auth_callback_route_implemented": false,
+  "auth_callback_utility_implemented": true,
+  "session_detection_implemented": true,
+  "protected_route_implemented": false,
+  "protected_shell_entry_implemented": false,
+  "authenticated_surfaces_born": false,
+  "backend_implemented": false,
+  "database_schema_implemented": false,
+  "database_access_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "billing_implemented": false,
+  "palisade_implemented": false,
+  "weave_runtime_implemented": false,
+  "public_nexus_runtime_implemented": false,
+  "component_births_after_this_pass": [
+    "bounded auth callback utility",
+    "bounded session guard classifier"
+  ],
+  "shell_birth_status": {
+    "authenticated_surfaces_born": false,
+    "protected_shell_entry_implemented": false,
+    "authenticated_workspace_implemented": false
+  },
+  "permitted_supabase_auth_methods": [
+    "exchangeCodeForSession",
+    "getSession"
+  ],
+  "callback_session_behavior": {
+    "callback_utility_file": "js/supabase-auth-precondition.js",
+    "callback_route_file": "",
+    "callback_route_created": false,
+    "callback_exchange_scope": "exchangeCodeForSession may be called only when public runtime config exists, the conditional client initializes, a code parameter is present, and the function is explicitly invoked.",
+    "session_guard_scope": "getSession may be called only to classify session state and never to enter a protected shell."
+  },
+  "claimable_after_this_pass": [
+    "A bounded Supabase auth callback/session-guard precondition exists; the repo can classify provider-return/session state when externally supplied public config and callback input exist."
+  ],
+  "not_claimable_after_this_pass": [
+    "login exists",
+    "signup exists",
+    "user can initiate provider login from the product",
+    "credential capture exists",
+    "protected route exists",
+    "protected shell entry exists",
+    "authenticated shell exists",
+    "authenticated workspace exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ],
+  "next_threshold": {
+    "name": "§1.2 Supabase Implementation 0.5 — Login Initiation or Protected Shell Authorization Boundary",
+    "purpose": "Separately authorize either a real login initiation surface or a protected shell boundary without conflating callback/session classification with Authenticated Surfaces birth.",
+    "must_not_implement": [
+      "signup UI",
+      "credential capture",
+      "protected shell entry",
+      "authenticated workspace",
+      "backend/server",
+      "database schema",
+      "database access",
+      "persistence layer",
+      "RLS implementation",
+      "tenant isolation",
+      "customer workspace",
+      "billing",
+      "Palisade",
+      "Weave runtime",
+      "public NEXUS runtime"
+    ]
+  },
+  "hard_boundaries_preserved": [
+    "No login UI, signup UI, provider-login initiation, credential capture, protected route entry, or protected shell entry is implemented.",
+    "No callback HTML route is created in this pass.",
+    "No backend, database schema, database access, persistence layer, RLS, tenant isolation, customer workspace, billing, Palisade, Weave runtime, or public NEXUS runtime is implemented.",
+    "No Supabase runtime public config values or package files are committed.",
+    "Server-secret names remain bounded to validators and data records as forbidden terms."
+  ]
+}
