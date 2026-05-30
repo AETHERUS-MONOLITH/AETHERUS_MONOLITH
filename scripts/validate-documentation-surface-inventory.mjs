@@ -101,7 +101,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-supabase-client-scaffold.v0.json",
   "scripts/validate-direct-ui-membrane-supabase-client-scaffold.mjs",
   "data/direct-ui-membrane-supabase-dependency-config-decision.v0.json",
-  "scripts/validate-direct-ui-membrane-supabase-dependency-config-decision.mjs"
+  "scripts/validate-direct-ui-membrane-supabase-dependency-config-decision.mjs",
+  "data/direct-ui-membrane-conditional-supabase-client-initialization.v0.json",
+  "scripts/validate-direct-ui-membrane-conditional-supabase-client-initialization.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

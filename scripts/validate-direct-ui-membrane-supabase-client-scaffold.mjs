@@ -2,7 +2,11 @@ import fs from "node:fs/promises";
 
 const clientPath = "js/supabase-client.js";
 const scaffoldPath = "data/direct-ui-membrane-supabase-client-scaffold.v0.json";
+const conditionalInitializationPath =
+  "data/direct-ui-membrane-conditional-supabase-client-initialization.v0.json";
 const envExamplePath = ".env.example";
+const exactConditionalModuleUrl =
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.103.2/+esm";
 
 const expectedPublicConfigNames = [
   "SUPABASE_URL",
@@ -77,11 +81,6 @@ const forbiddenClientPatterns = [
   { label: "real Supabase URL", pattern: /https:\/\/[A-Za-z0-9-]+\.supabase\.co/i },
   { label: "Supabase key-like value", pattern: /\bsb_(?:publishable|anon|secret|service)_[A-Za-z0-9_-]{8,}/i },
   { label: "JWT-like value", pattern: /\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/ },
-  { label: "Supabase dependency import", pattern: /@supabase\/supabase-js/ },
-  { label: "Supabase dependency import", pattern: /from\s+["'][^"']*supabase[^"']*["']/ },
-  { label: "Supabase dependency import", pattern: /import\s*\([^)]*["'][^"']*supabase[^"']*["'][^)]*\)/ },
-  { label: "live client initialization", pattern: /\bcreateClient\s*\(/ },
-  { label: "live client initialization", pattern: /\bsupabase\.createClient\b/ },
   { label: "auth call", pattern: /\bsignIn\b/ },
   { label: "auth call", pattern: /\bsignUp\b/ },
   { label: "auth call", pattern: /\bsignOut\b/ },
@@ -172,6 +171,46 @@ async function assertActiveHtmlHasNoCredentialInputs() {
   }
 }
 
+async function assertConditionalInitializationIfPresent(clientText) {
+  const hasConditionalDependency =
+    /@supabase\/supabase-js/.test(clientText) || /\bcreateClient\s*\(/.test(clientText);
+  if (!hasConditionalDependency) return;
+
+  if (!(await exists(conditionalInitializationPath))) {
+    fail(`${clientPath} contains conditional initialization without ${conditionalInitializationPath}`);
+  }
+
+  const conditional = await readJson(conditionalInitializationPath);
+  if (conditional.object_status !== "conditional_supabase_browser_client_initialization") {
+    fail("conditional initialization record object_status mismatch");
+  }
+  if (conditional.implementation_performed !== true) {
+    fail("conditional initialization record must mark implementation_performed true");
+  }
+  if (conditional.supabase_dependency_installed !== false) {
+    fail("conditional initialization must not install a Supabase dependency");
+  }
+  if (conditional.package_installation_performed !== false) {
+    fail("conditional initialization must not perform package installation");
+  }
+  if (conditional.runtime_public_config_values_committed !== false) {
+    fail("conditional initialization must not commit runtime public config values");
+  }
+  if (conditional.browser_esm_module_url !== exactConditionalModuleUrl) {
+    fail("conditional initialization must use the exact version-pinned ESM URL");
+  }
+  if (!clientText.includes(exactConditionalModuleUrl)) {
+    fail(`${clientPath} must use the exact conditional initialization ESM URL`);
+  }
+  if (/@supabase\/supabase-js@latest/.test(clientText)) fail(`${clientPath} must not use @latest`);
+  if (/@supabase\/supabase-js@2(?:[/"'`?]|$)/.test(clientText)) {
+    fail(`${clientPath} must not use a major-only @2 specifier`);
+  }
+  if (/\bsupabase\.createClient\b/.test(clientText)) {
+    fail(`${clientPath} must not use a global supabase.createClient surface`);
+  }
+}
+
 if (!(await exists(clientPath))) fail(`${clientPath} is missing`);
 if (!(await exists(scaffoldPath))) fail(`${scaffoldPath} is missing`);
 
@@ -219,6 +258,7 @@ for (const name of forbiddenClientConfigNames) {
 for (const { label, pattern } of forbiddenClientPatterns) {
   if (pattern.test(clientText)) fail(`${clientPath} contains forbidden ${label}`);
 }
+await assertConditionalInitializationIfPresent(clientText);
 
 await assertMissing(forbiddenPackageFiles, "package/dependency file");
 await assertMissing(forbiddenEnvFiles, "env file");
@@ -226,4 +266,4 @@ await assertMissing(forbiddenRouteFiles, "auth/app/protected route file");
 await assertEnvExampleValuesEmpty();
 await assertActiveHtmlHasNoCredentialInputs();
 
-console.log("direct ui membrane supabase client scaffold ok (scaffold only, no live client)");
+console.log("direct ui membrane supabase client scaffold ok (0.3 conditional boundary permitted)");

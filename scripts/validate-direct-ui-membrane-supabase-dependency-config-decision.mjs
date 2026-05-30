@@ -8,11 +8,15 @@ const decisionPath = "data/direct-ui-membrane-supabase-dependency-config-decisio
 const scaffoldPath = "data/direct-ui-membrane-supabase-client-scaffold.v0.json";
 const initializationBoundaryPath =
   "data/direct-ui-membrane-supabase-client-initialization-boundary.v0.json";
+const conditionalInitializationPath =
+  "data/direct-ui-membrane-conditional-supabase-client-initialization.v0.json";
 const envGatePath = "data/direct-ui-membrane-env-secret-hygiene-gate.v0.json";
 const projectBoundaryPath = "data/direct-ui-membrane-supabase-project-boundary.v0.json";
 const docsJsonPath = "data/docs.json";
 const clientPath = "js/supabase-client.js";
 const runtimeConfigPath = "js/supabase-public-config.runtime.js";
+const exactConditionalModuleUrl =
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.103.2/+esm";
 
 const publicConfigNames = [
   "SUPABASE_URL",
@@ -77,8 +81,7 @@ const activeClientFiles = [
   "js/pipeline.js",
   "js/preview-workspace.js",
   "js/governance-engine.js",
-  "js/trace-viewer.js",
-  clientPath
+  "js/trace-viewer.js"
 ];
 
 const runtimeForbiddenPatterns = [
@@ -169,6 +172,58 @@ async function assertNoRuntimeImplementation() {
       }
     }
   }
+}
+
+async function assertOnlyAuthorizedConditionalClientImplementation() {
+  if (!(await exists(clientPath))) return;
+  const clientText = await readText(clientPath);
+  const hasConditionalDependency =
+    /@supabase\/supabase-js/.test(clientText) || /\bcreateClient\s*\(/.test(clientText);
+  if (!hasConditionalDependency) return;
+
+  if (!(await exists(conditionalInitializationPath))) {
+    fail(`${clientPath} contains conditional initialization without ${conditionalInitializationPath}`);
+  }
+  const conditional = await readJson(conditionalInitializationPath);
+  if (conditional.object_status !== "conditional_supabase_browser_client_initialization") {
+    fail("conditional initialization record object_status mismatch");
+  }
+  if (conditional.implementation_performed !== true) {
+    fail("conditional initialization record must mark implementation_performed true");
+  }
+  if (conditional.supabase_dependency_installed !== false) {
+    fail("conditional initialization must not install a Supabase dependency");
+  }
+  if (conditional.package_installation_performed !== false) {
+    fail("conditional initialization must not perform package installation");
+  }
+  if (conditional.runtime_public_config_values_committed !== false) {
+    fail("conditional initialization must not commit runtime config values");
+  }
+  if (conditional.browser_esm_module_url !== exactConditionalModuleUrl) {
+    fail("conditional initialization must use the exact version-pinned ESM URL");
+  }
+  if (!clientText.includes(exactConditionalModuleUrl)) {
+    fail(`${clientPath} must include the exact version-pinned ESM URL`);
+  }
+  if (/@supabase\/supabase-js@latest/.test(clientText)) fail(`${clientPath} must not use @latest`);
+  if (/@supabase\/supabase-js@2(?:[/"'`?]|$)/.test(clientText)) {
+    fail(`${clientPath} must not use a major-only @2 specifier`);
+  }
+  if (/(?:https:\/\/cdn\.jsdelivr\.net\/npm\/)?@supabase\/supabase-js(?:[/"'`?]|\+esm|$)/.test(clientText)) {
+    fail(`${clientPath} must not use an unversioned Supabase module specifier`);
+  }
+  for (const { label, pattern } of runtimeForbiddenPatterns.slice(5)) {
+    if (pattern.test(clientText)) fail(`${clientPath} contains forbidden ${label}`);
+  }
+  for (const name of serverSecretNames) {
+    if (clientText.includes(name)) fail(`${clientPath} must not contain ${name}`);
+  }
+  for (const term of forbiddenClientStringPatterns) {
+    if (clientText.includes(term)) fail(`${clientPath} must not contain ${term}`);
+  }
+  if (/\bsupabase\.auth\b/.test(clientText)) fail(`${clientPath} must not call Supabase auth`);
+  if (/\bsupabase\.from\b/.test(clientText)) fail(`${clientPath} must not call Supabase database APIs`);
 }
 
 async function assertNoCommittedValues() {
@@ -468,6 +523,7 @@ await assertMissing(forbiddenPackageFiles, "package/dependency file");
 await assertMissing(forbiddenEnvFiles, "env file");
 if (await exists(runtimeConfigPath)) fail(`${runtimeConfigPath} must not exist in this pass`);
 await assertNoRuntimeImplementation();
+await assertOnlyAuthorizedConditionalClientImplementation();
 await assertNoCommittedValues();
 await assertNoForbiddenDiff();
 
@@ -491,4 +547,4 @@ for (const validator of [
   });
 }
 
-console.log("direct ui membrane supabase dependency config decision ok (decision only, no live client)");
+console.log("direct ui membrane supabase dependency config decision ok (0.3 conditional boundary permitted)");
