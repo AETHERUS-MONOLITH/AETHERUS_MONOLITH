@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Shell Boundary - AETHERUS MONOLITH</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/supabase-protected-shell.js"></script>
+</head>
+<body class="auth-login-page">
+  <div class="scan-line" aria-hidden="true"></div>
+
+  <header class="site-header" role="banner">
+    <a href="index.html" class="brand-lockup" aria-label="AETHERUS MONOLITH home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-copy">
+        <span class="brand-name">AETHERUS <b>&middot;</b> MONOLITH</span>
+        <span class="brand-subtitle">AI Governance &amp; Model-Behavior Risk Architecture</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Protected shell boundary navigation">
+      <a href="auth-login.html">Provider Initiation</a>
+      <a href="auth-callback.html">Callback Boundary</a>
+      <a href="workspace.html">Preview Workspace</a>
+    </nav>
+    <span class="interface-chip">Guarded Entry</span>
+  </header>
+
+  <main class="auth-login-shell" aria-labelledby="protected-shell-title">
+    <section class="auth-login-hero panel-frame">
+      <div>
+        <span class="panel-kicker">Section 1.2 Protected Shell Entry</span>
+        <h1 id="protected-shell-title">Protected Shell Boundary</h1>
+        <p class="auth-login-lede">
+          Admission is based only on recognized Supabase session state. This is
+          a minimal shell boundary and not a workspace surface.
+        </p>
+        <div class="auth-login-status-strip" aria-label="Protected shell boundary">
+          <span>Protected Shell Boundary</span>
+          <span data-shell-session-chip>Session pending</span>
+          <span>No database access</span>
+          <span>No persistence layer</span>
+          <span>No tenant workspace</span>
+          <span>No customer data</span>
+          <span>No billing</span>
+          <span>No production SaaS</span>
+        </div>
+      </div>
+
+      <aside class="auth-login-card" aria-label="Protected shell admission state">
+        <span class="section-kicker">Guard State</span>
+        <strong data-shell-heading>Classifying</strong>
+        <p data-shell-status data-state="checking_session">Checking session</p>
+        <a class="auth-login-return-link" href="auth-login.html" data-shell-denial-link hidden>
+          Provider Initiation
+        </a>
+      </aside>
+    </section>
+
+    <section class="auth-login-boundary-grid" aria-label="Protected shell content boundary" data-protected-shell-boundary hidden>
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Recognized</span>
+        <h2>Session recognized</h2>
+        <p>
+          The guarded route admitted only a bounded shell boundary after
+          Supabase session classification returned a session-present state.
+        </p>
+      </article>
+
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Not Included</span>
+        <h2>No data layer</h2>
+        <p>
+          No database access, no persistence layer, no tenant workspace, and no
+          customer data are loaded by this route.
+        </p>
+      </article>
+
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Not Included</span>
+        <h2>No SaaS claim</h2>
+        <p>
+          No billing, no production SaaS, and no compliance or customer
+          deployment claim is created by this boundary.
+        </p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

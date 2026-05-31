@@ -8,6 +8,8 @@ const runFile = promisify(execFile);
 const contractPath = "data/direct-ui-membrane-auth-route-callback-contract.v0.json";
 const protectedRouteGuardContractPath =
   "data/direct-ui-membrane-protected-route-guard-contract.v0.json";
+const protectedShellBirthGatePath =
+  "data/direct-ui-membrane-protected-shell-birth-gate.v0.json";
 const supabaseClientBoundaryValidator =
   "scripts/validate-direct-ui-membrane-supabase-client-initialization-boundary.mjs";
 const supabaseClientScaffoldValidator =
@@ -210,6 +212,26 @@ async function assertMissing(paths, label) {
   }
 }
 
+async function protectedShellBirthGateOwnsRouteFiles() {
+  if (!(await exists(protectedShellBirthGatePath))) return false;
+  const birthGate = await readJson(protectedShellBirthGatePath);
+  return (
+    birthGate.auth_callback_route_implemented === true &&
+    birthGate.protected_route_implemented === true &&
+    birthGate.protected_shell_entry_implemented === true &&
+    birthGate.authenticated_surfaces_birth_gate_implemented === true
+  );
+}
+
+async function assertForbiddenRoutesMissingOrOwnedByBirthGate() {
+  const laterBirthGateOwnsRoutes = await protectedShellBirthGateOwnsRouteFiles();
+  const allowedLaterRouteFiles = new Set(["auth-callback.html", "protected-shell.html"]);
+  const paths = laterBirthGateOwnsRoutes
+    ? forbiddenRouteFiles.filter((filePath) => !allowedLaterRouteFiles.has(filePath))
+    : forbiddenRouteFiles;
+  await assertMissing(paths, "forbidden callback/protected route file");
+}
+
 function normalizedHtmlText(text) {
   return text.replace(/&mdash;/g, "—").replace(/\s+/g, " ");
 }
@@ -370,7 +392,7 @@ for (const key of [
   }
 }
 
-await assertMissing(forbiddenRouteFiles, "forbidden callback/protected route file");
+await assertForbiddenRoutesMissingOrOwnedByBirthGate();
 await assertSupabaseClientFileIsScaffoldOnly();
 await assertMissing(forbiddenPackageFiles, "forbidden package/dependency file");
 await assertMissing(forbiddenEnvFiles, "forbidden env file");

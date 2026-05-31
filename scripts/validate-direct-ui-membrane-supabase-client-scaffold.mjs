@@ -4,6 +4,8 @@ const clientPath = "js/supabase-client.js";
 const scaffoldPath = "data/direct-ui-membrane-supabase-client-scaffold.v0.json";
 const conditionalInitializationPath =
   "data/direct-ui-membrane-conditional-supabase-client-initialization.v0.json";
+const protectedShellBirthGatePath =
+  "data/direct-ui-membrane-protected-shell-birth-gate.v0.json";
 const envExamplePath = ".env.example";
 const exactConditionalModuleUrl =
   "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.103.2/+esm";
@@ -144,6 +146,26 @@ async function assertMissing(paths, label) {
   }
 }
 
+async function protectedShellBirthGateOwnsRouteFiles() {
+  if (!(await exists(protectedShellBirthGatePath))) return false;
+  const birthGate = await readJson(protectedShellBirthGatePath);
+  return (
+    birthGate.auth_callback_route_implemented === true &&
+    birthGate.protected_route_implemented === true &&
+    birthGate.protected_shell_entry_implemented === true &&
+    birthGate.authenticated_surfaces_birth_gate_implemented === true
+  );
+}
+
+async function assertForbiddenRoutesMissingOrOwnedByBirthGate() {
+  const laterBirthGateOwnsRoutes = await protectedShellBirthGateOwnsRouteFiles();
+  const allowedLaterRouteFiles = new Set(["auth-callback.html", "protected-shell.html"]);
+  const paths = laterBirthGateOwnsRoutes
+    ? forbiddenRouteFiles.filter((filePath) => !allowedLaterRouteFiles.has(filePath))
+    : forbiddenRouteFiles;
+  await assertMissing(paths, "auth/app/protected route file");
+}
+
 async function assertEnvExampleValuesEmpty() {
   if (!(await exists(envExamplePath))) return;
 
@@ -262,7 +284,7 @@ await assertConditionalInitializationIfPresent(clientText);
 
 await assertMissing(forbiddenPackageFiles, "package/dependency file");
 await assertMissing(forbiddenEnvFiles, "env file");
-await assertMissing(forbiddenRouteFiles, "auth/app/protected route file");
+await assertForbiddenRoutesMissingOrOwnedByBirthGate();
 await assertEnvExampleValuesEmpty();
 await assertActiveHtmlHasNoCredentialInputs();
 

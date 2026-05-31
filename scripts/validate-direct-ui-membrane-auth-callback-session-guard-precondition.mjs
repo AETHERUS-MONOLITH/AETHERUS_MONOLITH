@@ -4,6 +4,7 @@ const recordPath = "data/direct-ui-membrane-auth-callback-session-guard-precondi
 const utilityPath = "js/supabase-auth-precondition.js";
 const callbackRoutePath = "auth-callback.html";
 const callbackScriptPath = "js/supabase-auth-callback.js";
+const protectedShellBirthGatePath = "data/direct-ui-membrane-protected-shell-birth-gate.v0.json";
 const envExamplePath = ".env.example";
 
 const requiredTrueFlags = [
@@ -80,10 +81,10 @@ const forbiddenBehaviorPatterns = [
   { label: "cookie persistence", pattern: /\bdocument\.cookie\b/ },
   { label: "credential form", pattern: /<form\b/i },
   { label: "credential field", pattern: /<input\b[^>]*(?:email|password)/i },
-  {
-    label: "protected shell",
-    pattern: /\b(?:authenticated dashboard|protected shell entry|account settings|billing page|team surface)\b/i
-  }
+  { label: "authenticated dashboard", pattern: /\bauthenticated dashboard\b/i },
+  { label: "account settings", pattern: /\baccount settings\b/i },
+  { label: "billing page", pattern: /\bbilling page\b/i },
+  { label: "team surface", pattern: /\bteam surface\b/i }
 ];
 
 function fail(message) {
@@ -171,7 +172,14 @@ function assertNoForbiddenBehavior(filePath, text) {
 async function assertCallbackRouteBounded(record) {
   const routeExists = await exists(callbackRoutePath);
   if (record.auth_callback_route_implemented !== routeExists) {
-    fail("auth_callback_route_implemented must match callback route file existence");
+    const birthGateExists = await exists(protectedShellBirthGatePath);
+    if (!birthGateExists || !routeExists || record.auth_callback_route_implemented !== false) {
+      fail("auth_callback_route_implemented must match callback route file existence unless the later protected-shell birth gate owns the route");
+    }
+    const birthGate = await readJson(protectedShellBirthGatePath);
+    if (birthGate.auth_callback_route_implemented !== true) {
+      fail("protected-shell birth gate must own the implemented callback route");
+    }
   }
   if (!routeExists) {
     if (await exists(callbackScriptPath)) fail(`${callbackScriptPath} must not exist without ${callbackRoutePath}`);

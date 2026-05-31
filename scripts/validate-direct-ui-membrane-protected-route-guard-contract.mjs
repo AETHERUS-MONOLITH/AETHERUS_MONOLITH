@@ -6,6 +6,8 @@ const runFile = promisify(execFile);
 
 const contractPath = "data/direct-ui-membrane-protected-route-guard-contract.v0.json";
 const loginSurfaceContractPath = "data/direct-ui-membrane-login-surface-contract.v0.json";
+const protectedShellBirthGatePath =
+  "data/direct-ui-membrane-protected-shell-birth-gate.v0.json";
 const authRouteCallbackValidator =
   "scripts/validate-direct-ui-membrane-auth-route-callback-contract.mjs";
 const supabaseClientScaffoldValidator =
@@ -251,6 +253,26 @@ async function assertMissing(paths, label) {
   }
 }
 
+async function protectedShellBirthGateOwnsRouteFiles() {
+  if (!(await exists(protectedShellBirthGatePath))) return false;
+  const birthGate = await readJson(protectedShellBirthGatePath);
+  return (
+    birthGate.auth_callback_route_implemented === true &&
+    birthGate.protected_route_implemented === true &&
+    birthGate.protected_shell_entry_implemented === true &&
+    birthGate.authenticated_surfaces_birth_gate_implemented === true
+  );
+}
+
+async function assertForbiddenRoutesMissingOrOwnedByBirthGate() {
+  const laterBirthGateOwnsRoutes = await protectedShellBirthGateOwnsRouteFiles();
+  const allowedLaterRouteFiles = new Set(["auth-callback.html", "protected-shell.html"]);
+  const paths = laterBirthGateOwnsRoutes
+    ? forbiddenRouteFiles.filter((filePath) => !allowedLaterRouteFiles.has(filePath))
+    : forbiddenRouteFiles;
+  await assertMissing(paths, "forbidden app/callback/protected route file");
+}
+
 function normalizedHtmlText(text) {
   return text.replace(/&mdash;/g, "—").replace(/\s+/g, " ");
 }
@@ -407,7 +429,7 @@ for (const key of [
   if (loginSurfaceContract[key] !== false) fail(`login_surface_contract.${key} must be false`);
 }
 
-await assertMissing(forbiddenRouteFiles, "forbidden app/callback/protected route file");
+await assertForbiddenRoutesMissingOrOwnedByBirthGate();
 await assertMissing(forbiddenRouteGuardFiles, "forbidden route guard JS file");
 await assertMissing(forbiddenLoginJsFiles, "forbidden login JS file");
 await assertSupabaseClientFileIsScaffoldOnly();

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Callback Boundary - AETHERUS MONOLITH</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/supabase-auth-callback.js"></script>
+</head>
+<body class="auth-login-page">
+  <div class="scan-line" aria-hidden="true"></div>
+
+  <header class="site-header" role="banner">
+    <a href="index.html" class="brand-lockup" aria-label="AETHERUS MONOLITH home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-copy">
+        <span class="brand-name">AETHERUS <b>&middot;</b> MONOLITH</span>
+        <span class="brand-subtitle">AI Governance &amp; Model-Behavior Risk Architecture</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Auth callback boundary navigation">
+      <a href="auth-login.html">Provider Initiation</a>
+      <a href="protected-shell.html">Guarded Entry</a>
+      <a href="workspace.html">Preview Workspace</a>
+    </nav>
+    <span class="interface-chip">Callback Boundary</span>
+  </header>
+
+  <main class="auth-login-shell" aria-labelledby="auth-callback-title">
+    <section class="auth-login-hero panel-frame">
+      <div>
+        <span class="panel-kicker">Section 1.2 Callback Boundary</span>
+        <h1 id="auth-callback-title">Provider callback classification</h1>
+        <p class="auth-login-lede">
+          This bounded route exchanges a provider return code only through the
+          existing Supabase callback precondition and exposes a guarded shell
+          entry link only after session recognition.
+        </p>
+        <div class="auth-login-status-strip" aria-label="Callback boundary">
+          <span>Callback classification</span>
+          <span>No credential fields</span>
+          <span>No database access</span>
+          <span>No persistence layer</span>
+          <span>No tenant workspace</span>
+          <span>No customer data</span>
+        </div>
+      </div>
+
+      <aside class="auth-login-card" aria-label="Callback classification state">
+        <span class="section-kicker">Callback State</span>
+        <strong data-callback-heading>Classifying</strong>
+        <p data-callback-status data-state="checking_callback">Checking callback</p>
+        <a class="auth-login-return-link" href="protected-shell.html" data-callback-entry hidden>
+          Protected Shell Boundary
+        </a>
+      </aside>
+    </section>
+
+    <section class="auth-login-boundary-grid" aria-label="Callback route boundary">
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Session</span>
+        <h2>Recognition only</h2>
+        <p>
+          The route classifies provider return state. It does not create a
+          workspace, load records, or store session data manually.
+        </p>
+      </article>
+
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Guard</span>
+        <h2>Entry is bounded</h2>
+        <p>
+          Protected shell entry remains subject to the separate guarded route
+          admission check on the protected-shell boundary.
+        </p>
+      </article>
+
+      <article class="auth-login-panel panel-frame">
+        <span class="section-kicker">Unavailable</span>
+        <h2>Failure is non-sensitive</h2>
+        <p>
+          Missing runtime public config, absent code, or callback exchange
+          failure are displayed without exposing provider internals or secrets.
+        </p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
