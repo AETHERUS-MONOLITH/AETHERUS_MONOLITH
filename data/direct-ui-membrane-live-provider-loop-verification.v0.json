@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Implementation 0.7 — Live Provider Loop Verification",
+  "baseline_commit": "fe0990837218309fac9ca69c9f10da7ba14e8609",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "live_provider_loop_verification",
+  "verification_performed": false,
+  "verification_completed": false,
+  "verification_blocker": "runtime_public_config_not_supplied",
+  "provider": "github",
+  "runtime_public_config_global": "AETHERUS_SUPABASE_PUBLIC_CONFIG",
+  "runtime_public_config_supplied_externally": false,
+  "runtime_public_config_values_committed": false,
+  "provider_login_verified": false,
+  "callback_session_recognition_verified": false,
+  "protected_shell_admission_verified": false,
+  "protected_shell_denial_without_session_verified": true,
+  "authenticated_surfaces_born": false,
+  "mock_stub_fake_session_used": false,
+  "backend_implemented": false,
+  "database_access_implemented": false,
+  "persistence_implemented": false,
+  "rls_implemented": false,
+  "tenant_isolation_implemented": false,
+  "customer_workspace_implemented": false,
+  "billing_implemented": false,
+  "production_saas_claimed": false,
+  "local_static_surface_checked": {
+    "server_origin": "http://127.0.0.1:4173",
+    "auth_login_route_checked": true,
+    "auth_callback_route_checked": true,
+    "protected_shell_route_checked": true,
+    "runtime_public_config_global_present_in_browser": false,
+    "protected_shell_denial_state": "Runtime public config unavailable"
+  },
+  "verification_notes": [
+    "Preflight matched the required baseline commit for HEAD and origin/main before this record was created.",
+    "The local static browser check found no externally supplied AETHERUS_SUPABASE_PUBLIC_CONFIG object.",
+    "Provider login, callback session recognition, and protected shell admission were not marked verified because no real Supabase provider-backed session was available.",
+    "The protected shell denied admission without a recognized session and kept the bounded shell content hidden in the live DOM state."
+  ],
+  "not_birth_evidence": [
+    "static DOM inspection only",
+    "unit test only",
+    "smoke test only",
+    "mocked session",
+    "stubbed getSession",
+    "fixture with session_present: true",
+    "manually toggled DOM state",
+    "browser localStorage/sessionStorage manipulation",
+    "fake callback code",
+    "fake user data",
+    "static flag",
+    "validator pass alone"
+  ],
+  "next_threshold": {
+    "name": "§1.2 Supabase Implementation 0.7 — Live Provider Loop Verification",
+    "purpose": "Supply browser-safe public Supabase runtime config externally and verify the real GitHub provider login, callback/session recognition, and protected shell admission loop without mock, stub, fake, static-flag, or demo-only session evidence."
+  }
+}
