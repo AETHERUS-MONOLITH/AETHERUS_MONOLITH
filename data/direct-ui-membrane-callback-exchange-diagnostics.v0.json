@@ -1,0 +1,101 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Callback Exchange Diagnostics 0.1 — PKCE Code Exchange Failure Boundary",
+  "baseline_commit": "08971d5bfce8eb5229eef5641b7755a6b10021a7",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "supabase_callback_exchange_diagnostics",
+  "diagnostics_performed": true,
+  "observed_blocker_being_addressed": "callback_exchange_failed_after_pkce_alignment",
+  "observed_runtime_sequence": {
+    "github_oauth_authorization_screen_reached": true,
+    "manual_github_authorization_completed": true,
+    "deployed_auth_callback_reached": true,
+    "callback_code_present": true,
+    "callback_visible_heading": "SESSION NOT ADMITTED",
+    "callback_visible_detail": "CALLBACK EXCHANGE FAILED"
+  },
+  "superseded_blocker": "callback_code_absent_because_supabase_returned_access_token_fragment",
+  "active_blocker": "pkce_callback_code_returned_but_exchange_failed",
+  "diagnostic_conclusion": "The callback route reads a query code and calls exchangeCodeForSession(code), but the configured Supabase browser client keeps persistSession false. Supabase PKCE requires the code verifier created during provider-login initiation to be available from the same browser/device at callback exchange time. With persistSession false, the package uses in-memory auth storage instead of durable browser storage, so the PKCE verifier is not expected to survive the full OAuth redirect round trip.",
+  "minimal_fix_implemented": false,
+  "minimal_fix_not_implemented_reason": "The narrowly indicated fix is to authorize durable auth storage/session persistence or an explicit storage adapter so the PKCE code verifier can survive redirect and the exchanged session can be recovered by protected-shell. That crosses the current accepted boundary and requires operator authorization before implementation.",
+  "supabase_client_configuration_changed": false,
+  "callback_handler_changed": false,
+  "provider_login_initiation_changed": false,
+  "protected_shell_link_visibility_changed": false,
+  "runtime_config_behavior_changed": false,
+  "runtime_config_script_order_preserved": true,
+  "runtime_public_config_values_committed": false,
+  "actual_supabase_values_committed": false,
+  "fake_or_placeholder_key_values_committed": false,
+  "env_files_created_or_populated": false,
+  "env_example_values_remain_empty": true,
+  "callback_code_token_session_user_payload_exposed": false,
+  "pkce_code_verifier_printed_logged_or_exposed": false,
+  "implicit_fragment_token_handling_added": false,
+  "manual_storage_session_manipulation_added": false,
+  "durable_auth_session_persistence_added": false,
+  "provider_live_loop_verified": false,
+  "callback_session_recognition_live_verified": false,
+  "protected_shell_admission_live_verified": false,
+  "authenticated_surfaces_born": false,
+  "docs_and_package_behavior_evidence": {
+    "supabase_pkce_docs_url": "https://supabase.com/docs/guides/auth/sessions/pkce-flow",
+    "supabase_exchange_code_docs_url": "https://supabase.com/docs/reference/javascript/auth-exchangecodeforsession",
+    "supabase_auth_js_source_url": "https://raw.githubusercontent.com/supabase/supabase-js/master/packages/core/auth-js/src/GoTrueClient.ts",
+    "evidence_summary": [
+      "The PKCE exchange sends both the callback auth code and locally stored code verifier.",
+      "The code verifier is created and stored locally during provider-login initiation and the exchange must occur on the same browser/device.",
+      "The package stores the PKCE code verifier in auth storage before provider redirect and reads the same storage key during exchangeCodeForSession.",
+      "When persistSession is false, the package constructor uses memory storage instead of browser localStorage or a supplied durable storage adapter."
+    ]
+  },
+  "callback_contract_preserved": {
+    "callback_code_source": "query parameter named code",
+    "callback_code_reader": "readCallbackCode(...)",
+    "session_exchange_method": "exchangeCodeForSession(code)",
+    "failure_state_exposes_sensitive_data": false,
+    "implicit_fragment_token_parsing": false
+  },
+  "protected_shell_link_visibility_diagnostic": {
+    "callback_entry_link_selector": "data-callback-entry",
+    "callback_entry_link_hidden_unless_session_present": true,
+    "static_header_guarded_entry_navigation_present": true,
+    "classification": "The visible header navigation to protected-shell.html is static site navigation, not protected shell admission. The callback-specific Protected Shell Boundary entry remains hidden unless session_present is true.",
+    "defect_found": false
+  },
+  "source_truth_after_this_pass": {
+    "provider_login_initiation_verified": true,
+    "github_oauth_provider_reached": true,
+    "deployed_app_callback_reached": true,
+    "callback_session_recognition_verified": false,
+    "protected_shell_admission_verified": false,
+    "authenticated_surfaces_born": false,
+    "runtime_config_behavior_changed": false
+  },
+  "claimable_after_this_pass": [
+    "Callback exchange failure boundary diagnosed against Supabase PKCE storage requirements.",
+    "No runtime auth persistence, implicit fragment handling, manual session manipulation, or Authenticated Surfaces birth claim was introduced."
+  ],
+  "not_claimable_after_this_pass": [
+    "callback session recognition live verified",
+    "protected shell admission live verified",
+    "Authenticated Surfaces born",
+    "durable auth session persistence exists",
+    "manual session storage manipulation exists",
+    "implicit fragment token handling exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ],
+  "follow_on_blocker_if_any": "pkce_code_verifier_not_persisted_across_oauth_redirect_under_non_persistent_client_boundary",
+  "next_threshold": {
+    "name": "§1.2 Supabase Auth Storage Boundary Decision 0.1",
+    "purpose": "Decide whether to authorize durable Supabase auth storage/session persistence or another approved PKCE verifier transport before rerunning live callback/session recognition and protected-shell admission."
+  }
+}

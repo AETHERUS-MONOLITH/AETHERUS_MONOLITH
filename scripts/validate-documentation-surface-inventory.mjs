@@ -113,7 +113,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
   "scripts/validate-direct-ui-membrane-live-provider-loop-verification.mjs",
   "data/direct-ui-membrane-pages-runtime-config-deployment.v0.json",
-  "data/direct-ui-membrane-oauth-flow-alignment.v0.json"
+  "data/direct-ui-membrane-oauth-flow-alignment.v0.json",
+  "data/direct-ui-membrane-callback-exchange-diagnostics.v0.json",
+  "scripts/validate-direct-ui-membrane-callback-exchange-diagnostics.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);
