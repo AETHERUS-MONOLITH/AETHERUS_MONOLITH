@@ -111,7 +111,8 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-protected-shell-birth-gate.v0.json",
   "scripts/validate-direct-ui-membrane-protected-shell-birth-gate.mjs",
   "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
-  "scripts/validate-direct-ui-membrane-live-provider-loop-verification.mjs"
+  "scripts/validate-direct-ui-membrane-live-provider-loop-verification.mjs",
+  "data/direct-ui-membrane-pages-runtime-config-deployment.v0.json"
 ]);
 
 const inventory = readJson(inventoryPath);

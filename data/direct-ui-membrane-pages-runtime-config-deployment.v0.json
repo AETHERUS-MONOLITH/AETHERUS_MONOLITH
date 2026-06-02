@@ -1,0 +1,111 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Deployment Mechanism 0.1 — GitHub Pages Actions Runtime Config Artifact",
+  "baseline_commit": "770b7a407a63e104e8006fea16d6ba873e9fdbfc",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "pages_runtime_config_deployment_mechanism",
+  "implementation_performed": true,
+  "workflow_added": true,
+  "workflow_path": ".github/workflows/pages-runtime-config.yml",
+  "github_pages_actions_deployment_mechanism_added": true,
+  "github_pages_source_actions_setting_verified": false,
+  "github_pages_source_actions_setting_required": true,
+  "runtime_config_artifact_path": "js/aetherus-runtime-config.js",
+  "runtime_config_generated_only_in_deployment_artifact": true,
+  "runtime_config_source_file_committed": false,
+  "runtime_public_config_global": "AETHERUS_SUPABASE_PUBLIC_CONFIG",
+  "github_actions_repository_variables_assumed_present": true,
+  "required_github_actions_repository_variables": [
+    "AETHERUS_SUPABASE_URL",
+    "AETHERUS_SUPABASE_PUBLISHABLE_KEY"
+  ],
+  "accepted_public_config_names": [
+    "SUPABASE_URL",
+    "SUPABASE_PUBLISHABLE_KEY"
+  ],
+  "fallback_public_config_name": "SUPABASE_ANON_KEY",
+  "auth_pages_updated": true,
+  "runtime_config_load_order": [
+    {
+      "page": "auth-login.html",
+      "runtime_config_script": "js/aetherus-runtime-config.js",
+      "auth_module_script": "js/supabase-login-surface.js",
+      "runtime_config_before_auth_module": true
+    },
+    {
+      "page": "auth-callback.html",
+      "runtime_config_script": "js/aetherus-runtime-config.js",
+      "auth_module_script": "js/supabase-auth-callback.js",
+      "runtime_config_before_auth_module": true
+    },
+    {
+      "page": "protected-shell.html",
+      "runtime_config_script": "js/aetherus-runtime-config.js",
+      "auth_module_script": "js/supabase-protected-shell.js",
+      "runtime_config_before_auth_module": true
+    }
+  ],
+  "workflow_behavior": {
+    "runs_on_push_to_main": true,
+    "allows_workflow_dispatch": true,
+    "uses_least_pages_permissions": true,
+    "uses_github_pages_environment": true,
+    "checks_out_repository_source": true,
+    "stages_static_site_from_git_archive": true,
+    "generates_runtime_config_from_vars": true,
+    "fails_closed_when_required_variables_absent": true,
+    "does_not_print_runtime_config_values": true,
+    "uploads_pages_artifact": true,
+    "deploys_pages_artifact": true
+  },
+  "secret_and_value_boundary": {
+    "actual_supabase_values_committed": false,
+    "fake_or_placeholder_key_values_committed": false,
+    "runtime_public_config_values_committed": false,
+    "env_files_created": false,
+    "env_example_values_remain_empty": true,
+    "oauth_client_secret_committed": false,
+    "oauth_token_committed": false,
+    "session_token_committed": false
+  },
+  "runtime_absence_behavior": {
+    "absent_config_behavior_preserved": true,
+    "missing_artifact_behavior": "When js/aetherus-runtime-config.js is unavailable, the existing Supabase client boundary continues to see no AETHERUS_SUPABASE_PUBLIC_CONFIG and remains absent_config.",
+    "missing_variables_behavior": "The workflow fails before upload or deploy when required GitHub Actions repository variables are absent."
+  },
+  "verification_scope": {
+    "live_auth_verification_performed": false,
+    "provider_login_verified": false,
+    "callback_session_recognition_verified": false,
+    "protected_shell_admission_verified": false,
+    "authenticated_surfaces_born": false
+  },
+  "hard_boundaries_preserved": [
+    "No real Supabase values are committed to repository source.",
+    "No generated runtime config with values is committed to repository source.",
+    "No package files, env files, backend, database, persistence, RLS, tenant isolation, customer workspace, billing, Palisade, Weave runtime, public NEXUS runtime, model API execution, monitoring dashboard, compliance claim, production SaaS claim, or Authenticated Surfaces birth claim is introduced."
+  ],
+  "claimable_after_this_pass": [
+    "A GitHub Actions Pages deployment mechanism exists to generate browser-safe public runtime config only inside the Pages deployment artifact.",
+    "The three static auth pages load the deployed runtime config artifact path before their auth modules initialize."
+  ],
+  "not_claimable_after_this_pass": [
+    "provider login verified",
+    "callback session recognition verified",
+    "protected shell admission verified",
+    "Authenticated Surfaces born",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ],
+  "next_threshold": {
+    "name": "§1.2 Supabase Runtime Config Injection 0.1 — Non-secret Runtime Config Loader Boundary",
+    "purpose": "Confirm the GitHub Pages deployment source is set to GitHub Actions, verify the deployed-only runtime config artifact loads before auth modules, and preserve absent_config behavior when unavailable.",
+    "external_operator_action_required": "Set GitHub Pages source to GitHub Actions if it is not already configured."
+  }
+}

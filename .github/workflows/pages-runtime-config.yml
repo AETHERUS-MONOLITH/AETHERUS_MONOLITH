@@ -1,0 +1,76 @@
+name: Deploy Pages with runtime config
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Stage static site
+        run: |
+          mkdir -p _site
+          git archive --format=tar HEAD | tar -x -C _site
+
+      - name: Generate runtime public config
+        env:
+          AETHERUS_SUPABASE_URL: ${{ vars.AETHERUS_SUPABASE_URL }}
+          AETHERUS_SUPABASE_PUBLISHABLE_KEY: ${{ vars.AETHERUS_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+
+          const required = [
+            "AETHERUS_SUPABASE_URL",
+            "AETHERUS_SUPABASE_PUBLISHABLE_KEY"
+          ];
+          const missing = required.filter((name) => !process.env[name]);
+          if (missing.length > 0) {
+            console.error(`Missing required GitHub Actions repository variable(s): ${missing.join(", ")}`);
+            process.exit(1);
+          }
+
+          const target = path.join("_site", "js", "aetherus-runtime-config.js");
+          const publicConfig = {
+            SUPABASE_URL: process.env.AETHERUS_SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY: process.env.AETHERUS_SUPABASE_PUBLISHABLE_KEY
+          };
+
+          fs.mkdirSync(path.dirname(target), { recursive: true });
+          fs.writeFileSync(
+            target,
+            `globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG = ${JSON.stringify(publicConfig)};\n`,
+            "utf8"
+          );
+          NODE
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
