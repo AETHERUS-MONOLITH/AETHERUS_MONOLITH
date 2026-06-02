@@ -15,7 +15,20 @@
   "runtime_public_config_values_committed": false,
   "oauth_flow_type": "pkce",
   "automatic_url_session_detection": false,
-  "durable_auth_session_persistence_added": false,
+  "durable_auth_session_persistence_added": true,
+  "bounded_supabase_auth_storage_implemented": true,
+  "auth_storage_scope": "Supabase auth state only for PKCE verifier continuity and Supabase session guard evaluation",
+  "auth_storage_owner": "Supabase client/auth library",
+  "auth_storage_configuration": {
+    "persistSession": true,
+    "autoRefreshToken": false,
+    "detectSessionInUrl": false,
+    "flowType": "pkce",
+    "storage": "default_supabase_browser_storage",
+    "custom_storage_adapter": false,
+    "manual_storage_manipulation": false,
+    "manual_token_handling": false
+  },
   "accepted_public_config_names": [
     "SUPABASE_URL",
     "SUPABASE_PUBLISHABLE_KEY",
@@ -48,11 +61,13 @@
   "client_initialization_behavior": {
     "absent_config": "Returns a bounded absent_config / not_initialized state without loading the Supabase module.",
     "present_config": "Loads the exact version-pinned browser ESM module and calls createClient with only SUPABASE_URL and the preferred or fallback public key.",
-    "create_client_scope": "Bounded to conditional browser client initialization only; no database, credential, protected-route, durable persistence, or authenticated-surface birth behavior is implemented.",
-    "oauth_flow_alignment": "The browser client is configured with auth.flowType pkce so provider redirects align with the existing query-code callback contract."
+    "create_client_scope": "Bounded to conditional browser client initialization and Supabase-managed auth storage for PKCE verifier/session continuity only; no database, credential, protected-route admission verification, application-data persistence, or authenticated-surface birth behavior is implemented.",
+    "oauth_flow_alignment": "The browser client is configured with auth.flowType pkce so provider redirects align with the existing query-code callback contract.",
+    "auth_storage_boundary": "The browser client permits Supabase-managed auth storage through persistSession true, with autoRefreshToken and detectSessionInUrl remaining false and no custom storage adapter."
   },
   "claimable_after_this_pass": [
-    "A conditional Supabase browser-client initialization path exists using the selected static ESM/runtime-public-config strategy; it initializes only when externally supplied browser-safe runtime public config is present."
+    "A conditional Supabase browser-client initialization path exists using the selected static ESM/runtime-public-config strategy; it initializes only when externally supplied browser-safe runtime public config is present.",
+    "Bounded Supabase-managed auth storage is implemented for PKCE verifier continuity and Supabase auth-session guard continuity only."
   ],
   "not_claimable_after_this_pass": [
     "login exists",
@@ -64,7 +79,7 @@
     "authenticated shell exists",
     "backend exists",
     "database exists",
-    "persistence exists",
+    "application data persistence exists",
     "RLS exists",
     "tenant isolation exists",
     "customer workspace exists",
@@ -99,7 +114,7 @@
     "No package installation or package files are introduced.",
     "No Supabase runtime public config values are committed.",
     "No runtime config file with values is committed.",
-    "No auth calls, credential capture, callback handling, session detection, protected routes, authenticated shell entry, backend, database access, persistence, RLS, tenant isolation, customer workspace, billing, Palisade, Weave runtime, or public NEXUS runtime is implemented.",
+    "No auth calls beyond already bounded provider/callback/session-guard methods, credential capture, backend, database access, application-data persistence, RLS, tenant isolation, customer workspace, billing, Palisade, Weave runtime, or public NEXUS runtime is implemented.",
     "Server-secret names remain bounded to validators and data records as forbidden terms."
   ]
 }

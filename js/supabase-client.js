@@ -44,6 +44,12 @@ const supabaseClientInitializationBoundary = Object.freeze({
   auth_callback_implemented: false,
   session_detection_implemented: false,
   protected_routes_implemented: false,
+  bounded_supabase_auth_storage_implemented: true,
+  auth_storage_scope: "supabase_auth_state_only",
+  auth_storage_owner: "supabase_client_auth_library",
+  auth_storage_purpose: "pkce_verifier_and_session_guard_continuity",
+  manual_storage_manipulation_implemented: false,
+  custom_storage_adapter_implemented: false,
   backend_implemented: false,
   database_access_implemented: false,
   persistence_implemented: false
@@ -151,7 +157,7 @@ async function initializeSupabaseBrowserClient(options = {}) {
     {
       auth: {
         flowType: "pkce",
-        persistSession: false,
+        persistSession: true,
         autoRefreshToken: false,
         detectSessionInUrl: false
       }

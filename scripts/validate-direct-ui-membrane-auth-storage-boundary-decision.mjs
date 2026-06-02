@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 
 const recordPath = "data/direct-ui-membrane-auth-storage-boundary-decision.v0.json";
+const implementationPath = "data/direct-ui-membrane-auth-storage-implementation.v0.json";
 const clientPath = "js/supabase-client.js";
 const loginPath = "js/supabase-login-initiation.js";
 const preconditionPath = "js/supabase-auth-precondition.js";
@@ -101,19 +102,31 @@ function assertNoForbiddenRuntimeStorage(filePath, text) {
   }
 }
 
-function assertCurrentRuntimeStillUnchanged(clientText) {
+async function implementationRecordExists() {
+  return exists(implementationPath);
+}
+
+async function assertCurrentRuntimeMatchesBoundary(clientText) {
   if (!clientText.includes('flowType: "pkce"')) fail(`${clientPath} must keep PKCE flow`);
-  if (!clientText.includes("persistSession: false")) {
-    fail(`${clientPath} must not enable persistSession in the decision pass`);
+  if (await implementationRecordExists()) {
+    const implementation = await readJson(implementationPath);
+    if (implementation.bounded_supabase_auth_storage_implemented !== true) {
+      fail(`${implementationPath}.bounded_supabase_auth_storage_implemented must be true`);
+    }
+    if (!clientText.includes("persistSession: true")) {
+      fail(`${clientPath} must implement the authorized bounded storage boundary`);
+    }
+  } else if (!clientText.includes("persistSession: false")) {
+    fail(`${clientPath} must not enable persistSession before the implementation pass`);
   }
   if (!clientText.includes("autoRefreshToken: false")) {
-    fail(`${clientPath} must keep autoRefreshToken disabled in the decision pass`);
+    fail(`${clientPath} must keep autoRefreshToken disabled`);
   }
   if (!clientText.includes("detectSessionInUrl: false")) {
-    fail(`${clientPath} must keep detectSessionInUrl disabled in the decision pass`);
+    fail(`${clientPath} must keep detectSessionInUrl disabled`);
   }
   if (clientText.includes("storage:")) {
-    fail(`${clientPath} must not add a storage adapter in the decision pass`);
+    fail(`${clientPath} must not add a custom storage adapter`);
   }
 }
 
@@ -295,7 +308,7 @@ const callbackText = await readText(callbackScriptPath);
 const protectedShellText = await readText(protectedShellPath);
 
 assertDecisionRecord(record);
-assertCurrentRuntimeStillUnchanged(clientText);
+await assertCurrentRuntimeMatchesBoundary(clientText);
 assertAuthFlowContracts(loginText, preconditionText, callbackText, protectedShellText);
 
 for (const filePath of [

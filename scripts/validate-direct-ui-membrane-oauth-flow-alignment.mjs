@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 
 const recordPath = "data/direct-ui-membrane-oauth-flow-alignment.v0.json";
+const authStorageImplementationPath = "data/direct-ui-membrane-auth-storage-implementation.v0.json";
 const clientPath = "js/supabase-client.js";
 const loginPath = "js/supabase-login-initiation.js";
 const callbackPath = "js/supabase-auth-precondition.js";
@@ -93,12 +94,20 @@ async function assertAuthPageOrder() {
   }
 }
 
-function assertPkceClientConfiguration(clientText) {
+async function assertPkceClientConfiguration(clientText) {
   if (!clientText.includes('flowType: "pkce"')) {
     fail(`${clientPath} must configure auth.flowType as pkce`);
   }
-  if (!clientText.includes("persistSession: false")) {
-    fail(`${clientPath} must keep durable auth session persistence disabled`);
+  if (await exists(authStorageImplementationPath)) {
+    const authStorageImplementation = await readJson(authStorageImplementationPath);
+    if (authStorageImplementation.bounded_supabase_auth_storage_implemented !== true) {
+      fail(`${authStorageImplementationPath}.bounded_supabase_auth_storage_implemented must be true`);
+    }
+    if (!clientText.includes("persistSession: true")) {
+      fail(`${clientPath} must implement the authorized bounded Supabase auth storage boundary`);
+    }
+  } else if (!clientText.includes("persistSession: false")) {
+    fail(`${clientPath} must keep durable auth session persistence disabled before the storage implementation pass`);
   }
   if (!clientText.includes("autoRefreshToken: false")) {
     fail(`${clientPath} must keep autoRefreshToken disabled`);
@@ -247,7 +256,7 @@ assertIncludesAll(
   "not_claimable_after_this_pass"
 );
 
-assertPkceClientConfiguration(clientText);
+await assertPkceClientConfiguration(clientText);
 assertLoginContract(loginText);
 assertCallbackContract(callbackText);
 await assertAuthPageOrder();

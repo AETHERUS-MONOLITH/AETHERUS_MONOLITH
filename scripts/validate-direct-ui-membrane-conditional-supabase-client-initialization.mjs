@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 
 const recordPath = "data/direct-ui-membrane-conditional-supabase-client-initialization.v0.json";
+const authStorageImplementationPath = "data/direct-ui-membrane-auth-storage-implementation.v0.json";
 const clientPath = "js/supabase-client.js";
 const envExamplePath = ".env.example";
 
@@ -178,8 +179,8 @@ function assertBoundedCreateClient(clientText) {
   if (!clientText.includes("missing_public_config") || !clientText.includes("absent_config")) {
     fail(`${clientPath} must return a bounded absent_config state`);
   }
-  if (!clientText.includes("persistSession: false")) {
-    fail(`${clientPath} must explicitly disable client auth persistence`);
+  if (!clientText.includes("persistSession: true")) {
+    fail(`${clientPath} must explicitly enable bounded Supabase auth persistence`);
   }
   if (!clientText.includes('flowType: "pkce"')) {
     fail(`${clientPath} must explicitly align OAuth to PKCE/code flow`);
@@ -251,8 +252,35 @@ if (record.oauth_flow_type !== "pkce") fail("oauth_flow_type must be pkce");
 if (record.automatic_url_session_detection !== false) {
   fail("automatic_url_session_detection must remain false");
 }
-if (record.durable_auth_session_persistence_added !== false) {
-  fail("durable_auth_session_persistence_added must remain false");
+if (record.durable_auth_session_persistence_added !== true) {
+  fail("durable_auth_session_persistence_added must be true for the bounded auth storage pass");
+}
+if (record.bounded_supabase_auth_storage_implemented !== true) {
+  fail("bounded_supabase_auth_storage_implemented must be true");
+}
+const authStorageConfiguration = record.auth_storage_configuration || {};
+if (authStorageConfiguration.persistSession !== true) {
+  fail("auth_storage_configuration.persistSession must be true");
+}
+if (authStorageConfiguration.autoRefreshToken !== false) {
+  fail("auth_storage_configuration.autoRefreshToken must be false");
+}
+if (authStorageConfiguration.detectSessionInUrl !== false) {
+  fail("auth_storage_configuration.detectSessionInUrl must be false");
+}
+if (authStorageConfiguration.flowType !== "pkce") {
+  fail("auth_storage_configuration.flowType must be pkce");
+}
+if (authStorageConfiguration.storage !== "default_supabase_browser_storage") {
+  fail("auth_storage_configuration.storage must be default_supabase_browser_storage");
+}
+for (const key of ["custom_storage_adapter", "manual_storage_manipulation", "manual_token_handling"]) {
+  if (authStorageConfiguration[key] !== false) {
+    fail(`auth_storage_configuration.${key} must be false`);
+  }
+}
+if (!(await exists(authStorageImplementationPath))) {
+  fail(`${authStorageImplementationPath} is required for bounded auth storage source truth`);
 }
 assertIncludesAll(record.accepted_public_config_names || [], acceptedPublicConfigNames, "accepted_public_config_names");
 if (record.preferred_public_key_name !== "SUPABASE_PUBLISHABLE_KEY") {
@@ -274,7 +302,7 @@ assertIncludesAll(record.not_claimable_after_this_pass || [], [
   "authenticated shell exists",
   "backend exists",
   "database exists",
-  "persistence exists",
+  "application data persistence exists",
   "RLS exists",
   "tenant isolation exists",
   "customer workspace exists",
