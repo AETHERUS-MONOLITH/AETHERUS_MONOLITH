@@ -1,0 +1,193 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase Auth Storage Boundary Decision 0.1",
+  "baseline_commit": "997135813e79ff07e4bf2ba0432be361d513ae4a",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "supabase_auth_storage_boundary_decision",
+  "decision_pass_performed": true,
+  "live_oauth_verification_performed": false,
+  "runtime_auth_storage_change_implemented": false,
+  "supabase_client_initialization_behavior_changed": false,
+  "callback_session_recognition_verified": false,
+  "protected_shell_admission_verified": false,
+  "authenticated_surfaces_born": false,
+  "decision_classification": "supabase_auth_session_storage_permitted_bounded",
+  "active_blocker_being_decided": "pkce_code_verifier_not_persisted_across_oauth_redirect_under_non_persistent_client_boundary",
+  "decision_summary": "Bounded browser-side Supabase auth storage is permitted for PKCE verifier continuity, Supabase session recognition after callback exchange, and protected-shell session guard evaluation only. This is not application data persistence and does not authorize backend, database, tenant, customer workspace, audit-ledger, billing, or production SaaS persistence.",
+  "source_context_confirmed": {
+    "local_checkout_clean_before_pass": true,
+    "local_head": "997135813e79ff07e4bf2ba0432be361d513ae4a",
+    "origin_main": "997135813e79ff07e4bf2ba0432be361d513ae4a",
+    "expected_baseline": "997135813e79ff07e4bf2ba0432be361d513ae4a",
+    "baseline_synchronized": true,
+    "current_runtime_client_boundary": {
+      "flow_type": "pkce",
+      "persist_session": false,
+      "auto_refresh_token": false,
+      "detect_session_in_url": false,
+      "custom_storage_adapter": false
+    },
+    "callback_handler_contract": {
+      "callback_code_source": "query parameter named code",
+      "session_exchange_method": "exchangeCodeForSession(code)",
+      "implicit_fragment_token_handling": false,
+      "manual_token_or_session_handling": false
+    },
+    "protected_shell_guard_contract": {
+      "session_guard_method": "getSession()",
+      "guard_admission_requires_session_present": true,
+      "guard_admission_live_verified": false
+    }
+  },
+  "evidence_basis": {
+    "supabase_docs": [
+      {
+        "url": "https://supabase.com/docs/guides/auth/sessions/pkce-flow",
+        "summary": "Supabase PKCE callback exchange requires both the returned auth code and a locally stored code verifier; the exchange must happen on the same browser/device that started the flow."
+      },
+      {
+        "url": "https://supabase.com/docs/reference/javascript/auth-api",
+        "summary": "Supabase JavaScript auth defaults to persistSession true and stores the session in local storage when available; when storage is unavailable, a custom storage implementation is required or persistSession can be disabled."
+      },
+      {
+        "url": "https://supabase.com/docs/reference/javascript/auth-getsession",
+        "summary": "getSession reads the session from the storage attached to the client and may return null when no session is detected."
+      }
+    ],
+    "prior_diagnostics_record": "data/direct-ui-membrane-callback-exchange-diagnostics.v0.json",
+    "prior_diagnostics_conclusion_supported": true,
+    "package_behavior_inference": [
+      "The PKCE code verifier must be recoverable by the callback exchange client after OAuth redirect.",
+      "A non-persistent in-memory storage boundary is insufficient for full-page OAuth redirect continuity.",
+      "Supabase-managed browser auth storage is the smallest supported browser-side continuity mechanism for both the verifier and the exchanged session."
+    ]
+  },
+  "allowed_auth_storage_boundary": {
+    "purpose": [
+      "PKCE code verifier continuity across provider redirect",
+      "Supabase auth session recognition after exchangeCodeForSession(code)",
+      "protected-shell session guard evaluation through Supabase auth APIs"
+    ],
+    "scope": "Supabase auth state only",
+    "storage_owner": "Supabase client/auth library",
+    "permitted_storage_behavior": [
+      "Supabase-managed browser auth storage only",
+      "PKCE verifier persistence only as managed by Supabase auth internals",
+      "Supabase auth session persistence until explicit sign-out, Supabase/session expiry, browser storage clearing, or equivalent Supabase-auth lifecycle end"
+    ],
+    "not_application_data_persistence": true,
+    "manual_storage_manipulation_permitted": false,
+    "manual_token_handling_permitted": false,
+    "service_role_or_secret_exposure_permitted": false,
+    "runtime_public_config_value_commit_permitted": false
+  },
+  "selected_future_runtime_candidate": {
+    "persistSession": true,
+    "autoRefreshToken": false,
+    "detectSessionInUrl": false,
+    "storage": "default_supabase_browser_storage",
+    "custom_storage_adapter": false,
+    "rationale": "The smallest later implementation candidate is to enable Supabase-managed browser auth persistence for PKCE verifier and session continuity while preserving the existing manual query-code exchange path and keeping background auto-refresh disabled unless separately justified."
+  },
+  "alternatives_rejected_or_deferred": [
+    {
+      "classification": "auth_storage_not_permitted",
+      "status": "rejected",
+      "reason": "It preserves the previous no-persistence boundary but blocks real Supabase PKCE callback exchange continuity."
+    },
+    {
+      "classification": "pkce_verifier_storage_permitted_only",
+      "status": "rejected",
+      "reason": "It is narrower than the documented Supabase auth client storage model and would not truthfully cover protected-shell getSession continuity after callback."
+    },
+    {
+      "classification": "auth_storage_requires_operator_decision",
+      "status": "resolved_by_this_decision_record",
+      "reason": "The permitted boundary is now explicitly scoped to Supabase auth state only and excludes application data persistence."
+    },
+    {
+      "classification": "auth_storage_requires_external_security_review",
+      "status": "not_required_for_this_boundary_decision",
+      "reason": "No service-role key, JWT secret, backend storage, tenant persistence, customer data, billing, or regulated application-data persistence is authorized by this decision."
+    },
+    {
+      "runtime_option": "detectSessionInUrl: true",
+      "status": "deferred",
+      "reason": "The current callback path already reads the query code and calls exchangeCodeForSession(code); automatic URL detection is not the smallest necessary implementation candidate."
+    },
+    {
+      "runtime_option": "autoRefreshToken: true",
+      "status": "deferred",
+      "reason": "Initial callback and protected-shell continuity can be decided without authorizing background refresh; enablement would require a separate lifecycle decision."
+    },
+    {
+      "runtime_option": "custom storage adapter",
+      "status": "deferred",
+      "reason": "Default Supabase browser storage is smaller than adding repository-owned storage adapter code."
+    }
+  ],
+  "still_not_allowed": [
+    "application data persistence",
+    "database persistence",
+    "customer data persistence",
+    "tenant workspace persistence",
+    "audit-ledger persistence",
+    "backend state",
+    "billing state",
+    "service-role key exposure",
+    "JWT secret exposure",
+    "OAuth secret exposure",
+    "manual token handling",
+    "manual localStorage manipulation",
+    "manual sessionStorage manipulation",
+    "runtime config value commit",
+    "callback code logging",
+    "PKCE verifier logging",
+    "session payload logging",
+    "user identity payload logging",
+    "Authenticated Surfaces birth claim"
+  ],
+  "claimable_after_this_pass": [
+    "Bounded Supabase-managed browser auth storage is permitted as a future implementation boundary for PKCE verifier continuity and Supabase session guard continuity only.",
+    "The decision does not implement runtime auth storage behavior, live OAuth verification, callback/session recognition verification, protected-shell admission verification, backend/database persistence, or Authenticated Surfaces birth."
+  ],
+  "not_claimable_after_this_pass": [
+    "persistSession runtime behavior changed",
+    "autoRefreshToken enabled",
+    "detectSessionInUrl enabled",
+    "custom storage adapter exists",
+    "callback session recognition live verified",
+    "protected shell admission live verified",
+    "Authenticated Surfaces born",
+    "backend exists",
+    "database exists",
+    "application data persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ],
+  "next_threshold": {
+    "name": "§1.2 Supabase Auth Storage Implementation 0.1 — Bounded PKCE/Auth Session Continuity",
+    "purpose": "Implement only the approved Supabase-managed auth storage continuity boundary, then separately rerun live callback/session recognition and protected-shell admission verification without claiming Authenticated Surfaces birth until those live checks pass.",
+    "must_not_implement": [
+      "backend/server",
+      "database schema",
+      "database access",
+      "application data persistence",
+      "RLS implementation",
+      "tenant isolation",
+      "customer workspace",
+      "billing",
+      "sign-out/session lifecycle UI",
+      "password login",
+      "signup",
+      "credential capture",
+      "custom storage adapter unless separately authorized",
+      "autoRefreshToken unless separately authorized",
+      "detectSessionInUrl unless separately authorized",
+      "Authenticated Surfaces birth claim"
+    ]
+  }
+}
