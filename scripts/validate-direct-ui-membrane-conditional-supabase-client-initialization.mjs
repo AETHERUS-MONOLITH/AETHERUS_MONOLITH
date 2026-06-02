@@ -181,6 +181,9 @@ function assertBoundedCreateClient(clientText) {
   if (!clientText.includes("persistSession: false")) {
     fail(`${clientPath} must explicitly disable client auth persistence`);
   }
+  if (!clientText.includes('flowType: "pkce"')) {
+    fail(`${clientPath} must explicitly align OAuth to PKCE/code flow`);
+  }
   if (!clientText.includes("detectSessionInUrl: false")) {
     fail(`${clientPath} must explicitly disable callback/session URL detection`);
   }
@@ -243,6 +246,13 @@ if (record.browser_esm_module_url !== exactModuleUrl) fail("browser_esm_module_u
 if (record.browser_esm_version_pin !== exactVersionPin) fail("browser_esm_version_pin mismatch");
 if (record.runtime_public_config_global !== runtimePublicConfigGlobal) {
   fail("runtime_public_config_global mismatch");
+}
+if (record.oauth_flow_type !== "pkce") fail("oauth_flow_type must be pkce");
+if (record.automatic_url_session_detection !== false) {
+  fail("automatic_url_session_detection must remain false");
+}
+if (record.durable_auth_session_persistence_added !== false) {
+  fail("durable_auth_session_persistence_added must remain false");
 }
 assertIncludesAll(record.accepted_public_config_names || [], acceptedPublicConfigNames, "accepted_public_config_names");
 if (record.preferred_public_key_name !== "SUPABASE_PUBLISHABLE_KEY") {

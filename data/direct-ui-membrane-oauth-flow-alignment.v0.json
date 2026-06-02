@@ -1,0 +1,73 @@
+{
+  "schema_version": "0.1",
+  "generated_for_sub_pass": "§1.2 Supabase OAuth Flow Alignment 0.1 — PKCE Callback Contract",
+  "baseline_commit": "be54f3fe1ec1091627cff6095a57dc08542288d2",
+  "section": "§1.2 Direct UI Membrane",
+  "object_status": "supabase_oauth_flow_alignment",
+  "observed_blocker_being_addressed": "callback_code_absent_because_supabase_returned_access_token_fragment",
+  "implementation_performed": true,
+  "pkce_code_callback_alignment_implemented": true,
+  "supabase_client_flow_configuration_changed": true,
+  "provider_login_initiation_changed": false,
+  "callback_handler_changed": false,
+  "runtime_config_behavior_changed": false,
+  "runtime_config_script_order_preserved": true,
+  "implicit_fragment_token_handling_added": false,
+  "manual_storage_session_manipulation_added": false,
+  "durable_auth_session_persistence_added": false,
+  "selected_oauth_flow_type": "pkce",
+  "client_auth_configuration": {
+    "flowType": "pkce",
+    "persistSession": false,
+    "autoRefreshToken": false,
+    "detectSessionInUrl": false
+  },
+  "callback_contract_preserved": {
+    "callback_code_source": "query parameter named code",
+    "callback_code_reader": "readCallbackCode(...)",
+    "session_exchange_method": "exchangeCodeForSession(code)",
+    "implicit_fragment_token_parsing": false
+  },
+  "source_truth_after_this_pass": {
+    "provider_live_loop_verified": false,
+    "callback_session_recognition_live_verified": false,
+    "protected_shell_admission_live_verified": false,
+    "authenticated_surfaces_born": false,
+    "runtime_public_config_values_committed": false,
+    "actual_supabase_values_committed": false,
+    "fake_or_placeholder_key_values_committed": false,
+    "env_files_created": false,
+    "env_example_values_remain_empty": true
+  },
+  "boundary_notes": [
+    "The OAuth return mode is aligned toward the PKCE/code callback contract expected by the existing callback handler.",
+    "The callback handler remains query-code based and still calls exchangeCodeForSession(code).",
+    "No implicit access-token fragment handling is added.",
+    "No durable auth session persistence is added in this pass.",
+    "Protected shell admission after callback remains a follow-on live verification concern."
+  ],
+  "claimable_after_this_pass": [
+    "The OAuth flow has been aligned toward the PKCE/code callback contract expected by the existing callback handler."
+  ],
+  "not_claimable_after_this_pass": [
+    "provider live loop verified",
+    "callback session recognition live verified",
+    "protected shell admission live verified",
+    "Authenticated Surfaces born",
+    "implicit fragment token handling exists",
+    "durable auth session persistence exists",
+    "backend exists",
+    "database exists",
+    "persistence exists",
+    "RLS exists",
+    "tenant isolation exists",
+    "customer workspace exists",
+    "billing exists",
+    "production SaaS exists"
+  ],
+  "follow_on_blocker_if_observed_later": "protected_shell_session_not_persisted_across_callback_navigation",
+  "next_threshold": {
+    "name": "§1.2 Supabase Live Provider Loop Verification 0.8 — Runtime-Configured GitHub OAuth Loop",
+    "purpose": "Rerun the real provider-backed OAuth loop after deployment and verify callback/session recognition and protected shell admission without mock, stub, fake, injected, or storage-manipulated session evidence."
+  }
+}

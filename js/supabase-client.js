@@ -150,6 +150,7 @@ async function initializeSupabaseBrowserClient(options = {}) {
     publicConfigBoundary.config.public_key,
     {
       auth: {
+        flowType: "pkce",
         persistSession: false,
         autoRefreshToken: false,
         detectSessionInUrl: false

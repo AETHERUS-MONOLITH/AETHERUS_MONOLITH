@@ -13,6 +13,9 @@
   "browser_esm_version_pin": "2.103.2",
   "runtime_public_config_global": "AETHERUS_SUPABASE_PUBLIC_CONFIG",
   "runtime_public_config_values_committed": false,
+  "oauth_flow_type": "pkce",
+  "automatic_url_session_detection": false,
+  "durable_auth_session_persistence_added": false,
   "accepted_public_config_names": [
     "SUPABASE_URL",
     "SUPABASE_PUBLISHABLE_KEY",
@@ -45,7 +48,8 @@
   "client_initialization_behavior": {
     "absent_config": "Returns a bounded absent_config / not_initialized state without loading the Supabase module.",
     "present_config": "Loads the exact version-pinned browser ESM module and calls createClient with only SUPABASE_URL and the preferred or fallback public key.",
-    "create_client_scope": "Bounded to conditional browser client initialization only; no auth, database, credential, session, protected-route, or persistence behavior is implemented."
+    "create_client_scope": "Bounded to conditional browser client initialization only; no database, credential, protected-route, durable persistence, or authenticated-surface birth behavior is implemented.",
+    "oauth_flow_alignment": "The browser client is configured with auth.flowType pkce so provider redirects align with the existing query-code callback contract."
   },
   "claimable_after_this_pass": [
     "A conditional Supabase browser-client initialization path exists using the selected static ESM/runtime-public-config strategy; it initializes only when externally supplied browser-safe runtime public config is present."
