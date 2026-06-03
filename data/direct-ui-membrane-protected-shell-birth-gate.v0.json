@@ -21,8 +21,8 @@
   "protected_route_implemented": true,
   "protected_shell_entry_implemented": true,
   "authenticated_surfaces_birth_gate_implemented": true,
-  "authenticated_surfaces_born": false,
-  "authenticated_surfaces_birth_verification": "unverified_runtime_config_unavailable",
+  "authenticated_surfaces_born": true,
+  "authenticated_surfaces_birth_verification": "verified_real_provider_callback_and_protected_shell_admission_after_auth_storage",
   "authenticated_workspace_implemented": false,
   "backend_implemented": false,
   "database_schema_implemented": false,
@@ -54,8 +54,18 @@
       "bounded protected shell route exists",
       "bounded protected shell script exists"
     ],
-    "birth_not_claimed_reason": "No real externally supplied AETHERUS_SUPABASE_PUBLIC_CONFIG values or configured provider runtime were available in this checkout, so a real provider-backed login/callback/protected-shell loop was not verified.",
-    "external_condition_required": "Provide runtime public Supabase config outside committed source and verify the GitHub provider OAuth loop against the configured Supabase project without mock, stub, fake, static-flag, or demo-only session evidence."
+    "birth_claimed_reason": "The deployed GitHub OAuth flow reached the app callback route, recognized a real Supabase session after callback exchange, exposed the Protected Shell Boundary link only after session recognition, and admitted protected-shell.html through the Supabase session guard.",
+    "live_verification_record": "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
+    "live_verification_result": {
+      "provider_login_initiation_verified": true,
+      "github_oauth_provider_reached": true,
+      "callback_session_recognition_verified": true,
+      "protected_shell_admission_verified": true,
+      "protected_shell_denial_without_session_verified": true,
+      "mock_stub_fake_session_used": false,
+      "local_storage_session_storage_manipulation_used": false,
+      "oauth_token_session_callback_user_payload_exposed": false
+    }
   },
   "component_births_after_this_pass": [
     "bounded auth callback route",
@@ -67,14 +77,15 @@
   ],
   "shell_birth_status": {
     "authenticated_surfaces_birth_gate_implemented": true,
-    "authenticated_surfaces_born": false,
-    "authenticated_surfaces_birth_verification": "unverified_runtime_config_unavailable",
+    "authenticated_surfaces_born": true,
+    "authenticated_surfaces_birth_verification": "verified_real_provider_callback_and_protected_shell_admission_after_auth_storage",
     "protected_route_implemented": true,
     "protected_shell_entry_implemented": true,
     "authenticated_workspace_implemented": false
   },
   "claimable_after_this_pass": [
-    "A bounded protected-shell birth gate exists; protected-route/protected-shell implementation is present, but §1.2.3 Authenticated Surfaces are not yet claimed born because real provider-backed verification was not completed."
+    "§1.2.3 Authenticated Surfaces are born only for the bounded callback/session recognition and protected-shell admission threshold verified through the real deployed GitHub OAuth and Supabase callback flow.",
+    "A bounded protected-shell birth gate exists, and protected-shell admission is verified through Supabase session guard state."
   ],
   "not_claimable_after_this_pass": [
     "password login exists",

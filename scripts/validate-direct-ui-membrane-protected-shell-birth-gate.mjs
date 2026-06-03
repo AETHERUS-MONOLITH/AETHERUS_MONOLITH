@@ -31,7 +31,6 @@ const requiredFalseFlags = [
   "signup_ui_implemented",
   "sign_up_implemented",
   "email_password_form_implemented",
-  "authenticated_surfaces_born",
   "authenticated_workspace_implemented",
   "backend_implemented",
   "database_schema_implemented",
@@ -253,8 +252,9 @@ function assertBirthEvidence(record) {
     "protected_route_admission_path",
     "protected_shell_entry_path",
     "implementation_pieces_present",
-    "birth_not_claimed_reason",
-    "external_condition_required"
+    "birth_claimed_reason",
+    "live_verification_record",
+    "live_verification_result"
   ], "birth_gate_evidence");
   assertIncludesAll(evidence.implementation_pieces_present || [], [
     "bounded provider login initiation exists",
@@ -262,11 +262,28 @@ function assertBirthEvidence(record) {
     "bounded protected shell route exists",
     "bounded protected shell script exists"
   ], "birth_gate_evidence.implementation_pieces_present");
-  if (!evidence.birth_not_claimed_reason.includes("AETHERUS_SUPABASE_PUBLIC_CONFIG")) {
-    fail("birth_not_claimed_reason must name the unavailable runtime public config");
+  if (!evidence.birth_claimed_reason.includes("real Supabase session")) {
+    fail("birth_claimed_reason must name real Supabase session recognition");
   }
-  if (!/without mock, stub, fake, static-flag, or demo-only session evidence/i.test(evidence.external_condition_required)) {
-    fail("external_condition_required must reject mock/stub/fake session evidence");
+  if (evidence.live_verification_record !== "data/direct-ui-membrane-live-provider-loop-verification.v0.json") {
+    fail("live_verification_record mismatch");
+  }
+  const live = evidence.live_verification_result || {};
+  for (const flag of [
+    "provider_login_initiation_verified",
+    "github_oauth_provider_reached",
+    "callback_session_recognition_verified",
+    "protected_shell_admission_verified",
+    "protected_shell_denial_without_session_verified"
+  ]) {
+    if (live[flag] !== true) fail(`birth_gate_evidence.live_verification_result.${flag} must be true`);
+  }
+  for (const flag of [
+    "mock_stub_fake_session_used",
+    "local_storage_session_storage_manipulation_used",
+    "oauth_token_session_callback_user_payload_exposed"
+  ]) {
+    if (live[flag] !== false) fail(`birth_gate_evidence.live_verification_result.${flag} must be false`);
   }
 }
 
@@ -287,8 +304,14 @@ if (record.baseline_commit !== "a8a80d535356197a326250bc0935fddaad6dbe99") {
   fail("baseline_commit mismatch");
 }
 if (record.object_status !== "protected_shell_entry_birth_gate") fail("object_status mismatch");
-if (record.authenticated_surfaces_birth_verification !== "unverified_runtime_config_unavailable") {
+if (
+  record.authenticated_surfaces_birth_verification !==
+  "verified_real_provider_callback_and_protected_shell_admission_after_auth_storage"
+) {
   fail("authenticated_surfaces_birth_verification mismatch");
+}
+if (record.authenticated_surfaces_born !== true) {
+  fail(`${recordPath}.authenticated_surfaces_born must be true`);
 }
 
 assertRecordFlags(record);
@@ -299,7 +322,8 @@ assertIncludesAll(record.permitted_supabase_auth_methods || [], [
 ], "permitted_supabase_auth_methods");
 assertBirthEvidence(record);
 assertIncludesAll(record.claimable_after_this_pass || [], [
-  "A bounded protected-shell birth gate exists; protected-route/protected-shell implementation is present, but §1.2.3 Authenticated Surfaces are not yet claimed born because real provider-backed verification was not completed."
+  "§1.2.3 Authenticated Surfaces are born only for the bounded callback/session recognition and protected-shell admission threshold verified through the real deployed GitHub OAuth and Supabase callback flow.",
+  "A bounded protected-shell birth gate exists, and protected-shell admission is verified through Supabase session guard state."
 ], "claimable_after_this_pass");
 assertIncludesAll(record.not_claimable_after_this_pass || [], [
   "password login exists",
@@ -342,4 +366,4 @@ await assertMissing(forbiddenEnvFiles, "env file");
 await assertEnvExampleEmptyNamesOnly();
 await assertServerSecretTermsBounded();
 
-console.log("direct ui membrane protected shell birth gate ok (implementation present, birth unverified)");
+console.log("direct ui membrane protected shell birth gate ok (live birth threshold verified)");

@@ -6,14 +6,22 @@ const loginRoutePath = "auth-login.html";
 const callbackRoutePath = "auth-callback.html";
 const protectedShellPath = "protected-shell.html";
 
-const requiredFalseFlags = [
+const requiredTrueFlags = [
+  "verification_performed",
+  "verification_completed",
   "runtime_public_config_supplied_externally",
-  "runtime_public_config_values_committed",
   "provider_login_verified",
   "callback_session_recognition_verified",
   "protected_shell_admission_verified",
-  "authenticated_surfaces_born",
+  "protected_shell_denial_without_session_verified",
+  "authenticated_surfaces_born"
+];
+
+const requiredFalseFlags = [
+  "runtime_public_config_values_committed",
   "mock_stub_fake_session_used",
+  "local_storage_session_storage_manipulation_used",
+  "oauth_token_session_callback_user_payload_exposed",
   "backend_implemented",
   "database_access_implemented",
   "persistence_implemented",
@@ -24,7 +32,7 @@ const requiredFalseFlags = [
   "production_saas_claimed"
 ];
 
-const invalidBirthEvidence = [
+const rejectedBirthEvidence = [
   "static DOM inspection only",
   "unit test only",
   "smoke test only",
@@ -77,9 +85,92 @@ function assertIncludesAll(actual, expected, label) {
   }
 }
 
-function assertFalseFlags(record) {
-  for (const flag of requiredFalseFlags) {
-    if (record[flag] !== false) fail(`${recordPath}.${flag} must be false`);
+function assertFlags(record, flags, expected) {
+  for (const flag of flags) {
+    if (record[flag] !== expected) fail(`${recordPath}.${flag} must be ${expected}`);
+  }
+}
+
+function assertRecordShape(record) {
+  if (record.schema_version !== "0.1") fail("schema_version must be 0.1");
+  if (
+    record.generated_for_sub_pass !==
+    "§1.2 Supabase Auth Storage Live Verification 0.1 — Callback Session Recognition / Protected Shell Admission"
+  ) {
+    fail("generated_for_sub_pass mismatch");
+  }
+  if (record.baseline_commit !== "dffde0257535fad80c60d9fbd288c828f7326a70") {
+    fail("baseline_commit mismatch");
+  }
+  if (record.object_status !== "live_provider_loop_verification") fail("object_status mismatch");
+  if (record.verification_blocker !== "none") fail("verification_blocker must be none");
+  if (record.provider !== "github") fail("provider must be github");
+  if (record.runtime_public_config_global !== "AETHERUS_SUPABASE_PUBLIC_CONFIG") {
+    fail("runtime_public_config_global mismatch");
+  }
+}
+
+function assertDeployedChecks(record) {
+  const runtime = record.deployed_runtime_config_check || {};
+  for (const flag of [
+    "runtime_config_artifact_http_200",
+    "runtime_config_parseable_javascript",
+    "runtime_config_global_present",
+    "auth_storage_deployed_configuration_verified"
+  ]) {
+    if (runtime[flag] !== true) fail(`deployed_runtime_config_check.${flag} must be true`);
+  }
+  if (runtime.runtime_config_values_printed_logged_or_exposed !== false) {
+    fail("runtime config values must not be printed, logged, or exposed");
+  }
+
+  const order = record.deployed_auth_page_load_order || {};
+  for (const flag of [
+    "auth_login_runtime_config_before_auth_module",
+    "auth_callback_runtime_config_before_auth_module",
+    "protected_shell_runtime_config_before_auth_module"
+  ]) {
+    if (order[flag] !== true) fail(`deployed_auth_page_load_order.${flag} must be true`);
+  }
+}
+
+function assertLiveSurface(record) {
+  const live = record.live_deployed_surface_checked || {};
+  const requiredLiveTrue = [
+    "auth_login_route_checked",
+    "provider_login_initiation_attempted_through_deployed_auth_login",
+    "provider_login_initiation_verified",
+    "github_oauth_provider_reached",
+    "supabase_app_callback_route_reached",
+    "protected_shell_boundary_link_exposed_after_session_recognition",
+    "protected_shell_route_reached",
+    "protected_shell_denial_without_session_protected_content_hidden"
+  ];
+  for (const flag of requiredLiveTrue) {
+    if (live[flag] !== true) fail(`live_deployed_surface_checked.${flag} must be true`);
+  }
+  if (live.callback_visible_heading !== "Session recognized") fail("callback heading mismatch");
+  if (live.callback_visible_status !== "Callback exchange classified") {
+    fail("callback visible status mismatch");
+  }
+  if (live.callback_status_state !== "callback_exchange_attempted") fail("callback state mismatch");
+  if (live.protected_shell_visible_heading !== "Protected Shell Boundary") {
+    fail("protected shell page heading mismatch");
+  }
+  if (live.protected_shell_guard_heading !== "Session recognized") {
+    fail("protected shell guard heading mismatch");
+  }
+  if (live.protected_shell_visible_status !== "Session recognized") {
+    fail("protected shell status mismatch");
+  }
+  if (live.protected_shell_status_state !== "guard_permitted_without_shell_entry") {
+    fail("protected shell state mismatch");
+  }
+  if (live.protected_shell_denial_without_session_state !== "Session absent") {
+    fail("no-session denial state mismatch");
+  }
+  if (live.protected_shell_denial_without_session_heading !== "Access denied") {
+    fail("no-session denial heading mismatch");
   }
 }
 
@@ -92,63 +183,32 @@ for (const filePath of [loginRoutePath, callbackRoutePath, protectedShellPath]) 
 const record = await readJson(recordPath);
 const birthGate = await readJson(birthGatePath);
 
-if (record.schema_version !== "0.1") fail("schema_version must be 0.1");
-if (
-  record.generated_for_sub_pass !==
-  "§1.2 Supabase Implementation 0.7 — Live Provider Loop Verification"
-) {
-  fail("generated_for_sub_pass mismatch");
-}
-if (record.baseline_commit !== "fe0990837218309fac9ca69c9f10da7ba14e8609") {
-  fail("baseline_commit mismatch");
-}
-if (record.object_status !== "live_provider_loop_verification") fail("object_status mismatch");
-if (record.verification_performed !== false) fail("verification_performed must remain false");
-if (record.verification_completed !== false) fail("verification_completed must remain false");
-if (record.verification_blocker !== "runtime_public_config_not_supplied") {
-  fail("verification_blocker mismatch");
-}
-if (record.provider !== "github") fail("provider must be github");
-if (record.runtime_public_config_global !== "AETHERUS_SUPABASE_PUBLIC_CONFIG") {
-  fail("runtime_public_config_global mismatch");
-}
-if (record.protected_shell_denial_without_session_verified !== true) {
-  fail("protected_shell_denial_without_session_verified must be true");
-}
-
-assertFalseFlags(record);
-assertIncludesAll(record.not_birth_evidence || [], invalidBirthEvidence, "not_birth_evidence");
-
-const localCheck = record.local_static_surface_checked || {};
-if (localCheck.server_origin !== "http://127.0.0.1:4173") {
-  fail("local_static_surface_checked.server_origin mismatch");
-}
-for (const flag of [
-  "auth_login_route_checked",
-  "auth_callback_route_checked",
-  "protected_shell_route_checked"
-]) {
-  if (localCheck[flag] !== true) fail(`local_static_surface_checked.${flag} must be true`);
-}
-if (localCheck.runtime_public_config_global_present_in_browser !== false) {
-  fail("runtime public config must not be reported present");
-}
-if (localCheck.protected_shell_denial_state !== "Runtime public config unavailable") {
-  fail("protected shell denial state mismatch");
-}
+assertRecordShape(record);
+assertFlags(record, requiredTrueFlags, true);
+assertFlags(record, requiredFalseFlags, false);
+assertDeployedChecks(record);
+assertLiveSurface(record);
+assertIncludesAll(
+  record.not_birth_evidence_rejected || [],
+  rejectedBirthEvidence,
+  "not_birth_evidence_rejected"
+);
 
 const notes = record.verification_notes || [];
 assertIncludesAll(notes, [
-  "The local static browser check found no externally supplied AETHERUS_SUPABASE_PUBLIC_CONFIG object.",
-  "Provider login, callback session recognition, and protected shell admission were not marked verified because no real Supabase provider-backed session was available."
+  "An initial manual OAuth return landed on a non-sensitive invalid_request / bad_oauth_state error at the site root and did not count as callback evidence.",
+  "A fresh deployed provider login attempt then reached the app callback route, recognized a real Supabase session after callback exchange, exposed the Protected Shell Boundary link, and admitted protected-shell.html through the Supabase session guard.",
+  "No mocked, stubbed, or fake session evidence was used; no browser storage was manually manipulated; no callback code, token, session, user payload, PKCE verifier, or runtime config value was printed, logged, exposed, or committed."
 ], "verification_notes");
 
-if (birthGate.authenticated_surfaces_born !== false) {
-  fail(`${birthGatePath}.authenticated_surfaces_born must remain false`);
+if (!record.birth_scope.includes("does not create backend")) fail("birth_scope must preserve backend boundary");
+
+if (birthGate.authenticated_surfaces_born !== true) {
+  fail(`${birthGatePath}.authenticated_surfaces_born must be true`);
 }
 if (
   birthGate.authenticated_surfaces_birth_verification !==
-  "unverified_runtime_config_unavailable"
+  "verified_real_provider_callback_and_protected_shell_admission_after_auth_storage"
 ) {
   fail(`${birthGatePath}.authenticated_surfaces_birth_verification mismatch`);
 }
@@ -167,4 +227,4 @@ if (/<input\b/i.test(callbackText) || /<form\b/i.test(callbackText)) {
 const protectedShellText = await readText(protectedShellPath);
 assertIncludesAll(protectedShellText, boundedShellPhrases, protectedShellPath);
 
-console.log("direct ui membrane live provider loop verification record ok (blocked by missing runtime public config)");
+console.log("direct ui membrane live provider loop verification record ok (live auth storage verification succeeded)");
