@@ -8,6 +8,7 @@ const protectedShellScriptPath = "js/supabase-protected-shell.js";
 const loginUtilityPath = "js/supabase-login-initiation.js";
 const callbackUtilityPath = "js/supabase-auth-precondition.js";
 const loginSurfacePath = "auth-login.html";
+const homepagePath = "index.html";
 const envExamplePath = ".env.example";
 
 const requiredTrueFlags = [
@@ -118,6 +119,30 @@ const protectedShellRequiredPhrases = [
   "No customer data",
   "No billing",
   "No production SaaS"
+];
+
+const homepageForbiddenExposurePatterns = [
+  { label: "backend claim", pattern: /\bbackend implemented\b/i },
+  { label: "database claim", pattern: /\bdatabase implemented\b/i },
+  { label: "application persistence claim", pattern: /\bapplication-data persistence\b/i },
+  { label: "RLS claim", pattern: /\bRLS implemented\b/i },
+  { label: "tenant isolation claim", pattern: /\btenant isolation implemented\b/i },
+  { label: "billing claim", pattern: /\bbilling implemented\b/i },
+  { label: "compliance readiness", pattern: /\bcompliance readiness\b/i },
+  { label: "customer deployment readiness", pattern: /\bcustomer deployment readiness\b/i },
+  { label: "public NEXUS runtime", pattern: /\bpublic NEXUS runtime\b/i },
+  { label: "model API execution", pattern: /\bmodel API execution\b/i },
+  { label: "monitoring dashboard", pattern: /\bmonitoring dashboard\b/i },
+  { label: "production authentication claim", pattern: /\bproduction authentication\b/i },
+  { label: "MFA completion claim", pattern: /\bMFA\b/i },
+  { label: "mock session", pattern: /\bmock session\b/i },
+  { label: "fake session", pattern: /\bfake session\b/i },
+  { label: "stub session", pattern: /\bstub session\b/i },
+  { label: "local storage manipulation", pattern: /\blocalStorage\b/ },
+  { label: "session storage manipulation", pattern: /\bsessionStorage\b/ },
+  { label: "cookie session handling", pattern: /\bdocument\.cookie\b/ },
+  { label: "credential form", pattern: /<form\b/i },
+  { label: "credential input", pattern: /<input\b/i }
 ];
 
 function fail(message) {
@@ -287,6 +312,67 @@ function assertBirthEvidence(record) {
   }
 }
 
+async function assertHomepageNavigationExposure(record) {
+  const exposure = record.public_homepage_navigation_exposure || {};
+  const requiredExposureKeys = [
+    "exposure_implemented",
+    "homepage_file",
+    "exposed_route",
+    "visible_link_label",
+    "supporting_copy",
+    "exposure_scope",
+    "birth_claim_expanded",
+    "provider_initiation_behavior_changed",
+    "callback_session_behavior_changed",
+    "protected_shell_behavior_changed"
+  ];
+  assertIncludesAll(Object.keys(exposure), requiredExposureKeys, "public_homepage_navigation_exposure");
+
+  if (exposure.exposure_implemented !== true) fail("homepage navigation exposure must be implemented");
+  if (exposure.homepage_file !== homepagePath) fail("homepage navigation exposure must name index.html");
+  if (exposure.exposed_route !== loginSurfacePath) fail("homepage navigation exposure must point to auth-login.html");
+  if (exposure.visible_link_label !== "Authenticated Surface") {
+    fail("homepage navigation exposure visible link label mismatch");
+  }
+  if (exposure.birth_claim_expanded !== false) fail("homepage navigation must not expand the birth claim");
+
+  for (const flag of [
+    "provider_initiation_behavior_changed",
+    "callback_session_behavior_changed",
+    "protected_shell_behavior_changed",
+    "authenticated_workspace_implemented",
+    "backend_implemented",
+    "database_schema_implemented",
+    "persistence_implemented",
+    "rls_implemented",
+    "tenant_isolation_implemented",
+    "customer_workspace_implemented",
+    "billing_implemented",
+    "production_saas_claimed"
+  ]) {
+    if (exposure[flag] !== false) fail(`public_homepage_navigation_exposure.${flag} must be false`);
+  }
+
+  const homepageText = await readText(homepagePath);
+  const routePattern = new RegExp(`<a\\b[^>]*href=["']${loginSurfacePath.replace(".", "\\.")}["'][^>]*>\\s*${exposure.visible_link_label}\\s*</a>`, "i");
+  if (!routePattern.test(homepageText)) {
+    fail(`${homepagePath} must expose a visible ${exposure.visible_link_label} link to ${loginSurfacePath}`);
+  }
+  if (!homepageText.includes("Provider-backed access path")) {
+    fail(`${homepagePath} must describe the provider-backed access path boundary`);
+  }
+  if (!homepageText.includes("authenticated-surface entry and provider initiation only")) {
+    fail(`${homepagePath} must bound the exposed path to authenticated-surface entry and provider initiation`);
+  }
+  if (!homepageText.includes("not a production SaaS dashboard or customer workspace")) {
+    fail(`${homepagePath} must deny production SaaS dashboard/customer workspace implications`);
+  }
+
+  for (const { label, pattern } of homepageForbiddenExposurePatterns) {
+    if (pattern.test(homepageText)) fail(`${homepagePath} contains forbidden homepage exposure copy or behavior: ${label}`);
+  }
+}
+
 if (!(await exists(recordPath))) fail(`${recordPath} is missing`);
 for (const filePath of implementationFiles) {
   if (!(await exists(filePath))) fail(`${filePath} is missing`);
@@ -321,6 +407,7 @@ assertIncludesAll(record.permitted_supabase_auth_methods || [], [
   "getSession"
 ], "permitted_supabase_auth_methods");
 assertBirthEvidence(record);
+await assertHomepageNavigationExposure(record);
 assertIncludesAll(record.claimable_after_this_pass || [], [
   "§1.2.3 Authenticated Surfaces are born only for the bounded callback/session recognition and protected-shell admission threshold verified through the real deployed GitHub OAuth and Supabase callback flow.",
   "A bounded protected-shell birth gate exists, and protected-shell admission is verified through Supabase session guard state."

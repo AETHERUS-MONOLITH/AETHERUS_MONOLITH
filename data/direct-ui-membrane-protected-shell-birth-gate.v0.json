@@ -67,6 +67,27 @@
       "oauth_token_session_callback_user_payload_exposed": false
     }
   },
+  "public_homepage_navigation_exposure": {
+    "exposure_implemented": true,
+    "homepage_file": "index.html",
+    "exposed_route": "auth-login.html",
+    "visible_link_label": "Authenticated Surface",
+    "supporting_copy": "Provider-backed access path: authenticated-surface entry and provider initiation only, not a production SaaS dashboard or customer workspace.",
+    "exposure_scope": "Public homepage navigation exposes only the already-born provider-initiation, callback-session recognition, and protected-shell guard-admission path.",
+    "birth_claim_expanded": false,
+    "provider_initiation_behavior_changed": false,
+    "callback_session_behavior_changed": false,
+    "protected_shell_behavior_changed": false,
+    "authenticated_workspace_implemented": false,
+    "backend_implemented": false,
+    "database_schema_implemented": false,
+    "persistence_implemented": false,
+    "rls_implemented": false,
+    "tenant_isolation_implemented": false,
+    "customer_workspace_implemented": false,
+    "billing_implemented": false,
+    "production_saas_claimed": false
+  },
   "component_births_after_this_pass": [
     "bounded auth callback route",
     "bounded auth callback page script",
