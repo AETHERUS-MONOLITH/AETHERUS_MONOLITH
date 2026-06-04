@@ -88,6 +88,33 @@
     "billing_implemented": false,
     "production_saas_claimed": false
   },
+  "authenticated_surface_boundary_messaging": {
+    "messaging_hardened": true,
+    "files_covered": [
+      "auth-login.html",
+      "auth-callback.html",
+      "protected-shell.html",
+      "js/supabase-protected-shell.js"
+    ],
+    "provider_backed_access_path_named": true,
+    "supabase_github_provider_initiation_named": true,
+    "callback_session_recognition_named": true,
+    "protected_shell_guard_admission_named": true,
+    "denial_without_session_framed_as_expected_guard_behavior": true,
+    "birth_claim_expanded": false,
+    "new_auth_capability_added": false,
+    "backend_implemented": false,
+    "database_schema_implemented": false,
+    "application_data_persistence_implemented": false,
+    "rls_implemented": false,
+    "tenant_isolation_implemented": false,
+    "customer_workspace_implemented": false,
+    "billing_implemented": false,
+    "monitoring_dashboard_implemented": false,
+    "public_nexus_runtime_implemented": false,
+    "model_api_execution_implemented": false,
+    "production_saas_claimed": false
+  },
   "component_births_after_this_pass": [
     "bounded auth callback route",
     "bounded auth callback page script",

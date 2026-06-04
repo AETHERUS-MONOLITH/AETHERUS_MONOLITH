@@ -114,9 +114,55 @@ const protectedShellRequiredPhrases = [
   "Protected Shell Boundary",
   "Session recognized",
   "No database access",
-  "No persistence layer",
+  "No application-data persistence",
   "No tenant workspace",
-  "No customer data",
+  "No public NEXUS runtime",
+  "No model API execution",
+  "No billing",
+  "No production SaaS"
+];
+
+const loginSurfaceRequiredBoundaryPhrases = [
+  "authenticated-surface entry",
+  "Supabase/GitHub",
+  "provider-backed access path",
+  "Callback/session recognition",
+  "guard admission",
+  "production workspace is",
+  "No repository credential fields",
+  "No signup surface",
+  "No application-data persistence",
+  "No public NEXUS runtime",
+  "No backend, database, RLS, tenant isolation, billing, monitoring,",
+  "model API execution, or production SaaS claim"
+];
+
+const callbackRequiredBoundaryPhrases = [
+  "Supabase/GitHub",
+  "provider return",
+  "session recognition",
+  "does not load product records",
+  "Callback/session recognition",
+  "Guarded entry only after session",
+  "No credential fields",
+  "No database access",
+  "No application-data persistence",
+  "No tenant workspace",
+  "No public NEXUS runtime",
+  "backend or product maturity"
+];
+
+const protectedShellMessagingRequiredPhrases = [
+  "Protected shell admission depends on recognized Supabase session state",
+  "Denial without a session is expected guard behavior",
+  "production workspace is",
+  "Expected denial without session",
+  "guard admission, not backend or product maturity",
+  "No database access",
+  "No application-data persistence",
+  "No tenant workspace",
+  "No public NEXUS runtime",
+  "No model API execution",
   "No billing",
   "No production SaaS"
 ];
@@ -312,6 +358,80 @@ function assertBirthEvidence(record) {
   }
 }
 
+function assertMessagingRecord(record) {
+  const messaging = record.authenticated_surface_boundary_messaging || {};
+  assertIncludesAll(Object.keys(messaging), [
+    "messaging_hardened",
+    "files_covered",
+    "provider_backed_access_path_named",
+    "supabase_github_provider_initiation_named",
+    "callback_session_recognition_named",
+    "protected_shell_guard_admission_named",
+    "denial_without_session_framed_as_expected_guard_behavior",
+    "birth_claim_expanded",
+    "new_auth_capability_added",
+    "backend_implemented",
+    "database_schema_implemented",
+    "application_data_persistence_implemented",
+    "rls_implemented",
+    "tenant_isolation_implemented",
+    "customer_workspace_implemented",
+    "billing_implemented",
+    "monitoring_dashboard_implemented",
+    "public_nexus_runtime_implemented",
+    "model_api_execution_implemented",
+    "production_saas_claimed"
+  ], "authenticated_surface_boundary_messaging");
+  assertIncludesAll(messaging.files_covered || [], [
+    "auth-login.html",
+    "auth-callback.html",
+    "protected-shell.html",
+    "js/supabase-protected-shell.js"
+  ], "authenticated_surface_boundary_messaging.files_covered");
+  for (const flag of [
+    "messaging_hardened",
+    "provider_backed_access_path_named",
+    "supabase_github_provider_initiation_named",
+    "callback_session_recognition_named",
+    "protected_shell_guard_admission_named",
+    "denial_without_session_framed_as_expected_guard_behavior"
+  ]) {
+    if (messaging[flag] !== true) fail(`authenticated_surface_boundary_messaging.${flag} must be true`);
+  }
+  for (const flag of [
+    "birth_claim_expanded",
+    "new_auth_capability_added",
+    "backend_implemented",
+    "database_schema_implemented",
+    "application_data_persistence_implemented",
+    "rls_implemented",
+    "tenant_isolation_implemented",
+    "customer_workspace_implemented",
+    "billing_implemented",
+    "monitoring_dashboard_implemented",
+    "public_nexus_runtime_implemented",
+    "model_api_execution_implemented",
+    "production_saas_claimed"
+  ]) {
+    if (messaging[flag] !== false) fail(`authenticated_surface_boundary_messaging.${flag} must be false`);
+  }
+}
+
+async function assertAuthenticatedPathBoundaryMessaging() {
+  const loginText = await readText(loginSurfacePath);
+  const callbackText = await readText(callbackRoutePath);
+  const protectedShellText = await readText(protectedShellPath);
+  const protectedShellScriptText = await readText(protectedShellScriptPath);
+
+  assertIncludesAll(loginText, loginSurfaceRequiredBoundaryPhrases, loginSurfacePath);
+  assertIncludesAll(callbackText, callbackRequiredBoundaryPhrases, callbackRoutePath);
+  assertIncludesAll(protectedShellText, protectedShellMessagingRequiredPhrases, protectedShellPath);
+  assertIncludesAll(protectedShellScriptText, [
+    "Expected guard denial: session not recognized",
+    "Guard denial expected"
+  ], protectedShellScriptPath);
+}
+
 async function assertHomepageNavigationExposure(record) {
   const exposure = record.public_homepage_navigation_exposure || {};
   const requiredExposureKeys = [
@@ -401,6 +521,7 @@ if (record.authenticated_surfaces_born !== true) {
 }
 
 assertRecordFlags(record);
+assertMessagingRecord(record);
 assertIncludesAll(record.permitted_supabase_auth_methods || [], [
   "signInWithOAuth",
   "exchangeCodeForSession",
@@ -435,6 +556,7 @@ for (const filePath of implementationFiles) {
 
 const protectedShellText = await readText(protectedShellPath);
 assertIncludesAll(protectedShellText, protectedShellRequiredPhrases, protectedShellPath);
+await assertAuthenticatedPathBoundaryMessaging();
 const protectedShellScriptText = await readText(protectedShellScriptPath);
 if (!protectedShellScriptText.includes("guard_denied === false")) {
   fail(`${protectedShellScriptPath} must admit only after guard permits`);

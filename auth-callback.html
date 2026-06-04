@@ -37,17 +37,19 @@
         <span class="panel-kicker">Section 1.2 Callback Boundary</span>
         <h1 id="auth-callback-title">Provider callback classification</h1>
         <p class="auth-login-lede">
-          This bounded route exchanges a provider return code only through the
-          existing Supabase callback precondition and exposes a guarded shell
-          entry link only after session recognition.
+          This bounded callback precondition route classifies the Supabase/GitHub
+          provider return and exposes a guarded shell entry link only after session
+          recognition. It does not load product records or create production
+          workspace behavior.
         </p>
         <div class="auth-login-status-strip" aria-label="Callback boundary">
-          <span>Callback classification</span>
+          <span>Callback/session recognition</span>
+          <span>Guarded entry only after session</span>
           <span>No credential fields</span>
           <span>No database access</span>
-          <span>No persistence layer</span>
+          <span>No application-data persistence</span>
           <span>No tenant workspace</span>
-          <span>No customer data</span>
+          <span>No public NEXUS runtime</span>
         </div>
       </div>
 
@@ -67,7 +69,8 @@
         <h2>Recognition only</h2>
         <p>
           The route classifies provider return state. It does not create a
-          workspace, load records, or store session data manually.
+          production workspace, load application records, or store session data
+          manually.
         </p>
       </article>
 
@@ -76,7 +79,8 @@
         <h2>Entry is bounded</h2>
         <p>
           Protected shell entry remains subject to the separate guarded route
-          admission check on the protected-shell boundary.
+          admission check on the protected-shell boundary; recognition is not
+          backend or product maturity.
         </p>
       </article>
 

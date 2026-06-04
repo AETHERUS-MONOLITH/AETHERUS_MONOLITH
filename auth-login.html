@@ -37,17 +37,20 @@
         <span class="panel-kicker">Section 1.2 Provider Login Initiation</span>
         <h1 id="auth-login-title">Provider authentication initiation</h1>
         <p class="auth-login-lede">
-          This bounded surface can start a GitHub provider flow when external
-          public runtime config is present. It does not create an authenticated
-          workspace or shell entry.
+          This authenticated-surface entry can start the verified Supabase/GitHub
+          provider-backed access path when external public runtime config is
+          present. Callback/session recognition and guard admission
+          happen only after the provider return. It does not create an authenticated
+          workspace, and no production workspace is active here.
         </p>
         <div class="auth-login-status-strip" aria-label="Provider login boundary">
-          <span>Provider initiation only</span>
+          <span>Provider-backed access path</span>
+          <span>Supabase/GitHub initiation</span>
           <span>No repository credential fields</span>
           <span>No signup surface</span>
-          <span>No shell entry</span>
-          <span>No database</span>
-          <span>No persistence layer</span>
+          <span>No production workspace</span>
+          <span>No application-data persistence</span>
+          <span>No public NEXUS runtime</span>
         </div>
       </div>
 
@@ -64,28 +67,29 @@
     <section class="auth-login-boundary-grid" aria-label="Provider login boundary">
       <article class="auth-login-panel panel-frame">
         <span class="section-kicker">Scope</span>
-        <h2>Initiation boundary</h2>
+        <h2>Access path boundary</h2>
         <p>
-          The action starts an external provider flow through Supabase only after
+          The action starts GitHub provider initiation through Supabase only after
           browser-safe public config is supplied outside committed source.
         </p>
       </article>
 
       <article class="auth-login-panel panel-frame">
-        <span class="section-kicker">Not Born</span>
-        <h2>Shell boundary</h2>
+        <span class="section-kicker">Admission</span>
+        <h2>Session recognition required</h2>
         <p>
           Returning from the provider can be classified by the callback/session
-          precondition, but this page does not enter an authenticated workspace.
+          precondition, but guarded entry depends on recognized Supabase session
+          state.
         </p>
       </article>
 
       <article class="auth-login-panel panel-frame">
-        <span class="section-kicker">Return</span>
-        <h2>Preview context</h2>
+        <span class="section-kicker">Not Included</span>
+        <h2>No product maturity claim</h2>
         <p>
-          The unauthenticated preview remains available as the public inspection
-          workspace for Direct UI Membrane surfaces.
+          No backend, database, RLS, tenant isolation, billing, monitoring,
+          model API execution, or production SaaS claim is created by this path.
         </p>
         <a class="auth-login-return-link" href="workspace.html">Return to Preview Workspace</a>
       </article>

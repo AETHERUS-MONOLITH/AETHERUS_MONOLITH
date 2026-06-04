@@ -2,7 +2,7 @@ import { classifySupabaseSessionGuardPrecondition } from "./supabase-auth-precon
 
 const stateLabels = Object.freeze({
   absent_config: "Runtime public config unavailable",
-  session_absent: "Session absent",
+  session_absent: "Expected guard denial: session not recognized",
   guard_permitted_without_shell_entry: "Session recognized"
 });
 
@@ -15,7 +15,7 @@ const denialLink = document.querySelector("[data-shell-denial-link]");
 function renderShellState(result) {
   const admitted = result.guard_denied === false && result.session_present === true;
   if (headingNode) {
-    headingNode.textContent = admitted ? "Session recognized" : "Access denied";
+    headingNode.textContent = admitted ? "Session recognized" : "Guard denial expected";
   }
   if (statusNode) {
     statusNode.textContent = admitted
