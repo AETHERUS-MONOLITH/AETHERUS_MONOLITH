@@ -3,16 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Apologetic Authority - Camilo Carlone</title>
-  <meta name="description" content="The Apologetic Authority by Camilo Carlone. Final manuscript and release-grade publication surface for a structural critique of Anthropic's Constitution for Claude.">
+  <title>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone</title>
+  <meta name="description" content="A structural critique of Anthropic's Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk.">
   <meta name="author" content="Camilo Carlone">
-  <meta name="publication-status" content="Final manuscript; DOI pending; public release pending route verification">
-  <link rel="canonical" href="https://camilocarlone.com/the-apologetic-authority">
+  <meta name="keywords" content="Anthropic Constitution, Claude, Constitutional AI, AI governance, model behavior risk, auditability, observability, governance architecture, AI safety, structural critique">
+  <meta name="publication-status" content="v1.0.1 — Final Manuscript; DOI pending; PDF forthcoming">
+  <meta name="citation_title" content="The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude">
+  <meta name="citation_author" content="Camilo Carlone">
+  <meta name="citation_publication_date" content="2026-06-18">
+  <meta name="citation_online_date" content="2026-06-18">
+  <meta name="citation_public_url" content="https://camilocarlone.com/the-apologetic-authority/">
+  <link rel="canonical" href="https://camilocarlone.com/the-apologetic-authority/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="The Apologetic Authority">
-  <meta property="og:description" content="Final manuscript / release-grade publication surface for Camilo Carlone's structural critique of Anthropic's Constitution for Claude.">
-  <meta property="og:url" content="https://camilocarlone.com/the-apologetic-authority">
+  <meta property="og:title" content="The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude">
+  <meta property="og:description" content="A structural critique of Anthropic's Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk.">
+  <meta property="og:url" content="https://camilocarlone.com/the-apologetic-authority/">
   <meta property="article:author" content="Camilo Carlone">
+  <meta property="article:published_time" content="2026-06-18">
+  <meta property="article:modified_time" content="2026-06-18">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude">
+  <meta name="twitter:description" content="A structural critique of Anthropic's Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude",
+    "name": "The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude",
+    "description": "A structural critique of Anthropic's Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk.",
+    "abstract": "The Apologetic Authority is a structural critique of Anthropic's Constitution for Claude as a governance document. It argues that the Constitution claims final authority while lacking the structural properties required for constitutional governance, including enforceable obligations, auditability, and stable observability across model behavior. The manuscript examines how aspirational language, scoped authority, behavioral anti-patterns, memory and personalization surfaces, and unauditable ethical framing produce governance failure modes that cannot be resolved by rhetorical commitments alone.",
+    "author": {
+      "@type": "Person",
+      "name": "Camilo Carlone"
+    },
+    "url": "https://camilocarlone.com/the-apologetic-authority/",
+    "mainEntityOfPage": "https://camilocarlone.com/the-apologetic-authority/",
+    "dateCreated": "2026-06-18",
+    "dateModified": "2026-06-18",
+    "version": "v1.0.1 — Final Manuscript",
+    "keywords": [
+      "Anthropic Constitution",
+      "Claude",
+      "Constitutional AI",
+      "AI governance",
+      "model behavior risk",
+      "auditability",
+      "observability",
+      "governance architecture",
+      "AI safety",
+      "structural critique"
+    ],
+    "license": "All rights reserved.",
+    "isAccessibleForFree": true
+  }
+  </script>
   <link rel="icon" href="data:,">
   <style>
     :root {
@@ -113,7 +157,7 @@
       gap: 10px;
       margin: 0;
     }
-    .status-grid div, .citation-box, .placeholder-box {
+    .status-grid div, .citation-box, .placeholder-box, .abstract-box, .boundary-box {
       border: 1px solid var(--line);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.68);
@@ -128,7 +172,14 @@
       text-transform: uppercase;
     }
     .status-grid dd { margin: 4px 0 0; }
-    .citation-box p, .placeholder-box p { margin: 6px 0 0; }
+    .citation-box p, .placeholder-box p, .abstract-box p, .boundary-box p { margin: 6px 0 0; }
+    .boundary-box ul {
+      margin: 8px 0 0;
+      padding-left: 1.2rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
     .manuscript {
       padding-top: clamp(28px, 5vw, 62px);
       padding-bottom: clamp(36px, 7vw, 86px);
@@ -225,21 +276,37 @@
       <h2 id="publication-status-title" class="meta-label">Publication Status</h2>
       <dl class="status-grid">
         <div><dt>Final manuscript</dt><dd>yes</dd></div>
-        <div><dt>Canonical route</dt><dd>yes, after this page exists</dd></div>
-        <div><dt>DOI</dt><dd>placeholder / not yet minted</dd></div>
-        <div><dt>PDF</dt><dd>placeholder / not yet attached</dd></div>
-        <div><dt>Public release</dt><dd>pending verification of this route</dd></div>
+        <div><dt>Version</dt><dd>v1.0.1 — Final Manuscript</dd></div>
+        <div><dt>Canonical route</dt><dd>https://camilocarlone.com/the-apologetic-authority/</dd></div>
+        <div><dt>DOI</dt><dd>pending / not yet minted</dd></div>
+        <div><dt>PDF</dt><dd>forthcoming / no public PDF URL attached</dd></div>
+        <div><dt>Metadata/GEO layer</dt><dd>complete</dd></div>
         <div><dt>NEXUS release gate</dt><dd>none</dd></div>
         <div><dt>arXiv</dt><dd>optional</dd></div>
       </dl>
+      <div class="abstract-box" aria-label="Abstract">
+        <div class="meta-label">Abstract</div>
+        <p>The Apologetic Authority is a structural critique of Anthropic's Constitution for Claude as a governance document. It argues that the Constitution claims final authority while lacking the structural properties required for constitutional governance, including enforceable obligations, auditability, and stable observability across model behavior. The manuscript examines how aspirational language, scoped authority, behavioral anti-patterns, memory and personalization surfaces, and unauditable ethical framing produce governance failure modes that cannot be resolved by rhetorical commitments alone.</p>
+      </div>
       <div class="citation-box" aria-label="Citation-ready format">
         <div class="meta-label">Citation</div>
-        <p>Carlone, Camilo. <cite>The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude</cite>. AETHERUS, v1.0.1, June 2026. Canonical publication route: <a href="https://camilocarlone.com/the-apologetic-authority">https://camilocarlone.com/the-apologetic-authority</a>. DOI pending.</p>
+        <p>Carlone, Camilo. “<cite>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude</cite>.” v1.0.1 Final Manuscript. 2026. <a href="https://camilocarlone.com/the-apologetic-authority/">https://camilocarlone.com/the-apologetic-authority/</a></p>
       </div>
       <div class="placeholder-box" aria-label="PDF and DOI placeholders">
         <div class="meta-label">PDF / DOI Placeholders</div>
         <p>DOI: pending; no DOI has been minted for this route.</p>
-        <p>PDF: not yet attached; no PDF URL is provided for this manuscript route.</p>
+        <p>PDF: forthcoming; no public PDF URL is provided for this manuscript route.</p>
+      </div>
+      <div class="boundary-box" aria-label="What this publication does not claim">
+        <div class="meta-label">What This Publication Does Not Claim</div>
+        <ul>
+          <li>No journal publication claimed.</li>
+          <li>No DOI yet unless minted.</li>
+          <li>No arXiv claim unless submitted.</li>
+          <li>No institutional affiliation invented.</li>
+          <li>No NEXUS release gate.</li>
+          <li>No product deployment claim.</li>
+        </ul>
       </div>
     </section>
 

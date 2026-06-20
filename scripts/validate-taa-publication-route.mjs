@@ -40,20 +40,25 @@ function getAttributeValues(text, tagPattern, attributeName) {
 
 const html = await readText(routePath);
 
-assertIncludes(html, "<title>The Apologetic Authority - Camilo Carlone</title>", "title metadata");
+assertIncludes(html, "<title>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone</title>", "title metadata");
 assertIncludes(html, 'name="author" content="Camilo Carlone"', "author metadata");
-assertIncludes(html, 'href="https://camilocarlone.com/the-apologetic-authority"', "canonical URL");
-assertIncludes(html, 'property="og:title" content="The Apologetic Authority"', "Open Graph title");
-assertIncludes(html, 'property="og:url" content="https://camilocarlone.com/the-apologetic-authority"', "Open Graph URL");
+assertIncludes(html, 'name="description" content="A structural critique of Anthropic\'s Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk."', "description metadata");
+assertIncludes(html, 'name="keywords" content="Anthropic Constitution, Claude, Constitutional AI, AI governance, model behavior risk, auditability, observability, governance architecture, AI safety, structural critique"', "keywords metadata");
+assertIncludes(html, 'href="https://camilocarlone.com/the-apologetic-authority/"', "canonical URL");
+assertIncludes(html, 'property="og:title" content="The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude"', "Open Graph title");
+assertIncludes(html, 'property="og:description" content="A structural critique of Anthropic\'s Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk."', "Open Graph description");
+assertIncludes(html, 'property="og:url" content="https://camilocarlone.com/the-apologetic-authority/"', "Open Graph URL");
+assertIncludes(html, 'name="twitter:card" content="summary"', "Twitter card");
+assertIncludes(html, 'type="application/ld+json"', "JSON-LD metadata");
 
 assertIncludes(html, "A Structural Critique of Anthropic's Constitution for Claude", "subtitle");
-assertIncludes(html, "v1.0.1 Final Manuscript", "version status");
+assertIncludes(html, "v1.0.1 — Final Manuscript", "version status");
 assertIncludes(html, "May 2026", "manuscript date");
 assertIncludes(html, "Final manuscript", "publication status");
-assertIncludes(html, "yes, after this page exists", "canonical route status");
-assertIncludes(html, "placeholder / not yet minted", "DOI placeholder");
-assertIncludes(html, "placeholder / not yet attached", "PDF placeholder");
-assertIncludes(html, "pending verification of this route", "public release boundary");
+assertIncludes(html, "https://camilocarlone.com/the-apologetic-authority/", "canonical route status");
+assertIncludes(html, "pending / not yet minted", "DOI placeholder");
+assertIncludes(html, "forthcoming / no public PDF URL attached", "PDF placeholder");
+assertIncludes(html, "Metadata/GEO layer", "metadata/GEO layer status");
 assertIncludes(html, "NEXUS release gate", "NEXUS release-gate boundary label");
 assertIncludes(html, "<dd>none</dd>", "NEXUS release-gate boundary value");
 assertIncludes(html, "arXiv", "arXiv boundary label");
@@ -61,10 +66,12 @@ assertIncludes(html, "<dd>optional</dd>", "arXiv optional value");
 
 assertIncludes(
   html,
-  "Carlone, Camilo. <cite>The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude</cite>. AETHERUS, v1.0.1, June 2026. Canonical publication route:",
+  "Carlone, Camilo. “<cite>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude</cite>.” v1.0.1 Final Manuscript. 2026.",
   "citation boundary"
 );
-assertIncludes(html, "DOI pending.", "citation DOI boundary");
+assertIncludes(html, "DOI: pending; no DOI has been minted for this route.", "citation DOI boundary");
+assertIncludes(html, "PDF: forthcoming; no public PDF URL is provided for this manuscript route.", "PDF boundary");
+assertIncludes(html, "What This Publication Does Not Claim", "publication boundary block");
 
 assertMatches(html, /<h3 id="table-of-contents">Table of Contents<\/h3>\s*<nav aria-labelledby="table-of-contents">/, "Table of Contents");
 
