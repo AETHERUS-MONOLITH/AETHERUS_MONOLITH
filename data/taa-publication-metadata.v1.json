@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "publication": {
+    "canonical_title": "The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude",
+    "canonical_url": "https://camilocarlone.com/the-apologetic-authority/",
+    "author": {
+      "name": "Camilo Carlone"
+    },
+    "status": "v1.0.1 — Final Manuscript",
+    "date": {
+      "value": "June 18, 2026",
+      "verification": "verified",
+      "source": "Canonical route version history states: v1.0.1 — June 18, 2026. Final manuscript."
+    },
+    "abstract": "The Apologetic Authority is a structural critique of Anthropic's Constitution for Claude as a governance document. It argues that the Constitution claims final authority while lacking the structural properties required for constitutional governance, including enforceable obligations, auditability, and stable observability across model behavior. The manuscript examines how aspirational language, scoped authority, behavioral anti-patterns, memory and personalization surfaces, and unauditable ethical framing produce governance failure modes that cannot be resolved by rhetorical commitments alone.",
+    "short_description": "A structural critique of Anthropic's Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk.",
+    "keywords": [
+      "Anthropic Constitution",
+      "Claude",
+      "Constitutional AI",
+      "AI governance",
+      "model behavior risk",
+      "auditability",
+      "observability",
+      "governance architecture",
+      "AI safety",
+      "structural critique"
+    ],
+    "citation": {
+      "text": "Carlone, Camilo. “The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude.” v1.0.1 Final Manuscript. 2026. https://camilocarlone.com/the-apologetic-authority/",
+      "doi_included": false
+    },
+    "doi": {
+      "status": "pending",
+      "display": "DOI: pending",
+      "claimable": false
+    },
+    "pdf": {
+      "status": "forthcoming",
+      "public_url": null,
+      "claimable": false
+    },
+    "repository_source_status": {
+      "canonical_route_live": true,
+      "canonical_surface_complete": true,
+      "metadata_package_created": true,
+      "doi_minted": false,
+      "archive_release_completed": false,
+      "search_submission_completed": false,
+      "distribution_completed": false
+    },
+    "license": {
+      "manuscript_license_statement": "All rights reserved.",
+      "source": "Canonical route manuscript front matter",
+      "archive_license_decision": "unresolved"
+    },
+    "does_not_claim": [
+      "no journal publication claimed",
+      "no DOI yet unless minted",
+      "no arXiv claim unless submitted",
+      "no institutional affiliation invented",
+      "no NEXUS release gate",
+      "no product deployment claim"
+    ],
+    "reuse_targets": [
+      "canonical page update",
+      "Zenodo deposit",
+      "PDF front matter",
+      "Search Console / Bing",
+      "LinkedIn article",
+      "LessWrong post",
+      "email outreach",
+      "arXiv endorsement request"
+    ]
+  }
+}

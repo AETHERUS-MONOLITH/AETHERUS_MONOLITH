@@ -63,7 +63,7 @@
     ]
   },
   "summary_counts": {
-    "keep_public": 24,
+    "keep_public": 25,
     "remove_from_public_navigation_later": 13,
     "needs_operator_review": 4,
     "consolidate_later": 9,
@@ -2146,6 +2146,30 @@
       ],
       "evidence_snippets": [],
       "recommended_later_action": "Keep public in current pass; preserve non-claim boundaries and do not promote as implementation evidence.",
+      "destructive_change_required_now": false
+    },
+    {
+      "path": "data/taa-publication-metadata.v1.json",
+      "exists": true,
+      "surface": "data",
+      "publicly_discoverable_from_readme": false,
+      "publicly_discoverable_from_data_docs_json": false,
+      "title_or_label": "TAA Publication Metadata Package",
+      "series": "Other",
+      "audience": "machine_validator",
+      "artifact_type": "machine_validation_artifact",
+      "public_surface_status": "keep_public",
+      "risk_flags": [
+        "claim_boundary_risk"
+      ],
+      "evidence_snippets": [
+        "L3: \"canonical_title\": \"The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude\",",
+        "L30: \"status\": \"pending\",",
+        "L36: \"public_url\": null,",
+        "L58: \"no journal publication claimed\",",
+        "L62: \"no NEXUS release gate\""
+      ],
+      "recommended_later_action": "Keep public as the controlled TAA metadata and citation authority package; preserve DOI, archive, distribution, and release-fact boundaries.",
       "destructive_change_required_now": false
     },
     {
