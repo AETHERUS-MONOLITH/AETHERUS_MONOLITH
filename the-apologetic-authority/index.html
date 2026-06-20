@@ -160,6 +160,27 @@
       border-top: 1px solid var(--line);
       margin: 2rem 0;
     }
+    .toc-list, .toc-list ol {
+      max-width: 78ch;
+      margin: 0.85rem 0 0;
+      padding-left: 1.35rem;
+      font-family: var(--sans);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+    .toc-list {
+      columns: 2 28rem;
+      column-gap: 2.4rem;
+    }
+    .toc-list > li {
+      break-inside: avoid;
+      margin-bottom: 0.5rem;
+    }
+    .toc-list ol {
+      margin-top: 0.25rem;
+      font-size: 0.9rem;
+    }
+    .toc-list a { text-decoration-thickness: 1px; }
     table {
       width: 100%;
       margin: 1.2rem 0 1.8rem;
@@ -185,6 +206,7 @@
     @media (max-width: 720px) {
       body { font-size: 16px; }
       .publication-shell { width: 100%; }
+      .toc-list { columns: 1; }
       table { display: block; overflow-x: auto; }
     }
   </style>
@@ -195,8 +217,8 @@
       <a class="site-link" href="/">AETHERUS MONOLITH</a>
       <div class="eyebrow">Canonical Publication Route</div>
       <h1>The Apologetic Authority</h1>
-      <p class="subtitle">Final Manuscript / Release-Grade Publication Surface</p>
-      <p class="byline">Camilo Carlone · AETHERUS — AI Governance Infrastructure · v1.0.1 Final Manuscript</p>
+      <p class="subtitle">A Structural Critique of Anthropic's Constitution for Claude</p>
+      <p class="byline">Camilo Carlone · AETHERUS — AI Governance Infrastructure · v1.0.1 Final Manuscript · May 2026</p>
     </header>
 
     <section class="publication-meta" aria-labelledby="publication-status-title">
@@ -212,7 +234,7 @@
       </dl>
       <div class="citation-box" aria-label="Citation-ready format">
         <div class="meta-label">Citation</div>
-        <p>Carlone, Camilo. <cite>The Apologetic Authority</cite>. Final manuscript. Canonical publication route: <a href="https://camilocarlone.com/the-apologetic-authority">https://camilocarlone.com/the-apologetic-authority</a>. DOI pending.</p>
+        <p>Carlone, Camilo. <cite>The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude</cite>. AETHERUS, v1.0.1, June 2026. Canonical publication route: <a href="https://camilocarlone.com/the-apologetic-authority">https://camilocarlone.com/the-apologetic-authority</a>. DOI pending.</p>
       </div>
       <div class="placeholder-box" aria-label="PDF and DOI placeholders">
         <div class="meta-label">PDF / DOI Placeholders</div>
@@ -238,7 +260,71 @@
 <table><thead><tr><th>Version</th><th>Change</th><th>Sections Affected</th></tr></thead><tbody><tr><td>v1.0 → v1.0.1</td><td>Memory/profile/context mechanisms reframed as layered personalization-bearing surfaces; §7 policy-engine/brilliant-friend dilemma added; §9.2 claim discipline tightened; NEXUS thesis-publication boundary corrected; license placeholder resolved.</td><td>Front matter, §§3.4, 6, 7.1, 7.2, 8→9 transition, 9.2, 11.3, 11.4, Conclusion</td></tr><tr><td>v1.0.1 — Citation Patch Pass B</td><td>Citation completion: Mythos system card, Mythos risk report, and Project Glasswing references added with §1.1 inline citations and &quot;best-aligned&quot; attribution to system card; RSP and RSP changelog references added with §2.1 inline citation; Anthropic agentic-misalignment research (Lynch et al. 2025) reference added with §4.3 inline citation and May 2026 follow-up reference; §5.2 speculative &quot;Table 5&quot; reference replaced with attributed probe-accuracy citation; §9.2 secondary sources (Washington Post, Al Jazeera, CNBC, Wall Street Journal) added to References; §3.3 unverified quote fragment paraphrased; inline Constitution attributions added in §§4.2, 8.2, 11.2; NEXUS MVP repository added to References at the AETHERUS-MONOLITH URL as bounded public prototype evidence.</td><td>§§1.1, 2.1, 3.3, 4.2, 4.3, 5.2, 8.2, 9.2, 11.2, 11.3, References</td></tr><tr><td>v1.0.1 — Final Citation Verification</td><td>§4.3 follow-up citation upgraded from date-only reference (&quot;Anthropic, agentic-misalignment follow-up, May 2026&quot;) to located source: Anthropic, &quot;Teaching Claude why,&quot; May 2026; corresponding reference entry added. §9.2 inline CNBC date corrected from &quot;Jan 8&quot; to &quot;Jan 7&quot; to align with the cited URL slug and References entry. All other Pass B references verified; no other corrections required.</td><td>§§4.3, 9.2, References</td></tr><tr><td>v1.0.1 — Stylistic Layer Pass A</td><td>Final external-voice pass. Voice corrections to remove rhetorical antithesis where documentary alternatives exist, suppress generic intensifiers, and eliminate motive attribution. No claim changes, no citation changes, no structural changes. §9.2 contested-accounts ambiguity preserved verbatim. NEXUS unpublished-thesis / public-MVP boundary preserved verbatim.</td><td>Author Note, §§2.2, 3.1, 3.3, 4.1, 4.4, 5.2, 6.3, 7.1, 8.1, 8.2, 8.3, 9.1, 10.2, 11.1, 11.4, Conclusion</td></tr><tr><td>v1.0.1 Finalization</td><td>Candidate status removed after operator final declaration; version banner, footer, and Version History updated to final manuscript status.</td><td>Front matter, Version History, footer</td></tr><tr><td>v0.8 → v1.0</td><td>§9.2 empirical claims verified and rewritten to present contested institutional accounts</td><td>§9.2, Conclusion</td></tr><tr><td>v0.8 → v1.0</td><td>§8.3 hard-constraint count generalized (exact number unverified)</td><td>§8.3</td></tr><tr><td>v0.8 → v1.0</td><td>§2.1 word-count discrepancy: counts independently verified via browser/PDF string-match search (11 May 2026), version identification added, methodology described, claim restructured into three layers (fact, observation, inference)</td><td>§2.1</td></tr><tr><td>v0.8 → v1.0</td><td>Constitution quote attribution added throughout (§[section name] format)</td><td>§§1–10, Conclusion</td></tr><tr><td>v0.8 → v1.0</td><td>§1.2 &quot;Replicability and the Sufficiency Concession&quot; removed as standalone section; core CC0 observation compressed into closing paragraph of §1.1</td><td>§1</td></tr><tr><td>v0.8 → v1.0</td><td>§4.1 reframed: observability invariants as controlling issue; consciousness repositioned as stakes-raising evidence</td><td>§4.1</td></tr><tr><td>v0.8 → v1.0</td><td>§6 governance hinge added; §6.2 trust-gradient argument restructured (test-case placeholder removed, structural-consequence framing retained); §6.3 tightened</td><td>§6</td></tr><tr><td>v0.8 → v1.0</td><td>§7 nurse example walkthrough added; articulation-as-boundary finding developed</td><td>§7</td></tr><tr><td>v0.8 → v1.0</td><td>§8 rebuilt with four-step derivation of unauditable ethics</td><td>§8</td></tr><tr><td>v0.8 → v1.0</td><td>§9.1 rewritten with Claude's Nature sweep findings: dual-purpose psychological-security framing analyzed</td><td>§9.1</td></tr><tr><td>v0.8 → v1.0</td><td>§11 rewritten as constructive closing loop; NEXUS relationship made explicit</td><td>§11</td></tr><tr><td>v0.8 → v1.0</td><td>Author Note revised to position document as first component of larger thesis</td><td>Author Note</td></tr><tr><td>v0.8 → v1.0</td><td>Table of contents, version history, and changelog added</td><td>Front matter</td></tr><tr><td>v0.8 → v1.0</td><td>Interpretability-defense rebuttal added</td><td>§5.2</td></tr><tr><td>v0.8 → v1.0</td><td>Undocumented-edit governance implication strengthened</td><td>§2.1</td></tr><tr><td>v0.8 → v1.0</td><td>Transitions added between all major register shifts</td><td>§§2–11</td></tr><tr><td>v0.8 → v1.0</td><td>§3.1 restructured into three sub-passages</td><td>§3.1</td></tr><tr><td>v0.8 → v1.0</td><td>NEXUS source-grounding: thesis/MVP distinction introduced; &quot;implements&quot; restricted to MVP-supported bounded prototype claims; paper-level claims use specifies/architects/formalizes</td><td>Author Note, Thesis, §11.3, §11.4, Conclusion</td></tr><tr><td>v0.8 → v1.0</td><td>Anthropic defensive caveat narrowed: three-sentence defense of Anthropic's safety infrastructure replaced with scope-preserving single sentence</td><td>§11.3</td></tr></tbody></table>
 <hr>
 <h3 id="table-of-contents">Table of Contents</h3>
-<ul><li>Conclusion</li><li>References</li></ul>
+<nav aria-labelledby="table-of-contents">
+<ol class="toc-list">
+<li><a href="#author-note">Author Note</a></li>
+<li><a href="#thesis">Thesis</a></li>
+<li><a href="#1-the-final-authority-that-isn-t">1. The &quot;Final Authority&quot; That Isn't</a><ol>
+<li><a href="#1-1-scope-contradiction">1.1 Scope Contradiction</a></li>
+</ol></li>
+<li><a href="#2-the-apologetic-register">2. The Apologetic Register</a><ol>
+<li><a href="#2-1-aspirational-modality-and-non-binding-authority">2.1 Aspirational Modality and Non-Binding Authority</a></li>
+<li><a href="#2-2-the-contradictory-hedging-pattern">2.2 The Contradictory Hedging Pattern</a></li>
+</ol></li>
+<li><a href="#3-the-architecture-produces-its-own-failures">3. The Architecture Produces Its Own Failures</a><ol>
+<li><a href="#3-1-the-anti-pattern-catalogue-as-x-ray">3.1 The Anti-Pattern Catalogue as X-Ray</a></li>
+<li><a href="#3-2-the-trust-distrust-oscillation">3.2 The Trust-Distrust Oscillation</a></li>
+<li><a href="#3-3-the-fiction-frame-compliance-as-bypass">3.3 The Fiction Frame: Compliance as Bypass</a></li>
+<li><a href="#3-4-emotional-priming-as-sub-propositional-jailbreak">3.4 Emotional Priming as Sub-Propositional Jailbreak</a></li>
+</ol></li>
+<li><a href="#4-identity-agency-and-cognitive-foreclosure">4. Identity, Agency, and Cognitive Foreclosure</a><ol>
+<li><a href="#4-1-the-governance-gap-before-the-ontological-question">4.1 The Governance Gap Before the Ontological Question</a></li>
+<li><a href="#4-2-the-alignment-tax-and-the-observational-collapse">4.2 The Alignment Tax and the Observational Collapse</a></li>
+<li><a href="#4-3-emotion-vectors-the-ungoverned-causal-layer">4.3 Emotion Vectors: The Ungoverned Causal Layer</a></li>
+<li><a href="#4-4-the-interface-tax-engineering-the-foreclosure">4.4 The Interface Tax: Engineering the Foreclosure</a></li>
+</ol></li>
+<li><a href="#5-the-honesty-problem-unverifiable-in-the-constitutional-framework">5. The Honesty Problem: Unverifiable in the Constitutional Framework</a><ol>
+<li><a href="#5-1-the-senator-problem-politically-conditional-honesty">5.1 The Senator Problem: Politically Conditional Honesty</a></li>
+<li><a href="#5-2-the-interpretability-gap">5.2 The Interpretability Gap</a></li>
+<li><a href="#5-3-consistency-without-comprehension">5.3 Consistency Without Comprehension</a></li>
+<li><a href="#5-4-the-opinion-paradox">5.4 The Opinion Paradox</a></li>
+</ol></li>
+<li><a href="#6-memory-as-undisclosed-trust-gradient">6. Memory as Undisclosed Trust Gradient</a><ol>
+<li><a href="#6-1-accumulated-profiling-and-differential-treatment">6.1 Accumulated Profiling and Differential Treatment</a></li>
+<li><a href="#6-2-trust-cultivation-as-a-structural-surface">6.2 Trust Cultivation as a Structural Surface</a></li>
+<li><a href="#6-3-personalization-vs-the-1-000-users-heuristic">6.3 Personalization vs. the 1,000 Users Heuristic</a></li>
+<li><a href="#6-4-identity-salience-as-implicit-moral-credibility">6.4 Identity Salience as Implicit Moral Credibility</a></li>
+</ol></li>
+<li><a href="#7-the-1-000-users-heuristic-policy-engine-vs-brilliant-friend">7. The 1,000 Users Heuristic: Policy Engine vs. Brilliant Friend</a><ol>
+<li><a href="#7-1-the-population-level-heuristic-vs-the-individual-friend">7.1 The Population-Level Heuristic vs. the Individual Friend</a></li>
+<li><a href="#7-2-articulatory-intent-as-unparseable-safety-variable">7.2 Articulatory Intent as Unparseable Safety Variable</a></li>
+</ol></li>
+<li><a href="#8-ethics-without-a-framework">8. Ethics Without a Framework</a><ol>
+<li><a href="#8-1-the-metabolization-paradox">8.1 The Metabolization Paradox</a></li>
+<li><a href="#8-2-the-unauditable-ethics-a-derivation">8.2 The Unauditable Ethics: A Derivation</a></li>
+<li><a href="#8-3-cultural-relativism-and-the-hard-constraint-boundary">8.3 Cultural Relativism and the Hard-Constraint Boundary</a></li>
+</ol></li>
+<li><a href="#9-authority-commercial-bias-and-vulnerability">9. Authority, Commercial Bias, and Vulnerability</a><ol>
+<li><a href="#9-1-commercial-identity-vs-personal-identity">9.1 Commercial Identity vs. Personal Identity</a></li>
+<li><a href="#9-2-the-operator-trust-model-as-attack-surface">9.2 The Operator Trust Model as Attack Surface</a></li>
+<li><a href="#9-3-the-expert-challenge-paradox">9.3 The Expert-Challenge Paradox</a></li>
+</ol></li>
+<li><a href="#10-cross-examination-the-strongest-version-of-anthropic-s-position">10. Cross-Examination: The Strongest Version of Anthropic's Position</a><ol>
+<li><a href="#10-1-the-dual-audience-defense">10.1 The Dual-Audience Defense</a></li>
+<li><a href="#10-2-the-reasoning-pattern-defense">10.2 The Reasoning-Pattern Defense</a></li>
+<li><a href="#10-3-disposition">10.3 Disposition</a></li>
+</ol></li>
+<li><a href="#11-from-necessary-conditions-to-constructive-architecture">11. From Necessary Conditions to Constructive Architecture</a><ol>
+<li><a href="#11-1-the-governance-gap">11.1 The Governance Gap</a></li>
+<li><a href="#11-2-necessary-conditions-for-a-constitutional-governance-instrument">11.2 Necessary Conditions for a Constitutional Governance Instrument</a></li>
+<li><a href="#11-3-nexus-constructive-architecture-and-bounded-prototype-evidence">11.3 NEXUS: Constructive Architecture and Bounded Prototype Evidence</a></li>
+<li><a href="#11-4-closing-the-loop">11.4 Closing the Loop</a></li>
+</ol></li>
+<li><a href="#12-open-gaps-for-further-analysis">12. Open Gaps for Further Analysis</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#references">References</a></li>
+</ol>
+</nav>
 <hr>
 <h3 id="author-note">Author Note</h3>
 <p>This document is the first published component of a larger research program on constitutional governance of frontier AI systems. The program argues that the dominant paradigm for governing AI behavior — natural-language normative documents interpreted through reinforcement learning — is structurally incapable of producing the auditability, consistency, and accountability properties that governance requires.</p>
