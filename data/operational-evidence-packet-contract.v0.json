@@ -1,0 +1,275 @@
+{
+  "contract_id": "operational_evidence_packet_contract.v0",
+  "version": "0.1",
+  "status": "contract_defined",
+  "purpose": "Defines the evidence packet that must be satisfied before AETHERUS can truthfully cross from staged governance product surface into operational use.",
+  "current_claim_status": "operational_use_not_currently_claimable",
+  "operational_use_threshold_status": "threshold_not_met",
+  "required_evidence_classes": [
+    {
+      "id": "real_input_output_artifact",
+      "description": "Captured real input and output artifacts bound to a specific governance trace.",
+      "source_from_negative_space_backlog": ["Real input/output artifact", "Raw input/output capture"],
+      "required_for_operational_use": true,
+      "current_status": "not_attached",
+      "build_dependency": ["real_input_output_artifact", "artifact_capture_boundary", "trace_input_output_binding"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational artifact evidence or operational release support."
+    },
+    {
+      "id": "input_hash",
+      "description": "Generated hash for each real input artifact used by a governed trace.",
+      "source_from_negative_space_backlog": ["Real input hash", "Real session-state hash"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["input_hash_generation", "session_state_hash_generation", "hash_verification_surface"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational input integrity or replayable input verification."
+    },
+    {
+      "id": "output_hash",
+      "description": "Generated hash for each real output artifact produced by a governed trace.",
+      "source_from_negative_space_backlog": ["Real input/output artifact", "Raw input/output capture"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["output_hash_generation", "artifact_hash_binding", "hash_verification_surface"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational output integrity or release-artifact verification."
+    },
+    {
+      "id": "artifact_hash_binding",
+      "description": "Binding between input/output artifacts, generated hashes, and the trace record.",
+      "source_from_negative_space_backlog": ["Real input hash", "Cached artifact storage reference"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["artifact_hash_binding", "trace_input_output_binding", "hash_verification_surface"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational artifact lineage or hash-bound trace evidence."
+    },
+    {
+      "id": "persistent_trace_storage",
+      "description": "Durable trace storage with schema and retention boundaries.",
+      "source_from_negative_space_backlog": ["Persistent trace storage"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["persistent_trace_storage", "trace_storage_schema", "retention_policy"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational trace persistence."
+    },
+    {
+      "id": "append_only_ledger_semantics",
+      "description": "Append-only write behavior for trace and audit events.",
+      "source_from_negative_space_backlog": ["Append-only ledger semantics", "No persistent audit ledger"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["append_only_ledger_semantics", "immutable_event_chain", "ledger_write_boundary"],
+      "claim_effect_if_missing": "AETHERUS may not claim persistent production audit-ledger behavior."
+    },
+    {
+      "id": "hash_chain_verification",
+      "description": "Verification of trace-event continuity through previous-hash binding.",
+      "source_from_negative_space_backlog": ["Hash-chain verification", "No persistent audit ledger"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["hash_chain_verification", "previous_hash_binding", "trace_integrity_check"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational trace-integrity verification."
+    },
+    {
+      "id": "backend_validation",
+      "description": "Server-side validation and signed validation result artifacts.",
+      "source_from_negative_space_backlog": ["Backend validation", "Backend input validator", "Backend validator implementation", "Backend validation logs"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["server_side_validation", "schema_validation_endpoint", "signed_result_artifact"],
+      "claim_effect_if_missing": "AETHERUS may not claim backend-validated operational governance infrastructure."
+    },
+    {
+      "id": "authenticated_actor_identity",
+      "description": "Authenticated actor or reviewer identity available for trace attribution.",
+      "source_from_negative_space_backlog": ["Authenticated actor identity", "Authenticated reviewer identity"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["actor_session_binding", "reviewer_identity_context", "auth_to_trace_attribution"],
+      "claim_effect_if_missing": "AETHERUS may not claim authenticated workflow or actor-bound operational review."
+    },
+    {
+      "id": "actor_to_trace_attribution",
+      "description": "Binding between authenticated actor identity and each trace action.",
+      "source_from_negative_space_backlog": ["Authenticated actor identity", "Authenticated reviewer identity"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["auth_to_trace_attribution", "actor_session_binding", "workflow_state_audit_event"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational reviewer attribution or actor-accountable trace records."
+    },
+    {
+      "id": "reproducible_execution_log",
+      "description": "Execution log that records enough context to reproduce the governed run.",
+      "source_from_negative_space_backlog": ["Reproducible execution logs", "Reproducible safety-scan logs", "Reproducible missing-input logs"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["reproducible_execution_log", "deterministic_run_record", "replayable_trace_context"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational execution evidence."
+    },
+    {
+      "id": "deterministic_run_record",
+      "description": "Structured run record tying deterministic inputs, gates, verdicts, and replay context together.",
+      "source_from_negative_space_backlog": ["Reproducible execution logs", "Reproducible parser/normalization test result"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["deterministic_run_record", "replayable_trace_context", "normalization_test_result_artifact"],
+      "claim_effect_if_missing": "AETHERUS may not claim replayable operational governance runs."
+    },
+    {
+      "id": "test_result_artifact",
+      "description": "Test result artifact bound to release-gate evidence.",
+      "source_from_negative_space_backlog": ["Test result artifact", "Reproducible parser/normalization test result"],
+      "required_for_operational_use": true,
+      "current_status": "required_for_future_threshold",
+      "build_dependency": ["test_result_artifact", "release_gate_evidence", "normalization_test_result_artifact"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational release-gate test evidence."
+    },
+    {
+      "id": "validator_report_artifact",
+      "description": "Validator report artifact that records contract, schema, and release-gate validation results.",
+      "source_from_negative_space_backlog": ["Test result artifact", "Backend validation"],
+      "required_for_operational_use": true,
+      "current_status": "required_for_future_threshold",
+      "build_dependency": ["validator_report_artifact", "signed_result_artifact", "release_gate_evidence"],
+      "claim_effect_if_missing": "AETHERUS may not claim validation-backed operational release eligibility."
+    },
+    {
+      "id": "security_review_record",
+      "description": "Security review record covering threat model, runtime boundary, and operational attachment risk.",
+      "source_from_negative_space_backlog": ["Security review", "Model/API boundary documentation"],
+      "required_for_operational_use": true,
+      "current_status": "required_for_future_threshold",
+      "build_dependency": ["security_review_record", "threat_model_review", "runtime_boundary_review"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational readiness, production safety review, or deployment approval."
+    },
+    {
+      "id": "retention_model",
+      "description": "Storage and audit retention model for operational trace and evidence records.",
+      "source_from_negative_space_backlog": ["Storage/audit retention model", "No persistent audit ledger"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["audit_retention_model", "storage_policy", "trace_retention_governance"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational audit retention or production evidence retention."
+    },
+    {
+      "id": "runtime_execution_boundary",
+      "description": "Explicit bounded-runtime boundary for model execution, adapter execution, and safety gates.",
+      "source_from_negative_space_backlog": ["No live AI execution", "Adapter implementation", "Model/API boundary documentation"],
+      "required_for_operational_use": true,
+      "current_status": "not_implemented",
+      "build_dependency": ["bounded_runtime_execution_layer", "model_execution_boundary", "runtime_safety_gate"],
+      "claim_effect_if_missing": "AETHERUS may not claim live AI execution or operational runtime execution."
+    },
+    {
+      "id": "escalation_or_freeze_record",
+      "description": "Operational record for freeze, escalation, and review-state transitions.",
+      "source_from_negative_space_backlog": ["Escalation workflow record"],
+      "required_for_operational_use": true,
+      "current_status": "not_attached",
+      "build_dependency": ["escalation_workflow_record", "review_queue_binding", "workflow_state_audit_event"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational escalation workflow or freeze enforcement."
+    },
+    {
+      "id": "release_decision_record",
+      "description": "Operational release-decision record tied to actor identity, validator reports, and release-gate evidence.",
+      "source_from_negative_space_backlog": ["Test result artifact", "Authenticated actor identity", "Backend validation"],
+      "required_for_operational_use": true,
+      "current_status": "not_attached",
+      "build_dependency": ["release_decision_record", "release_gate_evidence", "actor_session_binding", "validator_report_artifact"],
+      "claim_effect_if_missing": "AETHERUS may not claim operational release authority or production release decision support."
+    }
+  ],
+  "claim_gates": [
+    {
+      "id": "current_staged_product_surface_allowed",
+      "claim": "AETHERUS may currently be described as a staged governance product surface.",
+      "current_permission": "allowed_current_claim",
+      "rule": "Allowed only with static, deterministic, non-operational boundary discipline."
+    },
+    {
+      "id": "current_deterministic_interface_and_requirements_allowed",
+      "claim": "AETHERUS may currently be described as exposing deterministic governance interface logic and operational evidence requirements.",
+      "current_permission": "allowed_current_claim",
+      "rule": "Allowed only when evidence requirements are framed as pending construction targets."
+    },
+    {
+      "id": "operational_deployment_disallowed",
+      "claim": "AETHERUS may not currently be described as operationally deployed.",
+      "current_permission": "disallowed_current_claim",
+      "rule": "Requires every required evidence class to be implemented and validated before this claim can change."
+    },
+    {
+      "id": "live_ai_execution_disallowed",
+      "claim": "AETHERUS may not currently be described as executing live AI.",
+      "current_permission": "disallowed_current_claim",
+      "rule": "Requires runtime_execution_boundary and model-execution safety gates before this claim can change."
+    },
+    {
+      "id": "persistent_production_audit_ledger_disallowed",
+      "claim": "AETHERUS may not currently be described as maintaining a persistent production audit ledger.",
+      "current_permission": "disallowed_current_claim",
+      "rule": "Requires persistent trace storage, append-only semantics, hash-chain verification, and retention model before this claim can change."
+    },
+    {
+      "id": "backend_validated_operational_governance_disallowed",
+      "claim": "AETHERUS may not currently be described as backend-validated operational governance infrastructure.",
+      "current_permission": "disallowed_current_claim",
+      "rule": "Requires backend validation, signed validator reports, and operational evidence packet validation before this claim can change."
+    },
+    {
+      "id": "customer_tenant_production_saas_disallowed",
+      "claim": "AETHERUS may not currently be described as customer-ready, tenant-isolated, or production SaaS.",
+      "current_permission": "disallowed_current_claim",
+      "rule": "This contract does not define customer workspace, tenant isolation, or SaaS readiness evidence."
+    },
+    {
+      "id": "future_operational_use_threshold_allowed",
+      "claim": "Operational use is a legitimate future threshold event once the required evidence classes are implemented and validated.",
+      "current_permission": "future_threshold_only",
+      "rule": "The threshold is defined here; this pass does not satisfy it."
+    }
+  ],
+  "disallowed_claims_until_threshold_met": [
+    "operational deployment",
+    "live AI execution",
+    "persistent production audit ledger",
+    "backend-validated operational governance",
+    "customer workspace",
+    "tenant isolation",
+    "production SaaS"
+  ],
+  "relationship_to_product_negative_space_backlog": {
+    "source_path": "data/product-negative-space-backlog.v0.json",
+    "relationship": "This contract converts negative-space construction targets into required operational-use evidence classes.",
+    "required_mapping_status": "all_required_evidence_classes_reference_negative_space_source_phrases"
+  },
+  "validation_requirements": [
+    "All required top-level fields must exist.",
+    "All required evidence classes must exist exactly once.",
+    "Every required evidence class must remain in a non-complete current_status until a future implementation pass changes the threshold truthfully.",
+    "operational_use_threshold_status must remain threshold_not_met for this version.",
+    "current_claim_status must not imply current operational use.",
+    "Every major prohibited current claim must remain listed in disallowed_claims_until_threshold_met.",
+    "relationship_to_product_negative_space_backlog.source_path must reference data/product-negative-space-backlog.v0.json.",
+    "The contract must state that operational use is a legitimate future threshold event.",
+    "The contract must state that this pass introduced no backend, database, persistence, ledger, auth, runtime execution, or model API implementation."
+  ],
+  "non_implementation_boundary": {
+    "introduced_by_this_pass": "contract_only_threshold_definition",
+    "backend_implementation": false,
+    "database_implementation": false,
+    "persistence_implementation": false,
+    "ledger_implementation": false,
+    "auth_behavior_change": false,
+    "runtime_execution": false,
+    "model_api_call": false,
+    "public_nexus_execution": false,
+    "palisade_or_weave_implementation": false,
+    "billing": false,
+    "monitoring_dashboard": false,
+    "tenant_isolation": false,
+    "customer_workspace": false,
+    "production_saas": false,
+    "operational_use_claim": false,
+    "boundary_statement": "This pass defines the operational-use threshold and introduces no backend, database, persistence, ledger, auth, runtime execution, model API, public NEXUS, Palisade, Weave, billing, monitoring, tenant isolation, customer workspace, production SaaS, or operational-use claim."
+  }
+}

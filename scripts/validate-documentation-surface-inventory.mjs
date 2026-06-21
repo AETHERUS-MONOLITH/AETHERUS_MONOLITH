@@ -121,7 +121,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-auth-storage-implementation.v0.json",
   "scripts/validate-direct-ui-membrane-auth-storage-implementation.mjs",
   "data/product-negative-space-backlog.v0.json",
-  "scripts/validate-product-language-boundary.mjs"
+  "scripts/validate-product-language-boundary.mjs",
+  "data/operational-evidence-packet-contract.v0.json",
+  "scripts/validate-operational-evidence-packet-contract.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

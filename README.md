@@ -183,6 +183,8 @@ This repository is intended for:
 
 Operational use is a legitimate future threshold event only after runtime, evidence, audit, auth, and release-authority requirements are implemented and validated. This repository must not be used as the basis for operational decision-making or production governance enforcement until that threshold is reached.
 
+`data/operational-evidence-packet-contract.v0.json` defines the machine-readable threshold for that future event. It is a contract-only evidence requirement map and does not provide completed operational evidence.
+
 ## Verification
 
 The current accepted verification checks are:
@@ -194,12 +196,15 @@ node --check js/pipeline.js
 node --check js/governance-engine.js
 node --check js/trace-viewer.js
 node --check scripts/validate-product-language-boundary.mjs
+node --check scripts/validate-operational-evidence-packet-contract.mjs
 node scripts/validate-product-language-boundary.mjs
+node scripts/validate-operational-evidence-packet-contract.mjs
 node -e 'JSON.parse(require("fs").readFileSync("data/docs.json","utf8")); console.log("data/docs.json parses")'
 node -e 'JSON.parse(require("fs").readFileSync("data/joint-workflow.manifest.json","utf8")); console.log("data/joint-workflow.manifest.json parses")'
 node -e 'JSON.parse(require("fs").readFileSync("data/scenarios.json","utf8")); console.log("data/scenarios.json parses")'
 node -e 'JSON.parse(require("fs").readFileSync("data/product-negative-space-backlog.v0.json","utf8")); console.log("data/product-negative-space-backlog.v0.json parses")'
+node -e 'JSON.parse(require("fs").readFileSync("data/operational-evidence-packet-contract.v0.json","utf8")); console.log("data/operational-evidence-packet-contract.v0.json parses")'
 git diff --check
 ```
 
-These checks validate JavaScript syntax, product-language boundary discipline, local evidence and scenario metadata parseability, negative-space backlog parseability, and diff whitespace integrity. Browser review should also confirm that the Governance Stack Cutaway, Intelligence Layer scenarios, evidence binding, artefact cards, detail panels, and responsive layouts render without console errors.
+These checks validate JavaScript syntax, product-language boundary discipline, operational evidence packet threshold discipline, local evidence and scenario metadata parseability, negative-space backlog parseability, and diff whitespace integrity. Browser review should also confirm that the Governance Stack Cutaway, Intelligence Layer scenarios, evidence binding, artefact cards, detail panels, and responsive layouts render without console errors.
