@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "validator_id": "readme-artifact-classification-sobriety.v0",
+  "target": "README.md",
+  "purpose": "Validate that README artifact classes are named and bounded without promoting repository-held documents, contracts, validators, metadata packages, specifications, or substrate into current operational capability.",
+  "required_artifact_classes": [
+    "Product surface",
+    "Implementation substrate",
+    "Validator",
+    "Evidence contract",
+    "Publication apparatus",
+    "Theoretical document",
+    "Conceptual/specification document",
+    "Metadata/citation authority package"
+  ],
+  "required_boundary_phrases": [
+    "staged governance product surface",
+    "static, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent public artifact",
+    "repository-held scaffolds",
+    "unapplied migration substrate",
+    "validate repository-local contracts",
+    "defines future evidence requirements",
+    "does not complete the operational evidence packet",
+    "repository-held publication and discovery apparatus",
+    "does not claim DOI, archive, journal, or search-submission completion",
+    "Operational use remains a legitimate future threshold event"
+  ],
+  "restricted_claim_patterns": [
+    {
+      "id": "evidence_contract_as_completed_evidence",
+      "pattern": "\\b(evidence packet completed|completed evidence packet|operational evidence exists|current operational evidence)\\b",
+      "reason": "An evidence contract may define future requirements, but it must not be described as completed operational evidence."
+    },
+    {
+      "id": "validator_as_runtime_enforcement",
+      "pattern": "\\b(validators?|validation scripts?)\\b[^\\n.]{0,120}\\b(runtime enforcement|production governance control|live compliance enforcement|operational audit system)\\b",
+      "reason": "Validators are repository constraint checkers, not runtime enforcement systems."
+    },
+    {
+      "id": "metadata_as_external_publication_proof",
+      "pattern": "\\b(metadata|citation authority|publication apparatus)\\b[^\\n.]{0,120}\\b(DOI minted|archive deposited|journal publication|institutional validation|external endorsement|search submission completed)\\b",
+      "reason": "Metadata packages are repository-held authority packages, not proof of external publication events."
+    },
+    {
+      "id": "substrate_as_live_database",
+      "pattern": "\\b(unapplied migration|implementation substrate|scaffold)\\b[^\\n.]{0,120}\\b(live database|verified RLS|verified tenant isolation|live application-data persistence|production audit ledger)\\b",
+      "reason": "Unapplied substrate must not be promoted into live infrastructure."
+    },
+    {
+      "id": "theory_or_spec_as_built_capability",
+      "pattern": "\\b(theoretical document|conceptual/specification document|specification)\\b[^\\n.]{0,120}\\b(implemented system|runtime capability|deployed component|proof of execution|operational workflow execution)\\b",
+      "reason": "Theory and specification documents describe or frame; they do not prove built capability."
+    },
+    {
+      "id": "repository_artifact_as_operational_behavior",
+      "pattern": "\\brepository[- ]held\\b[^\\n.]{0,120}\\b(operates|executes|enforces|governs|audits|monitors|secures)\\b",
+      "reason": "Repository-held artifacts should be described by class, not as operational system behavior."
+    },
+    {
+      "id": "future_threshold_as_current_use",
+      "pattern": "\\b(operational use achieved|operational use is current|operational-use threshold met|threshold has been reached)\\b",
+      "reason": "Operational use is a legitimate future threshold event, not a current claim."
+    },
+    {
+      "id": "disallowed_current_capability_claims",
+      "pattern": "\\b(production SaaS exists|customer workspace exists|tenant isolation exists|public NEXUS runtime exists|model API execution exists|Palisade is instantiated|Weave is runnable)\\b",
+      "reason": "README must not claim current operational capabilities that are not instantiated."
+    }
+  ],
+  "non_implementation_boundary": {
+    "introduced_by_this_pass": "readme_language_and_static_validator_only",
+    "runtime_behavior_changed": false,
+    "backend_added": false,
+    "database_connected": false,
+    "supabase_migration_applied": false,
+    "operational_use_claimed": false
+  }
+}

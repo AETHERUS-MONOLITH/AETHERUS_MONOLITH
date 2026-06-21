@@ -18,6 +18,23 @@ The site is designed to communicate an architecture, deterministic governance in
 
 The public Facade is the static claim-bounded surface. Track 3 Conduit work remains local-only evidence and integration-contract work. The current Vault reference is the pinned NEXUS MVP source at `ab95cbbd24df5817c4e363d24b3b199ac8af6c6f`; it is not public NEXUS execution. Palisade is not instantiated, and Weave is specification only, not runnable.
 
+## Artifact Classes and Claim Boundaries
+
+AETHERUS_MONOLITH distinguishes repository-held artifacts by class. The repository may contain documents, validators, metadata packages, contracts, and unapplied implementation substrate without promoting those artifacts into current runtime capability or operational evidence.
+
+| Class | What the repository may claim | What the claim does not imply |
+| --- | --- | --- |
+| Product surface | The public site exposes a staged governance product surface: a static, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent public artifact. | Not production SaaS, operational deployment, live governance execution, real-world workflow operation, customer workspace, billing, or monitoring. |
+| Implementation substrate | Repository-held scaffolds, bounded client scaffolds, unapplied migration substrate, and future attachable substrate specify construction paths. | Not a live database, applied infrastructure, verified RLS, verified tenant isolation, live application-data persistence, backend-validated governance, or production audit ledger behavior. |
+| Validator | Repository scripts check static constraints, validate repository-local contracts, detect claim-boundary drift, and guard static-language consistency. | Not runtime security enforcement, operational audit control, production governance enforcement, live compliance enforcement, or deployed monitoring. |
+| Evidence contract | `data/operational-evidence-packet-contract.v0.json` defines future evidence requirements, sets the operational-use threshold, and specifies evidence classes. | Not a completed evidence packet, not current operational evidence, not operational use achieved, and not backend-validated operational governance. |
+| Publication apparatus | Canonical routes, sitemap, robots, JSON-LD/Open Graph/Twitter metadata, and `data/taa-publication-metadata.v1.json` provide repository-held publication and discovery apparatus where present. | Not DOI minted, archive deposited, peer-reviewed status, institutional validation, external endorsement, search submission, social publication, outreach execution, or publication reception. |
+| Theoretical document | Manuscripts and theory-facing documents frame theses, critiques, governance arguments, conceptual frameworks, and theoretical architecture. | Not implemented systems, runtime capability, verified product behavior, deployed operational mechanisms, or proof of execution. |
+| Conceptual/specification document | Design specifications, architecture intent, construction maps, boundary specifications, and future implementation contracts describe planned or bounded work. | Not built features, deployed components, runtime subsystems, public NEXUS execution, Palisade, Weave, model API execution, or operational workflow execution. |
+| Metadata/citation authority package | Repository-held metadata and citation files record canonical metadata, citation fields, and publication-status boundaries. | Not external archive records, DOI assignment, journal publication, institutional record, or search-indexing completion unless separately completed and verified. |
+
+The public surface renders and links selected artifacts; the repository records additional artifacts; the system runs only the static browser-side behavior described in this README and the current source files. Operational use remains a legitimate future threshold event, but it is not a current claim.
+
 ## What The Interface Shows
 
 The interface presents a governance-oriented model for controlled AI behavior concepts, including:
@@ -40,12 +57,12 @@ The visual system is intended to support comprehension of the architecture, not 
 - `index.html` - One-page static interface, page structure, hero, stack cutaway, lower panels, artefact section, and footer boundary language.
 - `css/style.css` - Visual system, layout, responsive behavior, cutaway geometry, evidence card styling, and accessibility-oriented presentation states.
 - `js/app.js` - Page initialization, reveal behavior, reduced-motion handling, navigation anchors, and static mode controls.
-- `js/docs.js` - Local artefact card rendering, detail panels, evidence metadata display, graceful docs failure state, and evidence-binding API.
+- `js/docs.js` - Local artefact card rendering, detail panels, metadata display, graceful docs failure state, and static evidence-binding API.
 - `js/pipeline.js` - Stack and pipeline interaction behavior, stage-to-evidence binding, related evidence panel updates, and static explanatory state handling.
 - `js/governance-engine.js` - Pure browser-side deterministic evaluator for Intelligence Layer v0 scenarios.
 - `js/trace-viewer.js` - UI adapter for scenario selection and deterministic governance trace rendering.
 - `js/grid.js` - Ambient grid/canvas visual behavior used as part of the static visual identity.
-- `data/docs.json` - Structured local artefact metadata and explanatory content for the research evidence model.
+- `data/docs.json` - Structured local artefact metadata and explanatory content for the research evidence model; it is not operational evidence.
 - `data/joint-workflow.manifest.json` - Normalized Joint-Workflow-derived architecture manifest.
 - `data/scenarios.json` - Deterministic scenario fixtures for governance trace scenarios.
 - `docs/FACADE_REFLECTION_0_4_DIRECT_UI_MEMBRANE_VISUAL_SPEC.md` - Documentation-only visual specification for the planned Direct UI Membrane.
@@ -63,6 +80,10 @@ The visual system is intended to support comprehension of the architecture, not 
 - `docs/OPTION_E_0_8_SECRETS_KEY_MANAGEMENT_BOUNDARY_PLANNING.md` - Documentation-only secrets and key-management boundary planning for future Direct UI Membrane architecture.
 - `docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md` - Documentation-only billing and Stripe boundary planning for future Direct UI Membrane architecture.
 - `docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md` - Documentation-only implementation-readiness gate for future Direct UI Membrane architecture decisions.
+- `data/operational-evidence-packet-contract.v0.json` - Evidence contract defining future operational-use threshold requirements; it is not a completed evidence packet.
+- `data/taa-publication-metadata.v1.json` - Repository-held metadata/citation authority package for the canonical manuscript route; it does not claim DOI, archive, journal, or search-submission completion.
+- `data/readme-artifact-classification-sobriety.v0.json` - README artifact-classification and claim-boundary validator configuration.
+- `scripts/validate-readme-artifact-classification-sobriety.mjs` - Static README language-boundary validator; it does not enforce runtime governance.
 
 ## Local Development
 
@@ -96,6 +117,8 @@ A local server is recommended so `data/docs.json` can be loaded through the brow
 - `cta_label`
 
 These fields distinguish governance architecture, trace evidence, research artefacts, methodology, and planned interface direction. They also make explicit what each artefact should not be confused with.
+
+In this README, `evidence` may refer to repository-local explanatory artifacts, deterministic scenario traces, metadata fields, or the future operational evidence contract depending on context. Repository-local evidence fields and scenario traces are not operational evidence, and the evidence contract does not complete the operational evidence packet.
 
 ## Facade Reflection Documentation
 
@@ -197,14 +220,17 @@ node --check js/governance-engine.js
 node --check js/trace-viewer.js
 node --check scripts/validate-product-language-boundary.mjs
 node --check scripts/validate-operational-evidence-packet-contract.mjs
+node --check scripts/validate-readme-artifact-classification-sobriety.mjs
 node scripts/validate-product-language-boundary.mjs
 node scripts/validate-operational-evidence-packet-contract.mjs
+node scripts/validate-readme-artifact-classification-sobriety.mjs
 node -e 'JSON.parse(require("fs").readFileSync("data/docs.json","utf8")); console.log("data/docs.json parses")'
 node -e 'JSON.parse(require("fs").readFileSync("data/joint-workflow.manifest.json","utf8")); console.log("data/joint-workflow.manifest.json parses")'
 node -e 'JSON.parse(require("fs").readFileSync("data/scenarios.json","utf8")); console.log("data/scenarios.json parses")'
 node -e 'JSON.parse(require("fs").readFileSync("data/product-negative-space-backlog.v0.json","utf8")); console.log("data/product-negative-space-backlog.v0.json parses")'
 node -e 'JSON.parse(require("fs").readFileSync("data/operational-evidence-packet-contract.v0.json","utf8")); console.log("data/operational-evidence-packet-contract.v0.json parses")'
+node -e 'JSON.parse(require("fs").readFileSync("data/readme-artifact-classification-sobriety.v0.json","utf8")); console.log("data/readme-artifact-classification-sobriety.v0.json parses")'
 git diff --check
 ```
 
-These checks validate JavaScript syntax, product-language boundary discipline, operational evidence packet threshold discipline, local evidence and scenario metadata parseability, negative-space backlog parseability, and diff whitespace integrity. Browser review should also confirm that the Governance Stack Cutaway, Intelligence Layer scenarios, evidence binding, artefact cards, detail panels, and responsive layouts render without console errors.
+These checks validate JavaScript syntax, product-language boundary discipline, operational evidence packet threshold discipline, README artifact-classification sobriety, local evidence and scenario metadata parseability, negative-space backlog parseability, and diff whitespace integrity. Browser review should also confirm that the Governance Stack Cutaway, Intelligence Layer scenarios, evidence binding, artefact cards, detail panels, and responsive layouts render without console errors.

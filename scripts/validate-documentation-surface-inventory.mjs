@@ -123,7 +123,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/product-negative-space-backlog.v0.json",
   "scripts/validate-product-language-boundary.mjs",
   "data/operational-evidence-packet-contract.v0.json",
-  "scripts/validate-operational-evidence-packet-contract.mjs"
+  "scripts/validate-operational-evidence-packet-contract.mjs",
+  "data/readme-artifact-classification-sobriety.v0.json",
+  "scripts/validate-readme-artifact-classification-sobriety.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);
