@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1",
+  "artifact_id": "direct-ui-membrane-protected-workspace-frame.v0",
+  "section": "§1.2 Direct UI Membrane",
+  "surface_file": "protected-shell.html",
+  "object_classification": [
+    "protected workspace frame",
+    "customer-perceivable product surface",
+    "static/browser-side protected shell surface",
+    "non-persistent"
+  ],
+  "placement": {
+    "protected_workspace_frame": "protected-shell.html",
+    "unauthenticated_preview_workspace": "workspace.html",
+    "taa_route_workspace_functionality_added": false
+  },
+  "workspace_frame_elements": [
+    "workspace identity",
+    "workspace-level navigation",
+    "Workspace Overview",
+    "Evidence Packet",
+    "Release Review",
+    "Trace / Activity",
+    "Settings / Members"
+  ],
+  "empty_states": [
+    "No active release candidate is queued.",
+    "No evidence packet is loaded yet.",
+    "No release candidate is queued.",
+    "No persistent activity has been recorded.",
+    "No members are configured in this frame."
+  ],
+  "future_or_unavailable_surfaces": [
+    "evidence-packet review surface without loaded records",
+    "release review area without release authority",
+    "activity surface without persistent ledger or storage",
+    "settings and member controls unavailable until account, storage, and access layers are separately implemented"
+  ],
+  "static_fixture_state": {
+    "active_release_candidate": "none",
+    "evidence_packet_loaded": false,
+    "persistent_activity_records_loaded": false,
+    "members_configured": false,
+    "source": "static HTML copy only"
+  },
+  "non_claims": {
+    "production_customer_workspace": false,
+    "tenant_isolated": false,
+    "database_backed": false,
+    "rls_implemented": false,
+    "operational_use_evidence": false,
+    "monitoring_dashboard": false,
+    "nexus_execution": false,
+    "model_api_execution": false,
+    "billing": false,
+    "production_saas": false
+  },
+  "guard_boundary": {
+    "protected_shell_guard_preserved": true,
+    "denial_without_session_preserved": true,
+    "auth_script_changed": false,
+    "supabase_infrastructure_changed": false
+  }
+}

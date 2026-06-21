@@ -53,7 +53,7 @@
     ]
   },
   "summary_counts": {
-    "keep_public": 26,
+    "keep_public": 27,
     "remove_from_public_navigation_later": 13,
     "needs_operator_review": 4,
     "consolidate_later": 9,
@@ -2800,6 +2800,26 @@
         "preserve_claim_boundaries",
         "do_not_promote_as_runtime_or_implementation_evidence",
         "coordinate_with_readme_reference_pruning"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": false,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": false,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/taa-publication-metadata.v1.json",
+      "source_inventory_status": "keep_public",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "keep_public",
+      "routing_reason": "Controlled TAA metadata and citation authority package can remain visible in the repository while preserving DOI, archive, distribution, and release-fact boundaries.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "do_not_promote_as_external_publication_evidence",
+        "coordinate_with_taa_publication_metadata_validator"
       ],
       "operator_review_required": false,
       "safe_to_remove_from_public_navigation_later": false,
