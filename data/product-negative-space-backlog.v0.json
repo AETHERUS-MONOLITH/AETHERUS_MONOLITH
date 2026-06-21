@@ -1,0 +1,288 @@
+{
+  "schema_version": "0.1",
+  "surface": "AETHERUS staged governance product surface",
+  "purpose": "Maps visible operational-evidence gaps and runtime boundary phrases to construction targets without claiming those targets are already implemented.",
+  "operational_use_threshold_rule": "Operational use is a legitimate future threshold event only after runtime, evidence, audit, auth, and release-authority requirements are implemented and validated.",
+  "current_claim_rule": "AETHERUS public copy must frame the current interface as a staged governance product surface and must not imply operational use already exists.",
+  "mappings": [
+    {
+      "source_phrase": "Real input/output artifact",
+      "current_surface_context": "Operational Evidence Required list for release-eligibility trace scenarios.",
+      "boundary_type": "artifact_capture",
+      "construction_targets": ["real_input_output_artifact", "artifact_capture_boundary", "trace_input_output_binding"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Real input/output artifacts must be captured and bound to each runtime trace before operational use is claimed.",
+      "public_copy_rule": "May appear as an operational evidence requirement; must not imply real runtime artifacts already exist."
+    },
+    {
+      "source_phrase": "Real input hash",
+      "current_surface_context": "Operational Evidence Required list for idempotency trace scenarios.",
+      "boundary_type": "hash_binding",
+      "construction_targets": ["input_hash_generation", "artifact_hash_binding", "hash_verification_surface"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Input hashes must be generated, bound, and verifiable before operational cache or idempotency claims are made.",
+      "public_copy_rule": "May appear as a hash requirement; must not imply current cryptographic input verification."
+    },
+    {
+      "source_phrase": "Real session-state hash",
+      "current_surface_context": "Operational Evidence Required list for idempotency trace scenarios.",
+      "boundary_type": "hash_binding",
+      "construction_targets": ["session_state_hash_generation", "artifact_hash_binding", "hash_verification_surface"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Session-state hashes must be generated and verified before operational idempotency or replay claims are made.",
+      "public_copy_rule": "May appear as a construction target; must not imply current session-state hash verification."
+    },
+    {
+      "source_phrase": "Persistent trace storage",
+      "current_surface_context": "Operational Evidence Required list and audit-boundary copy for trace scenarios.",
+      "boundary_type": "persistence",
+      "construction_targets": ["persistent_trace_storage", "trace_storage_schema", "retention_policy"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Trace storage, schema, and retention policy must be implemented before operational trace persistence is claimed.",
+      "public_copy_rule": "May appear as a storage requirement; must not imply trace persistence currently exists."
+    },
+    {
+      "source_phrase": "Append-only ledger semantics",
+      "current_surface_context": "Operational Evidence Required list for audit and idempotency trace scenarios.",
+      "boundary_type": "ledger_semantics",
+      "construction_targets": ["append_only_ledger_semantics", "immutable_event_chain", "ledger_write_boundary"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Append-only write semantics and immutable event-chain behavior must be implemented before ledger claims are made.",
+      "public_copy_rule": "May appear as an audit-ledger construction requirement; must not imply a production audit ledger exists."
+    },
+    {
+      "source_phrase": "Hash-chain verification",
+      "current_surface_context": "Operational Evidence Required list for audit and idempotency trace scenarios.",
+      "boundary_type": "trace_integrity",
+      "construction_targets": ["hash_chain_verification", "previous_hash_binding", "trace_integrity_check"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Hash-chain verification must be implemented before trace-integrity claims are operational.",
+      "public_copy_rule": "May appear as a trace-integrity requirement; must not imply current hash-chain verification."
+    },
+    {
+      "source_phrase": "Backend validation",
+      "current_surface_context": "Operational Evidence Required list for release and idempotency trace scenarios.",
+      "boundary_type": "server_validation",
+      "construction_targets": ["server_side_validation", "schema_validation_endpoint", "signed_result_artifact"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Server-side validation and signed result artifacts must exist before operational validation claims are made.",
+      "public_copy_rule": "May appear as a backend validation requirement; must not imply current backend behavior."
+    },
+    {
+      "source_phrase": "Backend input validator",
+      "current_surface_context": "Operational Evidence Required list for missing-input trace scenarios.",
+      "boundary_type": "server_validation",
+      "construction_targets": ["server_side_validation", "schema_validation_endpoint", "input_contract_validation"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Backend input validation must exist before operational input-contract enforcement is claimed.",
+      "public_copy_rule": "May appear as a backend validation requirement; must not imply current backend behavior."
+    },
+    {
+      "source_phrase": "Backend validator implementation",
+      "current_surface_context": "Operational Evidence Required list for safety-scan trace scenarios.",
+      "boundary_type": "server_validation",
+      "construction_targets": ["server_side_validation", "schema_validation_endpoint", "signed_result_artifact"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Backend validator implementation must exist before operational safety enforcement is claimed.",
+      "public_copy_rule": "May appear as a validator construction requirement; must not imply current backend enforcement."
+    },
+    {
+      "source_phrase": "Backend validation logs",
+      "current_surface_context": "Operational Evidence Required list for adapter-failure trace scenarios.",
+      "boundary_type": "server_validation",
+      "construction_targets": ["server_side_validation", "validator_log_capture", "signed_result_artifact"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Backend validation logs must be captured and bound before operational validation evidence is claimed.",
+      "public_copy_rule": "May appear as a log requirement; must not imply current backend logging."
+    },
+    {
+      "source_phrase": "Authenticated actor identity",
+      "current_surface_context": "Operational Evidence Required list for trace attribution scenarios.",
+      "boundary_type": "identity_attribution",
+      "construction_targets": ["actor_session_binding", "auth_to_trace_attribution", "reviewer_identity_context"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Authenticated actor identity must be bound to trace records before operational attribution claims are made.",
+      "public_copy_rule": "May appear as an identity requirement; must not imply current authenticated workflow."
+    },
+    {
+      "source_phrase": "Authenticated reviewer identity",
+      "current_surface_context": "Operational Evidence Required list for safety-review trace scenarios.",
+      "boundary_type": "identity_attribution",
+      "construction_targets": ["actor_session_binding", "auth_to_trace_attribution", "reviewer_identity_context"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Reviewer identity must be authenticated and bound to trace records before operational reviewer-attribution claims are made.",
+      "public_copy_rule": "May appear as a reviewer identity requirement; must not imply current authenticated review."
+    },
+    {
+      "source_phrase": "Reproducible execution logs",
+      "current_surface_context": "Operational Evidence Required list for release-eligibility trace scenarios.",
+      "boundary_type": "execution_reproducibility",
+      "construction_targets": ["reproducible_execution_log", "deterministic_run_record", "replayable_trace_context"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Execution logs must be reproducible and replayable before operational execution evidence is claimed.",
+      "public_copy_rule": "May appear as an execution-log requirement; must not imply live runtime execution."
+    },
+    {
+      "source_phrase": "Reproducible safety-scan logs",
+      "current_surface_context": "Operational Evidence Required list for safety-scan trace scenarios.",
+      "boundary_type": "execution_reproducibility",
+      "construction_targets": ["reproducible_execution_log", "deterministic_run_record", "safety_scan_replay_context"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Safety-scan logs must be reproducible before operational safety enforcement evidence is claimed.",
+      "public_copy_rule": "May appear as a safety-log requirement; must not imply live safety enforcement."
+    },
+    {
+      "source_phrase": "Reproducible missing-input logs",
+      "current_surface_context": "Operational Evidence Required list for missing-input trace scenarios.",
+      "boundary_type": "execution_reproducibility",
+      "construction_targets": ["reproducible_execution_log", "deterministic_run_record", "missing_input_replay_context"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Missing-input logs must be reproducible before operational input-failure evidence is claimed.",
+      "public_copy_rule": "May appear as a replay-log requirement; must not imply live runtime execution."
+    },
+    {
+      "source_phrase": "Reproducible parser/normalization test result",
+      "current_surface_context": "Operational Evidence Required list for adapter-failure trace scenarios.",
+      "boundary_type": "execution_reproducibility",
+      "construction_targets": ["reproducible_execution_log", "deterministic_run_record", "normalization_test_result_artifact"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Parser and normalization test results must be reproducible before operational adapter evidence is claimed.",
+      "public_copy_rule": "May appear as a test-result requirement; must not imply live parser execution."
+    },
+    {
+      "source_phrase": "Test result artifact",
+      "current_surface_context": "Operational Evidence Required list for release and safety trace scenarios.",
+      "boundary_type": "release_gate_evidence",
+      "construction_targets": ["test_result_artifact", "validator_report_artifact", "release_gate_evidence"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Test result artifacts and validator reports must be present before operational release-gate evidence is claimed.",
+      "public_copy_rule": "May appear as a test evidence requirement; must not imply test evidence already exists."
+    },
+    {
+      "source_phrase": "Security review",
+      "current_surface_context": "Operational Evidence Required list across trace scenarios.",
+      "boundary_type": "security_review",
+      "construction_targets": ["security_review_record", "threat_model_review", "runtime_boundary_review"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Security and runtime-boundary reviews must be completed before operational use is claimed.",
+      "public_copy_rule": "May appear as a review requirement; must not imply security review completion."
+    },
+    {
+      "source_phrase": "Storage/audit retention model",
+      "current_surface_context": "Operational Evidence Required list for audit and idempotency trace scenarios.",
+      "boundary_type": "retention_governance",
+      "construction_targets": ["audit_retention_model", "storage_policy", "trace_retention_governance"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Storage and audit-retention governance must exist before operational audit retention is claimed.",
+      "public_copy_rule": "May appear as a retention requirement; must not imply a current retention model is active."
+    },
+    {
+      "source_phrase": "Real contaminated artifact",
+      "current_surface_context": "Operational Evidence Required list for safety-scan trace scenarios.",
+      "boundary_type": "artifact_capture",
+      "construction_targets": ["real_contaminated_artifact", "artifact_capture_boundary", "safety_scan_artifact_binding"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Real contaminated artifacts must be captured and bound before operational safety-scan evidence is claimed.",
+      "public_copy_rule": "May appear as an artifact requirement; must not imply real contaminated artifacts are currently processed."
+    },
+    {
+      "source_phrase": "Raw input/output capture",
+      "current_surface_context": "Operational Evidence Required list for safety-scan trace scenarios.",
+      "boundary_type": "artifact_capture",
+      "construction_targets": ["raw_input_output_capture", "artifact_capture_boundary", "trace_input_output_binding"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Raw input/output capture must exist before operational input/output evidence is claimed.",
+      "public_copy_rule": "May appear as a capture requirement; must not imply raw runtime capture currently exists."
+    },
+    {
+      "source_phrase": "Real job ticket",
+      "current_surface_context": "Operational Evidence Required list for missing-input trace scenarios.",
+      "boundary_type": "artifact_capture",
+      "construction_targets": ["real_job_ticket_artifact", "artifact_capture_boundary", "job_ticket_trace_binding"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Real job-ticket artifacts must be captured and bound before operational job-ticket evidence is claimed.",
+      "public_copy_rule": "May appear as an artifact requirement; must not imply real job tickets are currently processed."
+    },
+    {
+      "source_phrase": "Real constraints packet",
+      "current_surface_context": "Operational Evidence Required list for missing-input trace scenarios.",
+      "boundary_type": "artifact_capture",
+      "construction_targets": ["real_constraints_packet_artifact", "artifact_capture_boundary", "constraints_packet_trace_binding"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Real constraints-packet artifacts must be captured and bound before operational handoff evidence is claimed.",
+      "public_copy_rule": "May appear as an artifact requirement; must not imply real constraints packets are currently processed."
+    },
+    {
+      "source_phrase": "Escalation workflow record",
+      "current_surface_context": "Operational Evidence Required list for missing-input trace scenarios.",
+      "boundary_type": "workflow_record",
+      "construction_targets": ["escalation_workflow_record", "review_queue_binding", "workflow_state_audit_event"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Escalation workflow records must exist before operational escalation workflow claims are made.",
+      "public_copy_rule": "May appear as a workflow evidence requirement; must not imply operational escalation exists."
+    },
+    {
+      "source_phrase": "Real ingress payload",
+      "current_surface_context": "Operational Evidence Required list for adapter-failure trace scenarios.",
+      "boundary_type": "artifact_capture",
+      "construction_targets": ["real_ingress_payload", "artifact_capture_boundary", "adapter_input_binding"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Real ingress payload capture must exist before operational adapter evidence is claimed.",
+      "public_copy_rule": "May appear as an ingress requirement; must not imply real ingress payload processing currently exists."
+    },
+    {
+      "source_phrase": "Adapter implementation",
+      "current_surface_context": "Operational Evidence Required list for adapter-failure trace scenarios.",
+      "boundary_type": "runtime_adapter",
+      "construction_targets": ["adapter_implementation", "adapter_execution_boundary", "adapter_mapping_test_artifact"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Adapter implementation and mapping evidence must exist before operational adapter claims are made.",
+      "public_copy_rule": "May appear as an adapter requirement; must not imply public NEXUS execution or adapter runtime."
+    },
+    {
+      "source_phrase": "Model/API boundary documentation",
+      "current_surface_context": "Operational Evidence Required list for adapter-failure trace scenarios when model output is involved.",
+      "boundary_type": "model_api_boundary",
+      "construction_targets": ["model_api_boundary_documentation", "model_execution_boundary", "runtime_safety_gate"],
+      "current_claim_status": "required_if_model_output_is_involved_not_present",
+      "operational_use_threshold": "Model/API boundary documentation and runtime safety gates must exist before model-output operational claims are made.",
+      "public_copy_rule": "May appear as conditional boundary documentation; must not imply model API calls currently occur."
+    },
+    {
+      "source_phrase": "Cached artifact storage reference",
+      "current_surface_context": "Operational Evidence Required list for idempotency trace scenarios.",
+      "boundary_type": "storage_reference",
+      "construction_targets": ["cached_artifact_storage_reference", "persistent_trace_storage", "artifact_hash_binding"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "Cached artifact storage references must be persisted and hash-bound before operational cache-hit claims are made.",
+      "public_copy_rule": "May appear as a storage-reference requirement; must not imply persistent cached artifacts currently exist."
+    },
+    {
+      "source_phrase": "NEXUS adapter mapping",
+      "current_surface_context": "Interface fixture example evidence requirement.",
+      "boundary_type": "runtime_adapter",
+      "construction_targets": ["nexus_adapter_mapping", "adapter_mapping_test_artifact", "adapter_execution_boundary"],
+      "current_claim_status": "required_for_operational_evidence_not_present",
+      "operational_use_threshold": "NEXUS adapter mapping must be implemented and tested before public NEXUS execution or adapter claims are made.",
+      "public_copy_rule": "May appear as an adapter mapping requirement; must not imply public NEXUS execution."
+    },
+    {
+      "source_phrase": "No live AI execution",
+      "current_surface_context": "Runtime-execution boundary copy for static browser-side evaluation.",
+      "boundary_type": "runtime_execution",
+      "construction_targets": ["bounded_runtime_execution_layer", "model_execution_boundary", "runtime_safety_gate"],
+      "current_claim_status": "runtime_execution_absent_currently",
+      "operational_use_threshold": "Bounded runtime execution and model-execution safety gates must exist before operational runtime claims are made.",
+      "public_copy_rule": "May appear only in local runtime-execution boundary context; must not define the whole product by absence."
+    },
+    {
+      "source_phrase": "No persistent audit ledger",
+      "current_surface_context": "Audit-ledger boundary copy for deterministic trace scenarios.",
+      "boundary_type": "audit_ledger",
+      "construction_targets": ["persistent_audit_ledger", "append_only_ledger_semantics", "hash_chain_verification", "retention_model"],
+      "current_claim_status": "persistent_audit_ledger_absent_currently",
+      "operational_use_threshold": "Persistent audit ledger, append-only semantics, hash-chain verification, and retention model must exist before production audit claims are made.",
+      "public_copy_rule": "May appear only with construction targets in this backlog; must not function as a global product disclaimer."
+    }
+  ]
+}

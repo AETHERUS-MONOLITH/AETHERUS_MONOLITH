@@ -5,19 +5,19 @@
       "layer": "SYSTEM",
       "card_variant": "governance",
       "title": "GOVERNANCE ARCHITECTURE MAP",
-      "description": "Conceptual architecture map for authority, gates, pipeline state, and artifact traceability.",
+      "description": "Governance architecture map for authority, gates, pipeline state, and artifact traceability.",
       "format": "Markdown",
       "section": "governance",
-      "status": "Conceptual architecture",
+      "status": "Governance architecture",
       "category": "System map",
       "claim_supported": "AETHERUS has a coherent governance architecture for controlled LLM and agent workflow concepts.",
       "evidence_type": "Architecture outline",
-      "boundary": "Not a deployed product map, implementation audit, or certification package.",
+      "boundary": "Not an operational product map, implementation audit, or certification package.",
       "related_pipeline_stage": "Whole system",
       "pipeline_stage_keys": ["WHOLE_SYSTEM", "INPUT_FRAME", "AUTHORITY_CHECK", "GATE_DECISION", "AUDIT_RELEASE"],
       "audience": "Technical evaluators and governance stakeholders",
       "cta_label": "Inspect architecture",
-      "body": "# System Overview\n\nObject status: **Conceptual architecture**.\n\nAETHERUS MONOLITH frames controlled LLM and agent workflow concepts through five concerns:\n\n- **Authority**: human permission and override boundaries.\n- **Governance Gates**: validation before downstream release.\n- **Pipeline State**: visible PASS, FAIL, FREEZE, REPAIR, ESCALATE, and AUDIT movement.\n- **Artifacts**: traceable schemas, templates, and deltas.\n- **Control Surface**: a planned interface direction for human review.\n\n## Scope\n\nThis is research and prototype-facing material. It is not presented as an already deployed enterprise SaaS platform."
+      "body": "# System Overview\n\nObject status: **Staged governance product surface**.\n\nAETHERUS MONOLITH frames controlled LLM and agent workflow concepts through five concerns:\n\n- **Authority**: human permission and override boundaries.\n- **Governance Gates**: validation before downstream release.\n- **Pipeline State**: visible PASS, FAIL, FREEZE, REPAIR, ESCALATE, and AUDIT movement.\n- **Artifacts**: traceable schemas, templates, and deltas.\n- **Control Surface**: a staged interface direction for human review.\n\n## Scope\n\nThis is product-surface material in staged construction. Operational use is a legitimate future threshold event only after runtime, evidence, audit, auth, and release-authority requirements are implemented and validated; this artefact does not claim that threshold has been reached."
     },
     {
       "id": "AUTHORITY_MODEL",
@@ -81,10 +81,10 @@
       "layer": "PIPELINE",
       "card_variant": "pipeline-layer",
       "title": "SCENARIO GOVERNANCE FLOW",
-      "description": "Prototype evidence for how intent, model work, validation, and artifact release can be represented through a gated pipeline.",
+      "description": "Trace evidence for how intent, model work, validation, and artifact release can be represented through a gated pipeline.",
       "format": "Markdown",
       "section": "pipeline",
-      "status": "Prototype evidence",
+      "status": "Trace evidence",
       "category": "Prototype trace",
       "claim_supported": "A governed agent flow can be represented as inspectable movement through actors, checkpoints, and audit states.",
       "evidence_type": "Interactive interface prototype",
@@ -93,7 +93,7 @@
       "pipeline_stage_keys": ["INPUT_FRAME", "RISK_CLASSIFICATION", "G_IDEM", "S1", "S2", "S3", "S4", "S5"],
       "audience": "Technical evaluators and product/architecture reviewers",
       "cta_label": "Inspect flow",
-      "body": "# Pipeline Overview\n\nObject status: **Prototype evidence**.\n\n## Pre-Pipeline\nModeled inputs:\n- session_state\n- context\n- authority boundary\n\nPre-step concepts:\n- skeleton population\n- session state normalization\n- release condition registration\n\n## Main Pipeline (actors)\nS1 Communicator -> S2 Mediator -> S3 Drafter -> S4 Refiner -> S5 Origin\n\n## Modeled Outputs\n- updated_session_state\n- delta_brief (human-readable)\n- artifact reference(s)\n- audit state\n\n## Principle\nA joint represents work. A gate represents validation. They are never the same object."
+      "body": "# Pipeline Overview\n\nObject status: **Trace evidence**.\n\n## Pre-Pipeline\nModeled inputs:\n- session_state\n- context\n- authority boundary\n\nPre-step concepts:\n- skeleton population\n- session state normalization\n- release condition registration\n\n## Main Pipeline (actors)\nS1 Communicator -> S2 Mediator -> S3 Drafter -> S4 Refiner -> S5 Origin\n\n## Modeled Outputs\n- updated_session_state\n- delta_brief (human-readable)\n- artifact reference(s)\n- audit state\n\n## Principle\nA joint represents work. A gate represents validation. They are never the same object."
     },
     {
       "id": "JOINT_SPECIFICATIONS",

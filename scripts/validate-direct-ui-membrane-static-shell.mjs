@@ -32,7 +32,7 @@ const requiredForbiddenCapabilities = [
 const requiredBoundaryPhrases = [
   "Direct UI Membrane",
   "Static Preview",
-  "Conceptual interface scaffold",
+  "Staged product-surface scaffold",
   "No authentication",
   "No backend",
   "No persistence",
@@ -73,9 +73,9 @@ const allowedStaticLabels = [
   "Inspect Concept",
   "Review Boundary",
   "View Static Model",
-  "Concept Only",
-  "Static concept",
-  "Concept boundary",
+  "Product boundary",
+  "Staged product surface",
+  "Staged surface",
   "Reviewer model",
   "Preview surface",
   "Boundary note"
@@ -179,7 +179,7 @@ for (const surface of requiredSurfaces) {
   const card = articleMatches.find((article) => article.includes(`<h3>${surface}</h3>`));
   if (!card) fail(`membrane.html: missing card for ${surface}`);
   for (const required of [
-    "Object status: Static concept surface",
+    "Object status: Staged product-surface boundary",
     "<strong>Purpose:</strong>",
     "<strong>Reviewer function:</strong>",
     "<strong>Boundary:</strong>"

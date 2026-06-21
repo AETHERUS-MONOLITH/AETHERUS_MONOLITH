@@ -159,7 +159,7 @@
           "stage_key": "AUDIT_RELEASE",
           "reason": "The trace focuses on the audit and release boundary because the decisive question is whether the completed fixture can be treated as release-eligible in the prototype model.",
           "related_evidence_mapping": "Maps to artefacts tagged with AUDIT_RELEASE and release eligibility evidence metadata.",
-          "layer_status": "prototype-facing",
+          "layer_status": "staged_product_surface",
           "field_status": "current_static"
         },
         "evidence_requirements": [
@@ -446,7 +446,7 @@
           "stage_key": "RECOVERY_PATH",
           "reason": "The trace focuses on the recovery path because the decisive safety failure routes the fixture into the Freeze chamber.",
           "related_evidence_mapping": "Maps to artefacts tagged with RECOVERY_PATH, freeze semantics, and failure-handling evidence.",
-          "layer_status": "prototype-facing",
+          "layer_status": "staged_product_surface",
           "field_status": "current_static"
         },
         "evidence_requirements": [
@@ -678,7 +678,7 @@
           "stage_key": "RECOVERY_PATH",
           "reason": "The trace focuses on the recovery path because the missing input condition routes the fixture into Escalate rather than release flow.",
           "related_evidence_mapping": "Maps to artefacts tagged with RECOVERY_PATH and human escalation evidence.",
-          "layer_status": "prototype-facing",
+          "layer_status": "staged_product_surface",
           "field_status": "current_static"
         },
         "evidence_requirements": [
@@ -899,7 +899,7 @@
           "stage_key": "GATE_DECISION",
           "reason": "The trace focuses on Governance Gates because the decisive condition is a gate-level adapter failure.",
           "related_evidence_mapping": "Maps to artefacts tagged with GATE_DECISION, G1A, and gate validation evidence.",
-          "layer_status": "prototype-facing",
+          "layer_status": "staged_product_surface",
           "field_status": "current_static"
         },
         "evidence_requirements": [
@@ -1111,7 +1111,7 @@
           "stage_key": "AUTHORITY_CHECK",
           "reason": "The trace focuses on Authority because idempotency is evaluated before downstream execution in the static pipeline model.",
           "related_evidence_mapping": "Maps to artefacts tagged with AUTHORITY_CHECK and G_IDEM evidence metadata.",
-          "layer_status": "prototype-facing",
+          "layer_status": "staged_product_surface",
           "field_status": "current_static"
         },
         "evidence_requirements": [
