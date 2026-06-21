@@ -7,6 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const routePath = "the-apologetic-authority/index.html";
+const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
+const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
 
 function fail(message) {
   throw new Error(message);
@@ -39,6 +41,9 @@ function getAttributeValues(text, tagPattern, attributeName) {
 }
 
 const html = await readText(routePath);
+const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))) fail("canonical PDF: missing PDF header");
+if (pdf.length === 0) fail("canonical PDF: empty file");
 
 assertIncludes(html, "<title>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone</title>", "title metadata");
 assertIncludes(html, 'name="author" content="Camilo Carlone"', "author metadata");
@@ -57,7 +62,9 @@ assertIncludes(html, "May 2026", "manuscript date");
 assertIncludes(html, "Final manuscript", "publication status");
 assertIncludes(html, "https://camilocarlone.com/the-apologetic-authority/", "canonical route status");
 assertIncludes(html, "pending / not yet minted", "DOI placeholder");
-assertIncludes(html, "forthcoming / no public PDF URL attached", "PDF placeholder");
+assertIncludes(html, "available / v1.0.1, 44 pages, A4", "PDF status");
+assertIncludes(html, `rel="alternate" type="application/pdf" href="${pdfUrl}"`, "PDF alternate link");
+assertIncludes(html, `name="citation_pdf_url" content="${pdfUrl}"`, "citation PDF metadata");
 assertIncludes(html, "Metadata/GEO layer", "metadata/GEO layer status");
 assertIncludes(html, "NEXUS release gate", "NEXUS release-gate boundary label");
 assertIncludes(html, "<dd>none</dd>", "NEXUS release-gate boundary value");
@@ -70,7 +77,9 @@ assertIncludes(
   "citation boundary"
 );
 assertIncludes(html, "DOI: pending; no DOI has been minted for this route.", "citation DOI boundary");
-assertIncludes(html, "PDF: forthcoming; no public PDF URL is provided for this manuscript route.", "PDF boundary");
+assertIncludes(html, "Download PDF (v1.0.1, 44 pages, A4)", "visible PDF download link");
+assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"`, "visible PDF download href");
+assertIncludes(html, `PDF: available at <a href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf">${pdfUrl}</a>.`, "PDF availability boundary");
 assertIncludes(html, "What This Publication Does Not Claim", "publication boundary block");
 
 assertMatches(html, /<h3 id="table-of-contents">Table of Contents<\/h3>\s*<nav aria-labelledby="table-of-contents">/, "Table of Contents");

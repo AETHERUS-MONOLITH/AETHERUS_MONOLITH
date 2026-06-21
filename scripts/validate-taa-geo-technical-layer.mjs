@@ -11,6 +11,8 @@ const metadataPath = "data/taa-publication-metadata.v1.json";
 const routePath = "the-apologetic-authority/index.html";
 const sitemapPath = "sitemap.xml";
 const robotsPath = "robots.txt";
+const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
+const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
 
 function fail(message) {
   throw new Error(message);
@@ -70,12 +72,16 @@ await fs.access(path.join(repoRoot, metadataPath));
 await fs.access(path.join(repoRoot, routePath));
 await fs.access(path.join(repoRoot, sitemapPath));
 await fs.access(path.join(repoRoot, robotsPath));
+await fs.access(path.join(repoRoot, pdfPath));
 
 const metadata = await readJson(metadataPath);
 const publication = metadata.publication;
 const html = await readText(routePath);
 const sitemap = await readText(sitemapPath);
 const robots = await readText(robotsPath);
+const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+assert(pdf.length > 0, "PDF artifact: must be non-empty");
+assert(pdf.subarray(0, 5).equals(Buffer.from("%PDF-")), "PDF artifact: must have PDF header");
 
 assert(publication && typeof publication === "object", "metadata package: missing publication object");
 
@@ -92,8 +98,11 @@ assertIncludes(html, `<title>${title} - ${author}</title>`, "HTML title");
 assert(metaContent(html, "description") === description, "meta description: must match metadata package");
 assert(metaContent(html, "author") === author, "author metadata: must match metadata package");
 assert(metaContent(html, "publication-status").includes(status), "publication status metadata: must include metadata status");
+assert(metaContent(html, "publication-status").includes("PDF available"), "publication status metadata: must include PDF availability");
+assert(metaContent(html, "citation_pdf_url") === pdfUrl, "citation PDF URL: must match canonical PDF URL");
 assert(metaContent(html, "keywords") === keywords.join(", "), "keywords metadata: must match metadata package");
 assertIncludes(html, `<link rel="canonical" href="${url}">`, "canonical link");
+assertIncludes(html, `<link rel="alternate" type="application/pdf" href="${pdfUrl}">`, "PDF alternate link");
 
 assert(propertyContent(html, "og:title") === title, "Open Graph title: must match metadata package");
 assert(propertyContent(html, "og:description") === description, "Open Graph description: must match metadata package");
@@ -131,7 +140,8 @@ assert(article.dateModified === "2026-06-18", "JSON-LD dateModified: must use gr
 assertIncludes(html, abstract, "visible abstract");
 assertIncludes(htmlToText(html), citation, "visible citation");
 assertIncludes(html, "DOI: pending; no DOI has been minted for this route.", "visible DOI pending state");
-assertIncludes(html, "PDF: forthcoming; no public PDF URL is provided for this manuscript route.", "visible PDF pending state");
+assertIncludes(html, "Download PDF (v1.0.1, 44 pages, A4)", "visible PDF download link");
+assertIncludes(html, `PDF: available at <a href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf">${pdfUrl}</a>.`, "visible PDF availability state");
 for (const boundary of publication.does_not_claim) {
   const visibleBoundary = boundary.replace(/^no /i, "No ");
   assertIncludes(html, visibleBoundary, `visible boundary block: ${boundary}`);

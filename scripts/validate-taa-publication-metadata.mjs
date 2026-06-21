@@ -97,14 +97,26 @@ assertEqual(publication.doi?.status, "pending", "DOI status");
 assertEqual(publication.doi?.claimable, false, "DOI claimable");
 if (publication.doi?.display) assertEqual(publication.doi.display, "DOI: pending", "DOI display");
 
-assertEqual(publication.pdf?.status, "forthcoming", "PDF status");
-assertEqual(publication.pdf?.public_url, null, "PDF public URL");
-assertEqual(publication.pdf?.claimable, false, "PDF claimable");
+assertEqual(publication.pdf?.status, "repository_integrated", "PDF status");
+assertEqual(
+  publication.pdf?.public_url,
+  "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf",
+  "PDF public URL"
+);
+assertEqual(publication.pdf?.claimable, true, "PDF claimable");
+assertEqual(publication.pdf?.page_count, 44, "PDF page count");
+assertEqual(publication.pdf?.format, "A4", "PDF format");
+assertEqual(
+  publication.pdf?.source_artifact,
+  "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf",
+  "PDF source artifact"
+);
 
 const sourceStatus = publication.repository_source_status;
 assertEqual(sourceStatus?.canonical_route_live, true, "canonical route live");
 assertEqual(sourceStatus?.canonical_surface_complete, true, "canonical surface complete");
 assertEqual(sourceStatus?.metadata_package_created, true, "metadata package created");
+assertEqual(sourceStatus?.pdf_artifact_integrated, true, "PDF artifact integrated");
 assertEqual(sourceStatus?.doi_minted, false, "DOI minted");
 assertEqual(sourceStatus?.archive_release_completed, false, "archive release completed");
 assertEqual(sourceStatus?.search_submission_completed, false, "search submission completed");
