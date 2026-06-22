@@ -27,13 +27,28 @@
       "structural critique"
     ],
     "citation": {
-      "text": "Carlone, Camilo. “The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude.” v1.0.1 Final Manuscript. 2026. https://camilocarlone.com/the-apologetic-authority/",
-      "doi_included": false
+      "text": "Carlone, C. (2026). The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.20788207",
+      "doi_included": true,
+      "version_doi": "10.5281/zenodo.20788207",
+      "version_doi_url": "https://doi.org/10.5281/zenodo.20788207",
+      "all_versions_doi": "10.5281/zenodo.20788206",
+      "all_versions_doi_url": "https://doi.org/10.5281/zenodo.20788206"
     },
     "doi": {
-      "status": "pending",
-      "display": "DOI: pending",
-      "claimable": false
+      "status": "minted",
+      "display": "DOI: 10.5281/zenodo.20788207",
+      "version": "10.5281/zenodo.20788207",
+      "version_url": "https://doi.org/10.5281/zenodo.20788207",
+      "all_versions": "10.5281/zenodo.20788206",
+      "all_versions_url": "https://doi.org/10.5281/zenodo.20788206",
+      "claimable": true
+    },
+    "archive": {
+      "status": "deposited",
+      "platform": "Zenodo",
+      "resource_type": "Report",
+      "publication_date": "2026-06-21",
+      "operator_execution_date": "2026-06-22"
     },
     "pdf": {
       "status": "repository_integrated",
@@ -48,19 +63,19 @@
       "canonical_surface_complete": true,
       "metadata_package_created": true,
       "pdf_artifact_integrated": true,
-      "doi_minted": false,
-      "archive_release_completed": false,
+      "doi_minted": true,
+      "archive_release_completed": true,
       "search_submission_completed": false,
       "distribution_completed": false
     },
     "license": {
       "manuscript_license_statement": "All rights reserved.",
       "source": "Canonical route manuscript front matter",
-      "archive_license_decision": "unresolved"
+      "archive_license_decision": "All rights reserved"
     },
     "does_not_claim": [
-      "no journal publication claimed",
-      "no DOI yet unless minted",
+      "no journal publication or peer review claimed",
+      "no institutional validation or Anthropic assessment claimed",
       "no arXiv claim unless submitted",
       "no institutional affiliation invented",
       "no NEXUS release gate",

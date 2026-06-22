@@ -9,6 +9,9 @@ const repoRoot = path.resolve(__dirname, "..");
 const routePath = "the-apologetic-authority/index.html";
 const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
 const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
+const versionDoi = "10.5281/zenodo.20788207";
+const versionDoiUrl = "https://doi.org/10.5281/zenodo.20788207";
+const allVersionsDoiUrl = "https://doi.org/10.5281/zenodo.20788206";
 
 function fail(message) {
   throw new Error(message);
@@ -53,6 +56,8 @@ assertIncludes(html, 'href="https://camilocarlone.com/the-apologetic-authority/"
 assertIncludes(html, 'property="og:title" content="The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude"', "Open Graph title");
 assertIncludes(html, 'property="og:description" content="A structural critique of Anthropic\'s Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk."', "Open Graph description");
 assertIncludes(html, 'property="og:url" content="https://camilocarlone.com/the-apologetic-authority/"', "Open Graph URL");
+assertIncludes(html, 'property="article:published_time" content="2026-06-21"', "Open Graph published date");
+assertIncludes(html, 'property="article:modified_time" content="2026-06-22"', "Open Graph modified date");
 assertIncludes(html, 'name="twitter:card" content="summary"', "Twitter card");
 assertIncludes(html, 'type="application/ld+json"', "JSON-LD metadata");
 
@@ -61,10 +66,17 @@ assertIncludes(html, "v1.0.1 — Final Manuscript", "version status");
 assertIncludes(html, "May 2026", "manuscript date");
 assertIncludes(html, "Final manuscript", "publication status");
 assertIncludes(html, "https://camilocarlone.com/the-apologetic-authority/", "canonical route status");
-assertIncludes(html, "pending / not yet minted", "DOI placeholder");
+assertIncludes(html, `available / minted — ${versionDoi}`, "DOI minted status");
+assertIncludes(html, "available / deposited — Report, publication date 2026-06-21", "Zenodo archive status");
 assertIncludes(html, "available / v1.0.1, 44 pages, A4", "PDF status");
+assertIncludes(html, "All rights reserved", "license status");
+assertIncludes(html, "Copyright © 2026 Camilo Carlone", "copyright status");
 assertIncludes(html, `rel="alternate" type="application/pdf" href="${pdfUrl}"`, "PDF alternate link");
+assertIncludes(html, 'name="citation_publication_date" content="2026-06-21"', "citation publication date");
+assertIncludes(html, `name="citation_doi" content="${versionDoi}"`, "citation DOI metadata");
 assertIncludes(html, `name="citation_pdf_url" content="${pdfUrl}"`, "citation PDF metadata");
+assertIncludes(html, `name="DC.identifier" content="${versionDoiUrl}"`, "Dublin Core DOI identifier");
+assertIncludes(html, 'name="DC.rights" content="All rights reserved"', "Dublin Core rights metadata");
 assertIncludes(html, "Metadata/GEO layer", "metadata/GEO layer status");
 assertIncludes(html, "NEXUS release gate", "NEXUS release-gate boundary label");
 assertIncludes(html, "<dd>none</dd>", "NEXUS release-gate boundary value");
@@ -73,10 +85,13 @@ assertIncludes(html, "<dd>optional</dd>", "arXiv optional value");
 
 assertIncludes(
   html,
-  "Carlone, Camilo. “<cite>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude</cite>.” v1.0.1 Final Manuscript. 2026.",
-  "citation boundary"
+  `Carlone, C. (2026). <cite>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude</cite> (v1.0.1). Zenodo. <a href="${versionDoiUrl}">${versionDoiUrl}</a>`,
+  "version DOI citation"
 );
-assertIncludes(html, "DOI: pending; no DOI has been minted for this route.", "citation DOI boundary");
+assertIncludes(html, `DOI: available / minted for v1.0.1 at <a href="${versionDoiUrl}">${versionDoiUrl}</a>.`, "visible DOI minted state");
+assertIncludes(html, "Zenodo archive: available / deposited as an archived report.", "visible archive deposited state");
+assertIncludes(html, `<a href="${versionDoiUrl}">Zenodo DOI record</a>`, "visible Zenodo DOI record link");
+assertIncludes(html, `All-versions DOI: <a href="${allVersionsDoiUrl}">${allVersionsDoiUrl}</a>.`, "visible all-versions DOI link");
 assertIncludes(html, "Download PDF (v1.0.1, 44 pages, A4)", "visible PDF download link");
 assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"`, "visible PDF download href");
 assertIncludes(html, `PDF: available at <a href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf">${pdfUrl}</a>.`, "PDF availability boundary");
@@ -167,14 +182,20 @@ for (const anchor of requiredManuscriptAnchors) {
 assertMatches(html, /<h2 id="references">References<\/h2>/, "references section");
 assertIncludes(html, "Anthropic. &quot;Claude's Constitution.&quot;", "references retained");
 assertNotIncludes(html, "<h2 id=\"references\">References</h2>\n<p>Pending", "references placeholder");
-assertNotIncludes(html, "doi.org", "DOI must not be falsely minted");
-assertNotIncludes(html, "DOI: minted", "DOI must not be falsely minted");
+assertIncludes(html, versionDoiUrl, "version DOI URL");
+assertNotIncludes(html, "DOI pending", "stale DOI pending language");
+assertNotIncludes(html, "pending / not yet minted", "stale DOI pending language");
+assertNotIncludes(html, "no DOI", "stale DOI absence language");
+assertNotIncludes(html, "Zenodo pending", "stale Zenodo pending language");
+assertNotIncludes(html, "archive pending", "stale archive pending language");
+assertNotIncludes(html, "archive not deposited", "stale archive absence language");
+assertNotIncludes(html, "PDF unavailable", "stale PDF unavailable language");
+assertNotIncludes(html, "PDF pending", "stale PDF pending language");
 assertNotIncludes(html, "doi:10.", "DOI must not be falsely minted");
-assertNotIncludes(html, "DOI 10.", "DOI must not be falsely minted");
 assertNotIncludes(html, "the-apologetic-authority.pdf", "TAA PDF URL must not be invented");
-assertNotIncludes(html, "zenodo.org", "external archive fact must not be invented");
 assertNotIncludes(html, "ssrn.com", "external archive fact must not be invented");
 assertNotIncludes(html, "osf.io", "external archive fact must not be invented");
+assertNotIncludes(html, "peer-reviewed", "peer-review claim must not be introduced");
 assertNotIncludes(html, "Search Console", "search submission must not be claimed");
 assertNotIncludes(html, "Bing Webmaster", "search submission must not be claimed");
 assertNotIncludes(html, "NEXUS release gate</dt><dd>required", "NEXUS must not be a release gate");

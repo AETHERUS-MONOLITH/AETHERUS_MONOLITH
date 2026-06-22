@@ -2164,12 +2164,13 @@
       ],
       "evidence_snippets": [
         "L3: \"canonical_title\": \"The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude\",",
-        "L30: \"status\": \"pending\",",
-        "L36: \"public_url\": null,",
-        "L58: \"no journal publication claimed\",",
-        "L62: \"no NEXUS release gate\""
+        "L32: \"version_doi\": \"10.5281/zenodo.20788207\",",
+        "L38: \"status\": \"minted\",",
+        "L47: \"status\": \"deposited\",",
+        "L66: \"doi_minted\": true,",
+        "L78: \"no institutional validation or Anthropic assessment claimed\""
       ],
-      "recommended_later_action": "Keep public as the controlled TAA metadata and citation authority package; preserve DOI, archive, distribution, and release-fact boundaries.",
+      "recommended_later_action": "Keep public as the controlled TAA metadata and citation authority package; preserve DOI/archive facts while retaining distribution and release-fact boundaries.",
       "destructive_change_required_now": false
     },
     {

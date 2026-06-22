@@ -21,8 +21,8 @@
     "validate repository-local contracts",
     "defines future evidence requirements",
     "does not complete the operational evidence packet",
-    "repository-held publication and discovery apparatus",
-    "does not claim DOI, archive, journal, or search-submission completion",
+    "completed TAA v1.0.1 Zenodo DOI/archive record",
+    "records the completed TAA v1.0.1 Zenodo DOI/archive state without claiming journal publication",
     "Operational use remains a legitimate future threshold event"
   ],
   "restricted_claim_patterns": [
@@ -38,8 +38,8 @@
     },
     {
       "id": "metadata_as_external_publication_proof",
-      "pattern": "\\b(metadata|citation authority|publication apparatus)\\b[^\\n.]{0,120}\\b(DOI minted|archive deposited|journal publication|institutional validation|external endorsement|search submission completed)\\b",
-      "reason": "Metadata packages are repository-held authority packages, not proof of external publication events."
+      "pattern": "\\b(metadata|citation authority|publication apparatus)\\b[^\\n.]{0,120}\\b(journal publication completed|peer review completed|peer-reviewed status achieved|institutional validation completed|external endorsement received|search submission completed|social publication completed)\\b",
+      "reason": "Metadata packages may record the verified TAA DOI/archive state, but they must not imply peer review, institutional validation, endorsement, or distribution completion."
     },
     {
       "id": "substrate_as_live_database",

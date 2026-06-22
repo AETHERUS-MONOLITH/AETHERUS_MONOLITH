@@ -7,6 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const metadataPath = "data/taa-publication-metadata.v1.json";
+const versionDoi = "10.5281/zenodo.20788207";
+const versionDoiUrl = "https://doi.org/10.5281/zenodo.20788207";
+const allVersionsDoi = "10.5281/zenodo.20788206";
+const allVersionsDoiUrl = "https://doi.org/10.5281/zenodo.20788206";
 
 function fail(message) {
   throw new Error(message);
@@ -87,15 +91,28 @@ for (const keyword of requiredKeywords) {
 
 const citationText = publication.citation?.text ?? "";
 assert(citationText.length > 0, "citation block: missing text");
-assert(citationText.includes("Carlone, Camilo."), "citation block: missing author");
-assert(citationText.includes("v1.0.1 Final Manuscript"), "citation block: missing manuscript status");
-assert(citationText.includes("https://camilocarlone.com/the-apologetic-authority/"), "citation block: missing canonical URL");
-assertEqual(publication.citation?.doi_included, false, "citation DOI flag");
-assert(!/doi\.org|DOI:\s*10\.|10\.\d{4,9}\//i.test(citationText), "citation block: DOI must not be included");
+assert(citationText.includes("Carlone, C. (2026)."), "citation block: missing author/date");
+assert(citationText.includes("(v1.0.1). Zenodo."), "citation block: missing version/Zenodo state");
+assert(citationText.includes(versionDoiUrl), "citation block: missing version DOI URL");
+assertEqual(publication.citation?.doi_included, true, "citation DOI flag");
+assertEqual(publication.citation?.version_doi, versionDoi, "citation version DOI");
+assertEqual(publication.citation?.version_doi_url, versionDoiUrl, "citation version DOI URL");
+assertEqual(publication.citation?.all_versions_doi, allVersionsDoi, "citation all-versions DOI");
+assertEqual(publication.citation?.all_versions_doi_url, allVersionsDoiUrl, "citation all-versions DOI URL");
 
-assertEqual(publication.doi?.status, "pending", "DOI status");
-assertEqual(publication.doi?.claimable, false, "DOI claimable");
-if (publication.doi?.display) assertEqual(publication.doi.display, "DOI: pending", "DOI display");
+assertEqual(publication.doi?.status, "minted", "DOI status");
+assertEqual(publication.doi?.claimable, true, "DOI claimable");
+assertEqual(publication.doi?.display, `DOI: ${versionDoi}`, "DOI display");
+assertEqual(publication.doi?.version, versionDoi, "version DOI");
+assertEqual(publication.doi?.version_url, versionDoiUrl, "version DOI URL");
+assertEqual(publication.doi?.all_versions, allVersionsDoi, "all-versions DOI");
+assertEqual(publication.doi?.all_versions_url, allVersionsDoiUrl, "all-versions DOI URL");
+
+assertEqual(publication.archive?.status, "deposited", "archive status");
+assertEqual(publication.archive?.platform, "Zenodo", "archive platform");
+assertEqual(publication.archive?.resource_type, "Report", "archive resource type");
+assertEqual(publication.archive?.publication_date, "2026-06-21", "archive publication date");
+assertEqual(publication.archive?.operator_execution_date, "2026-06-22", "archive operator execution date");
 
 assertEqual(publication.pdf?.status, "repository_integrated", "PDF status");
 assertEqual(
@@ -117,8 +134,8 @@ assertEqual(sourceStatus?.canonical_route_live, true, "canonical route live");
 assertEqual(sourceStatus?.canonical_surface_complete, true, "canonical surface complete");
 assertEqual(sourceStatus?.metadata_package_created, true, "metadata package created");
 assertEqual(sourceStatus?.pdf_artifact_integrated, true, "PDF artifact integrated");
-assertEqual(sourceStatus?.doi_minted, false, "DOI minted");
-assertEqual(sourceStatus?.archive_release_completed, false, "archive release completed");
+assertEqual(sourceStatus?.doi_minted, true, "DOI minted");
+assertEqual(sourceStatus?.archive_release_completed, true, "archive release completed");
 assertEqual(sourceStatus?.search_submission_completed, false, "search submission completed");
 assertEqual(sourceStatus?.distribution_completed, false, "distribution completed");
 
@@ -128,11 +145,11 @@ assert(
   license.manuscript_license_statement === "All rights reserved." || license.manuscript_license_statement === "unresolved",
   "license: must be grounded or explicitly unresolved"
 );
-assertEqual(license.archive_license_decision, "unresolved", "archive license decision");
+assertEqual(license.archive_license_decision, "All rights reserved", "archive license decision");
 
 const requiredBoundaryItems = [
-  "no journal publication claimed",
-  "no DOI yet unless minted",
+  "no journal publication or peer review claimed",
+  "no institutional validation or Anthropic assessment claimed",
   "no arXiv claim unless submitted",
   "no institutional affiliation invented",
   "no NEXUS release gate",
@@ -160,10 +177,11 @@ for (const target of requiredReuseTargets) {
 
 const allMetadataText = walkStrings(metadata).join("\n");
 const forbiddenMetadataClaims = [
-  /doi\.org/i,
-  /DOI:\s*10\./,
   /published in/i,
   /journal publication[^.\n]*(accepted|completed|published)/i,
+  /peer[- ]review(ed)?[^.\n]*(accepted|completed|published|validated)/i,
+  /institutional validation[^.\n]*(completed|validated|endorsed)/i,
+  /Anthropic assessment[^.\n]*(completed|validated|endorsed)/i,
   /Search Console submitted/i,
   /Bing submitted/i,
   /LinkedIn published/i,
