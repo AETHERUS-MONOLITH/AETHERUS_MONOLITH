@@ -2826,6 +2826,53 @@ main {
   padding-left: 18px;
 }
 
+.protected-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.protected-review-button {
+  min-height: 38px;
+  padding: 9px 12px;
+  color: rgba(230, 245, 250, 0.9);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  border: 1px solid rgba(24, 191, 245, 0.34);
+  background: rgba(24, 191, 245, 0.1);
+  cursor: pointer;
+}
+
+.protected-review-button:disabled {
+  color: rgba(220, 232, 238, 0.38);
+  cursor: not-allowed;
+  border-color: rgba(153, 207, 226, 0.13);
+  background: rgba(3, 9, 14, 0.5);
+}
+
+.protected-workspace-note {
+  margin-top: 12px;
+  color: rgba(220, 232, 238, 0.48);
+  font-size: 11px;
+}
+
+.protected-activity-list {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+
+.protected-activity-list li {
+  color: rgba(220, 232, 238, 0.62);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 @media (max-width: 1180px) {
   .workspace-grid,
   .workspace-hero,

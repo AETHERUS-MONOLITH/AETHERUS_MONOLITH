@@ -14,6 +14,8 @@ const requiredProtectedShellPhrases = [
   "Release Review",
   "Trace / Activity",
   "Settings / Members",
+  "Stage candidate",
+  "Run local review",
   "No evidence packet is loaded yet.",
   "No release candidate is queued.",
   "No persistent activity has been recorded.",
@@ -144,6 +146,10 @@ for (const flag of [
   "production_saas"
 ]) {
   if (record.non_claims?.[flag] !== false) fail(`${recordPath}: non_claims.${flag} must be false`);
+}
+
+if (!protectedShell.includes('js/protected-workspace.js')) {
+  fail(`${protectedShellPath}: missing protected workspace interaction script`);
 }
 
 if (record.guard_boundary?.protected_shell_guard_preserved !== true) {

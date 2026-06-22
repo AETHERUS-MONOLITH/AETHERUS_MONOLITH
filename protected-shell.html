@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="js/aetherus-runtime-config.js"></script>
   <script type="module" src="js/supabase-protected-shell.js"></script>
+  <script type="module" src="js/protected-workspace.js"></script>
 </head>
 <body class="auth-login-page">
   <div class="scan-line" aria-hidden="true"></div>
@@ -102,39 +103,52 @@
           <dl>
             <div><dt>Workspace identity</dt><dd>AETHERUS Review Workspace</dd></div>
             <div><dt>Current frame</dt><dd>Static browser-side protected shell surface.</dd></div>
-            <div><dt>Workspace state</dt><dd>No active release candidate is queued.</dd></div>
+            <div><dt>Workspace state</dt><dd data-review-workspace-state>No active release candidate is queued.</dd></div>
+            <div><dt>Local release candidate</dt><dd data-review-candidate-summary>sample release candidate available for local review.</dd></div>
           </dl>
+          <div class="protected-review-actions" aria-label="Local release-review controls">
+            <button class="protected-review-button" type="button" data-action="stage-local-candidate">
+              Stage candidate
+            </button>
+            <button class="protected-review-button" type="button" data-action="run-local-review" disabled>
+              Run local review
+            </button>
+          </div>
+          <p class="protected-workspace-note">
+            This local release candidate is browser-side and in-memory only; no external release action is performed.
+          </p>
         </article>
 
         <article class="protected-workspace-card panel-frame" id="evidence-packet">
           <span class="section-kicker">Evidence Packet</span>
           <h3>Evidence Packet</h3>
-          <p class="protected-empty-state">No evidence packet is loaded yet.</p>
-          <p>
-            This area reserves the evidence-packet review surface without loading
-            records from storage or presenting operational evidence.
-          </p>
+          <p class="protected-empty-state" data-evidence-status>No evidence packet is loaded yet.</p>
+          <dl data-evidence-fields>
+            <div><dt>Candidate</dt><dd data-evidence-candidate>None staged.</dd></div>
+            <div><dt>Evidence status</dt><dd data-evidence-completeness>Operational evidence packet missing.</dd></div>
+            <div><dt>Missing requirement</dt><dd data-evidence-missing>No backend persistence.</dd></div>
+            <div><dt>Ledger / context</dt><dd>No production audit ledger; No tenant/customer context.</dd></div>
+          </dl>
         </article>
 
         <article class="protected-workspace-card panel-frame" id="release-review">
           <span class="section-kicker">Release Review</span>
           <h3>Release Review</h3>
-          <p class="protected-empty-state">No release candidate is queued.</p>
-          <p>
-            Release review is visible as a workspace area only. It does not create
-            release authority, approval workflow, or production control.
-          </p>
+          <p class="protected-empty-state" data-review-result>No release candidate is queued.</p>
+          <dl>
+            <div><dt>Review state</dt><dd data-review-state>Waiting for local candidate.</dd></div>
+            <div><dt>Decision</dt><dd data-review-decision>Release authority unavailable.</dd></div>
+            <div><dt>Result</dt><dd data-review-reason>Review blocked: Incomplete operational evidence; no external release action is performed.</dd></div>
+          </dl>
         </article>
 
         <article class="protected-workspace-card panel-frame" id="trace-activity">
           <span class="section-kicker">Trace / Activity</span>
           <h3>Trace / Activity</h3>
-          <p class="protected-empty-state">No persistent activity has been recorded.</p>
-          <p>
-            Activity is not read from a ledger or storage layer. This frame can
-            display future activity surfaces after backend workspace services are
-            implemented.
-          </p>
+          <p class="protected-empty-state" data-activity-status>No persistent activity has been recorded.</p>
+          <ol class="protected-activity-list" data-activity-list>
+            <li>Local in-memory activity will appear here after staging.</li>
+          </ol>
         </article>
 
         <article class="protected-workspace-card panel-frame" id="settings-members">

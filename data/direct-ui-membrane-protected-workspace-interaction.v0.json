@@ -1,0 +1,67 @@
+{
+  "schema_version": "0.1",
+  "artifact_id": "direct-ui-membrane-protected-workspace-interaction.v0",
+  "section": "§1.2 Direct UI Membrane",
+  "surface_file": "protected-shell.html",
+  "script_file": "js/protected-workspace.js",
+  "object_classification": [
+    "protected workspace interaction",
+    "browser-side in-memory release-review flow",
+    "local fixture only"
+  ],
+  "local_release_candidate": {
+    "id": "local-release-candidate-0-1",
+    "label": "Local release candidate",
+    "source": "static module fixture",
+    "customer_data": false,
+    "tenant_data": false,
+    "operational_log_data": false,
+    "audit_record_data": false
+  },
+  "interaction_controls": [
+    "Stage candidate",
+    "Run local review"
+  ],
+  "populated_areas": [
+    "Evidence Packet",
+    "Release Review",
+    "Trace / Activity"
+  ],
+  "blocked_review_result": {
+    "result": "Review blocked",
+    "reason": "Incomplete operational evidence",
+    "release_authority_available": false,
+    "external_release_action_performed": false
+  },
+  "state_boundary": {
+    "browser_side": true,
+    "in_memory_only": true,
+    "local_storage_used": false,
+    "session_storage_used": false,
+    "cookies_used": false,
+    "network_calls_used": false,
+    "supabase_writes_used": false,
+    "database_calls_used": false,
+    "api_calls_used": false,
+    "service_worker_used": false
+  },
+  "non_claims": {
+    "backend": false,
+    "persistence": false,
+    "tenant_isolation": false,
+    "rls": false,
+    "billing": false,
+    "monitoring": false,
+    "production_release_authority": false,
+    "public_nexus_runtime": false,
+    "model_api_execution": false,
+    "operational_use": false,
+    "doi_archive_search_publication_distribution": false
+  },
+  "guard_boundary": {
+    "protected_shell_guard_preserved": true,
+    "auth_script_changed": false,
+    "provider_loop_changed": false,
+    "supabase_infrastructure_changed": false
+  }
+}
