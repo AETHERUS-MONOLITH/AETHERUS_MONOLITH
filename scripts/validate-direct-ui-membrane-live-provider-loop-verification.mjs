@@ -50,8 +50,8 @@ const rejectedBirthEvidence = [
 const boundedShellPhrases = [
   "Protected Shell Boundary",
   "Session recognized",
-  "No database access",
-  "No persistence layer",
+  "Authenticated save/load loop",
+  "Session-scoped Supabase state",
   "No tenant workspace",
   "No customer data",
   "No billing",

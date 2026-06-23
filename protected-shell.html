@@ -41,18 +41,17 @@
           Protected shell admission depends on recognized Supabase session state.
           Denial without a session is expected guard behavior. When admitted, this
           surface presents the first protected AETHERUS workspace frame: review
-          areas, empty states, and bounded future workspace surfaces. No production workspace is active here.
+          areas, bounded workspace persistence, and future workspace surfaces.
+          No production workspace is active here.
         </p>
         <div class="auth-login-status-strip" aria-label="Protected shell boundary">
           <span>Protected Shell Boundary</span>
           <span data-shell-session-chip>Session pending</span>
           <span>Expected denial without session</span>
           <span>Protected workspace frame</span>
-          <span>Static browser-side surface</span>
-          <span>Non-persistent</span>
-          <span>No database access</span>
-          <span>No persistence layer</span>
-          <span>No application-data persistence</span>
+          <span>Browser-side workspace surface</span>
+          <span>Authenticated save/load loop</span>
+          <span>Session-scoped Supabase state</span>
           <span>No tenant workspace</span>
           <span>No customer data</span>
           <span>No public NEXUS runtime</span>
@@ -80,7 +79,8 @@
           <p>
             The guarded route admitted this protected workspace frame after
             Supabase session classification returned a session-present state; this
-            is guard admission, not backend or product maturity.
+            is guard admission plus a bounded save/load path for release-review
+            workspace state, not backend or product maturity.
           </p>
         </div>
         <nav class="protected-workspace-nav" aria-label="Workspace-level navigation">
@@ -105,6 +105,7 @@
             <div><dt>Current frame</dt><dd>Static browser-side protected shell surface.</dd></div>
             <div><dt>Workspace state</dt><dd data-review-workspace-state>No active release candidate is queued.</dd></div>
             <div><dt>Local release candidate</dt><dd data-review-candidate-summary>sample release candidate available for local review.</dd></div>
+            <div><dt>Persistence status</dt><dd data-persistence-status>unsaved</dd></div>
           </dl>
           <div class="protected-review-actions" aria-label="Local release-review controls">
             <button class="protected-review-button" type="button" data-action="stage-local-candidate">
@@ -113,9 +114,18 @@
             <button class="protected-review-button" type="button" data-action="run-local-review" disabled>
               Run local review
             </button>
+            <button class="protected-review-button" type="button" data-action="save-workspace-state" disabled>
+              Save workspace state
+            </button>
+            <button class="protected-review-button" type="button" data-action="load-saved-workspace-state">
+              Load saved workspace state
+            </button>
           </div>
           <p class="protected-workspace-note">
-            This local release candidate is browser-side and in-memory only; no external release action is performed.
+            This local release candidate stays bounded to release-review state. Saving stores only this workspace state through the authenticated Supabase session; no external release action is performed.
+          </p>
+          <p class="protected-workspace-note" data-persistence-detail>
+            no saved workspace state has been loaded in this browser session.
           </p>
         </article>
 
@@ -126,7 +136,7 @@
           <dl data-evidence-fields>
             <div><dt>Candidate</dt><dd data-evidence-candidate>None staged.</dd></div>
             <div><dt>Evidence status</dt><dd data-evidence-completeness>Operational evidence packet missing.</dd></div>
-            <div><dt>Missing requirement</dt><dd data-evidence-missing>No backend persistence.</dd></div>
+            <div><dt>Missing requirement</dt><dd data-evidence-missing>Operational evidence packet missing.</dd></div>
             <div><dt>Ledger / context</dt><dd>No production audit ledger; No tenant/customer context.</dd></div>
           </dl>
         </article>
@@ -157,7 +167,7 @@
           <p class="protected-empty-state">No members are configured in this frame.</p>
           <p>
             Member and organization controls are reserved for future workspace
-            services. Settings are unavailable until account, storage, and access
+            services. Settings are unavailable until account, team, and access
             layers are separately implemented.
           </p>
         </article>
@@ -166,12 +176,16 @@
           <span class="section-kicker">Availability</span>
           <h3>Bounded future surfaces</h3>
           <p>
-            This frame is static and non-persistent until backend workspace services are implemented.
+            This frame can save and load bounded release-review workspace state
+            for the authenticated session. It is not a production customer
+            workspace, operational release system, or persistent production
+            audit ledger.
           </p>
           <ul class="protected-workspace-list">
-            <li>No database access.</li>
-            <li>No application-data persistence.</li>
+            <li>Only bounded release-review workspace state is saved.</li>
+            <li>No operational evidence ledger.</li>
             <li>No tenant workspace.</li>
+            <li>No customer data.</li>
             <li>No public NEXUS runtime.</li>
             <li>No model API execution.</li>
             <li>No billing.</li>

@@ -6,7 +6,8 @@
   "script_file": "js/protected-workspace.js",
   "object_classification": [
     "protected workspace interaction",
-    "browser-side in-memory release-review flow",
+    "browser-side release-review flow",
+    "in-memory interaction preserved with later authenticated persistence wiring",
     "local fixture only"
   ],
   "local_release_candidate": {
@@ -35,13 +36,14 @@
   },
   "state_boundary": {
     "browser_side": true,
-    "in_memory_only": true,
+    "in_memory_only": false,
+    "in_memory_interaction_preserved": true,
     "local_storage_used": false,
     "session_storage_used": false,
     "cookies_used": false,
-    "network_calls_used": false,
-    "supabase_writes_used": false,
-    "database_calls_used": false,
+    "network_calls_used": true,
+    "supabase_writes_used": true,
+    "database_calls_used": true,
     "api_calls_used": false,
     "service_worker_used": false
   },
@@ -62,6 +64,6 @@
     "protected_shell_guard_preserved": true,
     "auth_script_changed": false,
     "provider_loop_changed": false,
-    "supabase_infrastructure_changed": false
+    "supabase_infrastructure_changed": true
   }
 }

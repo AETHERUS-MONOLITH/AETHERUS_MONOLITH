@@ -15,9 +15,10 @@ const requiredShellPhrases = [
   "Incomplete operational evidence",
   "Operational evidence packet missing",
   "Release authority unavailable",
-  "No backend persistence",
   "No production audit ledger",
   "No tenant/customer context",
+  "Save workspace state",
+  "Load saved workspace state",
   "no external release action is performed",
   "Evidence Packet",
   "Release Review",
@@ -42,7 +43,6 @@ const forbiddenRuntimePatterns = [
   /\bfetch\s*\(/,
   /\bXMLHttpRequest\b/,
   /\bnavigator\.serviceWorker\b/,
-  /\bsupabase\.from\b/,
   /\bsupabase\.rpc\b/,
   /\bsupabase\.functions\b/,
   /\bcreateClient\s*\(/,
@@ -147,21 +147,28 @@ if (record.surface_file !== protectedShellPath) fail(`${recordPath}: surface_fil
 if (record.script_file !== scriptPath) fail(`${recordPath}: script_file mismatch`);
 for (const flag of [
   "browser_side",
-  "in_memory_only"
+  "in_memory_interaction_preserved"
 ]) {
   if (record.state_boundary?.[flag] !== true) fail(`${recordPath}: state_boundary.${flag} must be true`);
+}
+if (record.state_boundary?.in_memory_only !== false) {
+  fail(`${recordPath}: state_boundary.in_memory_only must be false after persistence wiring`);
 }
 for (const flag of [
   "local_storage_used",
   "session_storage_used",
   "cookies_used",
-  "network_calls_used",
-  "supabase_writes_used",
-  "database_calls_used",
   "api_calls_used",
   "service_worker_used"
 ]) {
   if (record.state_boundary?.[flag] !== false) fail(`${recordPath}: state_boundary.${flag} must be false`);
+}
+for (const flag of [
+  "network_calls_used",
+  "supabase_writes_used",
+  "database_calls_used"
+]) {
+  if (record.state_boundary?.[flag] !== true) fail(`${recordPath}: state_boundary.${flag} must be true`);
 }
 for (const flag of [
   "backend",
@@ -187,8 +194,8 @@ if (record.guard_boundary?.auth_script_changed !== false) {
 if (record.guard_boundary?.provider_loop_changed !== false) {
   fail(`${recordPath}: provider loop change flag must be false`);
 }
-if (record.guard_boundary?.supabase_infrastructure_changed !== false) {
-  fail(`${recordPath}: Supabase infrastructure change flag must be false`);
+if (record.guard_boundary?.supabase_infrastructure_changed !== true) {
+  fail(`${recordPath}: Supabase infrastructure change flag must be true`);
 }
 
 console.log("direct ui membrane protected workspace interaction ok");

@@ -6,8 +6,8 @@
   "object_classification": [
     "protected workspace frame",
     "customer-perceivable product surface",
-    "static/browser-side protected shell surface",
-    "non-persistent"
+    "browser-side protected shell surface",
+    "bounded authenticated workspace state persistence"
   ],
   "placement": {
     "protected_workspace_frame": "protected-shell.html",
@@ -27,27 +27,27 @@
     "No active release candidate is queued.",
     "No evidence packet is loaded yet.",
     "No release candidate is queued.",
-    "No persistent activity has been recorded.",
+    "No persistent activity has been recorded before save/load.",
     "No members are configured in this frame."
   ],
   "future_or_unavailable_surfaces": [
     "evidence-packet review surface without loaded records",
     "release review area without release authority",
-    "activity surface without persistent ledger or storage",
-    "settings and member controls unavailable until account, storage, and access layers are separately implemented"
+    "activity surface with local trace events and bounded saved state",
+    "settings and member controls unavailable until account, team, and access layers are separately implemented"
   ],
   "static_fixture_state": {
     "active_release_candidate": "none",
     "evidence_packet_loaded": false,
-    "persistent_activity_records_loaded": false,
+    "persistent_activity_records_loaded": "possible_after_authenticated_load",
     "members_configured": false,
-    "source": "static HTML copy only"
+    "source": "protected HTML and browser module"
   },
   "non_claims": {
     "production_customer_workspace": false,
     "tenant_isolated": false,
-    "database_backed": false,
-    "rls_implemented": false,
+    "database_backed": true,
+    "rls_implemented": true,
     "operational_use_evidence": false,
     "monitoring_dashboard": false,
     "nexus_execution": false,
@@ -59,6 +59,6 @@
     "protected_shell_guard_preserved": true,
     "denial_without_session_preserved": true,
     "auth_script_changed": false,
-    "supabase_infrastructure_changed": false
+    "supabase_infrastructure_changed": true
   }
 }

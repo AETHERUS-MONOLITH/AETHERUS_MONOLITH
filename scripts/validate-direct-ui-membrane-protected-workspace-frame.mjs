@@ -16,11 +16,13 @@ const requiredProtectedShellPhrases = [
   "Settings / Members",
   "Stage candidate",
   "Run local review",
+  "Save workspace state",
+  "Load saved workspace state",
   "No evidence packet is loaded yet.",
   "No release candidate is queued.",
   "No persistent activity has been recorded.",
   "No members are configured in this frame.",
-  "This frame is static and non-persistent until backend workspace services are implemented."
+  "This frame can save and load bounded release-review workspace state"
 ];
 
 const requiredNavigationTargets = [
@@ -36,8 +38,8 @@ const protectedBoundaryPhrases = [
   "Denial without a session is expected guard behavior",
   "data-protected-shell-boundary",
   "js/supabase-protected-shell.js",
-  "No database access",
-  "No application-data persistence",
+  "Authenticated save/load loop",
+  "Session-scoped Supabase state",
   "No tenant workspace",
   "No public NEXUS runtime",
   "No model API execution",
@@ -136,8 +138,6 @@ if (record.placement?.taa_route_workspace_functionality_added !== false) {
 for (const flag of [
   "production_customer_workspace",
   "tenant_isolated",
-  "database_backed",
-  "rls_implemented",
   "operational_use_evidence",
   "monitoring_dashboard",
   "nexus_execution",
@@ -146,6 +146,13 @@ for (const flag of [
   "production_saas"
 ]) {
   if (record.non_claims?.[flag] !== false) fail(`${recordPath}: non_claims.${flag} must be false`);
+}
+
+if (record.non_claims?.database_backed !== true) {
+  fail(`${recordPath}: database_backed must reflect bounded persistence wiring`);
+}
+if (record.non_claims?.rls_implemented !== true) {
+  fail(`${recordPath}: rls_implemented must reflect externally applied live substrate`);
 }
 
 if (!protectedShell.includes('js/protected-workspace.js')) {
@@ -161,8 +168,8 @@ if (record.guard_boundary?.denial_without_session_preserved !== true) {
 if (record.guard_boundary?.auth_script_changed !== false) {
   fail(`${recordPath}: auth script change flag must be false`);
 }
-if (record.guard_boundary?.supabase_infrastructure_changed !== false) {
-  fail(`${recordPath}: Supabase infrastructure change flag must be false`);
+if (record.guard_boundary?.supabase_infrastructure_changed !== true) {
+  fail(`${recordPath}: Supabase infrastructure change flag must be true`);
 }
 
 console.log("direct ui membrane protected workspace frame ok");

@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "object_status": "protected_workspace_persistence_gate",
-  "pass_id": "section-1-2-workspace-persistence-0-1",
-  "classification": "not_active_substrate_prepared_only",
-  "baseline_commit": "2d8c94aaebd5fa0878ad64f70658271dbed6d67f",
+  "object_status": "protected_workspace_persistence_wiring",
+  "pass_id": "section-1-2-workspace-persistence-0-2",
+  "classification": "partially_active_repository_wiring_present_live_browser_verification_pending",
+  "baseline_commit": "1aed2ad9cfa02cbf54825c70db99a514fdf9616b",
   "repository_substrate": {
     "migration_path": "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql",
     "migration_exists": true,
@@ -13,6 +13,11 @@
       "workspace_memberships",
       "workspace_state_records",
       "workspace_events"
+    ],
+    "tables_used_by_wiring": [
+      "workspaces",
+      "workspace_memberships",
+      "workspace_state_records"
     ],
     "minimal_persistence_table": "workspace_state_records",
     "state_payload_supports": [
@@ -24,36 +29,86 @@
     "rls_policy_sql_present": true,
     "auth_uid_binding_present": true
   },
-  "live_project_gate": {
-    "supabase_cli_available_in_codex_environment": false,
-    "supabase_project_link_detected": false,
-    "safe_live_schema_inspection_available": false,
-    "safe_live_migration_application_available": false,
-    "secrets_required_or_unavailable": true,
-    "migration_applied_live": false,
-    "live_schema_verified": false,
-    "rls_verified_live": false,
-    "cross_user_isolation_verified": false
+  "external_live_substrate_evidence": {
+    "operator_reported_project": "aetherus-monolith-dev",
+    "operator_reported_migration_applied_live": true,
+    "operator_reported_live_tables_verified": true,
+    "operator_reported_rls_enabled": true,
+    "operator_reported_authenticated_policies_present": true,
+    "operator_reported_policy_rows": 12,
+    "operator_reported_broad_unconstrained_policy_check_rows": 0,
+    "codex_live_database_inspection_performed": false,
+    "codex_supabase_cli_work_performed": false
   },
   "protected_shell_wiring": {
-    "save_workspace_state_action_added": false,
-    "load_saved_workspace_state_action_added": false,
-    "supabase_read_write_logic_added": false,
+    "surface_file": "protected-shell.html",
+    "script_file": "js/protected-workspace.js",
+    "save_workspace_state_action_added": true,
+    "load_saved_workspace_state_action_added": true,
+    "supabase_read_write_logic_added": true,
     "session_required_before_persistence": true,
-    "blocked_reason": "Repository migration substrate exists, but live schema/RLS application was not safely inspectable or verifiable from this environment."
+    "save_requires_staged_candidate": true,
+    "load_attempted_after_reentry": true,
+    "workspace_bootstrap_on_save": true,
+    "workspace_mutation_on_load": false,
+    "local_trace_events_for_save_load": true
   },
+  "persistence_object_model": {
+    "workspace_record": {
+      "table": "workspaces",
+      "owner_binding": "owner_user_id = authenticated user id",
+      "slug": "aetherus-review-workspace-{authenticated-user-id}"
+    },
+    "membership_record": {
+      "table": "workspace_memberships",
+      "role": "owner",
+      "status": "active"
+    },
+    "state_record": {
+      "table": "workspace_state_records",
+      "record_type": "release_review_workspace_state",
+      "record_key": "protected-shell-release-review-v0",
+      "state_payload_fields": [
+        "release_candidate",
+        "release_review_state",
+        "evidence_packet_state",
+        "trace_activity_state",
+        "boundaries"
+      ]
+    }
+  },
+  "supabase_methods_used": {
+    "auth": [
+      "auth.getSession"
+    ],
+    "database": [
+      "from('workspaces').upsert(...).select(...).single()",
+      "from('workspace_memberships').upsert(...).select(...).single()",
+      "from('workspaces').select(...).eq(...).maybeSingle()",
+      "from('workspace_state_records').upsert(...).select(...).single()",
+      "from('workspace_state_records').select(...).eq(...).maybeSingle()"
+    ],
+    "privileged_server_key_used": false
+  },
+  "ui_states": [
+    "unsaved",
+    "saving",
+    "saved",
+    "loading",
+    "load failed",
+    "session required",
+    "backend unavailable",
+    "persistence unavailable",
+    "no saved workspace state"
+  ],
   "verification_status": {
-    "authenticated_save_verified": false,
-    "reload_load_verified": false,
-    "logged_out_denial_verified": false,
-    "cross_user_denial_verified": false,
-    "backend_activation_claimed": false
-  },
-  "operator_action_required": {
-    "apply_or_verify_migration": true,
-    "migration_path": "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql",
-    "required_action": "Apply the SQL in the migration file to the live Supabase project through the Operator-controlled Supabase dashboard or CLI, then verify tables, RLS enabled state, auth.uid()-bound policies, authenticated save/load, logged-out denial, and cross-user denial before authorizing protected-shell persistence wiring.",
-    "backend_activation_after_this_pass": false
+    "authenticated_save_verified_by_codex": false,
+    "reload_load_verified_by_codex": false,
+    "logged_out_denial_verified_by_codex": false,
+    "cross_user_denial_verified_by_codex": false,
+    "operator_reported_live_sql_rls_substrate_verified": true,
+    "backend_activation_claimed": false,
+    "backend_persistence_claim_after_this_pass": "repository wiring present; live browser save/load verification pending"
   },
   "boundaries": {
     "no_privileged_server_key_added": true,
