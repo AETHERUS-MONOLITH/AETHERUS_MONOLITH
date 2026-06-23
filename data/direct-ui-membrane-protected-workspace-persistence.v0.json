@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "object_status": "protected_workspace_persistence_gate",
+  "pass_id": "section-1-2-workspace-persistence-0-1",
+  "classification": "not_active_substrate_prepared_only",
+  "baseline_commit": "2d8c94aaebd5fa0878ad64f70658271dbed6d67f",
+  "repository_substrate": {
+    "migration_path": "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql",
+    "migration_exists": true,
+    "schema_sufficient_for_minimal_loop_if_applied": true,
+    "tables": [
+      "workspaces",
+      "workspace_memberships",
+      "workspace_state_records",
+      "workspace_events"
+    ],
+    "minimal_persistence_table": "workspace_state_records",
+    "state_payload_supports": [
+      "release_candidate",
+      "evidence_packet",
+      "review_result",
+      "trace_activity"
+    ],
+    "rls_policy_sql_present": true,
+    "auth_uid_binding_present": true
+  },
+  "live_project_gate": {
+    "supabase_cli_available_in_codex_environment": false,
+    "supabase_project_link_detected": false,
+    "safe_live_schema_inspection_available": false,
+    "safe_live_migration_application_available": false,
+    "secrets_required_or_unavailable": true,
+    "migration_applied_live": false,
+    "live_schema_verified": false,
+    "rls_verified_live": false,
+    "cross_user_isolation_verified": false
+  },
+  "protected_shell_wiring": {
+    "save_workspace_state_action_added": false,
+    "load_saved_workspace_state_action_added": false,
+    "supabase_read_write_logic_added": false,
+    "session_required_before_persistence": true,
+    "blocked_reason": "Repository migration substrate exists, but live schema/RLS application was not safely inspectable or verifiable from this environment."
+  },
+  "verification_status": {
+    "authenticated_save_verified": false,
+    "reload_load_verified": false,
+    "logged_out_denial_verified": false,
+    "cross_user_denial_verified": false,
+    "backend_activation_claimed": false
+  },
+  "operator_action_required": {
+    "apply_or_verify_migration": true,
+    "migration_path": "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql",
+    "required_action": "Apply the SQL in the migration file to the live Supabase project through the Operator-controlled Supabase dashboard or CLI, then verify tables, RLS enabled state, auth.uid()-bound policies, authenticated save/load, logged-out denial, and cross-user denial before authorizing protected-shell persistence wiring.",
+    "backend_activation_after_this_pass": false
+  },
+  "boundaries": {
+    "no_privileged_server_key_added": true,
+    "no_secret_committed": true,
+    "no_browser_rls_bypass": true,
+    "no_client_side_filtering_as_authorization": true,
+    "no_customer_workspace_claim": true,
+    "no_tenant_isolation_maturity_claim": true,
+    "no_production_saas_claim": true,
+    "no_operational_use_claim": true,
+    "no_operational_release_authority_claim": true,
+    "no_production_audit_ledger_claim": true,
+    "no_taa_or_doi_change": true
+  }
+}
