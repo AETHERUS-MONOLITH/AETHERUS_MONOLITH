@@ -11,6 +11,12 @@ const headingNode = document.querySelector("[data-callback-heading]");
 const statusNode = document.querySelector("[data-callback-status]");
 const entryLink = document.querySelector("[data-callback-entry]");
 
+function enterProtectedShell() {
+  if (typeof globalThis === "undefined" || !globalThis.location) return;
+  const protectedShellUrl = new URL("protected-shell.html", globalThis.location.href);
+  globalThis.location.assign(protectedShellUrl.toString());
+}
+
 function renderCallbackState(result) {
   const sessionRecognized = result.session_present === true;
   if (headingNode) {
@@ -22,6 +28,9 @@ function renderCallbackState(result) {
   }
   if (entryLink) {
     entryLink.hidden = !sessionRecognized;
+  }
+  if (sessionRecognized) {
+    enterProtectedShell();
   }
 }
 

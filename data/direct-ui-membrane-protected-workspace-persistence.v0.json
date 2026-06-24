@@ -43,6 +43,9 @@
   "protected_shell_wiring": {
     "surface_file": "protected-shell.html",
     "script_file": "js/protected-workspace.js",
+    "callback_success_auto_enters_protected_shell": true,
+    "callback_success_auto_entry_script": "js/supabase-auth-callback.js",
+    "callback_success_auto_entry_target": "protected-shell.html",
     "save_workspace_state_action_added": true,
     "load_saved_workspace_state_action_added": true,
     "supabase_read_write_logic_added": true,

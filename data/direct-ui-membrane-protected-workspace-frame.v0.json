@@ -58,7 +58,10 @@
   "guard_boundary": {
     "protected_shell_guard_preserved": true,
     "denial_without_session_preserved": true,
-    "auth_script_changed": false,
+    "auth_script_changed": true,
+    "auth_script_change_scope": "callback_success_auto_enters_protected_shell",
+    "auth_script_changed_file": "js/supabase-auth-callback.js",
+    "callback_success_auto_entry_target": "protected-shell.html",
     "supabase_infrastructure_changed": true
   }
 }

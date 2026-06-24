@@ -4,6 +4,7 @@ const protectedShellPath = "protected-shell.html";
 const previewWorkspacePath = "workspace.html";
 const taaRoutePath = "the-apologetic-authority/index.html";
 const recordPath = "data/direct-ui-membrane-protected-workspace-frame.v0.json";
+const callbackScriptPath = "js/supabase-auth-callback.js";
 
 const requiredProtectedShellPhrases = [
   "Protected workspace frame",
@@ -85,11 +86,13 @@ if (!fs.existsSync(protectedShellPath)) fail(`${protectedShellPath} is missing`)
 if (!fs.existsSync(previewWorkspacePath)) fail(`${previewWorkspacePath} is missing`);
 if (!fs.existsSync(taaRoutePath)) fail(`${taaRoutePath} is missing`);
 if (!fs.existsSync(recordPath)) fail(`${recordPath} is missing`);
+if (!fs.existsSync(callbackScriptPath)) fail(`${callbackScriptPath} is missing`);
 
 const protectedShell = readText(protectedShellPath);
 const previewWorkspace = readText(previewWorkspacePath);
 const taaRoute = readText(taaRoutePath);
 const record = readJson(recordPath);
+const callbackScript = readText(callbackScriptPath);
 
 for (const phrase of requiredProtectedShellPhrases) {
   assertIncludes(protectedShell, phrase, protectedShellPath);
@@ -165,8 +168,23 @@ if (record.guard_boundary?.protected_shell_guard_preserved !== true) {
 if (record.guard_boundary?.denial_without_session_preserved !== true) {
   fail(`${recordPath}: denial without session must be preserved`);
 }
-if (record.guard_boundary?.auth_script_changed !== false) {
-  fail(`${recordPath}: auth script change flag must be false`);
+if (record.guard_boundary?.auth_script_changed !== true) {
+  fail(`${recordPath}: auth script change flag must reflect callback route visibility fix`);
+}
+if (record.guard_boundary?.auth_script_change_scope !== "callback_success_auto_enters_protected_shell") {
+  fail(`${recordPath}: auth script change scope mismatch`);
+}
+if (record.guard_boundary?.auth_script_changed_file !== callbackScriptPath) {
+  fail(`${recordPath}: auth script changed file mismatch`);
+}
+if (record.guard_boundary?.callback_success_auto_entry_target !== protectedShellPath) {
+  fail(`${recordPath}: callback auto-entry target mismatch`);
+}
+if (!callbackScript.includes('new URL("protected-shell.html", globalThis.location.href)')) {
+  fail(`${callbackScriptPath}: callback success must resolve protected-shell.html`);
+}
+if (!callbackScript.includes("globalThis.location.assign")) {
+  fail(`${callbackScriptPath}: callback success must enter the protected shell route`);
 }
 if (record.guard_boundary?.supabase_infrastructure_changed !== true) {
   fail(`${recordPath}: Supabase infrastructure change flag must be true`);

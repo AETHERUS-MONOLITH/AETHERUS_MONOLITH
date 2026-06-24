@@ -4,6 +4,7 @@ const recordPath = "data/direct-ui-membrane-protected-workspace-persistence.v0.j
 const migrationPath = "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql";
 const protectedShellPath = "protected-shell.html";
 const workspaceScriptPath = "js/protected-workspace.js";
+const callbackScriptPath = "js/supabase-auth-callback.js";
 
 const failures = [];
 
@@ -39,7 +40,7 @@ function assertNotMatches(text, pattern, label) {
   assert(!pattern.test(text), `${label}: forbidden pattern ${pattern}`);
 }
 
-for (const filePath of [recordPath, migrationPath, protectedShellPath, workspaceScriptPath]) {
+for (const filePath of [recordPath, migrationPath, protectedShellPath, workspaceScriptPath, callbackScriptPath]) {
   if (!fs.existsSync(filePath)) fail(`${filePath} is missing`);
 }
 
@@ -47,6 +48,7 @@ const record = fs.existsSync(recordPath) ? readJson(recordPath) : {};
 const migration = fs.existsSync(migrationPath) ? readText(migrationPath) : "";
 const protectedShell = fs.existsSync(protectedShellPath) ? readText(protectedShellPath) : "";
 const workspaceScript = fs.existsSync(workspaceScriptPath) ? readText(workspaceScriptPath) : "";
+const callbackScript = fs.existsSync(callbackScriptPath) ? readText(callbackScriptPath) : "";
 
 assert(record.schema_version === "1.0", `${recordPath}: schema_version must be 1.0`);
 assert(
@@ -115,6 +117,18 @@ assert(external.codex_live_database_inspection_performed === false, `${recordPat
 assert(external.codex_supabase_cli_work_performed === false, `${recordPath}: Codex Supabase CLI work must remain false`);
 
 const wiring = record.protected_shell_wiring || {};
+assert(
+  wiring.callback_success_auto_enters_protected_shell === true,
+  `${recordPath}: callback success auto-entry flag must be true`
+);
+assert(
+  wiring.callback_success_auto_entry_script === callbackScriptPath,
+  `${recordPath}: callback success auto-entry script mismatch`
+);
+assert(
+  wiring.callback_success_auto_entry_target === protectedShellPath,
+  `${recordPath}: callback success auto-entry target mismatch`
+);
 for (const field of [
   "save_workspace_state_action_added",
   "load_saved_workspace_state_action_added",
@@ -167,6 +181,14 @@ const requiredScriptPhrases = [
 
 for (const phrase of requiredScriptPhrases) {
   assertIncludes(workspaceScript, phrase, workspaceScriptPath);
+}
+
+for (const phrase of [
+  'new URL("protected-shell.html", globalThis.location.href)',
+  "globalThis.location.assign",
+  "handleSupabaseAuthCallbackPrecondition"
+]) {
+  assertIncludes(callbackScript, phrase, callbackScriptPath);
 }
 
 const requiredQueryPatterns = [
