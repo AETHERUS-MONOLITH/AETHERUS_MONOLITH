@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "object_status": "protected_workspace_persistence_wiring",
-  "pass_id": "section-1-2-workspace-persistence-0-2",
-  "classification": "partially_active_repository_wiring_present_live_browser_verification_pending",
-  "baseline_commit": "1aed2ad9cfa02cbf54825c70db99a514fdf9616b",
+  "pass_id": "section-1-2-workspace-persistence-verification-record-0-1",
+  "classification": "bounded_protected_shell_persistence_verified_in_tested_external_live_browser_path",
+  "baseline_commit": "96db91a92071d0fc7636495aa11613cf499202ab",
   "repository_substrate": {
     "migration_path": "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql",
     "migration_exists": true,
@@ -39,6 +39,167 @@
     "operator_reported_broad_unconstrained_policy_check_rows": 0,
     "codex_live_database_inspection_performed": false,
     "codex_supabase_cli_work_performed": false
+  },
+  "external_supabase_configuration_evidence": {
+    "evidence_source": "external live verification already established outside this repository pass",
+    "project": "aetherus-monolith-dev",
+    "github_provider_flow_reaches_canonical_custom_domain_callback_path": true,
+    "canonical_custom_domain_callback_path_verified": true,
+    "supabase_github_provider_flow_verified": true,
+    "codex_live_supabase_configuration_change_performed": false
+  },
+  "external_live_browser_verification_evidence": {
+    "evidence_source": "external live browser verification already established outside this repository pass",
+    "tested_surface": "protected-shell.html",
+    "authentication_path": "GitHub through Supabase",
+    "session_recognition_after_authentication": "SESSION RECOGNIZED",
+    "protected_workspace_frame_visible": true,
+    "bounded_save_load_persistence_verified_for": "workspace/release-review state in the tested protected-shell live browser path",
+    "bounded_save_load_persistence_verified": true,
+    "direct_unauthenticated_incognito_access_result": "SESSION NOT RECOGNIZED",
+    "unauthenticated_denial_verified": true,
+    "two_account_browser_level_workspace_state_separation_verified": true,
+    "two_account_browser_level_workspace_state_separation_detail": "Account B loaded its own recent saved timestamp/content, not Account A's saved state.",
+    "two_account_browser_level_separation_is_not_tenant_isolation_maturity": true,
+    "first_persistence_verification_is_not_production_authorization_maturity": true,
+    "codex_live_browser_verification_performed": false
+  },
+  "external_sql_rls_verification_evidence": {
+    "evidence_source": "external SQL/RLS verification already established outside this repository pass",
+    "project": "aetherus-monolith-dev",
+    "tables_verified": [
+      "public.workspaces",
+      "public.workspace_memberships",
+      "public.workspace_state_records",
+      "public.workspace_events"
+    ],
+    "rls_enabled": {
+      "workspace_events": true,
+      "workspace_memberships": true,
+      "workspace_state_records": true,
+      "workspaces": true
+    },
+    "policy_inspection": {
+      "policy_count": 12,
+      "constrained_by_auth_uid": true,
+      "constrained_by_owner_user_id_equals_auth_uid": true,
+      "constrained_by_is_workspace_member": true,
+      "constraint_summary": "12 policies are present and constrained through auth.uid(), owner_user_id = auth.uid(), and/or is_workspace_member(...)."
+    },
+    "codex_live_sql_rls_verification_performed": false
+  },
+  "external_grants_privilege_hygiene_evidence": {
+    "evidence_source": "external grants/privilege hygiene verification already established outside this repository pass",
+    "anon_normal_dml_privileges_on_workspace_tables": false,
+    "authenticated_bounded_dml_privileges_required_for_persistence_substrate": {
+      "workspace_events": [
+        "SELECT",
+        "INSERT"
+      ],
+      "workspace_memberships": [
+        "SELECT",
+        "INSERT",
+        "UPDATE"
+      ],
+      "workspace_state_records": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "workspaces": [
+        "SELECT",
+        "INSERT",
+        "UPDATE"
+      ]
+    },
+    "truncate_trigger_absence": {
+      "anon": {
+        "workspace_events": {
+          "has_truncate": false,
+          "has_trigger": false
+        },
+        "workspace_memberships": {
+          "has_truncate": false,
+          "has_trigger": false
+        },
+        "workspace_state_records": {
+          "has_truncate": false,
+          "has_trigger": false
+        },
+        "workspaces": {
+          "has_truncate": false,
+          "has_trigger": false
+        }
+      },
+      "authenticated": {
+        "workspace_events": {
+          "has_truncate": false,
+          "has_trigger": false
+        },
+        "workspace_memberships": {
+          "has_truncate": false,
+          "has_trigger": false
+        },
+        "workspace_state_records": {
+          "has_truncate": false,
+          "has_trigger": false
+        },
+        "workspaces": {
+          "has_truncate": false,
+          "has_trigger": false
+        }
+      }
+    },
+    "post_check_grants_shape": {
+      "anon": {
+        "workspace_events": [
+          "REFERENCES"
+        ],
+        "workspace_memberships": [
+          "REFERENCES"
+        ],
+        "workspace_state_records": [
+          "REFERENCES"
+        ],
+        "workspaces": [
+          "REFERENCES"
+        ]
+      },
+      "authenticated": {
+        "workspace_events": [
+          "SELECT",
+          "INSERT",
+          "REFERENCES"
+        ],
+        "workspace_memberships": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "REFERENCES"
+        ],
+        "workspace_state_records": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE",
+          "REFERENCES"
+        ],
+        "workspaces": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "REFERENCES"
+        ]
+      }
+    },
+    "references_classification": {
+      "non_blocking_least_privilege_hardening_note": true,
+      "normal_dml": false,
+      "pass_failure_reason": false,
+      "evidence_of_tenant_isolation_maturity": false
+    },
+    "codex_live_grants_privilege_verification_performed": false
   },
   "protected_shell_wiring": {
     "surface_file": "protected-shell.html",
@@ -109,10 +270,49 @@
     "reload_load_verified_by_codex": false,
     "logged_out_denial_verified_by_codex": false,
     "cross_user_denial_verified_by_codex": false,
+    "external_live_browser_bounded_save_load_verified": true,
+    "external_live_browser_unauthenticated_denial_verified": true,
+    "external_live_browser_two_account_browser_level_separation_verified": true,
+    "external_live_sql_rls_substrate_verified": true,
+    "external_live_grants_privilege_hygiene_verified": true,
     "operator_reported_live_sql_rls_substrate_verified": true,
     "backend_activation_claimed": false,
-    "backend_persistence_claim_after_this_pass": "repository wiring present; live browser save/load verification pending"
+    "backend_persistence_claim_after_this_pass": "bounded protected-shell save/load persistence for workspace/release-review state is externally verified in the tested live browser path only"
   },
+  "claimable_narrow_state": {
+    "bounded_protected_shell_persistence_loop_verified": true,
+    "claim": "Protected-shell bounded save/load persistence works for workspace/release-review state in the tested live browser path after GitHub-through-Supabase authentication.",
+    "repository_baseline_recorded": "96db91a92071d0fc7636495aa11613cf499202ab",
+    "external_evidence_not_repo_generated_proof": true
+  },
+  "not_claimable_maturity_states": {
+    "production_saas": false,
+    "customer_workspace_maturity": false,
+    "tenant_isolation_maturity": false,
+    "broad_authorization_assurance": false,
+    "operational_use": false,
+    "operational_release_authority": false,
+    "production_audit_ledger": false,
+    "billing_maturity": false,
+    "monitoring_maturity": false,
+    "mfa_maturity": false,
+    "team_management_maturity": false,
+    "account_recovery_maturity": false,
+    "palisade_birth": false,
+    "weave_birth": false,
+    "public_nexus_runtime": false,
+    "model_api_execution": false,
+    "production_authorization_maturity": false
+  },
+  "non_blocking_hardening_notes": [
+    {
+      "subject": "REFERENCES grants remain visible for anon and authenticated on the four workspace tables.",
+      "classification": "non-blocking least-privilege hardening note",
+      "normal_dml": false,
+      "pass_failure_reason": false,
+      "tenant_isolation_maturity_evidence": false
+    }
+  ],
   "boundaries": {
     "no_privileged_server_key_added": true,
     "no_secret_committed": true,
