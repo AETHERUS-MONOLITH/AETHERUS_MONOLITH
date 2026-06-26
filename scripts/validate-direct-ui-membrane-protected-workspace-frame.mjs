@@ -41,11 +41,11 @@ const protectedBoundaryPhrases = [
   "js/supabase-protected-shell.js",
   "Authenticated save/load loop",
   "Session-scoped Supabase state",
-  "No tenant workspace",
-  "No public NEXUS runtime",
-  "No model API execution",
-  "No billing",
-  "No production SaaS"
+  "Operational evidence pending",
+  "Customer data outside scope",
+  "Static evaluation mode",
+  "Not a production SaaS interface",
+  "Not an operational release system"
 ];
 
 const forbiddenPositiveClaims = [

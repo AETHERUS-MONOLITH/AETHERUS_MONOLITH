@@ -10,15 +10,12 @@ const readmePath = "README.md";
 
 const requiredStatusPhrases = [
   "Authenticated shell boundary",
-  "Reserved route — not active authentication",
-  "No login implementation",
-  "No signup implementation",
-  "No backend",
-  "No database",
-  "No persistence",
-  "No tenant isolation",
-  "No customer workspace",
-  "No public NEXUS runtime"
+  "Reserved access boundary",
+  "Static evaluation mode",
+  "Account access pending",
+  "Operational evidence pending",
+  "Not a production SaaS interface",
+  "Not an operational release system"
 ];
 
 const allowedStaticLabels = [
@@ -61,12 +58,10 @@ const forbiddenActiveLabels = [
 ];
 
 const negatedBoundaryPhrases = [
-  "No login implementation",
-  "No signup implementation",
-  "not active authentication",
-  "not active",
-  "not yet born",
-  "not implemented",
+  "Reserved access boundary",
+  "Account access pending",
+  "implementation threshold",
+  "Static evaluation mode",
   "reserved"
 ];
 
@@ -160,7 +155,7 @@ assertIncludesAll(
     "Future Authenticated Shell",
     "Route Placeholder",
     "Implementation Boundary",
-    "Not Active",
+    "Static Evaluation Mode",
     "Requires Separate Authorization",
     "Return to Preview Workspace"
   ],
@@ -171,7 +166,11 @@ if (/<form\b/i.test(pageText)) fail("auth-boundary.html must not contain forms")
 if (/<(?:input|textarea|select)\b/i.test(pageText)) {
   fail("auth-boundary.html must not contain input, textarea, or select controls");
 }
-if (/<button\b/i.test(pageText)) fail("auth-boundary.html must not contain button controls");
+const buttonMatches = pageText.match(/<button\b[^>]*>/gi) || [];
+for (const match of buttonMatches) {
+  if (/\bnav-trigger\b/i.test(match) && /aria-haspopup=["']true["']/i.test(match)) continue;
+  fail("auth-boundary.html must not contain button controls outside navigation disclosure");
+}
 
 for (const label of forbiddenActiveLabels) {
   const pattern = new RegExp(`\\b${label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "gi");

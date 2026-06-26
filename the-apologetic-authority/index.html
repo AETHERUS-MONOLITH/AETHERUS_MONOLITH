@@ -157,6 +157,7 @@
     }
     .publication-meta {
       display: grid;
+      min-width: 0;
       gap: 18px;
       padding-top: 30px;
       padding-bottom: 34px;
@@ -170,6 +171,7 @@
       margin: 0;
     }
     .status-grid div, .citation-box, .placeholder-box, .abstract-box, .boundary-box {
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.68);
@@ -183,8 +185,18 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
-    .status-grid dd { margin: 4px 0 0; }
+    .status-grid dd {
+      min-width: 0;
+      margin: 4px 0 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
     .citation-box p, .placeholder-box p, .abstract-box p, .boundary-box p { margin: 6px 0 0; }
+    .citation-box p, .placeholder-box p {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
     .boundary-box ul {
       margin: 8px 0 0;
       padding-left: 1.2rem;

@@ -207,6 +207,7 @@ main,
 }
 
 .site-nav a,
+.nav-trigger,
 .interface-chip,
 .panel-kicker,
 .section-kicker {
@@ -217,13 +218,77 @@ main,
   text-transform: uppercase;
 }
 
-.site-nav a {
+.site-nav a,
+.nav-trigger {
   color: rgba(220, 232, 238, 0.58);
   text-decoration: none;
 }
 
-.site-nav a:hover {
+.nav-trigger {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.site-nav a:hover,
+.nav-trigger:hover,
+.nav-dropdown:focus-within .nav-trigger {
   color: var(--text);
+}
+
+.nav-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-submenu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  z-index: 40;
+  min-width: 230px;
+  padding: 10px;
+  border: 1px solid rgba(153, 207, 226, 0.22);
+  background:
+    linear-gradient(180deg, rgba(8, 22, 32, 0.98), rgba(3, 9, 14, 0.98));
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.nav-submenu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -15px;
+  height: 15px;
+}
+
+.nav-dropdown:hover .nav-submenu,
+.nav-dropdown:focus-within .nav-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.nav-submenu a {
+  display: block;
+  padding: 10px 11px;
+  color: rgba(220, 232, 238, 0.74);
+  border: 1px solid transparent;
+  background: rgba(3, 9, 14, 0.42);
+}
+
+.nav-submenu a:hover,
+.nav-submenu a:focus-visible {
+  color: var(--text);
+  border-color: rgba(24, 191, 245, 0.28);
+  background: rgba(24, 191, 245, 0.08);
 }
 
 .interface-chip {
@@ -1746,6 +1811,20 @@ main {
   background: rgba(3, 9, 14, 0.56);
 }
 
+.footer-contact {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footer-contact a {
+  color: rgba(220, 232, 238, 0.78);
+  text-decoration-color: rgba(24, 191, 245, 0.48);
+  text-underline-offset: 0.24em;
+}
+
 .reveal,
 .doc-card {
   opacity: 1;
@@ -2947,6 +3026,16 @@ main {
   .site-nav {
     justify-content: flex-start;
     flex-wrap: wrap;
+  }
+
+  .nav-submenu {
+    left: 0;
+    transform: translateY(-4px);
+  }
+
+  .nav-dropdown:hover .nav-submenu,
+  .nav-dropdown:focus-within .nav-submenu {
+    transform: translateY(0);
   }
 
   .stack-cutaway {

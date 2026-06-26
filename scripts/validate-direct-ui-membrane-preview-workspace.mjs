@@ -17,12 +17,11 @@ const requiredSurfaces = [
 const requiredStatusPhrases = [
   "Unauthenticated preview workspace",
   "Interactive preview only",
-  "No authentication",
-  "No persistence",
-  "No backend",
-  "No tenant data",
-  "No public NEXUS runtime",
-  "No operational release authority"
+  "Static evaluation mode",
+  "Prototype evidence surface",
+  "Operational evidence pending",
+  "Not a production SaaS interface",
+  "Not an operational release system"
 ];
 
 const allowedControlLabels = [

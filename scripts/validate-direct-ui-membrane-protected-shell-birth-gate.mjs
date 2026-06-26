@@ -115,11 +115,11 @@ const protectedShellRequiredPhrases = [
   "Session recognized",
   "Authenticated save/load loop",
   "Session-scoped Supabase state",
-  "No tenant workspace",
-  "No public NEXUS runtime",
-  "No model API execution",
-  "No billing",
-  "No production SaaS"
+  "Operational evidence pending",
+  "Customer data outside scope",
+  "Static evaluation mode",
+  "Not a production SaaS interface",
+  "Not an operational release system"
 ];
 
 const loginSurfaceRequiredBoundaryPhrases = [
@@ -129,12 +129,11 @@ const loginSurfaceRequiredBoundaryPhrases = [
   "Callback/session recognition",
   "guard admission",
   "production workspace is",
-  "No repository credential fields",
-  "No signup surface",
-  "No application-data persistence",
-  "No public NEXUS runtime",
-  "No backend, database, RLS, tenant isolation, billing, monitoring,",
-  "model API execution, or production SaaS claim"
+  "Browser-safe public config required",
+  "Session recognition pending",
+  "Static evaluation mode",
+  "Not a production SaaS interface",
+  "live model-execution claim"
 ];
 
 const callbackRequiredBoundaryPhrases = [
@@ -144,11 +143,11 @@ const callbackRequiredBoundaryPhrases = [
   "does not load product records",
   "Callback/session recognition",
   "Guarded entry only after session",
-  "No credential fields",
-  "No database access",
-  "No application-data persistence",
-  "No tenant workspace",
-  "No public NEXUS runtime",
+  "Browser-safe route state",
+  "Static evaluation mode",
+  "Operational evidence pending",
+  "Not a production SaaS interface",
+  "Not an operational release system",
   "backend or product maturity"
 ];
 
@@ -160,11 +159,11 @@ const protectedShellMessagingRequiredPhrases = [
   "guard admission plus a bounded save/load path",
   "Authenticated save/load loop",
   "Session-scoped Supabase state",
-  "No tenant workspace",
-  "No public NEXUS runtime",
-  "No model API execution",
-  "No billing",
-  "No production SaaS"
+  "Operational evidence pending",
+  "Customer data outside scope",
+  "Static evaluation mode",
+  "Not a production SaaS interface",
+  "Not an operational release system"
 ];
 
 const homepageForbiddenExposurePatterns = [
@@ -484,8 +483,8 @@ async function assertHomepageNavigationExposure(record) {
   if (!homepageText.includes("authenticated-surface entry and provider initiation only")) {
     fail(`${homepagePath} must bound the exposed path to authenticated-surface entry and provider initiation`);
   }
-  if (!homepageText.includes("not a production SaaS dashboard or customer workspace")) {
-    fail(`${homepagePath} must deny production SaaS dashboard/customer workspace implications`);
+  if (!homepageText.includes("not a production SaaS interface or customer workspace")) {
+    fail(`${homepagePath} must deny production SaaS interface/customer workspace implications`);
   }
 
   for (const { label, pattern } of homepageForbiddenExposurePatterns) {

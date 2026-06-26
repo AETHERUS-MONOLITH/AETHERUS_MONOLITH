@@ -33,14 +33,11 @@ const requiredBoundaryPhrases = [
   "Direct UI Membrane",
   "Static Preview",
   "Staged product-surface scaffold",
-  "No authentication",
-  "No backend",
-  "No persistence",
-  "No live AI execution",
-  "No public NEXUS runtime",
-  "No operational release authority",
-  "No compliance certification",
-  "No customer data"
+  "Static evaluation mode",
+  "Prototype evidence surface",
+  "Operational evidence pending",
+  "Not a production SaaS interface",
+  "Not an operational release system"
 ];
 
 const forbiddenOperationalLabels = [
@@ -199,6 +196,7 @@ if (/<input\b[^>]*type=["']?(?:password|email)["']?/i.test(membraneText)) {
 }
 const buttonMatches = membraneText.match(/<button\b[^>]*>/gi) || [];
 for (const match of buttonMatches) {
+  if (/\bnav-trigger\b/i.test(match) && /aria-haspopup=["']true["']/i.test(match)) continue;
   if (!/\bdisabled\b/i.test(match) || !/\bconcept\b/i.test(match)) {
     fail("membrane.html must not contain active buttons");
   }
@@ -212,7 +210,7 @@ const boundedNavigationLabels = [
   "Static Membrane Preview",
   "Direct UI Membrane — Static Preview",
   "Direct UI Membrane &mdash; Static Preview",
-  "Conceptual Membrane Surface"
+  "Staged Interface Surface"
 ];
 if (!boundedNavigationLabels.some((label) => indexText.includes(label))) {
   fail("index.html navigation must use a bounded preview label");

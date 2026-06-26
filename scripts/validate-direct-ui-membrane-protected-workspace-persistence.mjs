@@ -325,10 +325,10 @@ const requiredShellPhrases = [
   "Persistence status",
   "unsaved",
   "bounded release-review workspace state",
-  "No operational evidence ledger",
-  "No tenant workspace",
-  "No customer data",
-  "No production SaaS"
+  "Operational evidence pending",
+  "Tenant and customer context outside this frame",
+  "Customer data outside scope",
+  "Not a production SaaS interface"
 ];
 
 for (const phrase of requiredShellPhrases) {

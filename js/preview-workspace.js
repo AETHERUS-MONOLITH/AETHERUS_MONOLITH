@@ -10,7 +10,7 @@
       reviewer:
         "Shows the intended boundary between public entry, authenticated access, and controlled workspace entry.",
       state: "Access Boundary Membrane is selected in preview; boundary context is visible.",
-      boundary: "No account, session, credential, or tenant access exists."
+      boundary: "Static evaluation mode; account and tenant access remain outside this preview."
     },
     {
       id: "workspace-control",
@@ -21,8 +21,8 @@
       purpose: "Frames the future workspace as a controlled review environment rather than a live dashboard.",
       reviewer:
         "Shows how work areas could be separated by review task, evidence state, and governance context.",
-      state: "Workspace Control Surface is selected in preview; no workspace record is stored.",
-      boundary: "No customer workspace, persistence, RBAC, tenant state, or operational dashboard exists."
+      state: "Workspace Control Surface is selected in preview; workspace state stays browser-side.",
+      boundary: "Preview workspace model; operational evidence is pending before customer-workspace or production-interface claims."
     },
     {
       id: "evidence-review",
@@ -33,7 +33,7 @@
       purpose: "Represents how evidence, artifacts, and claim boundaries may be inspected before release judgment.",
       reviewer: "Makes support, missing proof, and boundary status visible as review objects.",
       state: "Evidence / Artifact Review Surface is selected in preview; proof context is illustrative only.",
-      boundary: "No live evidence database, immutable ledger, customer data, or runtime audit trail exists."
+      boundary: "Prototype evidence surface; operational evidence and audit-trail attachment are pending."
     },
     {
       id: "release-review",
@@ -45,7 +45,7 @@
       reviewer:
         "Shows the reviewer-facing structure for evaluating release eligibility without granting release authority.",
       state: "Release Review Chamber is selected in preview; no release authority is granted.",
-      boundary: "No approval power, deployment authority, production release, or compliance certification exists."
+      boundary: "Review model only; operational release authority and certification are not claimed."
     },
     {
       id: "escalation-review",
@@ -56,7 +56,7 @@
       purpose: "Represents how unresolved boundary conflicts may be surfaced for human review.",
       reviewer: "Shows how escalation context, missing evidence, and review notes could be organized.",
       state: "Escalation Review Surface is selected in preview; review notes are not stored.",
-      boundary: "No incident queue, enforcement action, runtime observation, or runtime escalation exists."
+      boundary: "Escalation model only; runtime observation and enforcement remain future thresholds."
     }
   ];
 
