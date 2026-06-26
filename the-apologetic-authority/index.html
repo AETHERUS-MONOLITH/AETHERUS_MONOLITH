@@ -94,13 +94,21 @@
       font-size: 18px;
       line-height: 1.7;
     }
-    a { color: var(--accent); text-underline-offset: 0.18em; }
+    a {
+      color: var(--accent);
+      text-underline-offset: 0.18em;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
     .publication-shell {
       width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
       background: var(--paper);
       min-height: 100vh;
       box-shadow: 0 24px 80px rgba(16, 24, 32, 0.16);
+    }
+    .publication-shell, .publication-shell * {
+      box-sizing: border-box;
     }
     .publication-header, .publication-meta, .manuscript, .publication-footer {
       padding-inline: clamp(20px, 6vw, 88px);
@@ -205,6 +213,9 @@
       line-height: 1.5;
     }
     .manuscript {
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: break-word;
       padding-top: clamp(28px, 5vw, 62px);
       padding-bottom: clamp(36px, 7vw, 86px);
     }
@@ -258,16 +269,21 @@
     .toc-list a { text-decoration-thickness: 1px; }
     table {
       width: 100%;
+      max-width: 100%;
       margin: 1.2rem 0 1.8rem;
       border-collapse: collapse;
       font-family: var(--sans);
       font-size: 0.85rem;
       line-height: 1.45;
+      table-layout: fixed;
     }
     th, td {
+      min-width: 0;
       vertical-align: top;
       padding: 10px 12px;
       border: 1px solid var(--line);
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     th { background: var(--panel-strong); text-align: left; }
     .publication-footer {
@@ -282,7 +298,11 @@
       body { font-size: 16px; }
       .publication-shell { width: 100%; }
       .toc-list { columns: 1; }
-      table { display: block; overflow-x: auto; }
+      table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
     }
   </style>
 </head>

@@ -103,7 +103,12 @@ const negatedBoundaryPhrases = [
   "not active",
   "not implemented",
   "reserved",
-  "future"
+  "future",
+  "provider-backed access path",
+  "authenticated-surface entry",
+  "provider initiation only",
+  "not a production SaaS interface or customer workspace",
+  "not a production SaaS interface"
 ];
 
 const newApiCallPatterns = [
@@ -181,7 +186,15 @@ async function assertEnvExampleEmpty() {
 }
 
 function normalizedHtmlText(text) {
-  return text.replace(/&mdash;/g, "—").replace(/\s+/g, " ");
+  return text
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&mdash;/g, "—")
+    .replace(/&middot;/g, "·")
+    .replace(/&amp;/g, "&")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ");
 }
 
 function textNear(text, matchIndex) {

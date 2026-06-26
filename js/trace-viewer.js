@@ -601,7 +601,16 @@
     if (focusTarget.startsWith('tab:')) {
       const tabId = focusTarget.slice(4);
       const tab = mount.querySelector(`[data-command-tab="${CSS.escape(tabId)}"]`);
-      if (tab) tab.focus();
+      if (tab) {
+        mount.querySelectorAll('.command-tab--keyboard-focus').forEach(node => {
+          node.classList.remove('command-tab--keyboard-focus');
+        });
+        tab.focus();
+        tab.classList.add('command-tab--keyboard-focus');
+        tab.addEventListener('blur', () => {
+          tab.classList.remove('command-tab--keyboard-focus');
+        }, { once: true });
+      }
     }
   }
 

@@ -9,7 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/aetherus-runtime-config.js"></script>
+  <script>
+    (function () {
+      const host = globalThis.location ? globalThis.location.hostname : "";
+      const localHost = host === "" || host === "localhost" || host === "127.0.0.1" || host === "[::1]";
+      globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG = globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG || Object.freeze({});
+      if (!localHost) {
+        document.write('<script src="js/aetherus-runtime-config.js"><\/script>');
+      }
+    })();
+  </script>
   <script type="module" src="js/supabase-auth-callback.js"></script>
 </head>
 <body class="auth-login-page">
