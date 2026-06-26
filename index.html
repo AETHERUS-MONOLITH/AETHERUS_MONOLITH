@@ -223,31 +223,25 @@
 
     </section>
 
-    <section class="pipeline-evidence-section analysis-panel evidence-panel-anchor panel-frame" aria-labelledby="pipeline-evidence-title">
-      <span class="section-kicker">Governance Pipeline to Evidence</span>
-      <h2 id="pipeline-evidence-title">Every layer should reference supporting proof.</h2>
-      <p>
-        Select any stack layer to see which research artefacts support that part of
-        the governance model. The binding is static metadata, not live execution.
-      </p>
-      <div class="trace-viewer" id="governance-trace-viewer" role="region" aria-label="Deterministic governance trace">
-        <div class="trace-fallback" role="status">
+    <section class="pipeline-evidence-section command-deck-section analysis-panel evidence-panel-anchor panel-frame" aria-labelledby="pipeline-evidence-title" aria-label="Governance Pipeline to Evidence">
+      <div class="command-deck-intro">
+        <span class="section-kicker">GOVERNANCE PIPELINE // EVIDENCE</span>
+        <h2 id="pipeline-evidence-title">Every layer should reference supporting proof.</h2>
+        <p>
+          Select a deterministic governance scenario to inspect its modeled verdict,
+          evidence readiness, and claim boundary.
+        </p>
+      </div>
+      <div class="trace-viewer command-deck-mount" id="governance-trace-viewer" role="region" aria-label="AETHERUS Command Deck">
+        <div class="command-deck-skeleton" role="status">
           Deterministic prototype trace loading from local fixtures.
         </div>
       </div>
-      <div class="pipeline-control-map compact-controls" aria-label="Pipeline evidence stages">
-        <button type="button" data-stage-key="INPUT_FRAME" data-stage-label="Input / Context" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>01</span><small>Input / Context</small></button>
-        <button type="button" data-stage-key="AUTHORITY_CHECK" data-stage-label="Authority" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>02</span><small>Authority</small></button>
-        <button type="button" data-stage-key="RISK_CLASSIFICATION" data-stage-label="Risk Classification" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>03</span><small>Risk</small></button>
-        <button type="button" data-stage-key="GATE_DECISION" data-stage-label="Gate Decision" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>04</span><small>Gate</small></button>
-        <button type="button" data-stage-key="RECOVERY_PATH" data-stage-label="Freeze / Repair / Escalate" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>05</span><small>Freeze / Repair</small></button>
-        <button type="button" data-stage-key="AUDIT_RELEASE" data-stage-label="Audit / Release Eligibility" aria-controls="pipeline-related-evidence" aria-pressed="false"><span>06</span><small>Audit / Release</small></button>
-      </div>
-      <div class="related-evidence-panel" id="pipeline-related-evidence" aria-live="polite" aria-atomic="true">
+      <div class="related-evidence-panel command-deck-related-evidence" id="pipeline-related-evidence" aria-live="polite" aria-atomic="true">
         <div class="related-evidence-copy">
           <span>Related Evidence</span>
           <strong>Stack-to-evidence binding</strong>
-          <p>Select a stack layer or stage to see which research artefacts support that part of the governance model.</p>
+          <p>Select a stack layer, or inspect the active scenario, to see which research artefacts support that part of the governance model.</p>
         </div>
         <ul class="related-evidence-list" id="related-evidence-list">
           <li>Evidence links are loaded from local artefact metadata.</li>
@@ -308,6 +302,6 @@
   <script defer src="js/pipeline.js"></script>
   <script defer src="js/docs.js"></script>
   <script defer src="js/governance-engine.js"></script>
-  <script defer src="js/trace-viewer.js"></script>
+  <script defer src="js/trace-viewer.js?v=command-deck-1"></script>
 </body>
 </html>
