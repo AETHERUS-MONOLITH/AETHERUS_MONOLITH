@@ -1,22 +1,43 @@
 # AETHERUS MONOLITH
 
-AETHERUS MONOLITH is a static, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent, claim-bounded governance product surface for an AI governance and model-behavior risk architecture. The current interface is centered on a Governance Stack Cutaway that explains how controlled LLM and agent workflow concepts can be framed through authority, evidence, risk classification, state decisions, auditability, and release eligibility.
+AETHERUS MONOLITH is an active staged construction repository and claim-bounded governance product surface for an AI governance and model-behavior risk architecture. Its public surface is currently GitHub Pages deployed, browser-side, deterministic, scenario-driven, and evidence-bound; those current-state limits describe the present construction threshold and are not permanent product identity. The current interface is centered on a Governance Stack Cutaway that explains how controlled LLM and agent workflow concepts can be framed through authority, evidence, risk classification, state decisions, auditability, and release eligibility.
 
 ## Current Status
 
-This repository is a staged governance product surface.
+This repository is a staged governance product surface under active construction.
 
-- Static HTML/CSS/vanilla JS
-- No backend
-- No authentication
-- No live telemetry
-- No deployed enterprise platform
-- No compliance certification
-- Pending operational evidence before operational decision-making
+- Public surface: static HTML/CSS/vanilla JS, deterministic scenario logic, local artefact metadata, and claim-boundary language.
+- Bounded access evidence: provider initiation, callback/session recognition, protected-shell admission, and guarded-entry denial behavior exist in the repository and deployed public route set when browser-safe runtime config and Supabase/GitHub conditions are present.
+- Bounded workspace persistence evidence: the protected shell includes a release-review save/load loop for authenticated Supabase session state, with repository-held substrate and external verification records for that bounded path.
+- Current limits: static, preview, non-production, reserved, and boundary language marks current construction state only. Those terms identify build thresholds still to be satisfied; they are not permanent product identity.
+- Not yet claimable: production workspace maturity, runtime governance execution, public NEXUS/model execution, operational release authority, production audit ledger, billing, monitoring, MFA, production SaaS, or compliance certification.
 
-The site is designed to communicate an architecture, deterministic governance interface, and evidence model. It should not be interpreted as production software, a certified control framework, proof of enterprise deployment, or proof that operational use has already been reached.
+The site is designed to communicate an architecture, deterministic governance interface, evidence model, and staged workspace path. It should not be interpreted as production software, a certified control framework, proof of enterprise deployment, or proof that operational use has already been reached.
 
-The public Facade is the static claim-bounded surface. Track 3 Conduit work remains local-only evidence and integration-contract work. The current Vault reference is the pinned NEXUS MVP source at `ab95cbbd24df5817c4e363d24b3b199ac8af6c6f`; it is not public NEXUS execution. Palisade is not instantiated, and Weave is specification only, not runnable.
+The public Facade is the current claim-bounded surface. Track 3 Conduit work remains repository-local evidence and integration-contract work unless explicitly wired through a governed runtime path. The current Vault reference is the pinned NEXUS MVP source at `ab95cbbd24df5817c4e363d24b3b199ac8af6c6f`; it is not public NEXUS execution. Palisade is not instantiated, and Weave is specification only, not runnable.
+
+## Production Workspace Threshold
+
+Provider login, callback recognition, protected-route admission, and bounded save/load persistence are entry and early persistence conditions. They do not create production workspace maturity by themselves.
+
+Production workspace maturity requires all of the following to be built and verified:
+
+- Real authenticated shell.
+- Applied live workspace data model.
+- Server-side authorization through database/RLS/server-side predicates, not UI filtering.
+- Tenant-scoped persistence.
+- Verified membership/account separation beyond one bounded demonstration path.
+- Operational workspace surfaces only where underlying capabilities exist.
+- Durable evidence and audit trail.
+- Runtime governance path for real user/workspace input.
+
+The required runtime governance path is:
+
+```text
+User/workspace input -> Facade -> Conduit -> Palisade policy decision -> Vault/NEXUS evaluation -> evidence/audit record -> release-state decision -> surfaced result
+```
+
+NEXUS does not have to remain hidden forever. The current rule is narrower: public runtime execution must not bypass the governed path. No public interface should directly expose NEXUS or model calls before that governance path exists.
 
 ## Artifact Classes and Claim Boundaries
 
@@ -24,8 +45,8 @@ AETHERUS_MONOLITH distinguishes repository-held artifacts by class. The reposito
 
 | Class | What the repository may claim | What the claim does not imply |
 | --- | --- | --- |
-| Product surface | The public site exposes a staged governance product surface: a static, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent public artifact. | Not production SaaS, operational deployment, live governance execution, real-world workflow operation, customer workspace, billing, or monitoring. |
-| Implementation substrate | Repository-held scaffolds, bounded client scaffolds, unapplied migration substrate, and future attachable substrate specify construction paths. | Not a live database, applied infrastructure, verified RLS, verified tenant isolation, live application-data persistence, backend-validated governance, or production audit ledger behavior. |
+| Product surface | The public site exposes a staged governance product surface: a static, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent public artifact with bounded protected-shell evidence where verified. | Not production SaaS, operational deployment, live governance execution, real-world workflow operation, customer workspace, billing, or monitoring. |
+| Implementation substrate | Repository-held scaffolds, bounded client scaffolds, unapplied migration substrate, applied-substrate evidence records where separately verified, and future attachable substrate specify construction paths. | Not full production workspace maturity, direct public NEXUS execution, model API execution, production audit ledger behavior, billing, monitoring, or compliance certification. |
 | Validator | Repository scripts check static constraints, validate repository-local contracts, detect claim-boundary drift, and guard static-language consistency. | Not runtime security enforcement, operational audit control, production governance enforcement, live compliance enforcement, or deployed monitoring. |
 | Evidence contract | `data/operational-evidence-packet-contract.v0.json` defines future evidence requirements, sets the operational-use threshold, and specifies evidence classes. | Not a completed evidence packet, not current operational evidence, not operational use achieved, and not backend-validated operational governance. |
 | Publication apparatus | Canonical routes, sitemap, robots, JSON-LD/Open Graph/Twitter metadata, and `data/taa-publication-metadata.v1.json` provide repository-held publication and discovery apparatus where present, including the completed TAA v1.0.1 Zenodo DOI/archive record. | Not peer-reviewed status, institutional validation, external endorsement, search submission, social publication, outreach execution, publication reception, product release, or NEXUS release gate. |
@@ -33,7 +54,7 @@ AETHERUS_MONOLITH distinguishes repository-held artifacts by class. The reposito
 | Conceptual/specification document | Design specifications, architecture intent, construction maps, boundary specifications, and future implementation contracts describe planned or bounded work. | Not built features, deployed components, runtime subsystems, public NEXUS execution, Palisade, Weave, model API execution, or operational workflow execution. |
 | Metadata/citation authority package | Repository-held metadata and citation files record canonical metadata, citation fields, DOI/archive identifiers where completed, and publication-status boundaries. | Not journal publication, peer review, institutional record, Anthropic assessment, product release, or search-indexing completion. |
 
-The public surface renders and links selected artifacts; the repository records additional artifacts; the system runs only the static browser-side behavior described in this README and the current source files. Operational use remains a legitimate future threshold event, but it is not a current claim.
+The public surface renders and links selected artifacts; the repository records additional artifacts; the system runs only the browser-side behavior and bounded protected-shell behavior described in this README and the current source files. Operational use remains a legitimate future threshold event, but it is not a current claim.
 
 ## What The Interface Shows
 
@@ -150,11 +171,11 @@ Option E 0.8 records secrets classes, key-management principles, tenant-aware ke
 
 Option E 0.9 records billing and Stripe boundary assumptions, future billing data classes, webhook boundaries, tenant/billing relationships, and rejected billing patterns in `docs/OPTION_E_0_9_BILLING_STRIPE_BOUNDARY_PLANNING.md`.
 
-Option E 0.10 records the implementation-readiness gate and concludes that §1.2 is not yet implementation-ready in `docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md`.
+Option E 0.10 records the implementation-readiness gate at that point in the construction sequence in `docs/OPTION_E_0_10_IMPLEMENTATION_READINESS_GATE.md`.
 
-These specifications are staged construction records, documentation-only, and pending operational attachment. They are not an implemented authenticated surface and do not add §1.2 runtime UI behavior, public NEXUS execution, Palisade, Weave, backend routes, auth, database behavior, persistence, tenant infrastructure, or billing. They carry the same explicit runtime boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
+These specifications are staged construction records, documentation-only unless separately represented by implemented files and verification records. They do not by themselves add public NEXUS execution, Palisade, Weave, production backend maturity, tenant-isolation maturity, production audit ledger behavior, billing, monitoring, model API execution, or operational release authority. They carry the same explicit runtime boundary: no live AI execution, no customer data, no production deployment, no operational release authority, and no compliance certification.
 
-AETHERUS_MONOLITH / §1.1 remains the instantiated static public artifact. The §1.2 Direct UI Membrane remains planned and specified only until a separate authorized implementation pass exists.
+AETHERUS_MONOLITH currently includes the instantiated public governance surface, deterministic scenario layer, staged review surfaces, provider-backed access initiation, callback/session recognition, protected-shell admission, and bounded authenticated save/load persistence for release-review state. Production workspace maturity and the governed runtime path remain unclaimable until the threshold conditions in this README are built and verified.
 
 ## AETHERUS Intelligence Layer v0
 
@@ -162,7 +183,7 @@ AETHERUS Intelligence Layer v0 is a deterministic browser-side governance trace 
 
 It loads a static manifest and static scenario fixtures, evaluates bounded rule-based gates, activates the Governance Stack Cutaway, and renders deterministic in-memory trace events. The layer is designed to demonstrate how authority, provenance, risk classification, governance gates, state chambers, audit traceability, artifact lineage, and release eligibility can be represented in a deterministic governance interface.
 
-It does not execute AI, call models, persist data, authenticate users, transmit telemetry, operate a production audit ledger, or perform live orchestration.
+It does not execute AI, call models, transmit telemetry, operate a production audit ledger, or perform live orchestration. Authentication and persistence evidence exists only in the bounded protected-shell path described in Current Status; the Intelligence Layer itself remains deterministic and browser-side.
 
 ### Intelligence Layer Files
 
@@ -179,7 +200,7 @@ The trace layer is deterministic and scenario-facing. Generated trace events are
 
 Intelligence Layer v0.1 adds decision-legibility explanations to the deterministic scenarios. Each scenario can describe why a verdict was produced, which gate was decisive, which stack layer is active, what operational evidence would be required, and what remains non-operational.
 
-v0.1 remains static, browser-side, deterministic, scenario-facing, and pending operational attachment. It does not add backend logic, authentication, persistence, model calls, telemetry, live orchestration, or operational audit evidence.
+v0.1 remains static, browser-side, deterministic, scenario-facing, and pending operational attachment. It does not add backend logic, model calls, telemetry, live orchestration, or operational audit evidence. It is separate from the bounded protected-shell auth and persistence evidence described in Current Status.
 
 ## Claim Boundaries
 
@@ -189,8 +210,9 @@ This project does not claim to be:
 - Deployed enterprise software
 - A certified compliance product
 - A live audit ledger
-- An authenticated dashboard
+- A production authenticated dashboard
 - Customer-validated deployment proof
+- Public NEXUS runtime or model API execution
 
 All governance, pipeline, audit, and release concepts shown in the interface are staged product-surface representations unless explicitly documented otherwise.
 

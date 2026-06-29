@@ -81,7 +81,7 @@ for (const item of restrictedClaimPatterns) {
 const requiredDistinctions = [
   "The public surface renders and links selected artifacts",
   "the repository records additional artifacts",
-  "the system runs only the static browser-side behavior"
+  "the system runs only the browser-side behavior and bounded protected-shell behavior"
 ];
 
 for (const phrase of requiredDistinctions) {
