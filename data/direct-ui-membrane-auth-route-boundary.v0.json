@@ -46,9 +46,9 @@
     "tenant_isolation_remains_not_implemented": true
   },
   "current_claimable_state": [
-    "Direct UI Membrane has an unauthenticated interactive preview workspace",
+    "Governance workspace preview has an unauthenticated interactive preview workspace",
     "Preview workspace is browser-side and non-persistent",
-    "Authenticated shell route boundary is reserved but not active"
+    "Account access route is in development and not active"
   ],
   "not_claimable": [
     "login exists",

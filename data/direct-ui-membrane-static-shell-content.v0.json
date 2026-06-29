@@ -7,21 +7,21 @@
   "content_scope": [
     "surface_card_purpose_lines",
     "reviewer_function_lines",
-    "boundary_lines",
+    "current_state_lines",
     "object_status_language"
   ],
   "surfaces_refined": [
-    "Access Boundary Membrane",
+    "Access Review Surface",
     "Workspace Control Surface",
     "Evidence / Artifact Review Surface",
-    "Release Review Chamber",
+    "Release Review Surface",
     "Escalation Review Surface"
   ],
   "surface_structure_required": [
     "object_status",
     "purpose",
     "reviewer_function",
-    "boundary"
+    "current_state"
   ],
   "forbidden_capabilities_absent": [
     "auth",

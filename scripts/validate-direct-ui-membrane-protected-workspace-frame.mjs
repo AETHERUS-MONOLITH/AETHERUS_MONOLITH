@@ -8,7 +8,7 @@ const callbackScriptPath = "js/supabase-auth-callback.js";
 
 const requiredProtectedShellPhrases = [
   "Protected workspace frame",
-  "Protected Shell Boundary",
+  "Protected workspace path",
   "AETHERUS Review Workspace",
   "Workspace Overview",
   "Evidence Packet",
@@ -35,7 +35,7 @@ const requiredNavigationTargets = [
 ];
 
 const protectedBoundaryPhrases = [
-  "Protected shell admission depends on recognized Supabase session state",
+  "Protected workspace admission depends on recognized Supabase session state",
   "Denial without a session is expected guard behavior",
   "data-protected-shell-boundary",
   "js/supabase-protected-shell.js",
@@ -106,8 +106,8 @@ for (const target of requiredNavigationTargets) {
   assertIncludes(protectedShell, `href="${target}"`, `${protectedShellPath} navigation`);
 }
 
-if (!previewWorkspace.includes("Unauthenticated preview workspace")) {
-  fail(`${previewWorkspacePath}: must remain the unauthenticated preview workspace`);
+if (!previewWorkspace.includes("Interactive workspace preview")) {
+  fail(`${previewWorkspacePath}: must remain the interactive workspace preview`);
 }
 
 for (const phrase of [

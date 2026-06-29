@@ -8,10 +8,10 @@ const publicShellFiles = ["membrane.html", "index.html", "css/style.css"];
 const runtimeBoundaryFiles = [...publicShellFiles, recordPath, qaReportPath, contentRecordPath];
 
 const requiredSurfaces = [
-  "Access Boundary Membrane",
+  "Access Review Surface",
   "Workspace Control Surface",
   "Evidence / Artifact Review Surface",
-  "Release Review Chamber",
+  "Release Review Surface",
   "Escalation Review Surface"
 ];
 
@@ -30,9 +30,9 @@ const requiredForbiddenCapabilities = [
 ];
 
 const requiredBoundaryPhrases = [
-  "Direct UI Membrane",
-  "Static Preview",
-  "Staged product-surface scaffold",
+  "Governance workspace preview",
+  "Workspace Preview",
+  "Staged product interface",
   "Static evaluation mode",
   "Prototype evidence surface",
   "Operational evidence pending",
@@ -68,14 +68,13 @@ const forbiddenOperationalLabels = [
 const allowedStaticLabels = [
   "Preview Surface",
   "Inspect Concept",
-  "Review Boundary",
   "View Static Model",
-  "Product boundary",
+  "Access review",
   "Staged product surface",
   "Staged surface",
   "Reviewer model",
   "Preview surface",
-  "Boundary note"
+  "Escalation review"
 ];
 
 function fail(message) {
@@ -160,7 +159,7 @@ assertIncludesAll(normalizedMembraneText, requiredBoundaryPhrases, "membrane.htm
 assertIncludesAll(normalizedMembraneText, requiredSurfaces, "membrane.html surfaces");
 assertIncludesAll(
   normalizedMembraneText,
-  ["Object status:", "Purpose:", "Reviewer function:", "Boundary:"],
+  ["Object status:", "Purpose:", "Reviewer function:", "Current state:"],
   "membrane.html surface card structure"
 );
 
@@ -176,10 +175,10 @@ for (const surface of requiredSurfaces) {
   const card = articleMatches.find((article) => article.includes(`<h3>${surface}</h3>`));
   if (!card) fail(`membrane.html: missing card for ${surface}`);
   for (const required of [
-    "Object status: Staged product-surface boundary",
+    "Object status: Staged product interface",
     "<strong>Purpose:</strong>",
     "<strong>Reviewer function:</strong>",
-    "<strong>Boundary:</strong>"
+    "<strong>Current state:</strong>"
   ]) {
     if (!card.includes(required)) fail(`${surface}: missing ${required}`);
   }
@@ -207,10 +206,9 @@ if (!indexText.includes('href="membrane.html"')) {
   fail("index.html must link to membrane.html");
 }
 const boundedNavigationLabels = [
-  "Static Membrane Preview",
-  "Direct UI Membrane — Static Preview",
-  "Direct UI Membrane &mdash; Static Preview",
-  "Staged Interface Surface"
+  "Workspace Preview",
+  "Governance workspace preview",
+  "Staged Product Interface"
 ];
 if (!boundedNavigationLabels.some((label) => indexText.includes(label))) {
   fail("index.html navigation must use a bounded preview label");
@@ -303,7 +301,7 @@ if (contentRecord) {
     [
       "surface_card_purpose_lines",
       "reviewer_function_lines",
-      "boundary_lines",
+      "current_state_lines",
       "object_status_language"
     ],
     "Content record content_scope"
@@ -311,7 +309,7 @@ if (contentRecord) {
   assertIncludesAll(contentRecord.surfaces_refined || [], requiredSurfaces, "Content record surfaces_refined");
   assertIncludesAll(
     contentRecord.surface_structure_required || [],
-    ["object_status", "purpose", "reviewer_function", "boundary"],
+    ["object_status", "purpose", "reviewer_function", "current_state"],
     "Content record surface_structure_required"
   );
   assertIncludesAll(

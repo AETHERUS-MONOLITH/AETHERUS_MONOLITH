@@ -1,15 +1,15 @@
 (function() {
   const surfaces = [
     {
-      id: "access-boundary",
+      id: "access-review",
       index: "01",
-      title: "Access Boundary Membrane",
-      controlLabel: "Preview Access Boundary",
+      title: "Access Review Surface",
+      controlLabel: "Preview Access Review",
       status: "selected in preview",
-      purpose: "Defines where human intent enters the future Direct UI Membrane.",
+      purpose: "Defines where human intent enters the staged workspace path.",
       reviewer:
-        "Shows the intended boundary between public entry, authenticated access, and controlled workspace entry.",
-      state: "Access Boundary Membrane is selected in preview; boundary context is visible.",
+        "Shows the intended separation between public entry, account access, and controlled workspace entry.",
+      state: "Access Review Surface is selected in preview; access context is visible.",
       boundary: "Static evaluation mode; account and tenant access remain outside this preview."
     },
     {
@@ -29,22 +29,22 @@
       index: "03",
       title: "Evidence / Artifact Review Surface",
       controlLabel: "Preview Evidence Review",
-      status: "boundary visible",
-      purpose: "Represents how evidence, artifacts, and claim boundaries may be inspected before release judgment.",
-      reviewer: "Makes support, missing proof, and boundary status visible as review objects.",
+      status: "current state visible",
+      purpose: "Represents how evidence, artifacts, and claim status may be inspected before release judgment.",
+      reviewer: "Makes support, missing proof, and review status visible as review objects.",
       state: "Evidence / Artifact Review Surface is selected in preview; proof context is illustrative only.",
       boundary: "Prototype evidence surface; operational evidence and audit-trail attachment are pending."
     },
     {
       id: "release-review",
       index: "04",
-      title: "Release Review Chamber",
+      title: "Release Review Surface",
       controlLabel: "Preview Release Review",
-      status: "boundary visible",
+      status: "current state visible",
       purpose: "Represents the conceptual area where freeze, repair, or escalation state would be reviewed.",
       reviewer:
         "Shows the reviewer-facing structure for evaluating release eligibility without granting release authority.",
-      state: "Release Review Chamber is selected in preview; no release authority is granted.",
+      state: "Release Review Surface is selected in preview; no release authority is granted.",
       boundary: "Review model only; operational release authority and certification are not claimed."
     },
     {
@@ -53,7 +53,7 @@
       title: "Escalation Review Surface",
       controlLabel: "Preview Escalation Review",
       status: "no runtime action",
-      purpose: "Represents how unresolved boundary conflicts may be surfaced for human review.",
+      purpose: "Represents how unresolved review conflicts may be surfaced for human review.",
       reviewer: "Shows how escalation context, missing evidence, and review notes could be organized.",
       state: "Escalation Review Surface is selected in preview; review notes are not stored.",
       boundary: "Escalation model only; runtime observation and enforcement remain future thresholds."

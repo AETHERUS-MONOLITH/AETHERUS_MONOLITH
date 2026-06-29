@@ -33,9 +33,9 @@
       </span>
     </a>
     <nav class="site-nav" aria-label="Provider login initiation navigation">
-      <a href="workspace.html">Preview Workspace</a>
-      <a href="auth-boundary.html">Auth Boundary</a>
-      <a href="membrane.html">Static Membrane</a>
+      <a href="workspace.html">Workspace Preview</a>
+      <a href="auth-boundary.html">Account Access</a>
+      <a href="membrane.html">Workspace Preview Overview</a>
     </nav>
     <span class="interface-chip">Provider Initiation</span>
   </header>
@@ -52,7 +52,7 @@
           happen only after the provider return. It does not create an authenticated
           workspace, and no production workspace is active here.
         </p>
-        <div class="auth-login-status-strip" aria-label="Provider login boundary">
+        <div class="auth-login-status-strip" aria-label="Provider login current state">
           <span>Provider-backed access path</span>
           <span>Supabase/GitHub initiation</span>
           <span>Browser-safe public config required</span>
@@ -73,10 +73,10 @@
       </aside>
     </section>
 
-    <section class="auth-login-boundary-grid" aria-label="Provider login boundary">
+    <section class="auth-login-boundary-grid" aria-label="Provider login current state">
       <article class="auth-login-panel panel-frame">
         <span class="section-kicker">Scope</span>
-        <h2>Access path boundary</h2>
+        <h2>Access path status</h2>
         <p>
           The action starts GitHub provider initiation through Supabase only after
           browser-safe public config is supplied outside committed source.
@@ -94,13 +94,13 @@
       </article>
 
       <article class="auth-login-panel panel-frame">
-        <span class="section-kicker">Claim Boundary</span>
+        <span class="section-kicker">Claim Status</span>
         <h2>No product maturity claim</h2>
         <p>
           This path does not create a production workspace, operational release
           system, live model-execution claim, or customer deployment claim.
         </p>
-        <a class="auth-login-return-link" href="workspace.html">Return to Preview Workspace</a>
+        <a class="auth-login-return-link" href="workspace.html">Return to Workspace Preview</a>
       </article>
     </section>
   </main>

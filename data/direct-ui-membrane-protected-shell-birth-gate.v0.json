@@ -54,7 +54,7 @@
       "bounded protected shell route exists",
       "bounded protected shell script exists"
     ],
-    "birth_claimed_reason": "The deployed GitHub OAuth flow reached the app callback route, recognized a real Supabase session after callback exchange, exposed the Protected Shell Boundary link only after session recognition, and admitted protected-shell.html through the Supabase session guard.",
+    "birth_claimed_reason": "The deployed GitHub OAuth flow reached the app callback route, recognized a real Supabase session after callback exchange, exposed the protected workspace path link only after session recognition, and admitted protected-shell.html through the Supabase session guard.",
     "live_verification_record": "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
     "live_verification_result": {
       "provider_login_initiation_verified": true,
@@ -133,7 +133,7 @@
   },
   "claimable_after_this_pass": [
     "§1.2.3 Authenticated Surfaces are born only for the bounded callback/session recognition and protected-shell admission threshold verified through the real deployed GitHub OAuth and Supabase callback flow.",
-    "A bounded protected-shell birth gate exists, and protected-shell admission is verified through Supabase session guard state."
+    "A bounded protected workspace birth gate exists, and protected workspace admission is verified through Supabase session guard state."
   ],
   "not_claimable_after_this_pass": [
     "password login exists",
@@ -177,7 +177,7 @@
   "hard_boundaries_preserved": [
     "The callback route does not provide login UI, signup UI, credential fields, database-backed UI, customer workspace access, or manual session persistence.",
     "The protected shell route admits only when Supabase session classification reports a session-present state.",
-    "The admitted protected-shell content is limited to the Protected Shell Boundary, Session recognized, No database access, No persistence layer, No tenant workspace, No customer data, No billing, and No production SaaS boundary.",
+    "The admitted protected-shell content is limited to the protected workspace path, Session recognized, No database access, No persistence layer, No tenant workspace, No customer data, No billing, and No production SaaS boundary.",
     "No backend, database schema, database access, persistence layer, RLS, tenant isolation, customer workspace, billing, Palisade, Weave runtime, public NEXUS runtime, model API execution, monitoring dashboard, compliance/customer claim, or production SaaS claim is implemented.",
     "No Supabase runtime public config values, package files, real keys, fake keys, placeholder key values, service-role key values, JWT secret values, or non-empty env assignments are committed."
   ]

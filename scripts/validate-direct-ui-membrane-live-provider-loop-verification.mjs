@@ -48,7 +48,7 @@ const rejectedBirthEvidence = [
 ];
 
 const boundedShellPhraseGroups = [
-  ["Protected Shell Boundary"],
+  ["Protected workspace path"],
   ["Session recognized"],
   ["Authenticated save/load loop"],
   ["Session-scoped Supabase state"],
@@ -162,7 +162,7 @@ function assertLiveSurface(record) {
     fail("callback visible status mismatch");
   }
   if (live.callback_status_state !== "callback_exchange_attempted") fail("callback state mismatch");
-  if (live.protected_shell_visible_heading !== "Protected Shell Boundary") {
+  if (live.protected_shell_visible_heading !== "Protected workspace frame") {
     fail("protected shell page heading mismatch");
   }
   if (live.protected_shell_guard_heading !== "Session recognized") {
@@ -205,7 +205,7 @@ assertIncludesAll(
 const notes = record.verification_notes || [];
 assertIncludesAll(notes, [
   "An initial manual OAuth return landed on a non-sensitive invalid_request / bad_oauth_state error at the site root and did not count as callback evidence.",
-  "A fresh deployed provider login attempt then reached the app callback route, recognized a real Supabase session after callback exchange, exposed the Protected Shell Boundary link, and admitted protected-shell.html through the Supabase session guard.",
+  "A fresh deployed provider login attempt then reached the app callback route, recognized a real Supabase session after callback exchange, exposed the protected workspace path link, and admitted protected-shell.html through the Supabase session guard.",
   "No mocked, stubbed, or fake session evidence was used; no browser storage was manually manipulated; no callback code, token, session, user payload, PKCE verifier, or runtime config value was printed, logged, exposed, or committed."
 ], "verification_notes");
 

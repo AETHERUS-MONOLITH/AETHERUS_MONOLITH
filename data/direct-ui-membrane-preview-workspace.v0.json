@@ -10,12 +10,12 @@
   "backend_born": false,
   "persistence_born": false,
   "tenant_system_born": false,
-  "first_journey": "Visitor opens Direct UI Membrane, sees conceptual surfaces, and enters a controlled preview workspace.",
+  "first_journey": "Visitor opens the governance workspace preview, sees staged review surfaces, and enters a controlled preview workspace.",
   "surfaces_represented": [
-    "Access Boundary Membrane",
+    "Access Review Surface",
     "Workspace Control Surface",
     "Evidence / Artifact Review Surface",
-    "Release Review Chamber",
+    "Release Review Surface",
     "Escalation Review Surface"
   ],
   "workspace_files": [
@@ -27,7 +27,7 @@
   "allowed_interactions": [
     "surface_selection",
     "preview_panel_switching",
-    "boundary_inspection",
+    "current_state_inspection",
     "transient_in_memory_preview_state",
     "preview_reset"
   ],
@@ -55,8 +55,8 @@
   ],
   "claim_boundary": {
     "claimable": [
-      "unauthenticated interactive preview workspace exists",
-      "Direct UI Membrane has first real interactive surface",
+      "interactive workspace preview exists",
+      "Governance workspace preview has first real interactive surface",
       "preview interactions are browser-side and non-persistent"
     ],
     "not_claimable": [

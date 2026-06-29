@@ -130,8 +130,8 @@ for (const [filePath, text] of [
   }
 }
 
-if (!previewWorkspace.includes("Unauthenticated preview workspace")) {
-  fail(`${previewWorkspacePath}: must remain the unauthenticated preview workspace`);
+if (!previewWorkspace.includes("Interactive workspace preview")) {
+  fail(`${previewWorkspacePath}: must remain the interactive workspace preview`);
 }
 for (const phrase of ["Release Review", "Run local review", "local release candidate", "Review blocked"]) {
   if (previewWorkspace.includes(phrase)) {

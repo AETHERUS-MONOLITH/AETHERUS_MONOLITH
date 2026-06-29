@@ -9,7 +9,7 @@
   "content_refinement_status": "surface_cards_refined",
   "linked_interactive_workspace": {
     "href": "workspace.html",
-    "label": "Enter Preview Workspace",
+    "label": "Open Workspace Preview",
     "object_status": "unauthenticated_interactive_preview_workspace",
     "birth_condition_met_by_workspace": true
   },
@@ -33,15 +33,15 @@
   ],
   "navigation_update": {
     "file": "index.html",
-    "label": "Static Membrane Preview",
+    "label": "Workspace Preview",
     "href": "membrane.html",
     "bounded_as_conceptual_preview": true
   },
   "surfaces_represented": [
-    "Access Boundary Membrane",
+    "Access Review Surface",
     "Workspace Control Surface",
     "Evidence / Artifact Review Surface",
-    "Release Review Chamber",
+    "Release Review Surface",
     "Escalation Review Surface"
   ],
   "forbidden_capabilities_absent": [

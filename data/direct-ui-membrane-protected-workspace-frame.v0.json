@@ -6,7 +6,7 @@
   "object_classification": [
     "protected workspace frame",
     "customer-perceivable product surface",
-    "browser-side protected shell surface",
+    "browser-side protected workspace surface",
     "bounded authenticated workspace state persistence"
   ],
   "placement": {

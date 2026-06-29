@@ -111,7 +111,7 @@ const forbiddenImplementationPatterns = [
 ];
 
 const protectedShellRequiredPhrases = [
-  "Protected Shell Boundary",
+  "Protected workspace path",
   "Session recognized",
   "Authenticated save/load loop",
   "Session-scoped Supabase state",
@@ -152,7 +152,7 @@ const callbackRequiredBoundaryPhrases = [
 ];
 
 const protectedShellMessagingRequiredPhrases = [
-  "Protected shell admission depends on recognized Supabase session state",
+  "Protected workspace admission depends on recognized Supabase session state",
   "Denial without a session is expected guard behavior",
   "production workspace is",
   "Expected denial without session",
@@ -530,7 +530,7 @@ assertBirthEvidence(record);
 await assertHomepageNavigationExposure(record);
 assertIncludesAll(record.claimable_after_this_pass || [], [
   "§1.2.3 Authenticated Surfaces are born only for the bounded callback/session recognition and protected-shell admission threshold verified through the real deployed GitHub OAuth and Supabase callback flow.",
-  "A bounded protected-shell birth gate exists, and protected-shell admission is verified through Supabase session guard state."
+  "A bounded protected workspace birth gate exists, and protected workspace admission is verified through Supabase session guard state."
 ], "claimable_after_this_pass");
 assertIncludesAll(record.not_claimable_after_this_pass || [], [
   "password login exists",

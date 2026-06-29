@@ -7,15 +7,15 @@ const authBoundaryPath = "data/direct-ui-membrane-auth-backend-boundary.v0.json"
 const docsJsonPath = "data/docs.json";
 
 const requiredSurfaces = [
-  "Access Boundary Membrane",
+  "Access Review Surface",
   "Workspace Control Surface",
   "Evidence / Artifact Review Surface",
-  "Release Review Chamber",
+  "Release Review Surface",
   "Escalation Review Surface"
 ];
 
 const requiredStatusPhrases = [
-  "Unauthenticated preview workspace",
+  "Interactive workspace preview",
   "Interactive preview only",
   "Static evaluation mode",
   "Prototype evidence surface",
@@ -25,13 +25,13 @@ const requiredStatusPhrases = [
 ];
 
 const allowedControlLabels = [
-  "Enter Preview Workspace",
+  "Open Workspace Preview",
   "Inspect Surface",
-  "View Boundary",
+  "View Current State",
   "Open Preview Panel",
   "Reset Preview",
-  "Return to Static Membrane",
-  "Preview Access Boundary",
+  "Return to Workspace Preview",
+  "Preview Access Review",
   "Preview Workspace Control",
   "Preview Evidence Review",
   "Preview Release Review",
@@ -39,10 +39,10 @@ const allowedControlLabels = [
 ];
 
 const requiredControlLabels = [
-  "Enter Preview Workspace",
+  "Open Workspace Preview",
   "Reset Preview",
-  "Return to Static Membrane",
-  "Preview Access Boundary",
+  "Return to Workspace Preview",
+  "Preview Access Review",
   "Preview Workspace Control",
   "Preview Evidence Review",
   "Preview Release Review",
@@ -132,7 +132,7 @@ assertIncludesAll(
   [
     "surface_selection",
     "preview_panel_switching",
-    "boundary_inspection",
+    "current_state_inspection",
     "transient_in_memory_preview_state",
     "preview_reset"
   ],

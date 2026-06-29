@@ -9,8 +9,7 @@ const docsJsonPath = "data/docs.json";
 const readmePath = "README.md";
 
 const requiredStatusPhrases = [
-  "Authenticated shell boundary",
-  "Reserved access boundary",
+  "Account access in development",
   "Static evaluation mode",
   "Account access pending",
   "Operational evidence pending",
@@ -19,15 +18,15 @@ const requiredStatusPhrases = [
 ];
 
 const allowedStaticLabels = [
-  "Reserved Boundary",
-  "Auth Boundary",
-  "Future Authenticated Shell",
-  "Route Placeholder",
-  "Implementation Boundary",
+  "Account Access in Development",
+  "Account Access",
+  "Account access not active",
+  "Route Shape",
+  "Activation Requirements",
   "Not Active",
   "Requires Separate Authorization",
-  "Return to Preview Workspace",
-  "View Preview Workspace"
+  "Return to Workspace Preview",
+  "Workspace Preview"
 ];
 
 const forbiddenActiveLabels = [
@@ -58,7 +57,7 @@ const forbiddenActiveLabels = [
 ];
 
 const negatedBoundaryPhrases = [
-  "Reserved access boundary",
+  "Account access in development",
   "Account access pending",
   "implementation threshold",
   "Static evaluation mode",
@@ -150,14 +149,13 @@ assertIncludesAll(normalizedPage, requiredStatusPhrases, "auth-boundary.html sta
 assertIncludesAll(
   normalizedPage,
   [
-    "Reserved Boundary",
-    "Auth Boundary",
-    "Future Authenticated Shell",
-    "Route Placeholder",
-    "Implementation Boundary",
+    "Account Access in Development",
+    "Account access not active",
+    "Activation Requirements",
+    "Route Shape",
     "Static Evaluation Mode",
     "Requires Separate Authorization",
-    "Return to Preview Workspace"
+    "Return to Workspace Preview"
   ],
   "auth-boundary.html static labels"
 );

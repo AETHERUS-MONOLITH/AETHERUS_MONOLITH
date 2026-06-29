@@ -19,6 +19,17 @@ const publicIdentityFiles = [
   "data/docs.json"
 ];
 
+const customerFacingSurfaceFiles = [
+  "index.html",
+  "membrane.html",
+  "workspace.html",
+  "auth-boundary.html",
+  "auth-login.html",
+  "auth-callback.html",
+  "protected-shell.html",
+  "js/preview-workspace.js"
+];
+
 const failures = [];
 
 function fail(file, message) {
@@ -140,6 +151,33 @@ for (const file of publicIdentityFiles) {
   assertNoPattern(file, text, /\bprototype-facing\b/i, "prototype-facing must not define the product surface");
   assertNoPattern(file, text, /\bresearch\/prototype-facing\b/i, "research/prototype-facing must not define the product surface");
   assertNoPattern(file, text, /\bstatic prototype\b/i, "static prototype must not define the product surface");
+}
+
+for (const file of customerFacingSurfaceFiles) {
+  const text = readText(file);
+  for (const [pattern, message] of [
+    [/Direct UI Membrane/i, "Direct UI Membrane is internal construction language for customer-facing surfaces"],
+    [/\bPAR\b/i, "PAR is an internal protocol/task label"],
+    [/Zone 3/i, "Zone labels are internal construction labels"],
+    [/Birth Framing/i, "Birth Framing is an internal construction label"],
+    [/Palisade Birth/i, "Palisade Birth is an internal construction label"],
+    [/§2 Palisade Birth Pass/i, "internal pass labels must not be customer-facing"],
+    [/Static Membrane/i, "Static Membrane is internal scaffolding language"],
+    [/Access Boundary Membrane/i, "Access Boundary Membrane is an internal surface label"],
+    [/Authenticated shell boundary/i, "Authenticated shell boundary is internal scaffolding language"],
+    [/Protected Shell Boundary/i, "Protected Shell Boundary is internal scaffolding language"],
+    [/Auth Boundary/i, "Auth Boundary is an internal surface label"],
+    [/Reserved Boundary/i, "Reserved Boundary is an internal surface label"],
+    [/Implementation Boundary/i, "Implementation Boundary is an internal surface label"],
+    [/Route Placeholder/i, "Route Placeholder is an internal route label"],
+    [/Future Authenticated Shell/i, "Future Authenticated Shell is internal scaffolding language"],
+    [/Staged Interface Surface/i, "Staged Interface Surface is internal scaffolding language"],
+    [/Staged product-surface/i, "staged product-surface is internal scaffolding language"],
+    [/Release Review Chamber/i, "Release Review Chamber is an internal surface label"],
+    [/Unauthenticated preview workspace/i, "Unauthenticated preview workspace exposes construction state as product identity"]
+  ]) {
+    assertNoPattern(file, text, pattern, message);
+  }
 }
 
 for (const file of publicCopyFiles) {

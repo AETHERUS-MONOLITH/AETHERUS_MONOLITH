@@ -483,7 +483,7 @@
     "case_b_evasive_or_at_risk": [
       {
         "surface": "membrane.html and workspace.html internal membrane preview labels",
-        "reason": "Public identity is dominated by preview/static/internal naming rather than a concrete construction threshold."
+        "reason": "Original audit finding preserved. Public labels were corrected in Public-Surface Label / Validator Correction 0.1 and validator enforcement now rejects the old customer-facing internal labels."
       },
       {
         "surface": "protected-shell.html operational-looking panels",
@@ -496,11 +496,11 @@
     ]
   },
   "overall_conclusion": {
-    "public_surfaces_execute_corrected_staging_doctrine": false,
-    "public_surfaces_require_correction_before_palisade": true,
+    "public_surfaces_execute_corrected_staging_doctrine": true,
+    "public_surfaces_require_correction_before_palisade": false,
     "palisade_can_proceed_with_named_caveats": true,
     "palisade_should_be_held_pending_implementation_defect": false,
-    "rationale": "The public surfaces mostly avoid overclaiming production SaaS, NEXUS runtime, model execution, and operational release authority. However, they still expose internal membrane/boundary labels, treat static/preview as public identity in key routes, and README under-specifies implemented auth/persistence substrate. These are bounded correction and threshold-definition tasks; they do not require holding Palisade completely if Palisade begins as a policy artifact consuming the named boundaries and explicitly excludes public runtime execution."
+    "rationale": "After README Current-State Truth Correction 0.1 and Public-Surface Label / Validator Correction 0.1, the audited public surfaces preserve current-state truth while avoiding production SaaS, public NEXUS runtime, model execution, operational release authority, Palisade runtime, Weave runtime, and production audit-ledger claims. Remaining production-workspace gaps are claim boundaries and Palisade policy inputs, not blockers to the first bounded Palisade-owned policy artifact."
   },
   "post_audit_correction_status": {
     "readme_current_state_truth_correction": {
@@ -508,11 +508,20 @@
       "followup_pass": "README Current-State Truth Correction 0.1",
       "corrected_findings": ["PSA-004", "PSA-005"],
       "traceability_note": "Original findings remain in this audit record. README now distinguishes active staged construction, bounded provider/callback/protected-shell evidence, bounded save/load persistence evidence, production workspace threshold conditions, and the governed runtime path required before public NEXUS or model execution can be claimable."
+    },
+    "public_surface_label_validator_correction": {
+      "status": "corrected_in_followup_pass",
+      "followup_pass": "Public-Surface Label / Validator Correction 0.1",
+      "expected_commit_reference": "Correct public surface labels",
+      "corrected_findings": ["PSA-001", "PSA-002", "PSA-003", "PSA-008", "PSA-009", "PSA-010"],
+      "partially_corrected_findings": ["PSA-011", "PSA-014"],
+      "still_open_findings": ["PSA-006", "PSA-007", "PSA-016"],
+      "traceability_note": "Original findings remain in this audit record. Public HTML routes, preview workspace JavaScript, public label records, Direct UI route validators, and the product-language boundary validator now use product-safe current-state labels and reject customer-facing exposure of the prior membrane, shell, reserved-boundary, route-placeholder, and staged-interface labels."
     }
   },
   "next_pass_recommendation": {
     "proceed_to_palisade_policy_artifact": true,
-    "first_required_fix_before_palisade": "None after README Current-State Truth Correction 0.1; the next required public-surface correction is customer-facing label and validator alignment for internal membrane/boundary terminology.",
-    "rationale": "Palisade should consume policy candidate boundaries from this audit, especially production workspace claim gates, public NEXUS runtime denial, operational evidence thresholds, and preview-to-implementation obligations. The README status correction is recorded as complete; public label cleanup remains the next named correction before broad public-surface doctrine can be considered fully executed."
+    "first_required_fix_before_palisade": "None after README Current-State Truth Correction 0.1 and Public-Surface Label / Validator Correction 0.1.",
+    "rationale": "Palisade should consume policy candidate boundaries from this audit, especially production workspace claim gates, public NEXUS runtime denial, operational evidence thresholds, and preview-to-implementation obligations. README status correction and public label cleanup are recorded as complete follow-up corrections; the next construction threshold is the first bounded Palisade-owned policy artifact."
   }
 }

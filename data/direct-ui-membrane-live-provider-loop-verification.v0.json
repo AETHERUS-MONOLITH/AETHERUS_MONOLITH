@@ -50,7 +50,7 @@
     "callback_status_state": "callback_exchange_attempted",
     "protected_shell_boundary_link_exposed_after_session_recognition": true,
     "protected_shell_route_reached": true,
-    "protected_shell_visible_heading": "Protected Shell Boundary",
+    "protected_shell_visible_heading": "Protected workspace frame",
     "protected_shell_guard_heading": "Session recognized",
     "protected_shell_visible_status": "Session recognized",
     "protected_shell_status_state": "guard_permitted_without_shell_entry",
@@ -62,7 +62,7 @@
     "Preflight matched the required baseline commit for HEAD and origin/main before live verification.",
     "The deployed auth pages and relevant auth modules matched local HEAD content, and the deployed runtime config artifact was served, parseable, and global-present without printing config values.",
     "An initial manual OAuth return landed on a non-sensitive invalid_request / bad_oauth_state error at the site root and did not count as callback evidence.",
-    "A fresh deployed provider login attempt then reached the app callback route, recognized a real Supabase session after callback exchange, exposed the Protected Shell Boundary link, and admitted protected-shell.html through the Supabase session guard.",
+    "A fresh deployed provider login attempt then reached the app callback route, recognized a real Supabase session after callback exchange, exposed the protected workspace path link, and admitted protected-shell.html through the Supabase session guard.",
     "The protected shell denied access without a session before the OAuth flow and kept the protected shell content hidden.",
     "No mocked, stubbed, or fake session evidence was used; no browser storage was manually manipulated; no callback code, token, session, user payload, PKCE verifier, or runtime config value was printed, logged, exposed, or committed."
   ],

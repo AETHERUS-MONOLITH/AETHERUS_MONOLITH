@@ -82,10 +82,10 @@
     "runtime_monitoring"
   ],
   "surfaces_verified": [
-    "Access Boundary Membrane",
+    "Access Review Surface",
     "Workspace Control Surface",
     "Evidence / Artifact Review Surface",
-    "Release Review Chamber",
+    "Release Review Surface",
     "Escalation Review Surface"
   ]
 }
