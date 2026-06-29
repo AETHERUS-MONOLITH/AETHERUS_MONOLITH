@@ -131,7 +131,9 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-protected-workspace-interaction.v0.json",
   "scripts/validate-direct-ui-membrane-protected-workspace-interaction.mjs",
   "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
-  "scripts/validate-direct-ui-membrane-protected-workspace-persistence.mjs"
+  "scripts/validate-direct-ui-membrane-protected-workspace-persistence.mjs",
+  "data/public-surface-execution-audit.v0.json",
+  "scripts/validate-public-surface-execution-audit.mjs"
 ]);
 
 const inventory = readJson(inventoryPath);

@@ -1,0 +1,510 @@
+{
+  "audit_id": "public-surface-execution-audit-0.1",
+  "baseline_commit": "2d0cf7c3d312af4047c2fb875368519716ffe78d",
+  "audited_at_utc": "2026-06-29T00:00:00Z",
+  "scope_summary": "External-facing repository surfaces and deployed public interface language were inspected for active staged construction, evidence-bound current-state truth, internal label exposure, threshold alignment, and runtime governance claim discipline.",
+  "inspected_surfaces": [
+    {
+      "surface": "deployed_homepage",
+      "file_or_url": "https://camilocarlone.com/",
+      "surface_type": "deployed_public_html",
+      "inspection_result": "Accessible through curl on 2026-06-29; deployed content matches current repository homepage language for the audited strings."
+    },
+    {
+      "surface": "deployed_static_membrane_preview",
+      "file_or_url": "https://camilocarlone.com/membrane.html",
+      "surface_type": "deployed_public_html",
+      "inspection_result": "Accessible through curl on 2026-06-29; deployed content matches repository membrane.html for the audited strings."
+    },
+    {
+      "surface": "deployed_preview_workspace",
+      "file_or_url": "https://camilocarlone.com/workspace.html",
+      "surface_type": "deployed_public_html",
+      "inspection_result": "Accessible through curl on 2026-06-29; deployed content matches repository workspace.html for the audited strings."
+    },
+    {
+      "surface": "deployed_auth_boundary",
+      "file_or_url": "https://camilocarlone.com/auth-boundary.html",
+      "surface_type": "deployed_public_html",
+      "inspection_result": "Accessible through curl on 2026-06-29; deployed content matches repository auth-boundary.html for the audited strings."
+    },
+    {
+      "surface": "deployed_auth_login",
+      "file_or_url": "https://camilocarlone.com/auth-login.html",
+      "surface_type": "deployed_public_html",
+      "inspection_result": "Accessible through curl on 2026-06-29; deployed content matches repository auth-login.html for the audited strings."
+    },
+    {
+      "surface": "deployed_auth_callback",
+      "file_or_url": "https://camilocarlone.com/auth-callback.html",
+      "surface_type": "deployed_public_html",
+      "inspection_result": "Accessible through curl on 2026-06-29; deployed content matches repository auth-callback.html for the audited strings."
+    },
+    {
+      "surface": "deployed_protected_shell",
+      "file_or_url": "https://camilocarlone.com/protected-shell.html",
+      "surface_type": "deployed_public_html",
+      "inspection_result": "Accessible through curl on 2026-06-29; deployed content matches repository protected-shell.html for the audited strings."
+    },
+    {
+      "surface": "public_repository_html",
+      "file_or_url": "index.html, membrane.html, workspace.html, auth-boundary.html, auth-login.html, auth-callback.html, protected-shell.html, the-apologetic-authority/index.html",
+      "surface_type": "repository_html",
+      "inspection_result": "Inspected public route labels, headings, CTAs, status chips, footers, metadata titles, and disclaimers. TAA manuscript and DOI/archive metadata were not modified."
+    },
+    {
+      "surface": "public_javascript_strings",
+      "file_or_url": "js/app.js, js/docs.js, js/pipeline.js, js/governance-engine.js, js/trace-viewer.js, js/preview-workspace.js, js/supabase-client.js, js/supabase-login-initiation.js, js/supabase-login-surface.js, js/supabase-auth-precondition.js, js/supabase-auth-callback.js, js/supabase-protected-shell.js, js/protected-workspace.js",
+      "surface_type": "repository_javascript",
+      "inspection_result": "Inspected rendered strings, state labels, public route behavior, Supabase client constraints, preview surface objects, and protected workspace save/load text."
+    },
+    {
+      "surface": "public_static_data",
+      "file_or_url": "data/*.json",
+      "surface_type": "repository_json_data",
+      "inspection_result": "Inspected public content sources, fixtures, validator-governed records, operational evidence contracts, negative-space backlog, Direct UI records, NEXUS/Vault records, and documentation routing records."
+    },
+    {
+      "surface": "external_repository_documents",
+      "file_or_url": "README.md, docs/*.md, sitemap.xml, robots.txt, wrangler.jsonc, .env.example",
+      "surface_type": "repository_documentation_and_config",
+      "inspection_result": "Inspected externally visible documentation for claim consistency, construction threshold discipline, and successor confusion risk."
+    },
+    {
+      "surface": "database_substrate",
+      "file_or_url": "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql",
+      "surface_type": "repository_sql_substrate",
+      "inspection_result": "Inspected authored RLS and tenant workspace substrate as repository evidence only; no live database inspection was performed in this pass."
+    },
+    {
+      "surface": "validators",
+      "file_or_url": "scripts/*.mjs",
+      "surface_type": "repository_validation_scripts",
+      "inspection_result": "Inspected current public-copy and interface validators for strings they require or forbid."
+    }
+  ],
+  "findings": [
+    {
+      "id": "PSA-001",
+      "severity": "high",
+      "category": "internal_label_exposure",
+      "file": "membrane.html:37",
+      "selector_or_string": "h1#membrane-title",
+      "current_text": "Direct UI Membrane - Static Preview",
+      "problem": "A customer-facing heading exposes the internal membrane construction label and defines the surface through static preview identity. The same string is deployed at https://camilocarlone.com/membrane.html.",
+      "required_change": "Replace internal membrane naming with a public product-facing workspace or governance review surface name, then update route labels, page titles, aria labels, data records, and validators together.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "First public-surface correction pass before or alongside the first Palisade policy artifact, because Palisade cannot consume public boundaries that still depend on internal scaffolding names."
+    },
+    {
+      "id": "PSA-002",
+      "severity": "high",
+      "category": "internal_label_exposure",
+      "file": "workspace.html:40",
+      "selector_or_string": ".workspace-lede",
+      "current_text": "Interactive preview only for selecting Direct UI Membrane surfaces and inspecting browser-side, non-persistent preview state.",
+      "problem": "The preview workspace repeats the internal membrane label in user-facing copy and treats preview as the core workspace identity.",
+      "required_change": "Rename the public workspace language to describe the user-visible review action and bind the staged state to the next executable threshold: authenticated shell plus applied workspace data and policy-gated evaluation.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "Public-surface correction must precede production workspace maturity claims and should feed Palisade boundary naming."
+    },
+    {
+      "id": "PSA-003",
+      "severity": "medium",
+      "category": "internal_label_exposure",
+      "file": "auth-boundary.html:101",
+      "selector_or_string": ".auth-boundary-chip-grid span",
+      "current_text": "Auth Boundary",
+      "problem": "Auth Boundary, Reserved Boundary, Route Placeholder, and Future Authenticated Shell appear as public chips. These are construction states rather than visitor-facing product concepts.",
+      "required_change": "Replace these chips with current user-facing state labels that say what exists now, what action is possible, and which concrete threshold gates account-bound operation.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "This should be corrected in the public-surface pass that renames membrane/workspace surfaces, because these labels are policy candidate boundaries."
+    },
+    {
+      "id": "PSA-004",
+      "severity": "high",
+      "category": "README_handoff_conflict",
+      "file": "README.md:7",
+      "selector_or_string": "Current Status bullet list",
+      "current_text": "No authentication",
+      "problem": "README still says no authentication, no backend, and no persistence even though the repository and deployed routes now include provider initiation, callback/session recognition, protected-shell admission, and bounded Supabase save/load state. This can confuse a successor Recipient about the true current state.",
+      "required_change": "Update README status to distinguish real provider initiation, callback/session recognition, guarded route admission, authored/applied workspace substrate evidence, and bounded save/load persistence from unclaimable production workspace maturity.",
+      "implementation_or_copy": "copy",
+      "next_pass_relevance": "README correction should occur before Palisade artifact work so successor context does not under-specify the current auth and persistence substrate."
+    },
+    {
+      "id": "PSA-005",
+      "severity": "high",
+      "category": "README_handoff_conflict",
+      "file": "README.md:157",
+      "selector_or_string": "Facade Reflection Documentation closing status",
+      "current_text": "The §1.2 Direct UI Membrane remains planned and specified only until a separate authorized implementation pass exists.",
+      "problem": "The statement contradicts existing implementation evidence: unauthenticated preview workspace, provider login initiation, auth callback/session recognition, protected-shell admission, and bounded save/load persistence are present. It under-specifies the current state rather than preserving evidence-bound truth.",
+      "required_change": "Replace this passage with a phased state summary: public static governance surface exists; preview workspace exists; provider/callback/protected-shell path exists; bounded save/load exists; production workspace and governed runtime path remain unclaimable.",
+      "implementation_or_copy": "copy",
+      "next_pass_relevance": "This is the first required fix before relying on README as handoff evidence for Palisade work."
+    },
+    {
+      "id": "PSA-006",
+      "severity": "high",
+      "category": "staged_surface_evasive",
+      "file": "protected-shell.html:185",
+      "selector_or_string": "article[aria-label='Workspace availability boundary'] h3",
+      "current_text": "Bounded future surfaces",
+      "problem": "The protected workspace frame offers Settings/Members, Evidence Packet, Release Review, and Trace/Activity surfaces, but the availability panel keeps several of them in bounded future language without a visible construction threshold for membership separation, audit events, or runtime governance. This risks Case B staging.",
+      "required_change": "Convert unavailable panels into implementation tasks tied to production workspace MUST-conditions, or remove/disable operational-looking panels until the underlying capability exists.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "Required before production workspace maturity claims; Palisade can proceed only with a caveat that operational workspace panels remain non-authoritative."
+    },
+    {
+      "id": "PSA-007",
+      "severity": "high",
+      "category": "threshold_underdefinition",
+      "file": "membrane.html:129",
+      "selector_or_string": ".membrane-surface-card.escalation small",
+      "current_text": "Escalation model only; runtime observation and enforcement remain future thresholds.",
+      "problem": "The surface names missing runtime observation and enforcement but does not connect the staged panel to a concrete next executable threshold. It restates absence instead of creating the implementation obligation.",
+      "required_change": "Bind escalation preview to a named construction threshold: runtime governance input path, Palisade decision record, Vault/NEXUS evaluation boundary, evidence/audit record, and surfaced release-state result.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "Directly prepares the Palisade policy artifact by identifying the escalation decision boundary to become policy-owned."
+    },
+    {
+      "id": "PSA-008",
+      "severity": "medium",
+      "category": "permanent_limitation_language",
+      "file": "index.html:34",
+      "selector_or_string": "primary navigation link",
+      "current_text": "Static Membrane Preview",
+      "problem": "Static and preview appear in the primary navigation as product identity. The term truthfully describes the current state, but in primary navigation it makes limitation look permanent.",
+      "required_change": "Rename public navigation around the user task, such as review workspace or governance review surface, with an adjacent current-state status chip only where necessary.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "Should be handled with the public-surface rename so current limitations remain descriptors, not identity."
+    },
+    {
+      "id": "PSA-009",
+      "severity": "medium",
+      "category": "permanent_limitation_language",
+      "file": "membrane.html:56",
+      "selector_or_string": "aside#membrane-boundary strong",
+      "current_text": "Static preview surface",
+      "problem": "Object status converts a current implementation limit into the identity of the surface. This is especially risky because the same page also uses product-surface language.",
+      "required_change": "Keep current-state truth in status copy, but move identity to the intended product action and construction threshold.",
+      "implementation_or_copy": "copy",
+      "next_pass_relevance": "Can be corrected in the public-copy pass if the route and validator labels are updated together."
+    },
+    {
+      "id": "PSA-010",
+      "severity": "medium",
+      "category": "implementation_required",
+      "file": "scripts/validate-direct-ui-membrane-preview-workspace.mjs:8",
+      "selector_or_string": "requiredSurfaces",
+      "current_text": "Access Boundary Membrane",
+      "problem": "The preview workspace validator requires internal membrane labels and status phrases. Public correction cannot be completed by editing HTML alone because validators currently lock the internal labels in place.",
+      "required_change": "Update validators and data contracts in the same implementation pass as the public-surface rename, preserving non-claim boundaries while removing customer-facing internal labels.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "This is a direct blocker for clean public-surface correction before Palisade consumes boundary names."
+    },
+    {
+      "id": "PSA-011",
+      "severity": "medium",
+      "category": "internal_label_exposure",
+      "file": "data/direct-ui-membrane-static-shell.v0.json:3",
+      "selector_or_string": "generated_for_sub_pass",
+      "current_text": "§1.2 Pre-Birth Static Membrane Shell 0.1",
+      "problem": "Public repository data objects expose internal pass labels and birth framing. These are acceptable as construction records only if they do not feed customer-facing copy, but they are externally visible and successor-facing.",
+      "required_change": "Separate customer/public content records from internal construction audit records, or mark internal records as non-public construction evidence and keep them out of rendered public routes.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "Policy ownership should distinguish copy boundaries from construction metadata before Palisade consumes source records."
+    },
+    {
+      "id": "PSA-012",
+      "severity": "low",
+      "category": "staged_surface_disciplined",
+      "file": "index.html:52",
+      "selector_or_string": ".thesis-panel p",
+      "current_text": "In this static browser-side evaluation, outputs are represented through a disciplined stack of controls, each tied to evidence and bounded by authority.",
+      "problem": "This is disciplined staging: it preserves current-state truth, avoids runtime execution claims, and keeps evidence binding visible.",
+      "required_change": "Retain the evidence-bound current-state framing while correcting navigation and internal label exposure elsewhere.",
+      "implementation_or_copy": "copy",
+      "next_pass_relevance": "This can remain as a public-surface model for Palisade-facing copy discipline."
+    },
+    {
+      "id": "PSA-013",
+      "severity": "low",
+      "category": "staged_surface_disciplined",
+      "file": "auth-login.html:51",
+      "selector_or_string": ".auth-login-lede",
+      "current_text": "This authenticated-surface entry can start the verified Supabase/GitHub provider-backed access path when external public runtime config is present.",
+      "problem": "The copy accurately describes provider initiation as an entry condition and does not promote it to production workspace maturity.",
+      "required_change": "Retain the distinction between provider initiation, callback recognition, guard admission, and production workspace maturity.",
+      "implementation_or_copy": "copy",
+      "next_pass_relevance": "This is Case A staging and can feed the production workspace threshold assessment."
+    },
+    {
+      "id": "PSA-014",
+      "severity": "high",
+      "category": "threshold_underdefinition",
+      "file": "protected-shell.html:51",
+      "selector_or_string": ".auth-login-lede",
+      "current_text": "When admitted, this surface presents the first protected AETHERUS workspace frame: review areas, bounded workspace persistence, and future workspace surfaces.",
+      "problem": "The protected frame is real enough to require production-threshold classification, but the surface still blurs workspace frame, persistence, and future workspace surfaces without naming the missing production MUST-conditions.",
+      "required_change": "Split the public state into verified current capabilities and unclaimable production workspace conditions: authenticated shell, live data model, server-side authorization, tenant-scoped persistence, membership/account separation, audit trail, and runtime governance.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "This should be addressed before claiming operational workspace surfaces; Palisade may proceed only with explicit caveats."
+    },
+    {
+      "id": "PSA-015",
+      "severity": "medium",
+      "category": "policy_candidate_boundary",
+      "file": "data/product-negative-space-backlog.v0.json:5",
+      "selector_or_string": "operational_use_threshold_rule",
+      "current_text": "Operational use is a legitimate future threshold event only after runtime, evidence, audit, auth, and release-authority requirements are implemented and validated.",
+      "problem": "This is a strong candidate for policy ownership because it already converts negative-space language into construction targets instead of permanent product identity.",
+      "required_change": "Promote operational-use threshold checks into the first Palisade policy artifact or an immediate integration pass after the artifact exists.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "Direct input to Palisade policy candidate boundaries."
+    },
+    {
+      "id": "PSA-016",
+      "severity": "medium",
+      "category": "implementation_required",
+      "file": "data/operational-evidence-packet-contract.v0.json:154",
+      "selector_or_string": "required_evidence_classes[id=runtime_execution_boundary]",
+      "current_text": "runtime_execution_boundary",
+      "problem": "The operational evidence contract defines runtime execution as an evidence class, but the public runtime governance path is not implemented and no public interface should expose NEXUS or model calls before the governed path exists.",
+      "required_change": "Build the governed runtime path in phases: user/workspace input, Facade intake, Conduit normalization, Palisade decision, Vault/NEXUS evaluation, evidence/audit record, release-state decision, surfaced result.",
+      "implementation_or_copy": "implementation",
+      "next_pass_relevance": "This defines the runtime gate Palisade must own before public NEXUS execution can be claimable."
+    }
+  ],
+  "production_workspace_threshold_assessment": {
+    "real_authenticated_shell": {
+      "state": "partial",
+      "evidence": "Provider initiation exists in auth-login.html and js/supabase-login-initiation.js; callback/session recognition exists in auth-callback.html and js/supabase-auth-precondition.js; protected-shell admission exists in protected-shell.html and js/supabase-protected-shell.js. It remains a bounded protected frame, not production workspace maturity."
+    },
+    "live_workspace_data_model": {
+      "state": "partial",
+      "evidence": "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql authors workspaces, workspace_memberships, workspace_state_records, and workspace_events; js/protected-workspace.js reads/writes workspaces and workspace_state_records. The model is bounded to release-review state and lacks complete operational workspace data."
+    },
+    "server_side_authorization": {
+      "state": "partial",
+      "evidence": "The SQL migration contains RLS enablement and auth.uid()/is_workspace_member predicates. data/direct-ui-membrane-protected-workspace-persistence.v0.json records external live SQL/RLS verification reported outside this pass. This audit did not independently inspect the live database."
+    },
+    "tenant_scoped_persistence": {
+      "state": "partial",
+      "evidence": "Persistence is scoped to authenticated Supabase session workspace rows and workspace_id record lookup. Current slug is derived from user id, not a mature tenant/account model, and public copy states tenant/customer context is outside the protected frame."
+    },
+    "membership_account_separation": {
+      "state": "partial",
+      "evidence": "workspace_memberships table and RLS predicates exist in SQL, and the persistence record reports two-account browser-level separation. The same record says this is not tenant isolation maturity."
+    },
+    "operational_workspace_surfaces": {
+      "state": "stubbed",
+      "evidence": "protected-shell.html exposes Workspace Overview, Evidence Packet, Release Review, Trace/Activity, Settings/Members, and Availability panels. The panels mostly contain empty states, bounded local review behavior, or unavailable-member copy rather than operational capability."
+    },
+    "durable_evidence_audit_trail": {
+      "state": "stubbed",
+      "evidence": "workspace_events table is authored in SQL and operational evidence contract exists, but js/protected-workspace.js uses local activity arrays and workspace_state_records; no durable production audit trail or append-only ledger is implemented."
+    },
+    "runtime_governance_path": {
+      "state": "absent",
+      "evidence": "No implemented path connects user/workspace input through Facade, Conduit, Palisade policy decision, Vault/NEXUS evaluation, evidence/audit record, release-state decision, and surfaced result. Public NEXUS runtime and model API execution remain unclaimable."
+    }
+  },
+  "runtime_governance_path_assessment": {
+    "Facade": {
+      "state": "partial",
+      "evidence": "The public static Facade exists through index.html, data/docs.json, deterministic scenario fixtures, and public review surfaces. It is not an intake path for real user/workspace runtime input."
+    },
+    "Conduit": {
+      "state": "stubbed",
+      "evidence": "Track 3 Conduit contracts, local fixture runtime, adapters, and report validators exist in docs, data, and scripts. They remain repository-local evidence and are not wired to public runtime input."
+    },
+    "Palisade_policy_decision": {
+      "state": "absent",
+      "evidence": "README and data records repeatedly state Palisade is not instantiated. No policy artifact or runtime decision function exists in this repository baseline."
+    },
+    "Vault_NEXUS_evaluation": {
+      "state": "stubbed",
+      "evidence": "NEXUS/Vault compatibility contracts, pinned source preflight records, local adapter reports, and validators exist. Public NEXUS runtime execution is not implemented or claimable."
+    },
+    "evidence_audit_record": {
+      "state": "stubbed",
+      "evidence": "data/operational-evidence-packet-contract.v0.json and workspace_events SQL substrate exist, but no durable production evidence/audit trail is wired into runtime governance."
+    },
+    "release_state_decision": {
+      "state": "stubbed",
+      "evidence": "Deterministic scenario decisions and protected-shell local release-review blocking exist. They do not perform operational release authority decisions."
+    },
+    "surfaced_result": {
+      "state": "partial",
+      "evidence": "Public UI surfaces show deterministic scenario verdicts, preview selections, and local review states. Surfaced results are not outputs from the full governed runtime path."
+    }
+  },
+  "palisade_policy_candidate_boundaries": [
+    {
+      "id": "PPCB-001",
+      "boundary": "operational_use_threshold",
+      "current_home": "data/product-negative-space-backlog.v0.json and data/operational-evidence-packet-contract.v0.json",
+      "current_location_type": "fixtures_or_static_data",
+      "candidate_policy_decision": "Allow staged public claim only while operational-use evidence classes remain incomplete; deny operational-use claim until every required evidence class is implemented and validated."
+    },
+    {
+      "id": "PPCB-002",
+      "boundary": "public_nexus_runtime_gate",
+      "current_home": "README.md, data/direct-ui-membrane-*.json, data/nexus-*.json, docs/TRACK_3_*.md",
+      "current_location_type": "copy_and_fixtures",
+      "candidate_policy_decision": "Deny public NEXUS or model-call exposure unless user/workspace input has passed Facade, Conduit, Palisade, Vault/NEXUS, audit record, release decision, and surfaced-result controls."
+    },
+    {
+      "id": "PPCB-003",
+      "boundary": "production_workspace_claim",
+      "current_home": "README.md, protected-shell.html, js/protected-workspace.js, data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+      "current_location_type": "copy_validators_and_fixtures",
+      "candidate_policy_decision": "Allow bounded protected-shell persistence claim only; deny production workspace claim until authenticated shell, live data model, server predicates/RLS, tenant scope, membership separation, operational surfaces, durable audit trail, and runtime governance path are complete."
+    },
+    {
+      "id": "PPCB-004",
+      "boundary": "public_internal_label_exposure",
+      "current_home": "index.html, membrane.html, workspace.html, auth-boundary.html, auth-callback.html, protected-shell.html, scripts/validate-direct-ui-membrane-preview-workspace.mjs",
+      "current_location_type": "copy_and_validators",
+      "candidate_policy_decision": "Deny customer-facing use of internal construction labels while permitting them in repository-only construction records that are not rendered into public routes."
+    },
+    {
+      "id": "PPCB-005",
+      "boundary": "persistence_vs_audit_ledger",
+      "current_home": "js/protected-workspace.js, supabase/migrations/20260619_0001_tenant_workspace_substrate.sql, data/operational-evidence-packet-contract.v0.json",
+      "current_location_type": "implementation_substrate_and_static_data",
+      "candidate_policy_decision": "Allow bounded workspace state persistence; deny production audit ledger claim until append-only semantics, hash-chain verification, retention policy, and audit-event release rules exist."
+    },
+    {
+      "id": "PPCB-006",
+      "boundary": "preview_surface_to_implementation_obligation",
+      "current_home": "membrane.html, workspace.html, protected-shell.html, data/direct-ui-membrane-preview-workspace.v0.json",
+      "current_location_type": "copy_and_fixtures",
+      "candidate_policy_decision": "Require every staged or preview surface to point to a concrete construction threshold tied to production workspace, Palisade, Conduit, Vault integration, runtime governance, Weave orchestration, or public-surface correction."
+    }
+  ],
+  "boundary_location_register": {
+    "copy": [
+      {
+        "boundary": "static/current-state public surface",
+        "files": ["index.html", "membrane.html", "workspace.html", "auth-login.html", "auth-callback.html", "auth-boundary.html", "protected-shell.html", "README.md"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "no production SaaS/customer workspace claim",
+        "files": ["index.html", "membrane.html", "workspace.html", "auth-login.html", "auth-callback.html", "auth-boundary.html", "protected-shell.html", "README.md"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "no public NEXUS/model execution claim",
+        "files": ["README.md", "membrane.html", "workspace.html", "protected-shell.html"],
+        "policy_candidate": true
+      }
+    ],
+    "validators": [
+      {
+        "boundary": "public product language boundary",
+        "files": ["scripts/validate-product-language-boundary.mjs", "data/product-negative-space-backlog.v0.json"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "preview workspace allowed interactions and forbidden operational labels",
+        "files": ["scripts/validate-direct-ui-membrane-preview-workspace.mjs"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "protected workspace persistence claim discipline",
+        "files": ["scripts/validate-direct-ui-membrane-protected-workspace-persistence.mjs", "data/direct-ui-membrane-protected-workspace-persistence.v0.json"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "operational evidence packet threshold",
+        "files": ["scripts/validate-operational-evidence-packet-contract.mjs", "data/operational-evidence-packet-contract.v0.json"],
+        "policy_candidate": true
+      }
+    ],
+    "fixtures_or_static_data": [
+      {
+        "boundary": "negative-space construction obligations",
+        "files": ["data/product-negative-space-backlog.v0.json"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "operational evidence classes",
+        "files": ["data/operational-evidence-packet-contract.v0.json"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "auth, callback, protected shell, and persistence records",
+        "files": ["data/direct-ui-membrane-provider-login-initiation.v0.json", "data/direct-ui-membrane-auth-callback-session-guard-precondition.v0.json", "data/direct-ui-membrane-protected-shell-birth-gate.v0.json", "data/direct-ui-membrane-live-provider-loop-verification.v0.json", "data/direct-ui-membrane-protected-workspace-persistence.v0.json"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "NEXUS/Vault local evidence and public runtime denial",
+        "files": ["data/nexus-adapter-contract.v1.json", "data/nexus-vault-version-compatibility.v1.json", "data/nexus-vault-compatibility-evidence-packet-contract.v1.json", "data/nexus-pinned-source-preflight.v0.json"],
+        "policy_candidate": true
+      }
+    ],
+    "handoff_constraints_only": [
+      {
+        "boundary": "runtime governance path exact sequence",
+        "files": ["operator prompt for Public-Surface Execution Audit 0.1"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "production workspace MUST-condition set",
+        "files": ["operator prompt for Public-Surface Execution Audit 0.1"],
+        "policy_candidate": true
+      },
+      {
+        "boundary": "forbidden customer-facing internal labels list",
+        "files": ["operator prompt for Public-Surface Execution Audit 0.1"],
+        "policy_candidate": true
+      }
+    ]
+  },
+  "staging_classification_summary": {
+    "case_a_disciplined": [
+      {
+        "surface": "index.html deterministic governance stack",
+        "reason": "Preserves static browser-side current-state truth and points to evidence requirements without claiming operation."
+      },
+      {
+        "surface": "auth-login.html provider initiation",
+        "reason": "Truthfully describes provider initiation as an entry condition rather than workspace maturity."
+      },
+      {
+        "surface": "auth-callback.html callback classification",
+        "reason": "Truthfully limits callback behavior to session recognition and guarded entry."
+      }
+    ],
+    "case_b_evasive_or_at_risk": [
+      {
+        "surface": "membrane.html and workspace.html internal membrane preview labels",
+        "reason": "Public identity is dominated by preview/static/internal naming rather than a concrete construction threshold."
+      },
+      {
+        "surface": "protected-shell.html operational-looking panels",
+        "reason": "Workspace, evidence, release, trace, and members panels are visible before all production workspace MUST-conditions exist."
+      },
+      {
+        "surface": "README current status",
+        "reason": "It under-specifies implemented auth and persistence substrate and could mislead successor work."
+      }
+    ]
+  },
+  "overall_conclusion": {
+    "public_surfaces_execute_corrected_staging_doctrine": false,
+    "public_surfaces_require_correction_before_palisade": true,
+    "palisade_can_proceed_with_named_caveats": true,
+    "palisade_should_be_held_pending_implementation_defect": false,
+    "rationale": "The public surfaces mostly avoid overclaiming production SaaS, NEXUS runtime, model execution, and operational release authority. However, they still expose internal membrane/boundary labels, treat static/preview as public identity in key routes, and README under-specifies implemented auth/persistence substrate. These are bounded correction and threshold-definition tasks; they do not require holding Palisade completely if Palisade begins as a policy artifact consuming the named boundaries and explicitly excludes public runtime execution."
+  },
+  "next_pass_recommendation": {
+    "proceed_to_palisade_policy_artifact": true,
+    "first_required_fix_before_palisade": "Update README current-state status so it no longer says no authentication, no backend, or no persistence without acknowledging provider initiation, callback/session recognition, protected-shell admission, authored/applied workspace substrate evidence, and bounded save/load persistence.",
+    "rationale": "Palisade should consume policy candidate boundaries from this audit, especially production workspace claim gates, public NEXUS runtime denial, operational evidence thresholds, and preview-to-implementation obligations. Public label cleanup can run as a parallel public-surface correction pass, but README status must be corrected first to avoid handoff confusion."
+  }
+}
