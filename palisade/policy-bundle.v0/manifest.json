@@ -1,0 +1,97 @@
+{
+  "bundle_id": "palisade-policy-bundle.v0",
+  "version": "0.1.0",
+  "owner": "Palisade",
+  "status": "construction",
+  "claim_boundary": {
+    "domain": "claim_capability_release_state",
+    "purpose": "Evaluate whether structured evidence supports public claim, surface advancement, runtime exposure, or release-authority language.",
+    "current_evidence_state": "First Palisade-owned policy artifact. It is versioned and testable, but it is not wired into validators, public copy, runtime interfaces, or release authority.",
+    "decision_object_created": true
+  },
+  "policy_scope": [
+    "production_workspace_claim",
+    "public_nexus_runtime_execution_claim",
+    "model_api_execution_claim",
+    "operational_release_authority_claim",
+    "staged_surface_advancement",
+    "runtime_governance_path_sufficiency",
+    "operator_review_escalation"
+  ],
+  "evidence_inputs": [
+    "surface",
+    "claim_id",
+    "requested_action",
+    "evidence_state",
+    "production_workspace_threshold_state",
+    "runtime_governance_path_state",
+    "operator_authorization_state",
+    "current_repository_state_basis"
+  ],
+  "decision_outputs": [
+    "allow",
+    "deny",
+    "requires_evidence",
+    "requires_operator_review",
+    "runtime_enforcement_unavailable"
+  ],
+  "production_workspace_threshold": {
+    "rule": "Provider login, callback recognition, protected-route admission, and bounded save/load persistence do not create a production workspace by themselves.",
+    "required_components": [
+      "real_authenticated_shell",
+      "applied_live_workspace_data_model",
+      "server_side_authorization",
+      "tenant_scoped_persistence",
+      "verified_membership_account_separation",
+      "operational_workspace_surfaces_backed_by_capability",
+      "durable_evidence_audit_trail",
+      "runtime_governance_path_for_real_user_workspace_input"
+    ],
+    "satisfied_when": "Every required component is state exists and verified true."
+  },
+  "runtime_governance_path": {
+    "path": [
+      "user_workspace_input",
+      "Facade",
+      "Conduit",
+      "Palisade_policy_decision",
+      "Vault_NEXUS_evaluation",
+      "evidence_audit_record",
+      "release_state_decision",
+      "surfaced_result"
+    ],
+    "component_states": [
+      "exists",
+      "partial",
+      "stubbed",
+      "absent",
+      "unverified"
+    ],
+    "deterministic_sufficiency_rule": "The governed runtime path is sufficient only when every required path component is state exists and verified true. If any required component is absent, stubbed, partial, or unverified, the policy returns deny or requires_evidence, except where a rule explicitly routes the request to requires_operator_review."
+  },
+  "integration_status": {
+    "validator": "scripts/validate-palisade-policy-bundle.mjs",
+    "runtime_service": "not_present_in_current_evidence_state",
+    "public_surface_consumption": "not_integrated_in_current_evidence_state",
+    "conduit_contract_consumption": "not_integrated_in_current_evidence_state",
+    "release_gate_consumption": "not_integrated_in_current_evidence_state"
+  },
+  "evolution_threshold": {
+    "next_integration_path": "A later integration pass may connect validators, public-surface state, claim language, Conduit contracts, and runtime decision calls to this policy artifact after the bundle passes validation.",
+    "may_advance_when": [
+      "policy bundle validator passes",
+      "consumer contract is defined",
+      "decision outputs are consumed without weakening current claim boundaries",
+      "runtime governance path evidence is recorded as exists and verified before public runtime claims are allowed"
+    ]
+  },
+  "non_claims": [
+    "This bundle does not create a production enforcement service.",
+    "This bundle does not create Palisade runtime maturity.",
+    "This bundle does not create a production workspace.",
+    "This bundle does not create public NEXUS runtime execution.",
+    "This bundle does not create model API execution.",
+    "This bundle does not create operational release authority.",
+    "This bundle does not create Weave orchestration."
+  ]
+}

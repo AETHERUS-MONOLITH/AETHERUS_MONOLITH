@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aetherus.local/palisade/policy-bundle.v0/schema/policy-decision.schema.json",
+  "title": "Palisade Claim Capability Policy Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decision",
+    "claim_id",
+    "surface",
+    "requested_action",
+    "allowed",
+    "reasons",
+    "required_evidence",
+    "missing_evidence",
+    "operator_review_required",
+    "runtime_enforcement_status",
+    "current_state_basis",
+    "next_evidence_threshold"
+  ],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    "claim_id": {
+      "type": "string"
+    },
+    "surface": {
+      "type": "string"
+    },
+    "requested_action": {
+      "type": "string"
+    },
+    "allowed": {
+      "type": "boolean"
+    },
+    "reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "operator_review_required": {
+      "type": "boolean"
+    },
+    "runtime_enforcement_status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "unavailable",
+        "not_applicable"
+      ]
+    },
+    "current_state_basis": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_evidence_threshold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "description",
+        "components"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

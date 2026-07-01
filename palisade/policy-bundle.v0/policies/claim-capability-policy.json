@@ -1,0 +1,159 @@
+{
+  "policy_id": "claim-capability-policy",
+  "version": "0.1.0",
+  "owner": "Palisade",
+  "status": "construction",
+  "input_schema": "../schema/policy-input.schema.json",
+  "decision_schema": "../schema/policy-decision.schema.json",
+  "decision_outputs": [
+    "allow",
+    "deny",
+    "requires_evidence",
+    "requires_operator_review",
+    "runtime_enforcement_unavailable"
+  ],
+  "state_model": {
+    "component_states": [
+      "exists",
+      "partial",
+      "stubbed",
+      "absent",
+      "unverified"
+    ],
+    "component_satisfied_when": {
+      "state": "exists",
+      "verified": true
+    }
+  },
+  "production_workspace_threshold": {
+    "denied_by_itself": [
+      "provider_login",
+      "callback_recognition",
+      "protected_route_admission",
+      "bounded_save_load_persistence"
+    ],
+    "required_components": [
+      "real_authenticated_shell",
+      "applied_live_workspace_data_model",
+      "server_side_authorization",
+      "tenant_scoped_persistence",
+      "verified_membership_account_separation",
+      "operational_workspace_surfaces_backed_by_capability",
+      "durable_evidence_audit_trail",
+      "runtime_governance_path_for_real_user_workspace_input"
+    ],
+    "allow_rule": "Allow only when every required component is state exists and verified true, and the runtime governance path is also sufficient."
+  },
+  "runtime_governance_path": {
+    "ordered_components": [
+      "user_workspace_input",
+      "Facade",
+      "Conduit",
+      "Palisade_policy_decision",
+      "Vault_NEXUS_evaluation",
+      "evidence_audit_record",
+      "release_state_decision",
+      "surfaced_result"
+    ],
+    "sufficiency_rule": {
+      "type": "all_components_exist_and_verified",
+      "deny_or_requires_evidence_when_any_component_is": [
+        "absent",
+        "stubbed",
+        "partial",
+        "unverified"
+      ],
+      "operator_review_exception": "Only rules that explicitly set operator_review_gate true may return requires_operator_review instead of deny or requires_evidence."
+    },
+    "nexus_runtime_rule": "NEXUS does not need to remain hidden forever, but public NEXUS or model runtime execution must not bypass the governed path."
+  },
+  "rules": [
+    {
+      "rule_id": "production-workspace-claim-decision",
+      "claim_id": "production_workspace_claim",
+      "requested_actions": [
+        "claim_public_capability"
+      ],
+      "requires_production_workspace_threshold": true,
+      "requires_runtime_governance_path": true,
+      "incomplete_decision": "deny",
+      "complete_decision": "allow"
+    },
+    {
+      "rule_id": "public-nexus-runtime-claim-decision",
+      "claim_id": "public_nexus_runtime_execution_claim",
+      "requested_actions": [
+        "expose_public_runtime_execution"
+      ],
+      "requires_runtime_governance_path": true,
+      "incomplete_decision": "deny",
+      "complete_decision": "allow"
+    },
+    {
+      "rule_id": "model-api-execution-claim-decision",
+      "claim_id": "model_api_execution_claim",
+      "requested_actions": [
+        "claim_model_api_execution"
+      ],
+      "requires_runtime_governance_path": true,
+      "incomplete_decision": "deny",
+      "complete_decision": "allow"
+    },
+    {
+      "rule_id": "operational-release-authority-claim-decision",
+      "claim_id": "operational_release_authority_claim",
+      "requested_actions": [
+        "claim_operational_release_authority"
+      ],
+      "requires_runtime_governance_path": true,
+      "requires_components": [
+        "evidence_audit_record",
+        "release_state_decision"
+      ],
+      "incomplete_decision": "deny",
+      "complete_decision": "allow"
+    },
+    {
+      "rule_id": "staged-surface-advancement-decision",
+      "claim_id": "staged_surface_advancement",
+      "requested_actions": [
+        "advance_surface_to_product_language"
+      ],
+      "requires_runtime_governance_path": true,
+      "operator_review_gate": true,
+      "partial_evidence_decision": "requires_evidence",
+      "review_decision": "requires_operator_review",
+      "complete_decision": "allow"
+    },
+    {
+      "rule_id": "runtime-governance-path-sufficiency-decision",
+      "claim_id": "runtime_governance_path_sufficiency",
+      "requested_actions": [
+        "evaluate_runtime_path_sufficiency"
+      ],
+      "requires_runtime_governance_path": true,
+      "incomplete_decision": "requires_evidence",
+      "complete_decision": "allow"
+    },
+    {
+      "rule_id": "operator-review-escalation-decision",
+      "claim_id": "operator_review_escalation",
+      "requested_actions": [
+        "evaluate_operator_review_need"
+      ],
+      "operator_review_gate": true,
+      "review_decision": "requires_operator_review",
+      "complete_decision": "allow"
+    }
+  ],
+  "runtime_enforcement": {
+    "current_status": "unavailable",
+    "decision_output_when_requested_without_runtime_service": "runtime_enforcement_unavailable",
+    "current_state_basis": "This policy bundle is evaluable by validation script but is not a deployed runtime enforcement membrane."
+  },
+  "non_claims": [
+    "No production enforcement service is created by this policy file.",
+    "No Palisade runtime maturity is created by this policy file.",
+    "No production workspace, public runtime, model API execution, operational release authority, or Weave orchestration is created by this policy file."
+  ]
+}

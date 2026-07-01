@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aetherus.local/palisade/policy-bundle.v0/schema/policy-input.schema.json",
+  "title": "Palisade Claim Capability Policy Input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "surface",
+    "claim_id",
+    "requested_action",
+    "evidence_state",
+    "production_workspace_threshold_state",
+    "runtime_governance_path_state",
+    "operator_authorization_state",
+    "current_repository_state_basis"
+  ],
+  "properties": {
+    "surface": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_id": {
+      "type": "string",
+      "enum": [
+        "production_workspace_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim",
+        "operational_release_authority_claim",
+        "staged_surface_advancement",
+        "runtime_governance_path_sufficiency",
+        "operator_review_escalation"
+      ]
+    },
+    "requested_action": {
+      "type": "string",
+      "enum": [
+        "claim_public_capability",
+        "expose_public_runtime_execution",
+        "claim_model_api_execution",
+        "claim_operational_release_authority",
+        "advance_surface_to_product_language",
+        "evaluate_runtime_path_sufficiency",
+        "evaluate_operator_review_need"
+      ]
+    },
+    "evidence_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_evidence",
+        "missing_evidence",
+        "required_evidence",
+        "denied_claims",
+        "evidence_notes"
+      ],
+      "properties": {
+        "current_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "denied_claims": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "production_workspace_threshold_state": {
+      "$ref": "#/$defs/productionWorkspaceThresholdState"
+    },
+    "runtime_governance_path_state": {
+      "$ref": "#/$defs/runtimeGovernancePathState"
+    },
+    "operator_authorization_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "review_required",
+        "review_reason"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_requested",
+            "requested",
+            "approved",
+            "denied"
+          ]
+        },
+        "review_required": {
+          "type": "boolean"
+        },
+        "review_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "current_repository_state_basis": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "componentState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "verified",
+        "evidence"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "exists",
+            "partial",
+            "stubbed",
+            "absent",
+            "unverified"
+          ]
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "productionWorkspaceThresholdState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "real_authenticated_shell",
+        "applied_live_workspace_data_model",
+        "server_side_authorization",
+        "tenant_scoped_persistence",
+        "verified_membership_account_separation",
+        "operational_workspace_surfaces_backed_by_capability",
+        "durable_evidence_audit_trail",
+        "runtime_governance_path_for_real_user_workspace_input"
+      ],
+      "properties": {
+        "real_authenticated_shell": {
+          "$ref": "#/$defs/componentState"
+        },
+        "applied_live_workspace_data_model": {
+          "$ref": "#/$defs/componentState"
+        },
+        "server_side_authorization": {
+          "$ref": "#/$defs/componentState"
+        },
+        "tenant_scoped_persistence": {
+          "$ref": "#/$defs/componentState"
+        },
+        "verified_membership_account_separation": {
+          "$ref": "#/$defs/componentState"
+        },
+        "operational_workspace_surfaces_backed_by_capability": {
+          "$ref": "#/$defs/componentState"
+        },
+        "durable_evidence_audit_trail": {
+          "$ref": "#/$defs/componentState"
+        },
+        "runtime_governance_path_for_real_user_workspace_input": {
+          "$ref": "#/$defs/componentState"
+        }
+      }
+    },
+    "runtimeGovernancePathState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "user_workspace_input",
+        "Facade",
+        "Conduit",
+        "Palisade_policy_decision",
+        "Vault_NEXUS_evaluation",
+        "evidence_audit_record",
+        "release_state_decision",
+        "surfaced_result"
+      ],
+      "properties": {
+        "user_workspace_input": {
+          "$ref": "#/$defs/componentState"
+        },
+        "Facade": {
+          "$ref": "#/$defs/componentState"
+        },
+        "Conduit": {
+          "$ref": "#/$defs/componentState"
+        },
+        "Palisade_policy_decision": {
+          "$ref": "#/$defs/componentState"
+        },
+        "Vault_NEXUS_evaluation": {
+          "$ref": "#/$defs/componentState"
+        },
+        "evidence_audit_record": {
+          "$ref": "#/$defs/componentState"
+        },
+        "release_state_decision": {
+          "$ref": "#/$defs/componentState"
+        },
+        "surfaced_result": {
+          "$ref": "#/$defs/componentState"
+        }
+      }
+    }
+  }
+}

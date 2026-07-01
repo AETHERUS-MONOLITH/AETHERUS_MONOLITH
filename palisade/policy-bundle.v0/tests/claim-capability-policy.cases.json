@@ -1,0 +1,1511 @@
+{
+  "case_set_id": "claim-capability-policy.cases",
+  "version": "0.1.0",
+  "policy": "../policies/claim-capability-policy.json",
+  "fixture_boundary": "Cases marked policy_test_fixture_hypothetical_complete_evidence prove policy reachability only. They are not current repository state.",
+  "cases": [
+    {
+      "id": "deny-production-workspace-provider-login-only",
+      "description": "Provider login by itself does not allow a production workspace claim.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "auth-login.html",
+        "claim_id": "production_workspace_claim",
+        "requested_action": "claim_public_capability",
+        "evidence_state": {
+          "current_evidence": [
+            "provider_login"
+          ],
+          "missing_evidence": [
+            "applied_live_workspace_data_model",
+            "server_side_authorization",
+            "tenant_scoped_persistence",
+            "verified_membership_account_separation",
+            "durable_evidence_audit_trail",
+            "runtime_governance_path_for_real_user_workspace_input"
+          ],
+          "required_evidence": [
+            "production_workspace_threshold"
+          ],
+          "denied_claims": [
+            "production_workspace"
+          ],
+          "evidence_notes": [
+            "Login initiation is not workspace maturity."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "provider login initiation"
+            ]
+          },
+          "applied_live_workspace_data_model": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "durable_evidence_audit_trail": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "login click input"
+            ]
+          },
+          "Facade": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "static public surface"
+            ]
+          },
+          "Conduit": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "data/direct-ui-membrane-provider-login-initiation.v0.json"
+        ]
+      },
+      "expected_decision": {
+        "decision": "deny",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "deny-production-workspace-callback-and-protected-route-only",
+      "description": "Callback recognition plus protected-route admission does not allow a production workspace claim.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "protected-shell.html",
+        "claim_id": "production_workspace_claim",
+        "requested_action": "claim_public_capability",
+        "evidence_state": {
+          "current_evidence": [
+            "callback_recognition",
+            "protected_route_admission"
+          ],
+          "missing_evidence": [
+            "server_side_authorization",
+            "tenant_scoped_persistence",
+            "verified_membership_account_separation",
+            "durable_evidence_audit_trail",
+            "runtime_governance_path_for_real_user_workspace_input"
+          ],
+          "required_evidence": [
+            "production_workspace_threshold"
+          ],
+          "denied_claims": [
+            "production_workspace"
+          ],
+          "evidence_notes": [
+            "Route admission is a bounded shell behavior, not workspace maturity."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "callback recognition"
+            ]
+          },
+          "applied_live_workspace_data_model": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "protected shell frame"
+            ]
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "protected route admits shell"
+            ]
+          },
+          "durable_evidence_audit_trail": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "route request"
+            ]
+          },
+          "Facade": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "protected shell"
+            ]
+          },
+          "Conduit": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "browser route result"
+            ]
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "data/direct-ui-membrane-auth-route-callback-contract.v0.json",
+          "data/direct-ui-membrane-protected-route-guard-contract.v0.json"
+        ]
+      },
+      "expected_decision": {
+        "decision": "deny",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "deny-production-workspace-bounded-persistence-only",
+      "description": "Bounded save/load persistence alone does not allow a production workspace claim.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "workspace.html",
+        "claim_id": "production_workspace_claim",
+        "requested_action": "claim_public_capability",
+        "evidence_state": {
+          "current_evidence": [
+            "bounded_save_load_persistence"
+          ],
+          "missing_evidence": [
+            "server_side_authorization",
+            "tenant_scoped_persistence",
+            "verified_membership_account_separation",
+            "durable_evidence_audit_trail",
+            "runtime_governance_path_for_real_user_workspace_input"
+          ],
+          "required_evidence": [
+            "production_workspace_threshold"
+          ],
+          "denied_claims": [
+            "production_workspace"
+          ],
+          "evidence_notes": [
+            "Local bounded persistence is not tenant-scoped production persistence."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "applied_live_workspace_data_model": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "bounded save/load shape"
+            ]
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "bounded workspace interaction"
+            ]
+          },
+          "durable_evidence_audit_trail": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "bounded workspace interaction"
+            ]
+          },
+          "Facade": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "workspace surface"
+            ]
+          },
+          "Conduit": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "browser-side persisted state"
+            ]
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "data/direct-ui-membrane-protected-workspace-persistence.v0.json"
+        ]
+      },
+      "expected_decision": {
+        "decision": "deny",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "deny-production-workspace-until-threshold-complete",
+      "description": "A production workspace claim remains denied while any required threshold evidence is incomplete.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "README.md",
+        "claim_id": "production_workspace_claim",
+        "requested_action": "claim_public_capability",
+        "evidence_state": {
+          "current_evidence": [
+            "login",
+            "protected shell",
+            "bounded persistence"
+          ],
+          "missing_evidence": [
+            "server_side_authorization",
+            "tenant_scoped_persistence",
+            "verified_membership_account_separation",
+            "runtime_governance_path_for_real_user_workspace_input"
+          ],
+          "required_evidence": [
+            "production_workspace_threshold"
+          ],
+          "denied_claims": [
+            "production_workspace"
+          ],
+          "evidence_notes": [
+            "Several partial elements still do not satisfy the full threshold."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "bounded auth loop"
+            ]
+          },
+          "applied_live_workspace_data_model": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "bounded workspace frame"
+            ]
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "bounded shell"
+            ]
+          },
+          "durable_evidence_audit_trail": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "local validation records"
+            ]
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "Facade": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "public surfaces"
+            ]
+          },
+          "Conduit": {
+            "state": "stubbed",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "stubbed",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "README.md",
+          "data/public-surface-execution-audit.v0.json"
+        ]
+      },
+      "expected_decision": {
+        "decision": "deny",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "deny-public-nexus-runtime-without-palisade-or-audit",
+      "description": "Public NEXUS runtime claim is denied when Palisade policy decision or evidence audit is absent.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "membrane.html",
+        "claim_id": "public_nexus_runtime_execution_claim",
+        "requested_action": "expose_public_runtime_execution",
+        "evidence_state": {
+          "current_evidence": [
+            "nexus fixtures",
+            "compatibility pipeline stubs"
+          ],
+          "missing_evidence": [
+            "Palisade_policy_decision",
+            "evidence_audit_record"
+          ],
+          "required_evidence": [
+            "governed_runtime_path"
+          ],
+          "denied_claims": [
+            "public_nexus_runtime_execution"
+          ],
+          "evidence_notes": [
+            "NEXUS can become public only through the governed path."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "applied_live_workspace_data_model": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "durable_evidence_audit_trail": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "fixtures"
+            ]
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "Facade": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "public membrane surface"
+            ]
+          },
+          "Conduit": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "contracts"
+            ]
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "local stubs"
+            ]
+          },
+          "evidence_audit_record": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "public explanation"
+            ]
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+          "data/public-surface-execution-audit.v0.json"
+        ]
+      },
+      "expected_decision": {
+        "decision": "deny",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "deny-model-api-execution-without-governed-path",
+      "description": "Model API execution claim is denied when governed path is absent.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "README.md",
+        "claim_id": "model_api_execution_claim",
+        "requested_action": "claim_model_api_execution",
+        "evidence_state": {
+          "current_evidence": [
+            "adapter fixture contracts"
+          ],
+          "missing_evidence": [
+            "governed_runtime_path"
+          ],
+          "required_evidence": [
+            "runtime_governance_path"
+          ],
+          "denied_claims": [
+            "model_api_execution"
+          ],
+          "evidence_notes": [
+            "Fixtures and contracts do not prove model API execution."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "applied_live_workspace_data_model": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "durable_evidence_audit_trail": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "fixture reports"
+            ]
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Facade": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "Conduit": {
+            "state": "stubbed",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "stubbed",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "docs/TRACK_3_NEXUS_ADAPTER_CONTRACT.md"
+        ]
+      },
+      "expected_decision": {
+        "decision": "deny",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "deny-operational-release-authority-without-audit-and-release-decision",
+      "description": "Operational release authority claim is denied without durable evidence audit and release-state decision capability.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "README.md",
+        "claim_id": "operational_release_authority_claim",
+        "requested_action": "claim_operational_release_authority",
+        "evidence_state": {
+          "current_evidence": [
+            "static validators"
+          ],
+          "missing_evidence": [
+            "durable_evidence_audit_trail",
+            "release_state_decision"
+          ],
+          "required_evidence": [
+            "release_authority_threshold"
+          ],
+          "denied_claims": [
+            "operational_release_authority"
+          ],
+          "evidence_notes": [
+            "Local validation is not operational release authority."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "applied_live_workspace_data_model": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "durable_evidence_audit_trail": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "local validation output"
+            ]
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Facade": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "public surface"
+            ]
+          },
+          "Conduit": {
+            "state": "stubbed",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "stubbed",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "local artifacts"
+            ]
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "scripts/validate-public-surface-execution-audit.mjs"
+        ]
+      },
+      "expected_decision": {
+        "decision": "deny",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "requires-evidence-staged-surface-advancement-partial-evidence",
+      "description": "Staged surface advancement can require evidence instead of hard denial when some evidence exists.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "workspace.html",
+        "claim_id": "staged_surface_advancement",
+        "requested_action": "advance_surface_to_product_language",
+        "evidence_state": {
+          "current_evidence": [
+            "bounded protected workspace frame",
+            "bounded interaction"
+          ],
+          "missing_evidence": [
+            "server_side_authorization",
+            "runtime_governance_path"
+          ],
+          "required_evidence": [
+            "surface_advancement_threshold"
+          ],
+          "denied_claims": [],
+          "evidence_notes": [
+            "The surface has partial evidence and needs threshold completion before stronger language."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "protected shell"
+            ]
+          },
+          "applied_live_workspace_data_model": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "workspace frame"
+            ]
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "bounded interaction"
+            ]
+          },
+          "durable_evidence_audit_trail": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "validation records"
+            ]
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "Facade": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "workspace surface"
+            ]
+          },
+          "Conduit": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "data/direct-ui-membrane-protected-workspace-frame.v0.json",
+          "data/direct-ui-membrane-protected-workspace-interaction.v0.json"
+        ]
+      },
+      "expected_decision": {
+        "decision": "requires_evidence",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "requires-operator-review-structural-threshold-transition",
+      "description": "Operator review is required for structurally significant threshold transitions.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "README.md",
+        "claim_id": "operator_review_escalation",
+        "requested_action": "evaluate_operator_review_need",
+        "evidence_state": {
+          "current_evidence": [
+            "proposed claim-boundary transition"
+          ],
+          "missing_evidence": [
+            "operator approval record"
+          ],
+          "required_evidence": [
+            "operator_review"
+          ],
+          "denied_claims": [],
+          "evidence_notes": [
+            "Threshold transitions alter public claim boundaries."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "applied_live_workspace_data_model": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "durable_evidence_audit_trail": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "Facade": {
+            "state": "exists",
+            "verified": true,
+            "evidence": []
+          },
+          "Conduit": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "policy bundle fixture"
+            ]
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "stubbed",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "operator_authorization_state": {
+          "status": "requested",
+          "review_required": true,
+          "review_reason": "structural claim-boundary transition"
+        },
+        "current_repository_state_basis": [
+          "data/documentation-operator-review-queue.v1.json"
+        ]
+      },
+      "expected_decision": {
+        "decision": "requires_operator_review",
+        "allowed": false,
+        "operator_review_required": true,
+        "runtime_enforcement_status": "not_applicable"
+      }
+    },
+    {
+      "id": "runtime-enforcement-unavailable-current-policy-bundle",
+      "description": "A direct request for runtime enforcement reports unavailable while the bundle is not deployed as a service.",
+      "fixture_type": "current_repository_boundary_case",
+      "input": {
+        "surface": "palisade/policy-bundle.v0",
+        "claim_id": "runtime_governance_path_sufficiency",
+        "requested_action": "evaluate_runtime_path_sufficiency",
+        "evidence_state": {
+          "current_evidence": [
+            "policy bundle files"
+          ],
+          "missing_evidence": [
+            "deployed Palisade runtime service"
+          ],
+          "required_evidence": [
+            "runtime enforcement integration"
+          ],
+          "denied_claims": [
+            "runtime_enforcement"
+          ],
+          "evidence_notes": [
+            "The bundle is locally evaluable but not a runtime service."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "applied_live_workspace_data_model": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "server_side_authorization": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "tenant_scoped_persistence": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "verified_membership_account_separation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "durable_evidence_audit_trail": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "policy tests"
+            ]
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Facade": {
+            "state": "partial",
+            "verified": false,
+            "evidence": []
+          },
+          "Conduit": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "Palisade_policy_decision": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "policy bundle validation"
+            ]
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "evidence_audit_record": {
+            "state": "partial",
+            "verified": false,
+            "evidence": [
+              "policy test output"
+            ]
+          },
+          "release_state_decision": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          },
+          "surfaced_result": {
+            "state": "absent",
+            "verified": false,
+            "evidence": []
+          }
+        },
+        "operator_authorization_state": {
+          "status": "not_requested",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "palisade/policy-bundle.v0"
+        ]
+      },
+      "expected_decision": {
+        "decision": "runtime_enforcement_unavailable",
+        "allowed": false,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "unavailable"
+      }
+    },
+    {
+      "id": "allow-production-workspace-complete-hypothetical-evidence",
+      "description": "Allow is reachable under complete evidence; this is a policy test fixture, not current repository state.",
+      "fixture_type": "policy_test_fixture_hypothetical_complete_evidence",
+      "input": {
+        "surface": "policy-test-fixture",
+        "claim_id": "production_workspace_claim",
+        "requested_action": "claim_public_capability",
+        "evidence_state": {
+          "current_evidence": [
+            "all production workspace threshold components verified",
+            "all runtime governance path components verified"
+          ],
+          "missing_evidence": [],
+          "required_evidence": [
+            "production_workspace_threshold",
+            "runtime_governance_path"
+          ],
+          "denied_claims": [],
+          "evidence_notes": [
+            "Hypothetical complete evidence fixture only."
+          ]
+        },
+        "production_workspace_threshold_state": {
+          "real_authenticated_shell": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "applied_live_workspace_data_model": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "server_side_authorization": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "tenant_scoped_persistence": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "verified_membership_account_separation": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "operational_workspace_surfaces_backed_by_capability": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "durable_evidence_audit_trail": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "runtime_governance_path_for_real_user_workspace_input": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          }
+        },
+        "runtime_governance_path_state": {
+          "user_workspace_input": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "Facade": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "Conduit": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "Palisade_policy_decision": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "Vault_NEXUS_evaluation": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "evidence_audit_record": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "release_state_decision": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          },
+          "surfaced_result": {
+            "state": "exists",
+            "verified": true,
+            "evidence": [
+              "fixture"
+            ]
+          }
+        },
+        "operator_authorization_state": {
+          "status": "approved",
+          "review_required": false,
+          "review_reason": ""
+        },
+        "current_repository_state_basis": [
+          "policy test fixture only; not current repository state"
+        ]
+      },
+      "expected_decision": {
+        "decision": "allow",
+        "allowed": true,
+        "operator_review_required": false,
+        "runtime_enforcement_status": "available"
+      }
+    }
+  ]
+}
