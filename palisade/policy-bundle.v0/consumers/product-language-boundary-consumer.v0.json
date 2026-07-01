@@ -1,0 +1,176 @@
+{
+  "consumer_id": "product_language_boundary_validator",
+  "consumer_path": "scripts/validate-product-language-boundary.mjs",
+  "consumer_type": "validator",
+  "source_policy_bundle": "palisade/policy-bundle.v0/",
+  "policy_file": "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
+  "policy_input_schema": "palisade/policy-bundle.v0/schema/policy-input.schema.json",
+  "policy_decision_schema": "palisade/policy-bundle.v0/schema/policy-decision.schema.json",
+  "consumed_policy_decisions": [
+    "production_workspace_claim",
+    "public_nexus_runtime_execution_claim",
+    "model_api_execution_claim",
+    "operational_release_authority_claim",
+    "staged_surface_advancement",
+    "runtime_governance_path_sufficiency",
+    "operator_review_escalation"
+  ],
+  "product_language_claim_mappings": [
+    {
+      "claim_class": "production_workspace_maturity",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "public_claim_patterns": [
+        "\\bproduction workspace (exists|is live|is operational|maturity exists)\\b",
+        "\\bcustomer workspace exists\\b",
+        "\\bcustomer-ready, tenant-isolated, or production SaaS\\b",
+        "\\bproduction SaaS exists\\b",
+        "\\btenant isolation exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "requires_current_evidence": true
+    },
+    {
+      "claim_class": "public_nexus_runtime_execution",
+      "palisade_claim_id": "public_nexus_runtime_execution_claim",
+      "requested_action": "expose_public_runtime_execution",
+      "public_claim_patterns": [
+        "\\bpublic NEXUS runtime exists\\b",
+        "\\bpublic NEXUS runtime execution exists\\b",
+        "\\bNEXUS powers the public interface\\b",
+        "\\bAETHERUS runs NEXUS\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "requires_current_evidence": true
+    },
+    {
+      "claim_class": "model_api_execution",
+      "palisade_claim_id": "model_api_execution_claim",
+      "requested_action": "claim_model_api_execution",
+      "public_claim_patterns": [
+        "\\bmodel API execution exists\\b",
+        "\\blive AI execution exists\\b",
+        "\\bexecuting live AI\\b",
+        "\\bmodel calls are live\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "requires_current_evidence": true
+    },
+    {
+      "claim_class": "operational_release_authority",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "requested_action": "claim_operational_release_authority",
+      "public_claim_patterns": [
+        "\\boperational release authority exists\\b",
+        "\\brelease authority exists\\b",
+        "\\boperational release decision support exists\\b",
+        "\\bvalidation-backed operational release eligibility exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "requires_current_evidence": true
+    },
+    {
+      "claim_class": "staged_surface_advancement",
+      "palisade_claim_id": "staged_surface_advancement",
+      "requested_action": "advance_surface_to_product_language",
+      "public_claim_patterns": [
+        "\\boperational use exists\\b",
+        "\\bcurrently operationally deployed\\b",
+        "\\bis operationally deployed\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence; requires_evidence may preserve current construction requirements but cannot permit stronger public product language.",
+      "requires_current_evidence": true
+    },
+    {
+      "claim_class": "runtime_governance_path_sufficiency",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "requested_action": "evaluate_runtime_path_sufficiency",
+      "public_claim_patterns": [
+        "\\bruntime governance execution exists\\b",
+        "\\bgoverned runtime path is operational\\b",
+        "\\bPalisade runtime gate exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "requires_current_evidence": true
+    },
+    {
+      "claim_class": "operator_review_escalation",
+      "palisade_claim_id": "operator_review_escalation",
+      "requested_action": "evaluate_operator_review_need",
+      "public_claim_patterns": [
+        "\\bOperator review has authorized production threshold transition\\b",
+        "\\bOperator-approved runtime enforcement exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under explicit Operator authorization evidence.",
+      "requires_current_evidence": true
+    }
+  ],
+  "required_policy_input_fields": [
+    "surface",
+    "claim_id",
+    "requested_action",
+    "evidence_state",
+    "production_workspace_threshold_state",
+    "runtime_governance_path_state",
+    "operator_authorization_state",
+    "current_repository_state_basis"
+  ],
+  "required_policy_decision_fields": [
+    "decision",
+    "claim_id",
+    "surface",
+    "requested_action",
+    "allowed",
+    "reasons",
+    "required_evidence",
+    "missing_evidence",
+    "operator_review_required",
+    "runtime_enforcement_status",
+    "current_state_basis",
+    "next_evidence_threshold"
+  ],
+  "fail_closed_behavior": [
+    "Fail validation if the Palisade policy bundle, consumer contract, policy file, input schema, or decision schema is missing or malformed.",
+    "Fail validation if any consumed claim class lacks a Palisade claim ID mapping.",
+    "Fail validation if a Palisade-governed public claim appears and the current repository evidence decision is not allow.",
+    "Fail validation if decision output is malformed or allowed conflicts with the decision."
+  ],
+  "no_overclaim_behavior": [
+    "Validator consumption is not runtime enforcement.",
+    "Policy test fixtures are not current repository evidence.",
+    "Current public language must not claim production workspace maturity, public NEXUS runtime, model API execution, operational release authority, runtime enforcement, or deployed Palisade maturity without Palisade allow under current evidence."
+  ],
+  "operator_review_handling": {
+    "requires_operator_review": "Not public claim permission by itself.",
+    "authorization_required": "Explicit Operator authorization evidence must be present before the validator treats an Operator-review-gated claim as allowed.",
+    "current_repository_authorization_state": "not_requested"
+  },
+  "runtime_enforcement_status_handling": {
+    "runtime_enforcement_unavailable": "Blocks runtime-enforcement claims.",
+    "unavailable": "Confirms validator-only consumption and must not be represented as deployed enforcement.",
+    "available": "May only be accepted when current repository evidence proves the governed runtime path and runtime enforcement authorization."
+  },
+  "forbidden_runtime_claims": [
+    "production workspace maturity exists",
+    "public NEXUS runtime execution exists",
+    "model API execution exists",
+    "operational release authority exists",
+    "Palisade runtime enforcement exists",
+    "Palisade deployed enforcement membrane exists",
+    "Weave orchestration exists"
+  ],
+  "validation_mode": {
+    "mode": "validator_only_policy_consumption",
+    "uses_current_repository_evidence": true,
+    "uses_hypothetical_allow_fixtures_as_current_evidence": false,
+    "runtime_behavior_changed": false,
+    "public_copy_changed": false
+  },
+  "non_claims": [
+    "This consumer contract does not implement runtime enforcement.",
+    "This consumer contract does not wire Palisade into public runtime behavior.",
+    "This consumer contract does not modify public copy or README prose.",
+    "This consumer contract does not implement Conduit execution, Vault/NEXUS execution, model API execution, Weave orchestration, or operational release authority."
+  ],
+  "next_integration_boundary": "After product-language validator consumption is validated, a separately authorized pass may extend the same policy-consumption adapter to README current-state truth or operational-evidence contract validation without runtime enforcement."
+}
