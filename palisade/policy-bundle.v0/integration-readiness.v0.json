@@ -1,0 +1,906 @@
+{
+  "map_id": "palisade-integration-readiness.v0",
+  "baseline_commit": "1fdb76258cee0fde22c20320b6d047e872b9f6f7",
+  "policy_bundle_reference": {
+    "bundle_path": "palisade/policy-bundle.v0/",
+    "manifest_path": "palisade/policy-bundle.v0/manifest.json",
+    "policy_path": "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
+    "input_schema_path": "palisade/policy-bundle.v0/schema/policy-input.schema.json",
+    "decision_schema_path": "palisade/policy-bundle.v0/schema/policy-decision.schema.json",
+    "validator_path": "scripts/validate-palisade-policy-bundle.mjs"
+  },
+  "current_palisade_state": {
+    "repository_artifact_exists": true,
+    "versioned_policy_bundle_exists": true,
+    "locally_validated": true,
+    "deployed_enforcement_membrane_exists": false,
+    "runtime_policy_engine_exists": false,
+    "production_policy_service_exists": false,
+    "public_runtime_gate_exists": false,
+    "operational_enforcement_layer_exists": false,
+    "current_state_summary": "Palisade owns a versioned repository policy artifact and validator. The artifact is not consumed by public copy, runtime routes, Conduit execution, Vault/NEXUS execution, model API execution, Weave orchestration, or operational release authority."
+  },
+  "non_claims": [
+    "This map does not implement runtime enforcement.",
+    "This map does not deploy Palisade as an enforcement membrane.",
+    "This map does not create a production policy service.",
+    "This map does not create production workspace maturity.",
+    "This map does not expose public NEXUS runtime execution.",
+    "This map does not create model API execution.",
+    "This map does not create operational release authority.",
+    "This map does not implement Weave orchestration.",
+    "This map does not modify public routes or public-facing copy."
+  ],
+  "candidate_consumers": [
+    {
+      "consumer_id": "palisade_policy_bundle_validator",
+      "consumer_type": "validator",
+      "current_consumption_state": "structurally_ready",
+      "current_location": "scripts/validate-palisade-policy-bundle.mjs",
+      "boundary_logic_currently_lives_in": [
+        "Palisade_policy",
+        "validator"
+      ],
+      "policy_decisions_needed": [
+        "production_workspace_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim",
+        "operational_release_authority_claim",
+        "staged_surface_advancement",
+        "runtime_governance_path_sufficiency",
+        "operator_review_escalation"
+      ],
+      "required_input_mapping": {
+        "source": "policy bundle schemas and test cases",
+        "fields": [
+          "surface",
+          "claim_id",
+          "requested_action",
+          "evidence_state",
+          "production_workspace_threshold_state",
+          "runtime_governance_path_state",
+          "operator_authorization_state",
+          "current_repository_state_basis"
+        ]
+      },
+      "required_decision_mapping": {
+        "fields": [
+          "decision",
+          "allowed",
+          "required_evidence",
+          "missing_evidence",
+          "operator_review_required",
+          "runtime_enforcement_status"
+        ],
+        "use": "Continue proving the policy artifact is internally evaluable before external consumers depend on it."
+      },
+      "implementation_preconditions": [
+        "Keep the existing policy bundle validation command passing.",
+        "Do not change policy semantics during consumer integration."
+      ],
+      "forbidden_overclaims": [
+        "Palisade runtime enforcement exists",
+        "Palisade is deployed",
+        "Validator execution is production enforcement"
+      ],
+      "risk_if_integrated_now": "Low for validation self-checks, but it does not move public claim controls or repository contracts toward policy consumption by itself.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "disciplined_staging",
+      "rationale": "The validator already evaluates the policy artifact. It should remain the source of policy integrity, but making it the first external consumer would not add a new consumption path."
+    },
+    {
+      "consumer_id": "public_surface_execution_audit_validator",
+      "consumer_type": "validator",
+      "current_consumption_state": "indirectly_aligned",
+      "current_location": "scripts/validate-public-surface-execution-audit.mjs and data/public-surface-execution-audit.v0.json",
+      "boundary_logic_currently_lives_in": [
+        "validator",
+        "static_data"
+      ],
+      "policy_decisions_needed": [
+        "production_workspace_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim",
+        "operational_release_authority_claim",
+        "runtime_governance_path_sufficiency"
+      ],
+      "required_input_mapping": {
+        "surface": "audit finding file or surface",
+        "claim_id": "policy candidate boundary id",
+        "requested_action": "claim_public_capability or expose_public_runtime_execution",
+        "evidence_state": "finding evidence and missing production/runtime components",
+        "production_workspace_threshold_state": "production_workspace_threshold_assessment",
+        "runtime_governance_path_state": "runtime_governance_path_assessment",
+        "operator_authorization_state": "operator review queue state when present",
+        "current_repository_state_basis": "audit source file references"
+      },
+      "required_decision_mapping": {
+        "decision": "deny or requires_evidence must preserve current unclaimable boundaries",
+        "required_evidence": "must remain visible in finding requirements",
+        "missing_evidence": "must explain why claims remain blocked",
+        "runtime_enforcement_status": "must remain unavailable for current audit state"
+      },
+      "implementation_preconditions": [
+        "Define a reusable Palisade decision reader before the audit validator consumes policy outputs.",
+        "Keep the audit record historical where it describes its original inspection baseline."
+      ],
+      "forbidden_overclaims": [
+        "public NEXUS runtime exists",
+        "model API execution exists",
+        "runtime governance execution exists"
+      ],
+      "risk_if_integrated_now": "Moderate. The audit contains historical baseline statements, so direct mutation could blur historical evidence with current policy consumption.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "disciplined_staging",
+      "rationale": "The audit already mirrors Palisade thresholds, but its historical character makes product-language validation a cleaner first consumer."
+    },
+    {
+      "consumer_id": "product_language_boundary_validator",
+      "consumer_type": "validator",
+      "current_consumption_state": "structurally_ready",
+      "current_location": "scripts/validate-product-language-boundary.mjs",
+      "boundary_logic_currently_lives_in": [
+        "validator",
+        "static_data",
+        "copy"
+      ],
+      "policy_decisions_needed": [
+        "production_workspace_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim",
+        "operational_release_authority_claim",
+        "staged_surface_advancement",
+        "runtime_governance_path_sufficiency",
+        "operator_review_escalation"
+      ],
+      "required_input_mapping": {
+        "surface": "public copy file or data file being scanned",
+        "claim_id": "claim detected by phrase or configured negative-space mapping",
+        "requested_action": "claim_public_capability, expose_public_runtime_execution, claim_model_api_execution, claim_operational_release_authority, or advance_surface_to_product_language",
+        "evidence_state": "negative-space mapping evidence plus missing evidence from policy thresholds",
+        "production_workspace_threshold_state": "all incomplete unless a future evidence record marks every threshold component exists and verified",
+        "runtime_governance_path_state": "all incomplete unless a future evidence record marks every runtime path component exists and verified",
+        "operator_authorization_state": "not_requested unless an Operator review record is explicitly referenced",
+        "current_repository_state_basis": "validator target file path and source data path"
+      },
+      "required_decision_mapping": {
+        "decision": "deny, requires_evidence, or requires_operator_review determines whether the phrase is allowed, blocked, or must cite review",
+        "allowed": "true may permit stronger claim language only under complete threshold evidence",
+        "required_evidence": "reported as construction targets when a phrase is blocked",
+        "missing_evidence": "reported as claim-boundary reasons",
+        "operator_review_required": "blocks threshold transitions unless approved evidence is present",
+        "runtime_enforcement_status": "must be unavailable for current repository state"
+      },
+      "implementation_preconditions": [
+        "Add a local policy-decision reader for the Palisade JSON bundle.",
+        "Map existing forbidden claim patterns and negative-space mappings to Palisade claim_id values.",
+        "Fail closed when the policy bundle, schemas, or required decisions are missing.",
+        "Keep public-copy restrictions at least as strict as the current validator.",
+        "Do not change public routes or public-facing copy."
+      ],
+      "forbidden_overclaims": [
+        "production workspace maturity exists",
+        "public NEXUS runtime exists",
+        "model API execution exists",
+        "operational release authority exists",
+        "Palisade runtime enforcement exists"
+      ],
+      "risk_if_integrated_now": "Low if implemented as validator-only consumption. The main risk is accidentally treating policy evaluation as runtime enforcement, which the contract must forbid.",
+      "recommended_timing": "immediate_next_pass",
+      "classification": "implementation_ready",
+      "rationale": "This validator already gates the claim language Palisade is designed to decide. It can consume policy decisions in one bounded implementation pass without runtime wiring, public copy changes, Conduit execution, Vault/NEXUS execution, model calls, or Weave orchestration."
+    },
+    {
+      "consumer_id": "readme_current_state_truth_validator",
+      "consumer_type": "validator",
+      "current_consumption_state": "indirectly_aligned",
+      "current_location": "scripts/validate-readme-artifact-classification-sobriety.mjs and data/readme-artifact-classification-sobriety.v0.json",
+      "boundary_logic_currently_lives_in": [
+        "copy",
+        "validator",
+        "static_data"
+      ],
+      "policy_decisions_needed": [
+        "production_workspace_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim",
+        "operational_release_authority_claim",
+        "runtime_governance_path_sufficiency"
+      ],
+      "required_input_mapping": {
+        "surface": "README.md",
+        "claim_id": "claim pattern id mapped to Palisade claim_id",
+        "requested_action": "claim_public_capability",
+        "evidence_state": "restricted claim pattern and required boundary phrase coverage",
+        "production_workspace_threshold_state": "README threshold components",
+        "runtime_governance_path_state": "README governed path components",
+        "operator_authorization_state": "not_requested unless a review record is present",
+        "current_repository_state_basis": "README.md and readme-artifact-classification-sobriety.v0.json"
+      },
+      "required_decision_mapping": {
+        "decision": "deny must keep restricted claims blocked",
+        "missing_evidence": "must preserve README current-state truth reasons",
+        "runtime_enforcement_status": "must remain unavailable"
+      },
+      "implementation_preconditions": [
+        "Complete product-language validator consumption first so README-specific checks reuse the same policy reader.",
+        "Keep README content unchanged unless separately authorized."
+      ],
+      "forbidden_overclaims": [
+        "customer workspace exists",
+        "tenant isolation exists",
+        "Palisade is instantiated",
+        "Weave is runnable"
+      ],
+      "risk_if_integrated_now": "Moderate. README checks are narrower and should inherit the product-language policy adapter rather than creating a second mapping surface first.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "disciplined_staging",
+      "rationale": "README truth checks are a good second validator consumer after the shared claim-language policy adapter exists."
+    },
+    {
+      "consumer_id": "documentation_surface_inventory_validator",
+      "consumer_type": "validator",
+      "current_consumption_state": "should_not_consume_yet",
+      "current_location": "scripts/validate-documentation-surface-inventory.mjs and related validate-documentation-*.mjs scripts",
+      "boundary_logic_currently_lives_in": [
+        "validator",
+        "static_data"
+      ],
+      "policy_decisions_needed": [
+        "staged_surface_advancement",
+        "operator_review_escalation"
+      ],
+      "required_input_mapping": {
+        "surface": "inventory artifact path",
+        "claim_id": "staged_surface_advancement or operator_review_escalation",
+        "requested_action": "advance_surface_to_product_language or evaluate_operator_review_need",
+        "evidence_state": "inventory classification, public surface status, and risk flags",
+        "production_workspace_threshold_state": "not ready for direct consumption",
+        "runtime_governance_path_state": "not ready for direct consumption",
+        "operator_authorization_state": "operator queue status where present",
+        "current_repository_state_basis": "inventory entry and validator path"
+      },
+      "required_decision_mapping": {
+        "decision": "requires_operator_review may preserve review queue routing",
+        "required_evidence": "may become inventory evidence snippets after claim-language consumption exists",
+        "missing_evidence": "may drive risk flags only after contract alignment"
+      },
+      "implementation_preconditions": [
+        "Do not promote Palisade internal artifacts through public navigation metadata.",
+        "Only add inventory recognition if an existing validator requires it."
+      ],
+      "forbidden_overclaims": [
+        "documentation inventory is runtime governance",
+        "inventory classification is release authority"
+      ],
+      "risk_if_integrated_now": "Moderate. It would mostly classify artifacts and could become another mapping surface rather than an implementation path.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "disciplined_staging",
+      "rationale": "Inventory validators matter for repository hygiene, but they are not the first path from policy decision to claim control."
+    },
+    {
+      "consumer_id": "operational_evidence_packet_contract_validator",
+      "consumer_type": "repository_contract",
+      "current_consumption_state": "indirectly_aligned",
+      "current_location": "scripts/validate-operational-evidence-packet-contract.mjs and data/operational-evidence-packet-contract.v0.json",
+      "boundary_logic_currently_lives_in": [
+        "validator",
+        "static_data"
+      ],
+      "policy_decisions_needed": [
+        "operational_release_authority_claim",
+        "model_api_execution_claim",
+        "runtime_governance_path_sufficiency"
+      ],
+      "required_input_mapping": {
+        "surface": "operational evidence packet contract",
+        "claim_id": "operational_release_authority_claim or model_api_execution_claim",
+        "requested_action": "claim_operational_release_authority or claim_model_api_execution",
+        "evidence_state": "required evidence classes and disallowed claims",
+        "production_workspace_threshold_state": "not primary for this consumer",
+        "runtime_governance_path_state": "evidence/audit and release-state decision components",
+        "operator_authorization_state": "not_requested unless review is attached",
+        "current_repository_state_basis": "operational evidence contract and validator"
+      },
+      "required_decision_mapping": {
+        "decision": "deny must preserve operational-use and release-authority denial",
+        "required_evidence": "must remain equal to required evidence classes",
+        "missing_evidence": "must remain visible in claim effects"
+      },
+      "implementation_preconditions": [
+        "Product-language validator must consume Palisade decisions first.",
+        "Operational evidence contract must keep non-implementation boundary flags false."
+      ],
+      "forbidden_overclaims": [
+        "operational release authority exists",
+        "production audit ledger exists",
+        "live AI execution exists"
+      ],
+      "risk_if_integrated_now": "Moderate. It is close to release authority language and must not imply operational evidence currently exists.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "disciplined_staging",
+      "rationale": "This contract should consume Palisade after claim-language control is policy-backed, because it is nearer to operational authority claims."
+    },
+    {
+      "consumer_id": "direct_ui_protected_workspace_validators",
+      "consumer_type": "validator",
+      "current_consumption_state": "should_not_consume_yet",
+      "current_location": "scripts/validate-direct-ui-membrane-*.mjs and data/direct-ui-membrane-*.json",
+      "boundary_logic_currently_lives_in": [
+        "validator",
+        "static_data",
+        "fixture"
+      ],
+      "policy_decisions_needed": [
+        "production_workspace_claim",
+        "staged_surface_advancement",
+        "runtime_governance_path_sufficiency"
+      ],
+      "required_input_mapping": {
+        "surface": "Direct UI or protected workspace validator target",
+        "claim_id": "production_workspace_claim or staged_surface_advancement",
+        "requested_action": "claim_public_capability or advance_surface_to_product_language",
+        "evidence_state": "auth, callback, protected-shell, and bounded persistence evidence",
+        "production_workspace_threshold_state": "provider login, callback, route admission, and bounded persistence remain partial or absent for production maturity",
+        "runtime_governance_path_state": "runtime path remains incomplete",
+        "operator_authorization_state": "not_requested unless a review record is attached",
+        "current_repository_state_basis": "Direct UI data artifact and validator path"
+      },
+      "required_decision_mapping": {
+        "decision": "deny must keep production workspace claim blocked",
+        "required_evidence": "must preserve production workspace threshold components",
+        "missing_evidence": "must explain which workspace threshold components are absent"
+      },
+      "implementation_preconditions": [
+        "Do not change auth/session guards or protected-route behavior.",
+        "Do not treat bounded persistence as production workspace maturity.",
+        "Complete claim-language validator consumption first."
+      ],
+      "forbidden_overclaims": [
+        "production workspace exists",
+        "tenant isolation exists",
+        "customer workspace exists"
+      ],
+      "risk_if_integrated_now": "High if misread as runtime gating for protected routes. Safe consumption requires a prior validator-only policy adapter.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "disciplined_staging",
+      "rationale": "Direct UI validators are important, but first consumption should avoid touching auth/protected behavior."
+    },
+    {
+      "consumer_id": "public_surface_state_data",
+      "consumer_type": "public_surface_state",
+      "current_consumption_state": "should_not_consume_yet",
+      "current_location": "data/docs.json, data/interface-fixtures.v0.json, data/interface-fixture.example.v0.json, and public route data sources",
+      "boundary_logic_currently_lives_in": [
+        "copy",
+        "static_data",
+        "fixture"
+      ],
+      "policy_decisions_needed": [
+        "staged_surface_advancement",
+        "production_workspace_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim"
+      ],
+      "required_input_mapping": {
+        "surface": "public state data object",
+        "claim_id": "claim implied by state label or fixture evidence requirement",
+        "requested_action": "advance_surface_to_product_language or claim_public_capability",
+        "evidence_state": "public state metadata and fixture evidence requirements",
+        "production_workspace_threshold_state": "not ready for direct public-state consumption",
+        "runtime_governance_path_state": "not ready for direct public-state consumption",
+        "operator_authorization_state": "not_requested unless review is attached",
+        "current_repository_state_basis": "public data path"
+      },
+      "required_decision_mapping": {
+        "decision": "must not drive public text until validator consumption is implemented",
+        "missing_evidence": "must remain validator-only before public state mutation"
+      },
+      "implementation_preconditions": [
+        "Policy-backed validator consumption must exist first.",
+        "Any public state change must be separately authorized."
+      ],
+      "forbidden_overclaims": [
+        "public state data is a runtime decision",
+        "fixture state is release authority"
+      ],
+      "risk_if_integrated_now": "High. Direct public-state mutation would risk public copy changes and premature product language.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "blocked",
+      "rationale": "Public state data should reflect policy only after validators consume policy decisions and preserve no-overclaim behavior."
+    },
+    {
+      "consumer_id": "claim_language_checks",
+      "consumer_type": "claim_language",
+      "current_consumption_state": "structurally_ready",
+      "current_location": "scripts/validate-product-language-boundary.mjs, scripts/validate-readme-artifact-classification-sobriety.mjs, and related data records",
+      "boundary_logic_currently_lives_in": [
+        "copy",
+        "validator",
+        "static_data"
+      ],
+      "policy_decisions_needed": [
+        "production_workspace_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim",
+        "operational_release_authority_claim",
+        "staged_surface_advancement",
+        "operator_review_escalation"
+      ],
+      "required_input_mapping": {
+        "surface": "file containing claim language",
+        "claim_id": "detected or configured claim id",
+        "requested_action": "claim_public_capability or advance_surface_to_product_language",
+        "evidence_state": "configured claim pattern, evidence mappings, and denied claim list",
+        "production_workspace_threshold_state": "policy threshold state",
+        "runtime_governance_path_state": "policy runtime path state",
+        "operator_authorization_state": "review status when present",
+        "current_repository_state_basis": "claim-checking validator and file path"
+      },
+      "required_decision_mapping": {
+        "decision": "deny blocks claim, requires_evidence preserves construction requirement, requires_operator_review blocks transition",
+        "allowed": "permits claim only after threshold evidence is complete",
+        "runtime_enforcement_status": "must not be treated as runtime enforcement"
+      },
+      "implementation_preconditions": [
+        "Create one local policy consumption adapter used by claim-language validators.",
+        "Keep existing forbidden phrase coverage intact."
+      ],
+      "forbidden_overclaims": [
+        "validator-backed claim language equals runtime enforcement",
+        "policy allowed fixture equals current repository state"
+      ],
+      "risk_if_integrated_now": "Low when scoped to validator-only consumption and no public-copy edits.",
+      "recommended_timing": "immediate_next_pass",
+      "classification": "implementation_ready",
+      "rationale": "Claim-language checks are the functional category of the selected first consumer."
+    },
+    {
+      "consumer_id": "conduit_contracts",
+      "consumer_type": "conduit_contract",
+      "current_consumption_state": "structurally_ready",
+      "current_location": "data/conduit-versioning-policy.v1.json, data/interface-contract.v1.json, docs/TRACK_3_CONDUIT_VERSIONING_STORY_V1.md, and scripts/validate-track3-contracts.mjs",
+      "boundary_logic_currently_lives_in": [
+        "repository_contract",
+        "validator",
+        "static_data"
+      ],
+      "policy_decisions_needed": [
+        "runtime_governance_path_sufficiency",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim",
+        "operational_release_authority_claim"
+      ],
+      "required_input_mapping": {
+        "surface": "Conduit contract artifact",
+        "claim_id": "runtime_governance_path_sufficiency or runtime claim id",
+        "requested_action": "evaluate_runtime_path_sufficiency or expose_public_runtime_execution",
+        "evidence_state": "Conduit contract boundary flags and stop conditions",
+        "production_workspace_threshold_state": "not primary for contract readiness",
+        "runtime_governance_path_state": "Conduit exists as contract evidence only; runtime path remains incomplete",
+        "operator_authorization_state": "required for major contract changes",
+        "current_repository_state_basis": "Track 3 contract artifact and validator"
+      },
+      "required_decision_mapping": {
+        "decision": "requires_evidence must preserve contract-only status until runtime path components exist",
+        "operator_review_required": "must block major contract transitions",
+        "runtime_enforcement_status": "must remain unavailable"
+      },
+      "implementation_preconditions": [
+        "Complete claim-language validator consumption first.",
+        "Any Conduit contract alignment must be contract-only and separately authorized.",
+        "No Conduit runtime behavior may be changed."
+      ],
+      "forbidden_overclaims": [
+        "Conduit execution exists",
+        "Conduit is wired to public runtime input",
+        "Vault/NEXUS runtime is public",
+        "Palisade is enforcing runtime decisions"
+      ],
+      "risk_if_integrated_now": "High if pursued as runtime integration; acceptable only as a contract-readiness consumer after claim-language controls are policy-backed.",
+      "recommended_timing": "after_contract_alignment",
+      "classification": "disciplined_staging",
+      "rationale": "Conduit is within the two-to-three pass horizon, but it should consume policy through contract readiness after the first validator consumer proves the policy adapter."
+    },
+    {
+      "consumer_id": "future_runtime_release_state_decision_path",
+      "consumer_type": "runtime_candidate",
+      "current_consumption_state": "blocked",
+      "current_location": "No deployed runtime release-state path exists; related evidence appears in public-surface audit, operational evidence contract, and Track 3 local contracts.",
+      "boundary_logic_currently_lives_in": [
+        "handoff_constraint",
+        "validator",
+        "static_data",
+        "Palisade_policy"
+      ],
+      "policy_decisions_needed": [
+        "runtime_governance_path_sufficiency",
+        "operational_release_authority_claim",
+        "public_nexus_runtime_execution_claim",
+        "model_api_execution_claim"
+      ],
+      "required_input_mapping": {
+        "surface": "future runtime release-state path",
+        "claim_id": "runtime_governance_path_sufficiency or operational_release_authority_claim",
+        "requested_action": "evaluate_runtime_path_sufficiency or claim_operational_release_authority",
+        "evidence_state": "runtime evidence and audit record",
+        "production_workspace_threshold_state": "must be complete before production workspace claims",
+        "runtime_governance_path_state": "must mark every path component exists and verified before allow",
+        "operator_authorization_state": "required for operational release authority",
+        "current_repository_state_basis": "future implementation evidence"
+      },
+      "required_decision_mapping": {
+        "decision": "allow only after complete governed path evidence",
+        "required_evidence": "must be persisted as evidence record",
+        "missing_evidence": "must fail closed",
+        "runtime_enforcement_status": "must be available only after deployed enforcement is separately authorized and verified"
+      },
+      "implementation_preconditions": [
+        "production runtime enforcement authorization",
+        "durable evidence/audit record",
+        "release-state decision capability",
+        "tenant and workspace maturity where user/workspace input is involved",
+        "Conduit/Vault contract alignment"
+      ],
+      "forbidden_overclaims": [
+        "runtime release-state decision path is operational",
+        "operational release authority exists",
+        "Palisade runtime enforcement exists"
+      ],
+      "risk_if_integrated_now": "Blocking risk. This would require runtime enforcement, release authority, and durable audit evidence that do not exist.",
+      "recommended_timing": "after_runtime_path_exists",
+      "classification": "blocked",
+      "rationale": "This is the long-horizon target, not the first consumer."
+    },
+    {
+      "consumer_id": "future_weave_orchestration_path",
+      "consumer_type": "orchestration_candidate",
+      "current_consumption_state": "blocked",
+      "current_location": "Specification references only; no Weave runtime path is present.",
+      "boundary_logic_currently_lives_in": [
+        "handoff_constraint",
+        "copy",
+        "static_data"
+      ],
+      "policy_decisions_needed": [
+        "runtime_governance_path_sufficiency",
+        "operator_review_escalation",
+        "operational_release_authority_claim"
+      ],
+      "required_input_mapping": {
+        "surface": "future orchestration path",
+        "claim_id": "operator_review_escalation or runtime_governance_path_sufficiency",
+        "requested_action": "evaluate_operator_review_need or evaluate_runtime_path_sufficiency",
+        "evidence_state": "orchestration implementation and audit evidence",
+        "production_workspace_threshold_state": "not available",
+        "runtime_governance_path_state": "not available",
+        "operator_authorization_state": "required",
+        "current_repository_state_basis": "future implementation evidence"
+      },
+      "required_decision_mapping": {
+        "decision": "requires_operator_review or deny until authorized implementation evidence exists",
+        "operator_review_required": "must block orchestration promotion",
+        "runtime_enforcement_status": "must remain unavailable"
+      },
+      "implementation_preconditions": [
+        "explicit Operator authorization",
+        "orchestration runtime implementation",
+        "runtime governance path implementation",
+        "durable evidence/audit record"
+      ],
+      "forbidden_overclaims": [
+        "Weave is runnable",
+        "live orchestration exists",
+        "orchestration is release authority"
+      ],
+      "risk_if_integrated_now": "Blocking risk. Weave orchestration would require authorization and runtime work outside this pass.",
+      "recommended_timing": "not_until_operator_authorized",
+      "classification": "blocked",
+      "rationale": "Weave must not consume Palisade policy until an authorized orchestration implementation path exists."
+    }
+  ],
+  "consumer_priority_order": [
+    {
+      "rank": 1,
+      "consumer_id": "product_language_boundary_validator",
+      "reason": "First bounded implementation path: validator-only policy consumption for public claim language without public copy changes."
+    },
+    {
+      "rank": 2,
+      "consumer_id": "claim_language_checks",
+      "reason": "Shared claim-language category that should reuse the product-language validator policy adapter."
+    },
+    {
+      "rank": 3,
+      "consumer_id": "readme_current_state_truth_validator",
+      "reason": "README current-state truth can consume the same policy adapter after product-language validation proves the pattern."
+    },
+    {
+      "rank": 4,
+      "consumer_id": "operational_evidence_packet_contract_validator",
+      "reason": "Operational evidence and release-authority boundaries should consume policy only after claim language is policy-backed."
+    },
+    {
+      "rank": 5,
+      "consumer_id": "conduit_contracts",
+      "reason": "Conduit contract readiness is within the near horizon but must remain contract-only and authorized."
+    }
+  ],
+  "consumer_contract_requirements": {
+    "product_language_boundary_validator": {
+      "source_policy_bundle_path": "palisade/policy-bundle.v0/",
+      "policy_input_fields_consumed": [
+        "surface",
+        "claim_id",
+        "requested_action",
+        "evidence_state",
+        "production_workspace_threshold_state",
+        "runtime_governance_path_state",
+        "operator_authorization_state",
+        "current_repository_state_basis"
+      ],
+      "decision_fields_consumed": [
+        "decision",
+        "allowed",
+        "reasons",
+        "required_evidence",
+        "missing_evidence",
+        "operator_review_required",
+        "runtime_enforcement_status",
+        "next_evidence_threshold"
+      ],
+      "required_evidence_handling": "Report required_evidence as construction targets and keep existing phrase bans active until policy decision is allow.",
+      "missing_evidence_handling": "Fail the validator on claim language that lacks the evidence required by the Palisade decision.",
+      "operator_review_required_handling": "Fail closed unless an explicit Operator approval evidence record is provided by an authorized future pass.",
+      "runtime_enforcement_status_handling": "Treat unavailable as proof that validator consumption is not runtime enforcement.",
+      "fail_closed_behavior": "If policy bundle, schemas, decision outputs, or claim mappings are missing or malformed, fail validation.",
+      "no_overclaim_behavior": "Never convert a policy test fixture or repository validator pass into a public claim of runtime enforcement, production workspace maturity, public NEXUS/model execution, or operational release authority.",
+      "validation_command_after_integration": "node scripts/validate-product-language-boundary.mjs"
+    }
+  },
+  "blocked_consumers": [
+    {
+      "consumer_id": "public_surface_state_data",
+      "reason": "Direct public-state mutation requires policy-backed validator consumption first and separate authorization for public-facing changes."
+    },
+    {
+      "consumer_id": "future_runtime_release_state_decision_path",
+      "reason": "Requires production runtime enforcement, durable evidence/audit record, release-state decision capability, and operational authorization."
+    },
+    {
+      "consumer_id": "future_weave_orchestration_path",
+      "reason": "Requires explicit Operator authorization and a real orchestration runtime path."
+    }
+  ],
+  "first_recommended_consumer": {
+    "consumer_id": "product_language_boundary_validator",
+    "current_location": "scripts/validate-product-language-boundary.mjs",
+    "recommended_next_pass_name": "Implement Palisade-backed product-language validator consumption",
+    "can_be_implementation_pass_immediately_after_this_one": true,
+    "no_intervening_map_or_readiness_pass_required": true,
+    "connects_within_next_two_to_three_passes": [
+      "claim-language control",
+      "README current-state truth validator consumption",
+      "operational evidence contract consumption",
+      "Conduit contract readiness"
+    ],
+    "bounded_next_pass_contract": {
+      "source_policy_bundle_path": "palisade/policy-bundle.v0/",
+      "policy_input_fields_consumed": [
+        "surface",
+        "claim_id",
+        "requested_action",
+        "evidence_state",
+        "production_workspace_threshold_state",
+        "runtime_governance_path_state",
+        "operator_authorization_state",
+        "current_repository_state_basis"
+      ],
+      "decision_fields_consumed": [
+        "decision",
+        "allowed",
+        "reasons",
+        "required_evidence",
+        "missing_evidence",
+        "operator_review_required",
+        "runtime_enforcement_status",
+        "current_state_basis",
+        "next_evidence_threshold"
+      ],
+      "required_evidence_handling": "Use policy required_evidence to keep construction targets explicit for blocked or evidence-seeking claims.",
+      "missing_evidence_handling": "Use policy missing_evidence to explain validator failures for production workspace, public runtime, model execution, and release-authority language.",
+      "operator_review_required_handling": "Treat operator_review_required true as a hard validator failure unless an authorized Operator approval record is explicitly mapped.",
+      "runtime_enforcement_status_handling": "Require runtime_enforcement_status unavailable for current repository state and reject any interpretation that validator consumption is runtime enforcement.",
+      "fail_closed_behavior": "Fail validation if policy files cannot be read, required decisions are absent, or a claim phrase cannot be mapped to a Palisade claim_id.",
+      "no_overclaim_behavior": "Do not alter public copy and do not treat policy allow fixtures as current repository evidence.",
+      "validation_command_that_must_pass_after_integration": "node scripts/validate-product-language-boundary.mjs"
+    },
+    "rationale": "The product-language validator already owns the strongest public claim guardrail. Making it consume Palisade decisions is a bounded implementation pass that moves claim control from hard-coded stated limits toward policy-owned decisions without runtime enforcement or public surface changes."
+  },
+  "required_next_pass": {
+    "name": "Implement Palisade-backed product-language validator consumption",
+    "type": "implementation",
+    "must_not_be": [
+      "mapping pass",
+      "readiness pass",
+      "boundary-analysis pass"
+    ],
+    "scope": [
+      "add validator-only Palisade policy reader",
+      "map product-language claim patterns to Palisade claim_id values",
+      "preserve existing product-language bans",
+      "fail closed when policy consumption cannot decide"
+    ],
+    "out_of_scope": [
+      "public route changes",
+      "public copy changes",
+      "runtime enforcement",
+      "Conduit runtime changes",
+      "Vault/NEXUS execution",
+      "model API execution",
+      "Weave orchestration",
+      "operational release authority"
+    ]
+  },
+  "implementation_risks": [
+    {
+      "risk": "Validator-only policy consumption could be mistaken for runtime enforcement.",
+      "mitigation": "Require runtime_enforcement_status unavailable for current repository state and keep no-overclaim checks active."
+    },
+    {
+      "risk": "Claim phrase mappings could weaken existing product-language restrictions.",
+      "mitigation": "Fail closed on unmapped claims and keep existing forbidden-pattern checks at least as strict."
+    },
+    {
+      "risk": "Policy test fixtures could be misread as current repository evidence.",
+      "mitigation": "Reject any current-state allow claim unless real threshold evidence exists outside hypothetical policy test fixtures."
+    }
+  ],
+  "claim_boundary_preservation": {
+    "must_preserve_denials_for": [
+      "production workspace maturity",
+      "public NEXUS runtime execution",
+      "model API execution",
+      "operational release authority",
+      "production audit ledger",
+      "customer workspace maturity",
+      "tenant isolation maturity",
+      "Palisade runtime enforcement",
+      "Weave orchestration"
+    ],
+    "policy_consumption_must_not_weaken_existing_validators": true,
+    "public_copy_changes_allowed_in_this_pass": false
+  },
+  "runtime_enforcement_boundary": {
+    "runtime_enforcement_implemented": false,
+    "deployed_enforcement_membrane_exists": false,
+    "public_runtime_gate_exists": false,
+    "policy_service_exists": false,
+    "validator_consumption_is_runtime_enforcement": false,
+    "boundary_statement": "The map defines repository validator consumption order only. It does not make Palisade operational."
+  },
+  "evidence_required_before_runtime_enforcement": [
+    "deployed Palisade policy service or authorized equivalent",
+    "real user/workspace input path",
+    "Facade intake",
+    "Conduit contract and runtime normalization path",
+    "Palisade policy decision record",
+    "Vault/NEXUS evaluation boundary",
+    "durable evidence/audit record",
+    "release-state decision capability",
+    "surfaced result",
+    "Operator authorization for runtime enforcement",
+    "production workspace threshold evidence where workspace claims are involved"
+  ],
+  "runtime_governance_path_assessment": {
+    "operational": false,
+    "components": [
+      {
+        "component": "user_workspace_input",
+        "state": "partially_represented",
+        "basis": "Browser-side and protected-shell interactions exist, but no governed runtime input path exists."
+      },
+      {
+        "component": "Facade",
+        "state": "existing",
+        "basis": "Static public Facade surfaces exist and validators preserve claim boundaries."
+      },
+      {
+        "component": "Conduit",
+        "state": "partially_represented",
+        "basis": "Track 3 Conduit contracts and local validators exist as repository-local evidence, not public runtime wiring."
+      },
+      {
+        "component": "Palisade_policy_decision",
+        "state": "policy_represented_only",
+        "basis": "The policy bundle defines evaluable decisions, but no runtime caller exists."
+      },
+      {
+        "component": "Vault_NEXUS_evaluation",
+        "state": "stubbed",
+        "basis": "Vault/NEXUS contracts, fixtures, and local adapter evidence exist, but public runtime execution is not implemented."
+      },
+      {
+        "component": "evidence_audit_record",
+        "state": "partially_represented",
+        "basis": "Operational evidence contract and workspace event substrate records exist, but no durable production audit trail is wired into runtime governance."
+      },
+      {
+        "component": "release_state_decision",
+        "state": "absent",
+        "basis": "No operational release-state decision capability exists."
+      },
+      {
+        "component": "surfaced_result",
+        "state": "unverified",
+        "basis": "Public surfaces can display bounded static results, but no governed runtime result is surfaced."
+      }
+    ],
+    "sufficiency": "not_sufficient",
+    "sufficiency_reason": "The governed runtime path is sufficient only when every required path component exists and is verified. Current components are partial, policy-represented only, stubbed, absent, or unverified."
+  },
+  "production_workspace_threshold_relevance": {
+    "threshold_source": "palisade/policy-bundle.v0/manifest.json and README current-state truth section",
+    "conditions": [
+      {
+        "condition": "real_authenticated_shell",
+        "current_relevance_to_palisade_consumption": "relevant_to_claim_language",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      },
+      {
+        "condition": "applied_live_workspace_data_model",
+        "current_relevance_to_palisade_consumption": "relevant_to_claim_language",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      },
+      {
+        "condition": "server_side_authorization",
+        "current_relevance_to_palisade_consumption": "required_before_workspace_claim_allow",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      },
+      {
+        "condition": "tenant_scoped_persistence",
+        "current_relevance_to_palisade_consumption": "required_before_workspace_claim_allow",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      },
+      {
+        "condition": "verified_membership_account_separation",
+        "current_relevance_to_palisade_consumption": "required_before_workspace_claim_allow",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      },
+      {
+        "condition": "operational_workspace_surfaces_backed_by_capability",
+        "current_relevance_to_palisade_consumption": "relevant_to_staged_surface_advancement",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      },
+      {
+        "condition": "durable_evidence_audit_trail",
+        "current_relevance_to_palisade_consumption": "required_before_release_authority_or_runtime_claims",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      },
+      {
+        "condition": "runtime_governance_path_for_real_user_workspace_input",
+        "current_relevance_to_palisade_consumption": "required_before_public_runtime_or_workspace_claim_allow",
+        "integration_readiness": "not_ready_for_runtime_integration"
+      }
+    ]
+  },
+  "inspected_files": [
+    "palisade/policy-bundle.v0/manifest.json",
+    "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
+    "palisade/policy-bundle.v0/schema/policy-input.schema.json",
+    "palisade/policy-bundle.v0/schema/policy-decision.schema.json",
+    "palisade/policy-bundle.v0/tests/claim-capability-policy.cases.json",
+    "scripts/validate-palisade-policy-bundle.mjs",
+    "data/public-surface-execution-audit.v0.json",
+    "README.md",
+    "scripts/validate-product-language-boundary.mjs",
+    "scripts/validate-readme-artifact-classification-sobriety.mjs",
+    "scripts/validate-documentation-surface-inventory.mjs",
+    "scripts/validate-operational-evidence-packet-contract.mjs",
+    "scripts/validate-direct-ui-membrane-*.mjs",
+    "data/conduit-versioning-policy.v1.json",
+    "data/interface-contract.v1.json",
+    "scripts/validate-track3-contracts.mjs",
+    "data/product-negative-space-backlog.v0.json"
+  ]
+}
