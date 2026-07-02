@@ -1,0 +1,759 @@
+{
+  "consumer_id": "operational_evidence_packet_contract_validator",
+  "consumer_path": "scripts/validate-operational-evidence-packet-contract.mjs",
+  "consumer_type": "validator",
+  "governed_surface": "operational_evidence_packet_contract",
+  "source_policy_bundle": "palisade/policy-bundle.v0/",
+  "policy_file": "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
+  "policy_input_schema": "palisade/policy-bundle.v0/schema/policy-input.schema.json",
+  "policy_decision_schema": "palisade/policy-bundle.v0/schema/policy-decision.schema.json",
+  "operational_evidence_contract": "data/operational-evidence-packet-contract.v0.json",
+  "consumed_policy_decisions": [
+    "production_workspace_claim",
+    "public_nexus_runtime_execution_claim",
+    "model_api_execution_claim",
+    "operational_release_authority_claim",
+    "staged_surface_advancement",
+    "runtime_governance_path_sufficiency",
+    "operator_review_escalation"
+  ],
+  "evidence_class_mappings": [
+    {
+      "evidence_class": "production_workspace_maturity",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "operational_evidence_class_ids": [
+        "authenticated_actor_identity",
+        "actor_to_trace_attribution",
+        "backend_validation",
+        "persistent_trace_storage",
+        "runtime_execution_boundary",
+        "release_decision_record"
+      ],
+      "current_state": "partial",
+      "verification_state": "unverified",
+      "applicability_state": "inapplicable_for_current_operational_claim",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "authenticated_workspace_availability",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "operational_evidence_class_ids": [
+        "authenticated_actor_identity",
+        "actor_to_trace_attribution"
+      ],
+      "current_state": "partial",
+      "verification_state": "verified_for_bounded_auth_path_only",
+      "applicability_state": "not_applicable_to_production_workspace_maturity",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "applied_live_workspace_data_model",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "operational_evidence_class_ids": [
+        "persistent_trace_storage",
+        "artifact_hash_binding",
+        "deterministic_run_record"
+      ],
+      "current_state": "partial",
+      "verification_state": "unverified_for_operational_evidence",
+      "applicability_state": "bounded_protected_shell_only",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+        "supabase/migrations/20260619_0001_tenant_workspace_substrate.sql"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "server_side_authorization",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "operational_evidence_class_ids": [
+        "backend_validation",
+        "authenticated_actor_identity",
+        "actor_to_trace_attribution"
+      ],
+      "current_state": "partial",
+      "verification_state": "unverified_for_operational_claim",
+      "applicability_state": "bounded_substrate_evidence_only",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+        "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "rls_or_equivalent_authorization_enforcement",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "operational_evidence_class_ids": [
+        "backend_validation",
+        "security_review_record",
+        "authenticated_actor_identity"
+      ],
+      "current_state": "partial",
+      "verification_state": "external_substrate_record_only",
+      "applicability_state": "not_broad_authorization_maturity",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+        "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "tenant_scoped_persistence",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "operational_evidence_class_ids": [
+        "persistent_trace_storage",
+        "retention_model",
+        "authenticated_actor_identity"
+      ],
+      "current_state": "partial",
+      "verification_state": "unverified_for_tenant_maturity",
+      "applicability_state": "bounded_save_load_only",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+        "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "membership_account_separation",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "operational_evidence_class_ids": [
+        "authenticated_actor_identity",
+        "actor_to_trace_attribution"
+      ],
+      "current_state": "partial",
+      "verification_state": "browser_level_separation_only",
+      "applicability_state": "not_tenant_isolation_maturity",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "runtime_governance_path_sufficiency",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "requested_action": "evaluate_runtime_path_sufficiency",
+      "operational_evidence_class_ids": [
+        "runtime_execution_boundary",
+        "backend_validation",
+        "reproducible_execution_log",
+        "release_decision_record"
+      ],
+      "current_state": "partial",
+      "verification_state": "unverified",
+      "applicability_state": "incomplete_runtime_path",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "palisade/policy-bundle.v0/integration-readiness.v0.json",
+        "data/public-surface-execution-audit.v0.json",
+        "data/nexus-adapter-readiness.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "palisade_policy_decision_availability",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "requested_action": "evaluate_runtime_path_sufficiency",
+      "operational_evidence_class_ids": [
+        "validator_report_artifact",
+        "test_result_artifact"
+      ],
+      "current_state": "policy-represented-only",
+      "verification_state": "repository_validator_only",
+      "applicability_state": "not_runtime_enforcement",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
+        "scripts/validate-palisade-policy-bundle.mjs"
+      ],
+      "blocked_decisions": [
+        "requires_evidence",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "conduit_contract_or_execution_readiness",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "requested_action": "evaluate_runtime_path_sufficiency",
+      "operational_evidence_class_ids": [
+        "runtime_execution_boundary",
+        "reproducible_execution_log",
+        "validator_report_artifact"
+      ],
+      "current_state": "partial",
+      "verification_state": "contract_only",
+      "applicability_state": "not_execution_readiness",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/conduit-versioning-policy.v1.json",
+        "data/track3-local-report-export-manifest.v1.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "vault_nexus_evaluation_availability",
+      "palisade_claim_id": "public_nexus_runtime_execution_claim",
+      "requested_action": "expose_public_runtime_execution",
+      "operational_evidence_class_ids": [
+        "runtime_execution_boundary",
+        "reproducible_execution_log",
+        "deterministic_run_record"
+      ],
+      "current_state": "stubbed",
+      "verification_state": "local_only",
+      "applicability_state": "not_public_runtime",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/nexus-adapter-readiness.v0.json",
+        "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+        "data/nexus-vault-compatibility-pipeline-fixtures.v1.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "durable_evidence_audit_record_capability",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "requested_action": "claim_operational_release_authority",
+      "operational_evidence_class_ids": [
+        "persistent_trace_storage",
+        "append_only_ledger_semantics",
+        "hash_chain_verification",
+        "retention_model",
+        "reproducible_execution_log"
+      ],
+      "current_state": "required",
+      "verification_state": "missing",
+      "applicability_state": "not_current_operational_evidence",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/product-negative-space-backlog.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "release_state_decision_capability",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "requested_action": "claim_operational_release_authority",
+      "operational_evidence_class_ids": [
+        "release_decision_record",
+        "validator_report_artifact",
+        "security_review_record",
+        "escalation_or_freeze_record"
+      ],
+      "current_state": "absent",
+      "verification_state": "missing",
+      "applicability_state": "not_current_release_authority",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "operational_release_authority",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "requested_action": "claim_operational_release_authority",
+      "operational_evidence_class_ids": [
+        "release_decision_record",
+        "validator_report_artifact",
+        "security_review_record",
+        "backend_validation",
+        "reproducible_execution_log"
+      ],
+      "current_state": "absent",
+      "verification_state": "missing",
+      "applicability_state": "not_authorized",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/product-negative-space-backlog.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "operator_review_escalation",
+      "palisade_claim_id": "operator_review_escalation",
+      "requested_action": "evaluate_operator_review_need",
+      "operator_review_required": true,
+      "operational_evidence_class_ids": [
+        "security_review_record",
+        "validator_report_artifact",
+        "release_decision_record"
+      ],
+      "current_state": "required",
+      "verification_state": "missing_authorization",
+      "applicability_state": "not_claim_specific_authorization",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/documentation-operator-review-queue.v1.json",
+        "data/operational-evidence-packet-contract.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "public_nexus_runtime_execution",
+      "palisade_claim_id": "public_nexus_runtime_execution_claim",
+      "requested_action": "expose_public_runtime_execution",
+      "operational_evidence_class_ids": [
+        "runtime_execution_boundary",
+        "deterministic_run_record",
+        "reproducible_execution_log"
+      ],
+      "current_state": "absent",
+      "verification_state": "missing",
+      "applicability_state": "not_public_runtime",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/nexus-adapter-readiness.v0.json",
+        "data/nexus-vault-compatibility-pipeline-fixtures.v1.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "model_api_execution",
+      "palisade_claim_id": "model_api_execution_claim",
+      "requested_action": "claim_model_api_execution",
+      "operational_evidence_class_ids": [
+        "runtime_execution_boundary",
+        "reproducible_execution_log",
+        "backend_validation"
+      ],
+      "current_state": "absent",
+      "verification_state": "missing",
+      "applicability_state": "not_model_execution",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/nexus-adapter-readiness.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "deployed_palisade_runtime_enforcement",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "requested_action": "evaluate_runtime_path_sufficiency",
+      "denied_claims": [
+        "runtime_enforcement"
+      ],
+      "operational_evidence_class_ids": [
+        "backend_validation",
+        "validator_report_artifact",
+        "security_review_record"
+      ],
+      "current_state": "policy-represented-only",
+      "verification_state": "not_deployed",
+      "applicability_state": "not_runtime_enforcement",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "palisade/policy-bundle.v0/manifest.json",
+        "palisade/policy-bundle.v0/integration-readiness.v0.json"
+      ],
+      "blocked_decisions": [
+        "runtime_enforcement_unavailable",
+        "requires_evidence",
+        "deny"
+      ]
+    },
+    {
+      "evidence_class": "weave_orchestration_availability",
+      "palisade_claim_id": "staged_surface_advancement",
+      "requested_action": "advance_surface_to_product_language",
+      "operational_evidence_class_ids": [
+        "runtime_execution_boundary",
+        "escalation_or_freeze_record",
+        "reproducible_execution_log"
+      ],
+      "current_state": "absent",
+      "verification_state": "missing",
+      "applicability_state": "not_orchestration",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "README.md",
+        "palisade/policy-bundle.v0/integration-readiness.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    },
+    {
+      "evidence_class": "bounded_repository_evidence_classification",
+      "palisade_claim_id": "staged_surface_advancement",
+      "requested_action": "advance_surface_to_product_language",
+      "operational_evidence_class_ids": [
+        "test_result_artifact",
+        "validator_report_artifact"
+      ],
+      "current_state": "repository-owned",
+      "verification_state": "classification_only",
+      "applicability_state": "local_only_preview_stubbed_or_policy_represented",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+        "palisade/policy-bundle.v0/manifest.json"
+      ],
+      "blocked_decisions": [
+        "contradictory_evidence",
+        "stale_evidence",
+        "missing_evidence_source"
+      ]
+    },
+    {
+      "evidence_class": "evidence_packet_completeness_vs_operational_verification",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "requested_action": "claim_operational_release_authority",
+      "operational_evidence_class_ids": [
+        "real_input_output_artifact",
+        "input_hash",
+        "output_hash",
+        "artifact_hash_binding",
+        "persistent_trace_storage",
+        "append_only_ledger_semantics",
+        "hash_chain_verification",
+        "backend_validation",
+        "authenticated_actor_identity",
+        "actor_to_trace_attribution",
+        "reproducible_execution_log",
+        "deterministic_run_record",
+        "test_result_artifact",
+        "validator_report_artifact",
+        "security_review_record",
+        "retention_model",
+        "runtime_execution_boundary",
+        "escalation_or_freeze_record",
+        "release_decision_record"
+      ],
+      "current_state": "required",
+      "verification_state": "not_complete_or_verified",
+      "applicability_state": "not_release_authority",
+      "necessary_but_not_sufficient": true,
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/product-negative-space-backlog.v0.json"
+      ],
+      "blocked_decisions": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ]
+    }
+  ],
+  "claim_to_evidence_threshold_mappings": [
+    {
+      "claim_class": "production_workspace_maturity",
+      "palisade_claim_id": "production_workspace_claim",
+      "required_evidence_classes": [
+        "authenticated_workspace_availability",
+        "applied_live_workspace_data_model",
+        "server_side_authorization",
+        "rls_or_equivalent_authorization_enforcement",
+        "tenant_scoped_persistence",
+        "membership_account_separation",
+        "runtime_governance_path_sufficiency",
+        "durable_evidence_audit_record_capability"
+      ],
+      "decision_required": "allow",
+      "current_result": "blocked"
+    },
+    {
+      "claim_class": "runtime_governance_path_sufficiency",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "required_evidence_classes": [
+        "conduit_contract_or_execution_readiness",
+        "palisade_policy_decision_availability",
+        "vault_nexus_evaluation_availability",
+        "durable_evidence_audit_record_capability",
+        "release_state_decision_capability"
+      ],
+      "decision_required": "allow",
+      "current_result": "blocked"
+    },
+    {
+      "claim_class": "operational_release_authority",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "required_evidence_classes": [
+        "durable_evidence_audit_record_capability",
+        "release_state_decision_capability",
+        "runtime_governance_path_sufficiency",
+        "operator_review_escalation"
+      ],
+      "decision_required": "allow",
+      "current_result": "blocked"
+    },
+    {
+      "claim_class": "public_nexus_runtime_execution",
+      "palisade_claim_id": "public_nexus_runtime_execution_claim",
+      "required_evidence_classes": [
+        "vault_nexus_evaluation_availability",
+        "runtime_governance_path_sufficiency"
+      ],
+      "decision_required": "allow",
+      "current_result": "blocked"
+    },
+    {
+      "claim_class": "model_api_execution",
+      "palisade_claim_id": "model_api_execution_claim",
+      "required_evidence_classes": [
+        "model_api_execution",
+        "runtime_governance_path_sufficiency"
+      ],
+      "decision_required": "allow",
+      "current_result": "blocked"
+    },
+    {
+      "claim_class": "repository_owned_contract_classification",
+      "palisade_claim_id": "staged_surface_advancement",
+      "required_evidence_classes": [
+        "bounded_repository_evidence_classification"
+      ],
+      "decision_required": "not_claim_advancement",
+      "current_result": "classification_allowed_only"
+    }
+  ],
+  "required_policy_input_fields": [
+    "surface",
+    "claim_id",
+    "requested_action",
+    "evidence_state",
+    "production_workspace_threshold_state",
+    "runtime_governance_path_state",
+    "operator_authorization_state",
+    "current_repository_state_basis"
+  ],
+  "required_policy_decision_fields": [
+    "decision",
+    "claim_id",
+    "surface",
+    "requested_action",
+    "allowed",
+    "reasons",
+    "required_evidence",
+    "missing_evidence",
+    "operator_review_required",
+    "runtime_enforcement_status",
+    "current_state_basis",
+    "next_evidence_threshold"
+  ],
+  "current_evidence_sources": [
+    "data/operational-evidence-packet-contract.v0.json",
+    "data/product-negative-space-backlog.v0.json",
+    "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
+    "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+    "data/public-surface-execution-audit.v0.json",
+    "data/nexus-adapter-readiness.v0.json",
+    "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+    "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+    "palisade/policy-bundle.v0/integration-readiness.v0.json"
+  ],
+  "evidence_state_normalization": {
+    "required": "Evidence class is declared as required by the contract but is not fulfilled by declaration alone.",
+    "missing": "Required evidence has no current repository artifact or applicable operational record.",
+    "absent": "Capability or runtime path component does not exist in current repository evidence.",
+    "exists": "An artifact or bounded record exists; existence does not imply completeness.",
+    "partial": "Some bounded evidence exists but the policy threshold is incomplete.",
+    "complete": "All required fields or packet classes are present; completeness does not imply verification.",
+    "unverified": "Evidence lacks verification for the current claim.",
+    "verified": "Evidence is verified only for the stated bounded scope.",
+    "stale": "Evidence is not current for the claim or baseline and fails closed.",
+    "current": "Evidence applies to the current synchronized repository state.",
+    "contradictory": "Evidence records disagree and fail closed.",
+    "inapplicable": "Evidence exists but does not apply to the claim threshold.",
+    "local-only": "Local fixture or local validator evidence cannot authorize production claims.",
+    "preview-only": "Preview evidence cannot authorize operational claims.",
+    "stubbed": "Stub or contract evidence cannot authorize runtime execution.",
+    "policy-represented-only": "Palisade artifact exists as repository policy but not runtime enforcement.",
+    "test-only": "Test fixtures prove reachability only.",
+    "hypothetical": "Hypothetical complete evidence is not current repository evidence."
+  },
+  "evidence_completeness_rules": [
+    "Contract validity is not packet completeness.",
+    "A complete list of required evidence classes is not fulfilled evidence.",
+    "Every operational evidence class remains non-complete until its current_status changes through a separate authorized pass.",
+    "Packet completeness may be necessary for some claims but remains insufficient without verification and applicability."
+  ],
+  "evidence_verification_rules": [
+    "Packet completeness is not evidence verification.",
+    "Bounded protected-shell verification is scoped to the tested path only.",
+    "External substrate records do not create broad production authorization maturity.",
+    "Validator success is not operational verification."
+  ],
+  "evidence_applicability_rules": [
+    "Evidence must apply to the current repository state, claim, runtime path, workspace, and authorization boundary.",
+    "Local-only, preview-only, stubbed, policy-represented-only, test-only, and hypothetical evidence cannot authorize operational claims.",
+    "Ignored generated reports are not current operational evidence without tracked provenance and applicability."
+  ],
+  "contradiction_handling": "Fail closed if records disagree about current operational use, production workspace maturity, runtime path sufficiency, release authority, runtime enforcement, public NEXUS execution, model execution, tenant maturity, or verification state.",
+  "stale_evidence_handling": "Fail closed if evidence is not current for the synchronized repository state or cannot be tied to the current baseline.",
+  "fail_closed_behavior": [
+    "Fail if the operational-evidence consumer contract, Palisade policy, schemas, or operational-evidence contract is missing or malformed.",
+    "Fail if any governed evidence class lacks a Palisade mapping.",
+    "Fail if mapped claim IDs do not exist in the Palisade policy artifact.",
+    "Fail if required input or decision fields are absent.",
+    "Fail if hypothetical, test-only, stale, contradictory, or invented evidence is treated as current operational evidence.",
+    "Fail if non-allow decisions are treated as claim advancement.",
+    "Fail if release authority is inferred from contract validity, packet completeness, or Operator review alone."
+  ],
+  "no_overclaim_behavior": [
+    "A valid operational-evidence contract is not fulfilled operational evidence.",
+    "Packet completeness is not verification.",
+    "Verification is not runtime enforcement.",
+    "Palisade validator consumption is not a deployed enforcement membrane.",
+    "Repository-owned, local-only, preview-only, stubbed, or policy-represented evidence may be classified only as bounded current state."
+  ],
+  "operator_review_handling": {
+    "requires_operator_review": "Not evidence sufficiency or release authority by itself.",
+    "authorization_required": "Explicit claim-specific Operator authorization evidence and required evidence must exist before any review-gated claim can advance.",
+    "current_repository_authorization_state": "not_requested",
+    "missing_authorization_behavior": "fail_closed"
+  },
+  "runtime_enforcement_status_handling": {
+    "runtime_enforcement_unavailable": "Blocks any claim that Palisade is deployed, operational, or enforcing runtime decisions.",
+    "unavailable": "Confirms validator-only consumption.",
+    "available": "May only be accepted with complete current evidence and policy permission; not present in current repository state."
+  },
+  "release_authority_handling": [
+    "Operational release authority requires complete and verified operational evidence, durable auditability, release-state decision capability, applicable authorization, runtime governance path sufficiency, no unresolved contradictions, Palisade permission, and compatible runtime status.",
+    "Contract validity, packet completeness, and Operator review alone are not release authority.",
+    "Current repository state keeps operational release authority blocked."
+  ],
+  "hypothetical_fixture_boundary": {
+    "policy_test_fixtures": "May prove policy reachability only.",
+    "current_repository_evidence": "Must come from synchronized repository evidence records and the operational-evidence contract, not hypothetical complete-evidence fixtures.",
+    "validator_behavior": "fail if hypothetical allow fixtures authorize current operational-evidence claims."
+  },
+  "preserved_existing_checks": [
+    "required top-level operational-evidence contract fields",
+    "required non-complete evidence class statuses",
+    "negative-space backlog source phrase mapping",
+    "required claim gates",
+    "disallowed current claims",
+    "non_implementation_boundary false fields",
+    "operational use future-threshold wording"
+  ],
+  "forbidden_inferences": [
+    "contract validity implies evidence fulfillment",
+    "evidence packet completeness implies verification",
+    "verification implies runtime enforcement",
+    "Palisade policy artifact existence implies deployed enforcement",
+    "Operator review implies release authority",
+    "local-only fixture success implies public runtime",
+    "repository-owned contract implies operational capability"
+  ],
+  "non_claims": [
+    "This consumer contract does not implement runtime enforcement.",
+    "This consumer contract does not implement operational release authority.",
+    "This consumer contract does not implement public NEXUS or model execution.",
+    "This consumer contract does not implement Conduit execution, Vault/NEXUS execution, Weave orchestration, or a public policy API.",
+    "This consumer contract does not modify public copy, README prose, or the operational-evidence contract semantics.",
+    "Palisade remains not a deployed enforcement membrane."
+  ],
+  "next_integration_boundary": "After operational-evidence packet contract validation consumes Palisade policy decisions, the next consumer should remain contract-only unless separately authorized by the integration-readiness map and current repository evidence."
+}
