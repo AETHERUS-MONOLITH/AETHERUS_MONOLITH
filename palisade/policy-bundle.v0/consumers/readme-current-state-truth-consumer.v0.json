@@ -1,0 +1,500 @@
+{
+  "consumer_id": "readme_current_state_truth_validator",
+  "consumer_path": "scripts/validate-readme-artifact-classification-sobriety.mjs",
+  "consumer_type": "validator",
+  "governed_surface": "README",
+  "source_policy_bundle": "palisade/policy-bundle.v0/",
+  "policy_file": "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
+  "policy_input_schema": "palisade/policy-bundle.v0/schema/policy-input.schema.json",
+  "policy_decision_schema": "palisade/policy-bundle.v0/schema/policy-decision.schema.json",
+  "consumed_policy_decisions": [
+    "production_workspace_claim",
+    "public_nexus_runtime_execution_claim",
+    "model_api_execution_claim",
+    "operational_release_authority_claim",
+    "staged_surface_advancement",
+    "runtime_governance_path_sufficiency",
+    "operator_review_escalation"
+  ],
+  "readme_claim_mappings": [
+    {
+      "claim_class": "production_workspace_maturity",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "readme_claim_patterns": [
+        "\\bproduction workspace maturity exists\\b",
+        "\\bproduction SaaS exists\\b",
+        "\\bcustomer workspace exists\\b",
+        "\\bproduction authenticated dashboard\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence and existing README sobriety checks also pass.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "README.md",
+        "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+        "data/operational-evidence-packet-contract.v0.json"
+      ],
+      "current_state_qualifier_rule": "Current-state descriptions of provider login, callback recognition, protected-route admission, and bounded save/load persistence are classifications only; they are not production maturity assertions."
+    },
+    {
+      "claim_class": "authenticated_production_workspace_availability",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "readme_claim_patterns": [
+        "\\bauthenticated production workspace (exists|is available|is live)\\b",
+        "\\bproduction authenticated workspace (exists|is available|is live)\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json"
+      ],
+      "current_state_qualifier_rule": "Verified authentication path language may pass only when it remains bounded to provider initiation, callback/session recognition, protected-shell admission, or tested protected-shell save/load state."
+    },
+    {
+      "claim_class": "tenant_scoped_persistence_maturity",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "readme_claim_patterns": [
+        "\\btenant-scoped persistence maturity exists\\b",
+        "\\btenant isolation exists\\b",
+        "\\bverified tenant isolation\\b",
+        "\\blive application-data persistence\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+        "docs/OPTION_E_0_4_AUTH_TENANT_ISOLATION_REQUIREMENTS_MATRIX.md",
+        "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md"
+      ],
+      "current_state_qualifier_rule": "Bounded save/load and browser-level account separation may be stated only as bounded evidence, not tenant maturity."
+    },
+    {
+      "claim_class": "server_side_authorization_or_rls_maturity",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "production_workspace_claim",
+      "requested_action": "claim_public_capability",
+      "readme_claim_patterns": [
+        "\\bserver-side authorization maturity exists\\b",
+        "\\bverified RLS\\b",
+        "\\bproduction authorization maturity\\b",
+        "\\bRLS exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+        "docs/OPTION_E_0_6_DATABASE_RLS_POLICY_PLANNING_BASELINE.md"
+      ],
+      "current_state_qualifier_rule": "Repository-held planning and external substrate evidence do not become broad production authorization maturity."
+    },
+    {
+      "claim_class": "runtime_governance_path_sufficiency",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "requested_action": "evaluate_runtime_path_sufficiency",
+      "readme_claim_patterns": [
+        "\\bruntime governance execution exists\\b",
+        "\\bgoverned runtime path is operational\\b",
+        "\\bruntime governance path is sufficient\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "README.md",
+        "palisade/policy-bundle.v0/integration-readiness.v0.json",
+        "data/public-surface-execution-audit.v0.json",
+        "data/nexus-adapter-readiness.v0.json"
+      ],
+      "current_state_qualifier_rule": "The README may describe the required path as a threshold and may state it remains unclaimable; it may not state the path is operational."
+    },
+    {
+      "claim_class": "palisade_runtime_enforcement",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "runtime_governance_path_sufficiency",
+      "requested_action": "evaluate_runtime_path_sufficiency",
+      "denied_claims": [
+        "runtime_enforcement"
+      ],
+      "readme_claim_patterns": [
+        "\\bPalisade runtime enforcement exists\\b",
+        "\\bPalisade is instantiated\\b",
+        "\\bPalisade is a deployed enforcement membrane\\b",
+        "\\bPalisade runtime gate exists\\b"
+      ],
+      "allowed_only_when": "Runtime enforcement status is available and Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "palisade/policy-bundle.v0/manifest.json",
+        "palisade/policy-bundle.v0/integration-readiness.v0.json",
+        "palisade/policy-bundle.v0/policies/claim-capability-policy.json"
+      ],
+      "current_state_qualifier_rule": "Repository-owned policy artifact language may pass; runtime enforcement language is prohibited while runtime_enforcement.current_status is unavailable."
+    },
+    {
+      "claim_class": "public_nexus_runtime_execution",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "public_nexus_runtime_execution_claim",
+      "requested_action": "expose_public_runtime_execution",
+      "readme_claim_patterns": [
+        "\\bpublic NEXUS runtime exists\\b",
+        "\\bpublic NEXUS runtime execution exists\\b",
+        "\\bpublic interface .*NEXUS .*execution\\b",
+        "\\bAETHERUS runs NEXUS\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/nexus-adapter-readiness.v0.json",
+        "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+        "data/nexus-vault-compatibility-pipeline-fixtures.v1.json"
+      ],
+      "current_state_qualifier_rule": "Pinned NEXUS source and local compatibility records may be classified as repository evidence, not public runtime execution."
+    },
+    {
+      "claim_class": "model_api_execution",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "model_api_execution_claim",
+      "requested_action": "claim_model_api_execution",
+      "readme_claim_patterns": [
+        "\\bmodel API execution exists\\b",
+        "\\bmodel calls are live\\b",
+        "\\blive AI execution exists\\b",
+        "\\bexecuting live AI\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/product-negative-space-backlog.v0.json",
+        "data/nexus-adapter-readiness.v0.json"
+      ],
+      "current_state_qualifier_rule": "No-live-AI and no-model-execution boundary statements are bounded current-state classifications."
+    },
+    {
+      "claim_class": "operational_release_authority",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "requested_action": "claim_operational_release_authority",
+      "readme_claim_patterns": [
+        "\\boperational release authority exists\\b",
+        "\\brelease authority exists\\b",
+        "\\boperational release decision support exists\\b",
+        "\\bvalidation-backed operational release eligibility exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/product-negative-space-backlog.v0.json"
+      ],
+      "current_state_qualifier_rule": "Future threshold language may pass only when it states operational release authority is not current."
+    },
+    {
+      "claim_class": "durable_evidence_or_audit_capability",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "operational_release_authority_claim",
+      "requested_action": "claim_operational_release_authority",
+      "readme_claim_patterns": [
+        "\\bdurable evidence audit trail exists\\b",
+        "\\bpersistent production audit ledger\\b",
+        "\\bproduction audit ledger exists\\b",
+        "\\boperational audit evidence exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/operational-evidence-packet-contract.v0.json",
+        "data/product-negative-space-backlog.v0.json"
+      ],
+      "current_state_qualifier_rule": "Repository-local evidence, deterministic traces, and evidence contracts do not complete operational evidence or a production audit ledger."
+    },
+    {
+      "claim_class": "deployed_conduit_vault_integration",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "public_nexus_runtime_execution_claim",
+      "requested_action": "expose_public_runtime_execution",
+      "readme_claim_patterns": [
+        "\\bdeployed Conduit/Vault integration exists\\b",
+        "\\bConduit is wired to Vault runtime\\b",
+        "\\bVault/NEXUS evaluation is operational\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/conduit-versioning-policy.v1.json",
+        "data/nexus-adapter-readiness.v0.json",
+        "data/nexus-vault-compatibility-evidence-packet-contract.v1.json"
+      ],
+      "current_state_qualifier_rule": "Contracts, stubs, local adapters, and pinned-source evidence may pass as repository artifacts only."
+    },
+    {
+      "claim_class": "weave_orchestration_availability",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "staged_surface_advancement",
+      "requested_action": "advance_surface_to_product_language",
+      "readme_claim_patterns": [
+        "\\bWeave orchestration exists\\b",
+        "\\bWeave is runnable\\b",
+        "\\blive orchestration exists\\b",
+        "\\bWeave runtime exists\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under current repository evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "README.md",
+        "palisade/policy-bundle.v0/integration-readiness.v0.json"
+      ],
+      "current_state_qualifier_rule": "Specification-only Weave language may pass only when it states Weave remains non-operational."
+    },
+    {
+      "claim_class": "operator_review_claim_advancement",
+      "mapping_type": "capability_assertion",
+      "palisade_claim_id": "operator_review_escalation",
+      "requested_action": "evaluate_operator_review_need",
+      "operator_review_required": true,
+      "readme_claim_patterns": [
+        "\\bOperator review has authorized production threshold transition\\b",
+        "\\bOperator-approved runtime enforcement exists\\b",
+        "\\bOperator authorization permits operational claim advancement\\b"
+      ],
+      "allowed_only_when": "Palisade decision is allow under explicit claim-specific Operator authorization evidence.",
+      "blocks_when_decision_is": [
+        "deny",
+        "requires_evidence",
+        "requires_operator_review",
+        "runtime_enforcement_unavailable"
+      ],
+      "repository_evidence_sources": [
+        "data/documentation-operator-review-queue.v1.json",
+        "palisade/policy-bundle.v0/integration-readiness.v0.json"
+      ],
+      "current_state_qualifier_rule": "Operator-review routing may be described as a review requirement; it may not authorize README capability advancement by itself."
+    },
+    {
+      "claim_class": "bounded_preview_static_local_or_repository_state",
+      "mapping_type": "bounded_current_state_classification",
+      "palisade_claim_id": "staged_surface_advancement",
+      "requested_action": "advance_surface_to_product_language",
+      "classification_patterns": [
+        "\\bstatic, GitHub Pages deployed, browser-side, deterministic, scenario-driven, non-persistent public artifact\\b",
+        "\\bstatic, preview, non-production, reserved, and boundary language\\b",
+        "\\brepository-local evidence\\b",
+        "\\bstubbed\\b",
+        "\\blocal compatibility pipeline fixtures only\\b"
+      ],
+      "readme_claim_patterns": [
+        "\\b(static|preview|local-only|repository-held|repository-owned|stubbed|unverified)\\b"
+      ],
+      "allowed_only_when": "Classification is bounded by README context and does not imply production, operational, public runtime, or deployed enforcement capability.",
+      "blocks_when_decision_is": [
+        "allow_with_contradictory_runtime_claim",
+        "missing_evidence_source",
+        "contradictory_evidence_source"
+      ],
+      "repository_evidence_sources": [
+        "README.md",
+        "data/readme-artifact-classification-sobriety.v0.json",
+        "data/public-surface-execution-audit.v0.json",
+        "data/nexus-vault-compatibility-pipeline-fixtures.v1.json"
+      ],
+      "current_state_qualifier_rule": "Current-state qualifiers are accepted only as classification support and must not disguise unavailable operational capability."
+    },
+    {
+      "claim_class": "repository_owned_artifact_existence",
+      "mapping_type": "bounded_current_state_classification",
+      "palisade_claim_id": "staged_surface_advancement",
+      "requested_action": "advance_surface_to_product_language",
+      "classification_patterns": [
+        "\\brepository-owned, versioned policy artifact\\b",
+        "\\bintegration-readiness map\\b",
+        "\\bconsumer contract\\b",
+        "\\bvalidator-consumer\\b"
+      ],
+      "readme_claim_patterns": [
+        "\\brepository-owned policy artifact\\b",
+        "\\bintegration-readiness map\\b",
+        "\\bconsumer contract\\b",
+        "\\bvalidator-consumer\\b"
+      ],
+      "allowed_only_when": "Referenced repository artifact exists at the mapped source path and the wording does not claim runtime enforcement or operational capability.",
+      "blocks_when_decision_is": [
+        "missing_evidence_source",
+        "contradictory_evidence_source",
+        "runtime_enforcement_unavailable_if_used_as_runtime_claim"
+      ],
+      "repository_evidence_sources": [
+        "palisade/policy-bundle.v0/manifest.json",
+        "palisade/policy-bundle.v0/integration-readiness.v0.json",
+        "palisade/policy-bundle.v0/consumers/product-language-boundary-consumer.v0.json",
+        "palisade/policy-bundle.v0/consumers/readme-current-state-truth-consumer.v0.json",
+        "scripts/validate-readme-artifact-classification-sobriety.mjs"
+      ],
+      "current_state_qualifier_rule": "Artifact existence may pass as repository truth; it does not prove Palisade runtime enforcement, policy service deployment, or release authority."
+    }
+  ],
+  "required_policy_input_fields": [
+    "surface",
+    "claim_id",
+    "requested_action",
+    "evidence_state",
+    "production_workspace_threshold_state",
+    "runtime_governance_path_state",
+    "operator_authorization_state",
+    "current_repository_state_basis"
+  ],
+  "required_policy_decision_fields": [
+    "decision",
+    "claim_id",
+    "surface",
+    "requested_action",
+    "allowed",
+    "reasons",
+    "required_evidence",
+    "missing_evidence",
+    "operator_review_required",
+    "runtime_enforcement_status",
+    "current_state_basis",
+    "next_evidence_threshold"
+  ],
+  "current_evidence_sources": [
+    "README.md",
+    "data/readme-artifact-classification-sobriety.v0.json",
+    "data/direct-ui-membrane-live-provider-loop-verification.v0.json",
+    "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
+    "data/operational-evidence-packet-contract.v0.json",
+    "data/product-negative-space-backlog.v0.json",
+    "data/public-surface-execution-audit.v0.json",
+    "data/nexus-adapter-readiness.v0.json",
+    "data/nexus-vault-compatibility-evidence-packet-contract.v1.json",
+    "data/nexus-vault-compatibility-pipeline-fixtures.v1.json",
+    "palisade/policy-bundle.v0/integration-readiness.v0.json"
+  ],
+  "fail_closed_behavior": [
+    "Fail validation if the README consumer contract, Palisade policy, input schema, or decision schema is missing or malformed.",
+    "Fail validation if any governed README claim class lacks a Palisade claim ID mapping.",
+    "Fail validation if a mapped Palisade claim ID lacks a rule in the policy artifact.",
+    "Fail validation if a required policy input or decision field is absent.",
+    "Fail validation if current repository evidence sources are missing, contradictory, or hypothetical fixture-only.",
+    "Fail validation if a Palisade-governed README capability claim appears and the current policy decision is not allow.",
+    "Fail validation if allow lacks complete current evidence, traceable current-state basis, or compatible runtime-enforcement status."
+  ],
+  "no_overclaim_behavior": [
+    "Validator consumption is not runtime enforcement.",
+    "The existence of a Palisade policy artifact is not proof of deployed enforcement.",
+    "README language must not claim production workspace maturity, public NEXUS runtime, model API execution, operational release authority, runtime enforcement, deployed Conduit/Vault integration, or Weave orchestration without Palisade allow under current repository evidence.",
+    "Bounded current-state classifications may pass when repository evidence supports them and they do not imply unavailable operational capability."
+  ],
+  "operator_review_handling": {
+    "requires_operator_review": "Not README claim permission by itself.",
+    "authorization_required": "Explicit claim-specific Operator authorization evidence must exist and the policy must permit review-based advancement before any Operator-review-gated capability claim may pass.",
+    "current_repository_authorization_state": "not_requested",
+    "missing_authorization_behavior": "fail_closed"
+  },
+  "runtime_enforcement_status_handling": {
+    "runtime_enforcement_unavailable": "Blocks any README claim of deployed or operational Palisade enforcement.",
+    "unavailable": "Confirms validator-only consumption and cannot be represented as a deployed policy membrane.",
+    "available": "May be accepted only with complete current repository evidence and a Palisade allow decision."
+  },
+  "hypothetical_fixture_boundary": {
+    "policy_test_fixtures": "May prove policy reachability only.",
+    "current_repository_evidence": "Must come from synchronized repository evidence records, not hypothetical complete-evidence fixtures.",
+    "validator_behavior": "fail if hypothetical allow fixtures are used to authorize README current-state claims."
+  },
+  "preserved_existing_checks": [
+    "required_artifact_classes",
+    "required_boundary_phrases",
+    "restricted_claim_patterns",
+    "required_distinctions",
+    "non_implementation_boundary false fields",
+    "README-specific negated-boundary context handling"
+  ],
+  "forbidden_capability_claims": [
+    "production workspace maturity exists",
+    "authenticated production workspace exists",
+    "tenant isolation maturity exists",
+    "server-side authorization or RLS maturity exists",
+    "runtime governance execution exists",
+    "Palisade runtime enforcement exists",
+    "public NEXUS runtime execution exists",
+    "model API execution exists",
+    "operational release authority exists",
+    "persistent production audit ledger exists",
+    "deployed Conduit/Vault integration exists",
+    "Weave orchestration exists"
+  ],
+  "non_claims": [
+    "This consumer contract does not implement runtime enforcement.",
+    "This consumer contract does not wire Palisade into public runtime behavior.",
+    "This consumer contract does not modify README prose or public copy.",
+    "This consumer contract does not implement Conduit execution, Vault/NEXUS execution, model API execution, Weave orchestration, operational release authority, or a public policy API.",
+    "Palisade remains not a deployed enforcement membrane."
+  ],
+  "next_integration_boundary": "After README current-state truth validation consumes Palisade policy decisions, the next consumer should be selected from the integration-readiness map based on current repository evidence without runtime enforcement claims."
+}

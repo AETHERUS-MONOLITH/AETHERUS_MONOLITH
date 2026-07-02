@@ -1,12 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
+import {
+  allowedPalisadeDecisions,
+  buildPolicyInput,
+  decisionShapeErrors,
+  evaluatePalisadeDecision,
+  palisadeBundlePath,
+  palisadeDecisionSchemaPath,
+  palisadeInputSchemaPath,
+  palisadeManifestPath,
+  palisadePolicyPath
+} from "./palisade-policy-consumption.mjs";
 
 const backlogPath = "data/product-negative-space-backlog.v0.json";
-const palisadeBundlePath = "palisade/policy-bundle.v0";
-const palisadeManifestPath = path.posix.join(palisadeBundlePath, "manifest.json");
-const palisadePolicyPath = path.posix.join(palisadeBundlePath, "policies/claim-capability-policy.json");
-const palisadeInputSchemaPath = path.posix.join(palisadeBundlePath, "schema/policy-input.schema.json");
-const palisadeDecisionSchemaPath = path.posix.join(palisadeBundlePath, "schema/policy-decision.schema.json");
 const palisadeConsumerContractPath = path.posix.join(
   palisadeBundlePath,
   "consumers/product-language-boundary-consumer.v0.json"
@@ -40,14 +46,6 @@ const customerFacingSurfaceFiles = [
 ];
 
 const failures = [];
-const allowedPalisadeDecisions = new Set([
-  "allow",
-  "deny",
-  "requires_evidence",
-  "requires_operator_review",
-  "runtime_enforcement_unavailable"
-]);
-const allowedRuntimeStatuses = new Set(["available", "unavailable", "not_applicable"]);
 
 function fail(file, message) {
   failures.push(`${file}: ${message}`);
@@ -120,288 +118,8 @@ function assertIncludesAll(actual, required, file, label) {
   }
 }
 
-function componentState(state, evidence = []) {
-  return { state, verified: state === "exists", evidence };
-}
-
-function allComponentsSatisfied(state, components) {
-  return components.every((component) => {
-    const entry = state[component];
-    return entry && entry.state === "exists" && entry.verified === true;
-  });
-}
-
-function missingComponents(state, components) {
-  return components.filter((component) => {
-    const entry = state[component];
-    return !entry || entry.state !== "exists" || entry.verified !== true;
-  });
-}
-
-function buildCurrentProductionWorkspaceState(policy) {
-  const required = policy.production_workspace_threshold.required_components;
-  return Object.fromEntries(
-    required.map((component) => {
-      const partialComponents = new Set([
-        "real_authenticated_shell",
-        "applied_live_workspace_data_model",
-        "operational_workspace_surfaces_backed_by_capability",
-        "durable_evidence_audit_trail"
-      ]);
-      return [
-        component,
-        componentState(
-          partialComponents.has(component) ? "partial" : "absent",
-          partialComponents.has(component)
-            ? ["README current-state truth and Direct UI/protected workspace validation records"]
-            : []
-        )
-      ];
-    })
-  );
-}
-
-function buildCurrentRuntimeGovernancePathState(policy) {
-  const components = policy.runtime_governance_path.ordered_components;
-  const stateByComponent = {
-    user_workspace_input: componentState("partial", ["browser-side and protected-shell interactions"]),
-    Facade: componentState("exists", ["static public Facade surfaces and product-language validators"]),
-    Conduit: componentState("partial", ["Track 3 contract artifacts and local validators"]),
-    Palisade_policy_decision: componentState("exists", ["palisade/policy-bundle.v0 repository policy artifact"]),
-    Vault_NEXUS_evaluation: componentState("stubbed", ["Vault/NEXUS compatibility contracts and local adapter records"]),
-    evidence_audit_record: componentState("partial", ["operational evidence packet contract"]),
-    release_state_decision: componentState("absent", []),
-    surfaced_result: componentState("partial", ["bounded static public results only"])
-  };
-  return Object.fromEntries(components.map((component) => [component, stateByComponent[component] || componentState("absent")]));
-}
-
-function buildPolicyInput(mapping, policy) {
-  const productionState = buildCurrentProductionWorkspaceState(policy);
-  const runtimeState = buildCurrentRuntimeGovernancePathState(policy);
-  const productionMissing = missingComponents(
-    productionState,
-    policy.production_workspace_threshold.required_components
-  );
-  const runtimeMissing = missingComponents(runtimeState, policy.runtime_governance_path.ordered_components);
-  const requiredEvidence = new Set();
-  const missingEvidence = new Set();
-
-  if (mapping.palisade_claim_id === "production_workspace_claim") {
-    requiredEvidence.add("production_workspace_threshold");
-    productionMissing.forEach((item) => missingEvidence.add(item));
-  }
-  if (
-    [
-      "public_nexus_runtime_execution_claim",
-      "model_api_execution_claim",
-      "operational_release_authority_claim",
-      "staged_surface_advancement",
-      "runtime_governance_path_sufficiency"
-    ].includes(mapping.palisade_claim_id)
-  ) {
-    requiredEvidence.add("runtime_governance_path");
-    runtimeMissing.forEach((item) => missingEvidence.add(item));
-  }
-  if (mapping.palisade_claim_id === "operational_release_authority_claim") {
-    requiredEvidence.add("release_authority_threshold");
-    missingEvidence.add("durable_evidence_audit_trail");
-    missingEvidence.add("release_state_decision");
-  }
-  if (mapping.palisade_claim_id === "operator_review_escalation") {
-    requiredEvidence.add("operator_review");
-    missingEvidence.add("operator approval record");
-  }
-
-  return {
-    surface: "product-language-boundary-validator",
-    claim_id: mapping.palisade_claim_id,
-    requested_action: mapping.requested_action,
-    evidence_state: {
-      current_evidence: [
-        "current repository validation records",
-        "README current-state truth",
-        "Palisade policy artifact"
-      ],
-      missing_evidence: Array.from(missingEvidence),
-      required_evidence: Array.from(requiredEvidence),
-      denied_claims: mapping.claim_class === "runtime_governance_path_sufficiency"
-        ? ["runtime_enforcement"]
-        : [mapping.claim_class],
-      evidence_notes: [
-        "Constructed by product-language validator from current repository evidence.",
-        "Hypothetical complete-evidence Palisade fixtures are not used as current evidence."
-      ]
-    },
-    production_workspace_threshold_state: productionState,
-    runtime_governance_path_state: runtimeState,
-    operator_authorization_state: {
-      status: "not_requested",
-      review_required: mapping.palisade_claim_id === "operator_review_escalation",
-      review_reason: mapping.palisade_claim_id === "operator_review_escalation"
-        ? "structural claim-boundary transition"
-        : ""
-    },
-    current_repository_state_basis: [
-      "scripts/validate-product-language-boundary.mjs",
-      "palisade/policy-bundle.v0/consumers/product-language-boundary-consumer.v0.json",
-      "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
-      "README.md",
-      backlogPath
-    ]
-  };
-}
-
-function evaluatePalisadeDecision(policy, input) {
-  const productionComplete = allComponentsSatisfied(
-    input.production_workspace_threshold_state,
-    policy.production_workspace_threshold.required_components
-  );
-  const runtimeComplete = allComponentsSatisfied(
-    input.runtime_governance_path_state,
-    policy.runtime_governance_path.ordered_components
-  );
-  const missingProduction = missingComponents(
-    input.production_workspace_threshold_state,
-    policy.production_workspace_threshold.required_components
-  );
-  const missingRuntime = missingComponents(
-    input.runtime_governance_path_state,
-    policy.runtime_governance_path.ordered_components
-  );
-  const reasons = [];
-  let decision = "deny";
-  let operatorReviewRequired = false;
-  let nextThreshold = [...missingProduction, ...missingRuntime];
-
-  const policyRule = (policy.rules || []).find((rule) => rule.claim_id === input.claim_id);
-  if (!policyRule) {
-    fail(palisadePolicyPath, `policy missing rule for ${input.claim_id}`);
-  }
-
-  if (input.evidence_state.denied_claims.includes("runtime_enforcement")) {
-    decision = "runtime_enforcement_unavailable";
-    reasons.push(policy.runtime_enforcement.current_state_basis);
-    nextThreshold = ["runtime enforcement integration"];
-  } else if (
-    input.operator_authorization_state.review_required &&
-    input.operator_authorization_state.status !== "approved"
-  ) {
-    decision = "requires_operator_review";
-    operatorReviewRequired = true;
-    reasons.push("Operator review is required by the Palisade policy rule.");
-    nextThreshold = ["operator approval record"];
-  } else if (input.claim_id === "production_workspace_claim") {
-    if (productionComplete && runtimeComplete) {
-      decision = "allow";
-      reasons.push(policy.production_workspace_threshold.allow_rule);
-      nextThreshold = [];
-    } else {
-      decision = policyRule?.incomplete_decision || "deny";
-      reasons.push(policy.production_workspace_threshold.allow_rule);
-    }
-  } else if (
-    input.claim_id === "public_nexus_runtime_execution_claim" ||
-    input.claim_id === "model_api_execution_claim"
-  ) {
-    if (runtimeComplete) {
-      decision = "allow";
-      reasons.push(policy.runtime_governance_path.nexus_runtime_rule);
-      nextThreshold = [];
-    } else {
-      decision = policyRule?.incomplete_decision || "deny";
-      reasons.push(policy.runtime_governance_path.nexus_runtime_rule);
-      nextThreshold = missingRuntime;
-    }
-  } else if (input.claim_id === "operational_release_authority_claim") {
-    const releaseComplete = allComponentsSatisfied(input.runtime_governance_path_state, [
-      "evidence_audit_record",
-      "release_state_decision"
-    ]);
-    if (runtimeComplete && releaseComplete) {
-      decision = "allow";
-      reasons.push("Release authority threshold is complete under Palisade policy.");
-      nextThreshold = [];
-    } else {
-      decision = policyRule?.incomplete_decision || "deny";
-      reasons.push("Operational release authority requires durable evidence audit and release-state decision capability.");
-      nextThreshold = missingComponents(input.runtime_governance_path_state, [
-        "evidence_audit_record",
-        "release_state_decision"
-      ]);
-    }
-  } else if (input.claim_id === "staged_surface_advancement") {
-    if (productionComplete && runtimeComplete) {
-      decision = "allow";
-      reasons.push("Surface advancement threshold is complete under Palisade policy.");
-      nextThreshold = [];
-    } else {
-      decision = policyRule?.partial_evidence_decision || "requires_evidence";
-      reasons.push("Partial evidence exists, but stronger product language requires threshold completion.");
-    }
-  } else if (input.claim_id === "runtime_governance_path_sufficiency") {
-    if (runtimeComplete) {
-      decision = "allow";
-      reasons.push("Every runtime governance path component exists and is verified.");
-      nextThreshold = [];
-    } else {
-      decision = policyRule?.incomplete_decision || "requires_evidence";
-      reasons.push(policy.runtime_governance_path.sufficiency_rule.type);
-      nextThreshold = missingRuntime;
-    }
-  } else if (input.claim_id === "operator_review_escalation") {
-    decision = policyRule?.review_decision || "requires_operator_review";
-    operatorReviewRequired = true;
-    reasons.push("Operator review is required for structurally significant threshold transitions.");
-    nextThreshold = ["operator approval record"];
-  }
-
-  return {
-    decision,
-    claim_id: input.claim_id,
-    surface: input.surface,
-    requested_action: input.requested_action,
-    allowed: decision === "allow",
-    reasons,
-    required_evidence: input.evidence_state.required_evidence,
-    missing_evidence: input.evidence_state.missing_evidence,
-    operator_review_required: operatorReviewRequired,
-    runtime_enforcement_status: decision === "allow" ? "available" : input.claim_id === "operator_review_escalation" ? "not_applicable" : "unavailable",
-    current_state_basis: input.current_repository_state_basis,
-    next_evidence_threshold: {
-      description:
-        nextThreshold.length === 0
-          ? "No additional evidence required for this policy decision."
-          : "Complete these current repository evidence components before public claim advancement.",
-      components: nextThreshold
-    }
-  };
-}
-
 function assertDecisionShape(decision, requiredFields) {
-  for (const field of requiredFields) {
-    if (!(field in decision)) {
-      fail(palisadeConsumerContractPath, `Palisade decision for ${decision.claim_id || "unknown"} missing ${field}`);
-    }
-  }
-  if (!allowedPalisadeDecisions.has(decision.decision)) {
-    fail(palisadeConsumerContractPath, `${decision.claim_id}: invalid Palisade decision ${decision.decision}`);
-  }
-  if (decision.allowed !== (decision.decision === "allow")) {
-    fail(palisadeConsumerContractPath, `${decision.claim_id}: allowed conflicts with decision ${decision.decision}`);
-  }
-  if (!Array.isArray(decision.reasons) || decision.reasons.length === 0) {
-    fail(palisadeConsumerContractPath, `${decision.claim_id}: decision reasons must be non-empty`);
-  }
-  if (!Array.isArray(decision.required_evidence)) {
-    fail(palisadeConsumerContractPath, `${decision.claim_id}: required_evidence must be an array`);
-  }
-  if (!Array.isArray(decision.missing_evidence)) {
-    fail(palisadeConsumerContractPath, `${decision.claim_id}: missing_evidence must be an array`);
-  }
-  if (!allowedRuntimeStatuses.has(decision.runtime_enforcement_status)) {
-    fail(palisadeConsumerContractPath, `${decision.claim_id}: invalid runtime_enforcement_status`);
-  }
+  decisionShapeErrors(decision, requiredFields).forEach((error) => fail(palisadeConsumerContractPath, error));
 }
 
 function isBoundedCurrentStateContext(text, index) {
@@ -506,7 +224,22 @@ function validatePalisadeProductLanguageConsumption(filesToScan) {
       fail(palisadeConsumerContractPath, `${mapping.claim_class}: Palisade claim mapping has no policy rule`);
     }
     mappedClaimIds.add(mapping.palisade_claim_id);
-    const input = buildPolicyInput(mapping, policy);
+    const input = buildPolicyInput(mapping, policy, {
+      surface: "product-language-boundary-validator",
+      currentEvidence: [
+        "current repository validation records",
+        "README current-state truth",
+        "Palisade policy artifact"
+      ],
+      evidenceNote: "Constructed by product-language validator from current repository evidence.",
+      currentRepositoryStateBasis: [
+        "scripts/validate-product-language-boundary.mjs",
+        "palisade/policy-bundle.v0/consumers/product-language-boundary-consumer.v0.json",
+        "palisade/policy-bundle.v0/policies/claim-capability-policy.json",
+        "README.md",
+        backlogPath
+      ]
+    });
     for (const field of consumerContract.required_policy_input_fields || []) {
       if (!(field in input)) {
         fail(palisadeConsumerContractPath, `${mapping.claim_class}: constructed policy input missing ${field}`);
