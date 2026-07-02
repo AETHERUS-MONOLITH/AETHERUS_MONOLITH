@@ -1004,7 +1004,14 @@
     "This consumer contract does not implement Weave orchestration."
   ],
   "runtime_birth_handoff": {
-    "internal_entry_point": "scripts/palisade-policy-consumption.mjs",
+    "internal_entry_point": "palisade/runtime/v0/palisade-decision-boundary.mjs",
+    "policy_engine_entry_point": "palisade/runtime/v0/palisade-policy-engine.mjs",
+    "exported_function": "evaluatePalisadeDecision",
+    "supported_invocation_modes": [
+      "internal_module_import"
+    ],
+    "runtime_test_path": "scripts/validate-palisade-runtime-boundary.mjs",
+    "implementation_status": "executable_internal_boundary_created",
     "policy_bundle_path": "palisade/policy-bundle.v0/",
     "request_contract_reference": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.request_fields",
     "decision_contract_reference": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.decision_fields",
@@ -1065,10 +1072,10 @@
       "allow decision with traceable current evidence permits bounded internal contract-ready action"
     ],
     "deployment_excluded": true,
-    "next_pass_name": "Palisade Runtime Birth 0.1 — Executable Policy Decision Boundary"
+    "next_pass_name": "Palisade Runtime Integration 0.2 — Conduit Invocation Binding"
   },
   "next_integration_boundary": {
-    "selected_next_pass_if_validation_passes": "Palisade Runtime Birth 0.1 — Executable Policy Decision Boundary",
+    "selected_next_pass_if_validation_passes": "Palisade Runtime Integration 0.2 — Conduit Invocation Binding",
     "intervening_readiness_pass_required": false,
     "runtime_execution_implemented_by_this_consumer": false
   },

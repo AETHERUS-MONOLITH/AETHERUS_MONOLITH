@@ -1,0 +1,38 @@
+{
+  "case_set_id": "palisade-decision-boundary-runtime.cases",
+  "version": "0.1.0",
+  "runtime_entry_point": "palisade/runtime/v0/palisade-decision-boundary.mjs",
+  "exported_function": "evaluatePalisadeDecision",
+  "policy_bundle": "palisade/policy-bundle.v0/",
+  "fixture_boundary": "Allow-reachable fixtures are hypothetical test-only evidence and are not current repository state.",
+  "covered_cases": [
+    "schema_valid_deny_decision",
+    "schema_valid_requires_evidence_decision",
+    "schema_valid_operator_review_decision",
+    "schema_valid_runtime_enforcement_unavailable_decision",
+    "allow_reachable_hypothetical_test_only_fixture",
+    "malformed_request_boundary_failure",
+    "missing_claim_id_boundary_failure",
+    "missing_current_state_basis_boundary_failure",
+    "unknown_claim_boundary_failure",
+    "unsupported_request_contract_version_boundary_failure",
+    "unsupported_policy_version_boundary_failure",
+    "missing_policy_artifact_boundary_failure",
+    "malformed_policy_artifact_boundary_failure",
+    "malformed_decision_output_boundary_failure",
+    "contradictory_evidence_state_boundary_failure",
+    "missing_required_evidence_non_allowing_policy_decision",
+    "attempted_caller_supplied_allowed_true_boundary_failure",
+    "attempted_runtime_status_override_boundary_failure",
+    "attempted_policy_bypass_boundary_failure",
+    "identical_request_determinism",
+    "policy_deny_distinct_from_boundary_failure",
+    "full_nested_schema_validation",
+    "prohibited_field_handling",
+    "validator_module_regression"
+  ],
+  "cli": {
+    "implemented": false,
+    "reason": "The Palisade-owned module API is directly importable and the validation harness invokes it without a separate CLI evaluator."
+  }
+}

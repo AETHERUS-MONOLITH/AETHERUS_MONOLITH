@@ -1,0 +1,30 @@
+{
+  "runtime_id": "palisade-internal-policy-decision-boundary.v0",
+  "version": "0.1.0",
+  "policy_bundle_path": "palisade/policy-bundle.v0/",
+  "policy_bundle_version": "0.1.0",
+  "input_schema_path": "palisade/policy-bundle.v0/schema/policy-input.schema.json",
+  "decision_schema_path": "palisade/policy-bundle.v0/schema/policy-decision.schema.json",
+  "request_contract_path": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.request_fields",
+  "decision_contract_path": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.decision_fields",
+  "executable_entry_point": "palisade/runtime/v0/palisade-decision-boundary.mjs",
+  "exported_function": "evaluatePalisadeDecision",
+  "supported_invocation_modes": [
+    "internal_module_import"
+  ],
+  "fail_closed": true,
+  "deterministic": true,
+  "audit_persistence_status": "not_implemented",
+  "conduit_binding_status": "not_bound",
+  "deployment_status": "not_deployed",
+  "runtime_enforcement_status": "unavailable",
+  "non_claims": [
+    "This runtime manifest does not create public policy API behavior.",
+    "This runtime manifest does not create Conduit runtime binding.",
+    "This runtime manifest does not create durable audit persistence.",
+    "This runtime manifest does not create Vault/NEXUS execution.",
+    "This runtime manifest does not create model execution.",
+    "This runtime manifest does not create release authority.",
+    "This runtime manifest does not create deployment or operational runtime enforcement."
+  ]
+}

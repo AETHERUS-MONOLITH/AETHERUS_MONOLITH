@@ -548,6 +548,11 @@ const requiredConduitFailClosedStates = [
 
 const requiredRuntimeBirthHandoffFields = [
   'internal_entry_point',
+  'policy_engine_entry_point',
+  'exported_function',
+  'supported_invocation_modes',
+  'runtime_test_path',
+  'implementation_status',
   'policy_bundle_path',
   'request_contract_reference',
   'decision_contract_reference',
@@ -3066,8 +3071,23 @@ function validateRuntimeBirthHandoff(handoff) {
   requiredRuntimeBirthHandoffFields.forEach(field => {
     if (!(field in handoff)) addFailure(file, category, `runtime_birth_handoff missing ${field}`);
   });
-  if (handoff.internal_entry_point !== 'scripts/palisade-policy-consumption.mjs') {
-    addFailure(file, category, 'runtime_birth_handoff.internal_entry_point must be scripts/palisade-policy-consumption.mjs');
+  if (handoff.internal_entry_point !== 'palisade/runtime/v0/palisade-decision-boundary.mjs') {
+    addFailure(file, category, 'runtime_birth_handoff.internal_entry_point must be palisade/runtime/v0/palisade-decision-boundary.mjs');
+  }
+  if (handoff.policy_engine_entry_point !== 'palisade/runtime/v0/palisade-policy-engine.mjs') {
+    addFailure(file, category, 'runtime_birth_handoff.policy_engine_entry_point must be palisade/runtime/v0/palisade-policy-engine.mjs');
+  }
+  if (handoff.exported_function !== 'evaluatePalisadeDecision') {
+    addFailure(file, category, 'runtime_birth_handoff.exported_function must be evaluatePalisadeDecision');
+  }
+  if (!handoff.supported_invocation_modes?.includes('internal_module_import')) {
+    addFailure(file, category, 'runtime_birth_handoff.supported_invocation_modes must include internal_module_import');
+  }
+  if (handoff.runtime_test_path !== 'scripts/validate-palisade-runtime-boundary.mjs') {
+    addFailure(file, category, 'runtime_birth_handoff.runtime_test_path must be scripts/validate-palisade-runtime-boundary.mjs');
+  }
+  if (handoff.implementation_status !== 'executable_internal_boundary_created') {
+    addFailure(file, category, 'runtime_birth_handoff.implementation_status must be executable_internal_boundary_created');
   }
   if (handoff.policy_bundle_path !== palisadeBundlePath) {
     addFailure(file, category, `runtime_birth_handoff.policy_bundle_path must be ${palisadeBundlePath}`);
@@ -3081,8 +3101,8 @@ function validateRuntimeBirthHandoff(handoff) {
   if (handoff.deployment_excluded !== true) {
     addFailure(file, category, 'runtime_birth_handoff.deployment_excluded must be true');
   }
-  if (handoff.next_pass_name !== 'Palisade Runtime Birth 0.1 — Executable Policy Decision Boundary') {
-    addFailure(file, category, 'runtime_birth_handoff.next_pass_name must identify the executable policy decision boundary pass');
+  if (handoff.next_pass_name !== 'Palisade Runtime Integration 0.2 — Conduit Invocation Binding') {
+    addFailure(file, category, 'runtime_birth_handoff.next_pass_name must identify the next eligible Conduit invocation binding pass');
   }
   if (!Array.isArray(handoff.first_executable_test_cases) || handoff.first_executable_test_cases.length < 7) {
     addFailure(file, category, 'runtime_birth_handoff.first_executable_test_cases must contain direct executable tests');

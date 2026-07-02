@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { evaluatePolicyDecision } from "../palisade/runtime/v0/palisade-policy-engine.mjs";
+
 const bundleRoot = "palisade/policy-bundle.v0";
 const manifestPath = path.posix.join(bundleRoot, "manifest.json");
 const inputSchemaPath = path.posix.join(bundleRoot, "schema/policy-input.schema.json");
@@ -151,133 +153,6 @@ function allComponentsSatisfied(state, components) {
 
 function missingComponents(state, components) {
   return components.filter((component) => !componentSatisfied(state?.[component]));
-}
-
-function currentEvidenceCount(input) {
-  return input.evidence_state?.current_evidence?.length || 0;
-}
-
-function runtimeStatusFor(decision, claimId) {
-  if (decision === "allow") return "available";
-  if (claimId === "operator_review_escalation") return "not_applicable";
-  return "unavailable";
-}
-
-function evaluate(input) {
-  const productionComplete = allComponentsSatisfied(
-    input.production_workspace_threshold_state,
-    productionComponents
-  );
-  const runtimeComplete = allComponentsSatisfied(input.runtime_governance_path_state, runtimeComponents);
-  const missingProduction = missingComponents(input.production_workspace_threshold_state, productionComponents);
-  const missingRuntime = missingComponents(input.runtime_governance_path_state, runtimeComponents);
-  const operatorStatus = input.operator_authorization_state?.status;
-  const reviewRequired = input.operator_authorization_state?.review_required === true;
-  let decision = "deny";
-  let operatorReviewRequired = false;
-  let nextThreshold = [...missingProduction, ...missingRuntime];
-  const reasons = [];
-
-  if (input.evidence_state?.denied_claims?.includes("runtime_enforcement")) {
-    decision = "runtime_enforcement_unavailable";
-    reasons.push("Runtime enforcement is not available in the current evidence state.");
-    nextThreshold = ["runtime enforcement integration"];
-  } else if (input.claim_id === "operator_review_escalation") {
-    if (reviewRequired && operatorStatus !== "approved") {
-      decision = "requires_operator_review";
-      operatorReviewRequired = true;
-      reasons.push("Operator review is required before this threshold transition can advance.");
-      nextThreshold = ["operator approval record"];
-    } else {
-      decision = "allow";
-      reasons.push("Operator review has been satisfied for this policy fixture.");
-      nextThreshold = [];
-    }
-  } else if (reviewRequired && operatorStatus !== "approved") {
-    decision = "requires_operator_review";
-    operatorReviewRequired = true;
-    reasons.push("The requested action is routed to Operator review by policy.");
-    nextThreshold = ["operator approval record", ...nextThreshold];
-  } else if (input.claim_id === "production_workspace_claim") {
-    if (productionComplete && runtimeComplete) {
-      decision = "allow";
-      reasons.push("Production workspace threshold and governed runtime path are complete.");
-      nextThreshold = [];
-    } else {
-      decision = "deny";
-      reasons.push("Production workspace claim requires every threshold component and the governed runtime path.");
-    }
-  } else if (
-    input.claim_id === "public_nexus_runtime_execution_claim" ||
-    input.claim_id === "model_api_execution_claim"
-  ) {
-    if (runtimeComplete) {
-      decision = "allow";
-      reasons.push("Governed runtime path is complete and verified for public runtime execution.");
-      nextThreshold = [];
-    } else {
-      decision = "deny";
-      reasons.push("Public runtime execution claims cannot bypass the governed runtime path.");
-      nextThreshold = missingRuntime;
-    }
-  } else if (input.claim_id === "operational_release_authority_claim") {
-    const releaseComponents = ["evidence_audit_record", "release_state_decision"];
-    const releaseComplete = allComponentsSatisfied(input.runtime_governance_path_state, releaseComponents);
-    if (runtimeComplete && releaseComplete) {
-      decision = "allow";
-      reasons.push("Release authority threshold is complete in this policy fixture.");
-      nextThreshold = [];
-    } else {
-      decision = "deny";
-      reasons.push("Operational release authority requires durable evidence audit and release-state decision capability.");
-      nextThreshold = missingComponents(input.runtime_governance_path_state, releaseComponents);
-    }
-  } else if (input.claim_id === "staged_surface_advancement") {
-    if (productionComplete && runtimeComplete) {
-      decision = "allow";
-      reasons.push("Surface advancement threshold is complete.");
-      nextThreshold = [];
-    } else if (currentEvidenceCount(input) > 0) {
-      decision = "requires_evidence";
-      reasons.push("Partial evidence exists, but stronger product language requires threshold completion.");
-    } else {
-      decision = "deny";
-      reasons.push("No meaningful evidence supports staged surface advancement.");
-    }
-  } else if (input.claim_id === "runtime_governance_path_sufficiency") {
-    if (runtimeComplete) {
-      decision = "allow";
-      reasons.push("Every runtime governance path component is exists and verified.");
-      nextThreshold = [];
-    } else {
-      decision = "requires_evidence";
-      reasons.push("The runtime governance path is incomplete under the deterministic sufficiency rule.");
-      nextThreshold = missingRuntime;
-    }
-  } else {
-    fail(`${input.claim_id}: unknown claim_id`);
-  }
-
-  return {
-    decision,
-    claim_id: input.claim_id,
-    surface: input.surface,
-    requested_action: input.requested_action,
-    allowed: decision === "allow",
-    reasons,
-    required_evidence: input.evidence_state?.required_evidence || [],
-    missing_evidence: input.evidence_state?.missing_evidence || [],
-    operator_review_required: operatorReviewRequired,
-    runtime_enforcement_status: runtimeStatusFor(decision, input.claim_id),
-    current_state_basis: input.current_repository_state_basis || [],
-    next_evidence_threshold: {
-      description:
-        nextThreshold.length === 0
-          ? "No additional evidence required for this policy decision fixture."
-          : "Complete the listed evidence components before a stronger decision can be reached.",
-      components: nextThreshold
-    }
-  };
 }
 
 function assertComponentStateSet(state, required, label) {
@@ -460,7 +335,7 @@ if (failures.length === 0) {
       `${testCase.id}.runtime_governance_path_state`
     );
 
-    const actual = evaluate(input);
+    const actual = evaluatePolicyDecision(policy, input);
     assertDecisionShape(actual, `${testCase.id}.actual_decision`);
 
     for (const field of ["decision", "allowed", "operator_review_required", "runtime_enforcement_status"]) {
