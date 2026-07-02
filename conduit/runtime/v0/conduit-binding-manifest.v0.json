@@ -1,0 +1,97 @@
+{
+  "binding_id": "conduit-palisade-canonical-internal-binding.v0",
+  "version": "0.1.0",
+  "canonical_conduit_entry_point": "conduit/runtime/v0/index.mjs",
+  "canonical_internal_export": "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction",
+  "palisade_boundary_path": "palisade/runtime/v0/palisade-decision-boundary.mjs",
+  "palisade_exported_function": "evaluatePalisadeDecision",
+  "exported_conduit_function": "invokeGovernedConduitAction",
+  "governed_action_class": "internal_conduit_governed_policy_continuation",
+  "direct_palisade_invocation": true,
+  "palisade_evaluator_injectable": false,
+  "duplicate_policy_evaluator": false,
+  "fail_closed": true,
+  "result_classes": [
+    "permitted",
+    "policy_blocked",
+    "palisade_boundary_failed",
+    "downstream_failed"
+  ],
+  "bypass_coverage": [
+    {
+      "path": "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction",
+      "classification": "canonical_governed",
+      "routing": "directly invokes evaluatePalisadeDecision before downstream continuation"
+    },
+    {
+      "path": "conduit/runtime/v0/conduit-governed-invocation.mjs#invokeGovernedConduitAction",
+      "classification": "routed_to_canonical",
+      "routing": "implementation exported through the canonical index surface"
+    },
+    {
+      "path": "scripts/palisade-policy-consumption.mjs",
+      "classification": "non_governed",
+      "routing": "validator compatibility wrapper only; does not perform the governed downstream action class"
+    },
+    {
+      "path": "scripts/run-nexus-import-adapter-local.mjs",
+      "classification": "out_of_scope",
+      "routing": "local NEXUS adapter report generation action class; not a Conduit Palisade governed continuation"
+    },
+    {
+      "path": "scripts/run-nexus-import-adapter-regression-suite.mjs",
+      "classification": "out_of_scope",
+      "routing": "local NEXUS adapter regression action class; not a Conduit Palisade governed continuation"
+    },
+    {
+      "path": "scripts/run-nexus-import-adapter-failure-injection-suite.mjs",
+      "classification": "out_of_scope",
+      "routing": "local failure-injection report generation action class; not a Conduit Palisade governed continuation"
+    },
+    {
+      "path": "scripts/run-nexus-vault-compatibility-pipeline-stub.mjs",
+      "classification": "out_of_scope",
+      "routing": "local compatibility pipeline stub action class; not a Conduit Palisade governed continuation"
+    },
+    {
+      "path": "scripts/run-nexus-vault-compatibility-pipeline-failure-injection-suite.mjs",
+      "classification": "out_of_scope",
+      "routing": "local compatibility failure-injection action class; not a Conduit Palisade governed continuation"
+    },
+    {
+      "path": "scripts/run-nexus-vault-candidate-intake-gate-stub.mjs",
+      "classification": "out_of_scope",
+      "routing": "local candidate-intake stub action class; not a Conduit Palisade governed continuation"
+    },
+    {
+      "path": "scripts/evaluate-nexus-vault-compatibility-stub.mjs",
+      "classification": "out_of_scope",
+      "routing": "local compatibility evaluator stub action class; not a Conduit Palisade governed continuation"
+    },
+    {
+      "path": "scripts/run-track3-local-fixture.mjs",
+      "classification": "out_of_scope",
+      "routing": "deterministic local interface fixture action class; not a Conduit Palisade governed continuation"
+    }
+  ],
+  "downstream_adapter_classification": "bounded_local_adapter",
+  "downstream_adapter_path": "conduit/runtime/v0/conduit-governed-invocation.mjs#boundedLocalConduitContinuation",
+  "downstream_adapter_substantive_action": "bounded local continuation acknowledgement only; no Vault/NEXUS, model, release, public, network, or persistence action",
+  "internal_executable_policy_boundary_status": "implemented",
+  "canonical_internal_conduit_binding_status": "implemented",
+  "internal_executable_gate_status": "implemented",
+  "deployed_enforcement_status": "not_implemented",
+  "public_enforcement_status": "not_implemented",
+  "durable_enforcement_status": "not_implemented",
+  "production_enforcement_status": "not_implemented",
+  "audit_persistence_status": "not_implemented",
+  "non_claims": [
+    "This binding does not create public routes or public policy API behavior.",
+    "This binding does not create deployed enforcement.",
+    "This binding does not create durable audit persistence.",
+    "This binding does not create Vault/NEXUS execution.",
+    "This binding does not create model execution.",
+    "This binding does not create release authority.",
+    "This binding does not create a production enforcement membrane."
+  ]
+}
