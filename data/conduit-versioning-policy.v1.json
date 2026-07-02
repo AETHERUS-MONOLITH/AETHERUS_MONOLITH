@@ -69,6 +69,85 @@
       "support_status": "accepted_single_pinned_commit"
     }
   },
+  "palisade_contract_readiness_boundary": {
+    "status": "contract_integration_ready_for_executable_internal_boundary",
+    "implementation_status": "validator_consumption_and_contract_representation_only",
+    "policy_bundle_version_supported": "0.1.0",
+    "request_contract_reference": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.request_fields",
+    "decision_contract_reference": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.decision_fields",
+    "supported_request_fields": [
+      "surface",
+      "claim_id",
+      "requested_action",
+      "evidence_state",
+      "production_workspace_threshold_state",
+      "runtime_governance_path_state",
+      "operator_authorization_state",
+      "current_repository_state_basis"
+    ],
+    "supported_decision_fields": [
+      "decision",
+      "claim_id",
+      "surface",
+      "requested_action",
+      "allowed",
+      "reasons",
+      "required_evidence",
+      "missing_evidence",
+      "operator_review_required",
+      "runtime_enforcement_status",
+      "current_state_basis",
+      "next_evidence_threshold"
+    ],
+    "propagation_requirements": {
+      "facade_input_acceptance": "surface, claim_id, requested_action, evidence_state, threshold states, operator_authorization_state, and current_repository_state_basis must be accepted before evaluation.",
+      "workspace_tenant_context": "workspace and tenant context must be carried inside current_repository_state_basis until a runtime adapter gives them explicit fields.",
+      "evidence_state": "evidence_state must carry current_evidence, required_evidence, missing_evidence, denied_claims, and evidence_notes.",
+      "authorization_state": "operator_authorization_state must carry status, review_required, and review_reason.",
+      "operator_review": "requires_operator_review must block advancement unless claim-specific approval evidence exists.",
+      "runtime_status": "runtime_enforcement_status must be propagated and runtime_enforcement_unavailable must prohibit runtime claims.",
+      "vault_nexus_handoff": "handoff may reference the accepted pinned Vault/NEXUS contract but must not imply execution."
+    },
+    "audit_trace_requirements": {
+      "decision_trace_reference_required": true,
+      "current_state_basis_required": true,
+      "local_trace_status": "local_adapter_run_not_persistent_not_ledger",
+      "persistent_ledger_claim_allowed": false
+    },
+    "release_state_requirements": {
+      "release_state_decision_required": true,
+      "non_allow_decision_blocks_release_eligibility": true,
+      "malformed_decision_blocks_release_eligibility": true,
+      "release_authority_created": false
+    },
+    "fail_closed_contract_requirements": [
+      "missing_decision",
+      "malformed_decision",
+      "unsupported_decision_version",
+      "decision_request_contradiction",
+      "allowed_decision_conflict",
+      "required_evidence_absent",
+      "operator_review_unresolved",
+      "runtime_enforcement_unavailable",
+      "current_state_basis_absent_or_untraceable"
+    ],
+    "version_compatibility": {
+      "conduit_policy_version": "1.0.0",
+      "interface_contract_version": "1.0.0",
+      "palisade_policy_bundle_version": "0.1.0",
+      "unsupported_version_behavior": "fail_closed"
+    },
+    "runtime_birth_entry_point": "scripts/palisade-policy-consumption.mjs",
+    "non_runtime_boundary": {
+      "runtime_execution": false,
+      "deployment": false,
+      "runtime_enforcement": false,
+      "public_policy_api": false,
+      "vault_nexus_execution": false,
+      "model_execution": false,
+      "operational_release_authority": false
+    }
+  },
   "version_change_categories": {
     "patch": {
       "description": "Clarifying documentation or validator checks that do not alter contract semantics.",

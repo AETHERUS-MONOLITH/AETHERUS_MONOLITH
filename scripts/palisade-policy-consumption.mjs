@@ -141,8 +141,8 @@ export function buildCurrentRuntimeGovernancePathState(policy) {
 }
 
 export function buildPolicyInput(mapping, policy, options = {}) {
-  const productionState = buildCurrentProductionWorkspaceState(policy);
-  const runtimeState = buildCurrentRuntimeGovernancePathState(policy);
+  const productionState = options.productionWorkspaceThresholdState || buildCurrentProductionWorkspaceState(policy);
+  const runtimeState = options.runtimeGovernancePathState || buildCurrentRuntimeGovernancePathState(policy);
   const productionMissing = missingComponents(
     productionState,
     policy.production_workspace_threshold.required_components

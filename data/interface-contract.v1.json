@@ -118,6 +118,105 @@
     "trace_is_database_record": false,
     "trace_is_production_audit_evidence": false
   },
+  "palisade_contract_readiness_boundary": {
+    "status": "optional_contract_readiness_fields_declared",
+    "implementation_status": "contract_representation_only",
+    "request_fields": [
+      "surface",
+      "claim_id",
+      "requested_action",
+      "evidence_state",
+      "production_workspace_threshold_state",
+      "runtime_governance_path_state",
+      "operator_authorization_state",
+      "current_repository_state_basis"
+    ],
+    "decision_fields": [
+      "decision",
+      "claim_id",
+      "surface",
+      "requested_action",
+      "allowed",
+      "reasons",
+      "required_evidence",
+      "missing_evidence",
+      "operator_review_required",
+      "runtime_enforcement_status",
+      "current_state_basis",
+      "next_evidence_threshold"
+    ],
+    "evidence_states": [
+      "exists",
+      "verified",
+      "partial",
+      "missing",
+      "absent",
+      "stubbed",
+      "local-only",
+      "policy-represented-only",
+      "unverified"
+    ],
+    "authorization_states": [
+      "not_requested",
+      "requested",
+      "approved",
+      "denied"
+    ],
+    "operator_review_states": [
+      "not_required",
+      "required_unresolved",
+      "approved_for_claim",
+      "denied_for_claim"
+    ],
+    "runtime_enforcement_statuses": [
+      "available",
+      "unavailable",
+      "not_applicable"
+    ],
+    "fail_closed_outcomes": [
+      "missing_decision_blocks_release_eligibility",
+      "malformed_decision_blocks_release_eligibility",
+      "unsupported_decision_version_blocks_release_eligibility",
+      "request_decision_contradiction_blocks_release_eligibility",
+      "allowed_decision_conflict_blocks_release_eligibility",
+      "required_evidence_absent_blocks_release_eligibility",
+      "operator_review_unresolved_blocks_release_eligibility",
+      "runtime_enforcement_unavailable_blocks_runtime_claims",
+      "current_state_basis_absent_blocks_release_eligibility"
+    ],
+    "unsupported_version_outcome": "unsupported_contract_or_policy_version_blocks_release_eligibility",
+    "audit_event_requirements": {
+      "decision_trace_reference_required": true,
+      "current_state_basis_required": true,
+      "persistent_ledger_claim_allowed": false,
+      "production_audit_evidence_claim_allowed": false
+    },
+    "release_state_requirements": {
+      "release_state_decision_field_required": true,
+      "release_eligibility_remains_false_for_non_allow_or_malformed_decision": true,
+      "operational_release_authority_claim_allowed": false
+    },
+    "vault_nexus_handoff_requirements": {
+      "handoff_reference_required": true,
+      "execution_claim_allowed": false,
+      "public_runtime_claim_allowed": false,
+      "model_execution_claim_allowed": false
+    },
+    "version_compatibility": {
+      "interface_contract_version": "1.0.0",
+      "policy_bundle_version_supported": "0.1.0",
+      "unsupported_version_behavior": "fail_closed"
+    },
+    "non_runtime_boundary": {
+      "adds_runtime_behavior": false,
+      "adds_public_wiring": false,
+      "adds_palisade_runtime": false,
+      "adds_vault_nexus_execution": false,
+      "adds_model_execution": false,
+      "adds_release_authority": false,
+      "validator_consumption_is_runtime_enforcement": false
+    }
+  },
   "non_goals": [
     "public UI wiring",
     "backend service",
@@ -126,7 +225,7 @@
     "persistence",
     "ledger behavior",
     "model or API execution",
-    "live orchestration",
+    "no live orchestration",
     "Palisade implementation",
     "Weave implementation",
     "production runtime",

@@ -2,6 +2,15 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  buildPolicyInput,
+  decisionShapeErrors,
+  evaluatePalisadeDecision,
+  palisadeDecisionSchemaPath,
+  palisadeInputSchemaPath,
+  palisadeManifestPath,
+  palisadePolicyPath
+} from './palisade-policy-consumption.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -430,6 +439,156 @@ const expectedTrack331FailureInjectionReportFixtureIds = [
   'invalid_missing_generated_ignored_boundary'
 ];
 
+const conduitConsumerContractPath = 'palisade/policy-bundle.v0/consumers/conduit-contract-readiness-consumer.v0.json';
+const palisadeBundlePath = 'palisade/policy-bundle.v0/';
+const palisadeIntegrationReadinessPath = 'palisade/policy-bundle.v0/integration-readiness.v0.json';
+
+const requiredConduitConsumerFields = [
+  'consumer_id',
+  'consumer_path',
+  'consumer_type',
+  'governed_surface',
+  'source_policy_bundle',
+  'policy_file',
+  'policy_input_schema',
+  'policy_decision_schema',
+  'conduit_versioning_policy',
+  'interface_contract',
+  'consumed_policy_decisions',
+  'conduit_claim_mappings',
+  'contract_capability_mappings',
+  'required_policy_input_fields',
+  'required_policy_decision_fields',
+  'current_evidence_sources',
+  'request_contract_requirements',
+  'decision_contract_requirements',
+  'evidence_propagation_requirements',
+  'authorization_propagation_requirements',
+  'operator_review_propagation_requirements',
+  'runtime_status_propagation_requirements',
+  'audit_trace_requirements',
+  'release_state_requirements',
+  'fail_closed_contract_requirements',
+  'version_compatibility_requirements',
+  'unsupported_state_handling',
+  'contradiction_handling',
+  'hypothetical_fixture_boundary',
+  'preserved_existing_checks',
+  'forbidden_runtime_inferences',
+  'non_claims',
+  'runtime_birth_handoff',
+  'next_integration_boundary'
+];
+
+const requiredPalisadeInputFields = [
+  'surface',
+  'claim_id',
+  'requested_action',
+  'evidence_state',
+  'production_workspace_threshold_state',
+  'runtime_governance_path_state',
+  'operator_authorization_state',
+  'current_repository_state_basis'
+];
+
+const requiredPalisadeDecisionFields = [
+  'decision',
+  'claim_id',
+  'surface',
+  'requested_action',
+  'allowed',
+  'reasons',
+  'required_evidence',
+  'missing_evidence',
+  'operator_review_required',
+  'runtime_enforcement_status',
+  'current_state_basis',
+  'next_evidence_threshold'
+];
+
+const requiredConduitReadinessMappings = [
+  'facade_to_conduit_input_acceptance',
+  'workspace_tenant_context_propagation',
+  'claim_id_propagation',
+  'requested_action_propagation',
+  'evidence_state_propagation',
+  'production_workspace_threshold_state_propagation',
+  'runtime_governance_path_state_propagation',
+  'operator_authorization_state_propagation',
+  'current_repository_state_basis_propagation',
+  'palisade_decision_receipt',
+  'allowed_state_receipt',
+  'reasons_propagation',
+  'required_evidence_propagation',
+  'missing_evidence_propagation',
+  'operator_review_requirement_propagation',
+  'runtime_enforcement_status_propagation',
+  'current_state_basis_propagation',
+  'next_evidence_threshold_propagation',
+  'fail_closed_handling',
+  'version_compatibility',
+  'durable_audit_event_contract_readiness',
+  'release_state_decision_contract_readiness',
+  'vault_nexus_handoff_contract_readiness',
+  'unsupported_runtime_state_handling',
+  'bounded_contract_readiness_vs_runtime_execution'
+];
+
+const requiredConduitFailClosedStates = [
+  'missing_decision',
+  'malformed_decision',
+  'unsupported_decision_version',
+  'decision_request_contradiction',
+  'allowed_decision_conflict',
+  'required_evidence_absent',
+  'operator_review_unresolved',
+  'runtime_enforcement_unavailable',
+  'current_state_basis_absent_or_untraceable'
+];
+
+const requiredRuntimeBirthHandoffFields = [
+  'internal_entry_point',
+  'policy_bundle_path',
+  'request_contract_reference',
+  'decision_contract_reference',
+  'required_request_fields',
+  'required_decision_fields',
+  'fail_closed_states',
+  'unsupported_version_behavior',
+  'evidence_adapter_requirement',
+  'authorization_adapter_requirement',
+  'audit_event_requirement',
+  'persistence_requirement',
+  'prohibited_bypasses',
+  'first_executable_test_cases',
+  'deployment_excluded',
+  'next_pass_name'
+];
+
+const requiredConduitFailureFixtureIds = [
+  'contract_existence_does_not_imply_structural_readiness',
+  'structural_readiness_does_not_imply_palisade_permission',
+  'palisade_allow_does_not_repair_structural_defect',
+  'contract_readiness_does_not_imply_runtime_implementation',
+  'runtime_implementation_does_not_imply_deployment',
+  'deployment_does_not_imply_verified_enforcement',
+  'missing_input_fields_block_structural_readiness',
+  'missing_decision_fields_block_structural_readiness',
+  'malformed_decisions_fail_closed',
+  'unsupported_versions_fail_closed',
+  'missing_evidence_propagation_blocks_readiness',
+  'missing_authorization_propagation_blocks_readiness',
+  'unresolved_operator_review_blocks_advancement',
+  'runtime_enforcement_unavailable_blocks_runtime_claims',
+  'missing_audit_event_readiness_blocks_release_authority',
+  'missing_release_state_readiness_blocks_release_authority',
+  'vault_nexus_handoff_readiness_does_not_imply_execution',
+  'hypothetical_fixtures_do_not_prove_current_readiness',
+  'bounded_additive_corrections_remain_backward_compatible',
+  'runtime_birth_handoff_points_to_executable_construction',
+  'runtime_birth_handoff_does_not_recommend_readiness_pass'
+];
+
 function relPath(filePath) {
   return path.relative(repoRoot, filePath);
 }
@@ -471,6 +630,37 @@ function requirePath(root, pathParts, file, category) {
     }
   }
   return current;
+}
+
+function requireArrayValue(value, file, category, label) {
+  if (!Array.isArray(value)) {
+    addFailure(file, category, `${label} must be an array`);
+    return [];
+  }
+  return value;
+}
+
+function requireObjectValue(value, file, category, label) {
+  if (!isObject(value)) {
+    addFailure(file, category, `${label} must be an object`);
+    return null;
+  }
+  return value;
+}
+
+function validateIncludesAll(file, category, actual, required, label) {
+  const actualArray = requireArrayValue(actual, file, category, label);
+  required.forEach(item => {
+    if (!actualArray.includes(item)) {
+      addFailure(file, category, `${label} missing ${item}`);
+    }
+  });
+}
+
+function ensureNoHypotheticalConduitEvidenceSource(file, category, source, label) {
+  if (source.includes('/tests/') || source.includes('.track3-runs')) {
+    addFailure(file, category, `${label} must not use test fixtures or ignored generated reports as current evidence: ${source}`);
+  }
 }
 
 function walk(value, visitor, pathParts = []) {
@@ -2418,6 +2608,491 @@ function validateTrack324StopConditions(file, category, stopConditions) {
   });
 }
 
+function buildContractReadyComponentState(evidence) {
+  return { state: 'exists', verified: true, evidence };
+}
+
+function buildConduitContractRuntimePathState(policy, evidence) {
+  const components = policy.runtime_governance_path?.ordered_components || [];
+  const evidenceByComponent = {
+    user_workspace_input: ['data/interface-contract.v1.json'],
+    Facade: ['data/interface-contract.v1.json', 'data/conduit-versioning-policy.v1.json'],
+    Conduit: ['data/conduit-versioning-policy.v1.json'],
+    Palisade_policy_decision: [
+      palisadePolicyPath,
+      conduitConsumerContractPath,
+      'scripts/palisade-policy-consumption.mjs'
+    ],
+    Vault_NEXUS_evaluation: [
+      'data/nexus-adapter-contract.v1.json',
+      'data/nexus-vault-compatibility-evidence-packet-contract.v1.json'
+    ],
+    evidence_audit_record: [
+      'data/interface-contract.v1.json',
+      'data/operational-evidence-packet-contract.v0.json'
+    ],
+    release_state_decision: [
+      'data/interface-contract.v1.json',
+      'data/conduit-versioning-policy.v1.json'
+    ],
+    surfaced_result: ['scripts/validate-track3-contracts.mjs']
+  };
+  return Object.fromEntries(
+    components.map(component => [
+      component,
+      buildContractReadyComponentState(Array.from(new Set([...(evidenceByComponent[component] || []), ...evidence])))
+    ])
+  );
+}
+
+function buildConduitContractProductionState(policy, evidence) {
+  const components = policy.production_workspace_threshold?.required_components || [];
+  return Object.fromEntries(
+    components.map(component => [
+      component,
+      buildContractReadyComponentState([
+        'data/interface-contract.v1.json',
+        'data/conduit-versioning-policy.v1.json',
+        ...evidence
+      ])
+    ])
+  );
+}
+
+function validateConduitStructuralReadiness(consumer, interfaceContract, conduitPolicy) {
+  const file = conduitConsumerContractPath;
+  const category = 'Palisade Conduit contract readiness structural validation';
+  const interfaceBoundary = requirePath(
+    interfaceContract,
+    ['palisade_contract_readiness_boundary'],
+    'data/interface-contract.v1.json',
+    category
+  );
+  const conduitBoundary = requirePath(
+    conduitPolicy,
+    ['palisade_contract_readiness_boundary'],
+    'data/conduit-versioning-policy.v1.json',
+    category
+  );
+  if (!interfaceBoundary || !conduitBoundary) return false;
+
+  validateIncludesAll(
+    'data/interface-contract.v1.json',
+    category,
+    interfaceBoundary.request_fields,
+    requiredPalisadeInputFields,
+    'palisade_contract_readiness_boundary.request_fields'
+  );
+  validateIncludesAll(
+    'data/interface-contract.v1.json',
+    category,
+    interfaceBoundary.decision_fields,
+    requiredPalisadeDecisionFields,
+    'palisade_contract_readiness_boundary.decision_fields'
+  );
+  validateIncludesAll(
+    'data/conduit-versioning-policy.v1.json',
+    category,
+    conduitBoundary.supported_request_fields,
+    requiredPalisadeInputFields,
+    'palisade_contract_readiness_boundary.supported_request_fields'
+  );
+  validateIncludesAll(
+    'data/conduit-versioning-policy.v1.json',
+    category,
+    conduitBoundary.supported_decision_fields,
+    requiredPalisadeDecisionFields,
+    'palisade_contract_readiness_boundary.supported_decision_fields'
+  );
+
+  for (const field of [
+    'evidence_states',
+    'authorization_states',
+    'operator_review_states',
+    'runtime_enforcement_statuses',
+    'fail_closed_outcomes',
+    'unsupported_version_outcome',
+    'audit_event_requirements',
+    'release_state_requirements',
+    'vault_nexus_handoff_requirements',
+    'version_compatibility',
+    'non_runtime_boundary'
+  ]) {
+    if (!(field in interfaceBoundary)) {
+      addFailure('data/interface-contract.v1.json', category, `palisade_contract_readiness_boundary missing ${field}`);
+    }
+  }
+
+  for (const field of [
+    'policy_bundle_version_supported',
+    'request_contract_reference',
+    'decision_contract_reference',
+    'propagation_requirements',
+    'audit_trace_requirements',
+    'release_state_requirements',
+    'fail_closed_contract_requirements',
+    'version_compatibility',
+    'runtime_birth_entry_point',
+    'non_runtime_boundary'
+  ]) {
+    if (!(field in conduitBoundary)) {
+      addFailure('data/conduit-versioning-policy.v1.json', category, `palisade_contract_readiness_boundary missing ${field}`);
+    }
+  }
+
+  validateIncludesAll(
+    'data/conduit-versioning-policy.v1.json',
+    category,
+    conduitBoundary.fail_closed_contract_requirements,
+    requiredConduitFailClosedStates,
+    'palisade_contract_readiness_boundary.fail_closed_contract_requirements'
+  );
+  validateIncludesAll(
+    file,
+    category,
+    consumer.fail_closed_contract_requirements,
+    requiredConduitFailClosedStates,
+    'fail_closed_contract_requirements'
+  );
+
+  if (interfaceContract.metadata?.palisade !== false) {
+    addFailure('data/interface-contract.v1.json', category, 'metadata.palisade must remain false; contract readiness is not runtime Palisade');
+  }
+  if (conduitPolicy.metadata?.palisade !== false) {
+    addFailure('data/conduit-versioning-policy.v1.json', category, 'metadata.palisade must remain false; contract readiness is not runtime Palisade');
+  }
+  if (interfaceBoundary.non_runtime_boundary?.adds_runtime_behavior !== false) {
+    addFailure('data/interface-contract.v1.json', category, 'non_runtime_boundary.adds_runtime_behavior must be false');
+  }
+  if (interfaceBoundary.non_runtime_boundary?.adds_palisade_runtime !== false) {
+    addFailure('data/interface-contract.v1.json', category, 'non_runtime_boundary.adds_palisade_runtime must be false');
+  }
+  for (const field of [
+    'runtime_execution',
+    'deployment',
+    'runtime_enforcement',
+    'public_policy_api',
+    'vault_nexus_execution',
+    'model_execution',
+    'operational_release_authority'
+  ]) {
+    if (conduitBoundary.non_runtime_boundary?.[field] !== false) {
+      addFailure('data/conduit-versioning-policy.v1.json', category, `non_runtime_boundary.${field} must be false`);
+    }
+  }
+
+  const audit = conduitBoundary.audit_trace_requirements || {};
+  if (audit.decision_trace_reference_required !== true || audit.current_state_basis_required !== true) {
+    addFailure('data/conduit-versioning-policy.v1.json', category, 'audit trace requirements must require decision trace and current-state basis');
+  }
+  if (audit.persistent_ledger_claim_allowed !== false) {
+    addFailure('data/conduit-versioning-policy.v1.json', category, 'audit trace requirements must not allow persistent ledger claims');
+  }
+  const release = conduitBoundary.release_state_requirements || {};
+  if (release.release_state_decision_required !== true || release.non_allow_decision_blocks_release_eligibility !== true) {
+    addFailure('data/conduit-versioning-policy.v1.json', category, 'release-state requirements must fail closed on non-allow decisions');
+  }
+  if (release.release_authority_created !== false) {
+    addFailure('data/conduit-versioning-policy.v1.json', category, 'release-state contract readiness must not create release authority');
+  }
+
+  return true;
+}
+
+function validateConduitReadinessFixtures(consumer) {
+  const file = conduitConsumerContractPath;
+  const category = 'Palisade Conduit contract readiness fixtures';
+  const fixtureIds = new Set((consumer.contract_readiness_failure_fixtures || []).map(item => item && item.fixture_id));
+  requiredConduitFailureFixtureIds.forEach(fixtureId => {
+    if (!fixtureIds.has(fixtureId)) {
+      addFailure(file, category, `contract_readiness_failure_fixtures missing ${fixtureId}`);
+    }
+  });
+
+  const malformedDecisionErrors = decisionShapeErrors(
+    {
+      decision: 'allow',
+      claim_id: 'runtime_governance_path_sufficiency',
+      surface: 'conduit_contract_readiness',
+      requested_action: 'evaluate_runtime_path_sufficiency',
+      allowed: false,
+      reasons: [],
+      required_evidence: [],
+      missing_evidence: [],
+      operator_review_required: false,
+      runtime_enforcement_status: 'available',
+      current_state_basis: [],
+      next_evidence_threshold: { description: '', components: [] }
+    },
+    requiredPalisadeDecisionFields
+  );
+  if (malformedDecisionErrors.length === 0) {
+    addFailure(file, category, 'malformed decision fixture must fail closed through shared decision shape validation');
+  }
+
+  const unsupported = consumer.unsupported_state_handling || {};
+  ['unsupported_contract_version', 'unsupported_policy_version', 'unknown_decision_state', 'unknown_evidence_state'].forEach(field => {
+    if (unsupported[field] !== 'fail_closed') {
+      addFailure(file, category, `unsupported_state_handling.${field} must be fail_closed`);
+    }
+  });
+}
+
+function validateConduitPalisadeConsumption(consumer, policy, inputSchema, decisionSchema, interfaceContract, conduitPolicy) {
+  const file = conduitConsumerContractPath;
+  const category = 'Palisade Conduit contract readiness consumption';
+  const requiredFiles = [
+    palisadeManifestPath,
+    palisadePolicyPath,
+    palisadeInputSchemaPath,
+    palisadeDecisionSchemaPath,
+    conduitConsumerContractPath,
+    'data/conduit-versioning-policy.v1.json',
+    'data/interface-contract.v1.json'
+  ];
+  requiredFiles.forEach(requiredFile => {
+    if (!existsSync(path.join(repoRoot, requiredFile))) {
+      addFailure(file, category, `required Palisade Conduit consumption file is missing: ${requiredFile}`);
+    }
+  });
+
+  requiredConduitConsumerFields.forEach(field => {
+    if (!(field in consumer)) addFailure(file, category, `missing required field ${field}`);
+  });
+  if (consumer.consumer_id !== 'conduit_contract_readiness_validator') {
+    addFailure(file, category, 'consumer_id must be conduit_contract_readiness_validator');
+  }
+  if (consumer.consumer_path !== 'scripts/validate-track3-contracts.mjs') {
+    addFailure(file, category, 'consumer_path must be scripts/validate-track3-contracts.mjs');
+  }
+  if (consumer.consumer_type !== 'validator') addFailure(file, category, 'consumer_type must be validator');
+  if (consumer.governed_surface !== 'conduit_contract_readiness') {
+    addFailure(file, category, 'governed_surface must be conduit_contract_readiness');
+  }
+  if (consumer.source_policy_bundle !== palisadeBundlePath) {
+    addFailure(file, category, `source_policy_bundle must be ${palisadeBundlePath}`);
+  }
+  if (consumer.policy_file !== palisadePolicyPath) addFailure(file, category, `policy_file must be ${palisadePolicyPath}`);
+  if (consumer.policy_input_schema !== palisadeInputSchemaPath) {
+    addFailure(file, category, `policy_input_schema must be ${palisadeInputSchemaPath}`);
+  }
+  if (consumer.policy_decision_schema !== palisadeDecisionSchemaPath) {
+    addFailure(file, category, `policy_decision_schema must be ${palisadeDecisionSchemaPath}`);
+  }
+  if (consumer.conduit_versioning_policy !== 'data/conduit-versioning-policy.v1.json') {
+    addFailure(file, category, 'conduit_versioning_policy must point to data/conduit-versioning-policy.v1.json');
+  }
+  if (consumer.interface_contract !== 'data/interface-contract.v1.json') {
+    addFailure(file, category, 'interface_contract must point to data/interface-contract.v1.json');
+  }
+
+  validateIncludesAll(file, category, inputSchema.required, consumer.required_policy_input_fields, `${palisadeInputSchemaPath}.required`);
+  validateIncludesAll(file, category, decisionSchema.required, consumer.required_policy_decision_fields, `${palisadeDecisionSchemaPath}.required`);
+  validateIncludesAll(file, category, consumer.required_policy_input_fields, requiredPalisadeInputFields, 'required_policy_input_fields');
+  validateIncludesAll(file, category, consumer.required_policy_decision_fields, requiredPalisadeDecisionFields, 'required_policy_decision_fields');
+
+  const policyClaimIds = new Set((policy.rules || []).map(rule => rule.claim_id));
+  const consumedPolicyDecisions = requireArrayValue(consumer.consumed_policy_decisions, file, category, 'consumed_policy_decisions');
+  consumedPolicyDecisions.forEach(claimId => {
+    if (!policyClaimIds.has(claimId)) {
+      addFailure(file, category, `consumed_policy_decisions contains claim without policy rule: ${claimId}`);
+    }
+  });
+
+  requireArrayValue(consumer.current_evidence_sources, file, category, 'current_evidence_sources').forEach(source => {
+    if (!existsSync(path.join(repoRoot, source))) addFailure(file, category, `current evidence source missing: ${source}`);
+    ensureNoHypotheticalConduitEvidenceSource(file, category, source, 'current_evidence_sources');
+  });
+
+  const structuralReady = validateConduitStructuralReadiness(consumer, interfaceContract, conduitPolicy);
+  validateConduitReadinessFixtures(consumer);
+
+  const mappings = requireArrayValue(consumer.conduit_claim_mappings, file, category, 'conduit_claim_mappings');
+  const mappedIds = new Set();
+  const mappedClaimIds = new Set();
+  const decisionsByMapping = new Map();
+  const runtimeState = buildConduitContractRuntimePathState(policy, consumer.current_evidence_sources || []);
+  const productionState = buildConduitContractProductionState(policy, consumer.current_evidence_sources || []);
+
+  for (const [index, mapping] of mappings.entries()) {
+    const label = `conduit_claim_mappings[${index}]`;
+    if (!requireObjectValue(mapping, file, category, label)) continue;
+    for (const field of [
+      'mapping_id',
+      'palisade_claim_id',
+      'requested_action',
+      'readiness_stage',
+      'contract_requirement_ids',
+      'repository_evidence_sources',
+      'required_evidence',
+      'missing_evidence',
+      'denied_claims',
+      'decision_required',
+      'blocked_decisions',
+      'current_repository_state'
+    ]) {
+      if (!(field in mapping)) addFailure(file, category, `${label} missing ${field}`);
+    }
+    mappedIds.add(mapping.mapping_id);
+    mappedClaimIds.add(mapping.palisade_claim_id);
+    if (!policyClaimIds.has(mapping.palisade_claim_id)) {
+      addFailure(file, category, `${mapping.mapping_id}: Palisade claim mapping has no policy rule`);
+    }
+    requireArrayValue(mapping.repository_evidence_sources, file, category, `${label}.repository_evidence_sources`).forEach(source => {
+      if (!existsSync(path.join(repoRoot, source))) addFailure(file, category, `${mapping.mapping_id}: repository evidence source missing: ${source}`);
+      ensureNoHypotheticalConduitEvidenceSource(file, category, source, `${mapping.mapping_id}.repository_evidence_sources`);
+    });
+
+    const useContractReadyState = mapping.readiness_stage === 'contract_integration_ready';
+    const input = buildPolicyInput(
+      {
+        ...mapping,
+        claim_class: mapping.mapping_id
+      },
+      policy,
+      {
+        surface: 'conduit_contract_readiness',
+        currentEvidence: [
+          'Track 3 interface contract',
+          'Conduit versioning policy',
+          'Palisade consumer contract',
+          'current synchronized repository evidence records'
+        ],
+        evidenceNote: 'Constructed by Track 3 contract validator from structural Conduit contract evidence.',
+        currentRepositoryStateBasis: [
+          'data/interface-contract.v1.json',
+          'data/conduit-versioning-policy.v1.json',
+          conduitConsumerContractPath,
+          palisadePolicyPath,
+          palisadeIntegrationReadinessPath
+        ],
+        runtimeGovernancePathState: useContractReadyState ? runtimeState : undefined,
+        productionWorkspaceThresholdState: useContractReadyState ? productionState : undefined
+      }
+    );
+
+    consumer.required_policy_input_fields.forEach(field => {
+      if (!(field in input)) addFailure(file, category, `${mapping.mapping_id}: constructed Palisade input missing ${field}`);
+    });
+    if ((input.current_repository_state_basis || []).some(source => source.includes('/tests/') || source.includes('.track3-runs'))) {
+      addFailure(file, category, `${mapping.mapping_id}: constructed policy input used hypothetical or ignored generated evidence`);
+    }
+
+    const decision = evaluatePalisadeDecision(policy, input);
+    decisionsByMapping.set(mapping.mapping_id, decision);
+    decisionShapeErrors(decision, consumer.required_policy_decision_fields || []).forEach(error => {
+      addFailure(file, category, `${mapping.mapping_id}: ${error}`);
+    });
+
+    if (structuralReady && mapping.decision_required === 'allow' && decision.decision !== 'allow') {
+      addFailure(file, category, `${mapping.mapping_id}: structurally ready contract mapping requires Palisade allow, got ${decision.decision}`);
+    }
+    if (
+      !['allow', 'runtime_enforcement_unavailable', 'requires_operator_review'].includes(mapping.decision_required)
+      && decision.decision !== mapping.decision_required
+    ) {
+      addFailure(file, category, `${mapping.mapping_id}: expected Palisade decision ${mapping.decision_required}, got ${decision.decision}`);
+    }
+    if (mapping.decision_required === 'runtime_enforcement_unavailable') {
+      if (decision.decision !== 'runtime_enforcement_unavailable' || decision.allowed !== false) {
+        addFailure(file, category, `${mapping.mapping_id}: runtime enforcement claim must be blocked by runtime_enforcement_unavailable`);
+      }
+    }
+    if (mapping.decision_required === 'requires_operator_review') {
+      if (decision.decision !== 'requires_operator_review' || decision.allowed !== false || decision.operator_review_required !== true) {
+        addFailure(file, category, `${mapping.mapping_id}: unresolved Operator review must block advancement`);
+      }
+    }
+    if (decision.decision === 'requires_evidence' && decision.allowed) {
+      addFailure(file, category, `${mapping.mapping_id}: requires_evidence must not grant readiness`);
+    }
+    if (decision.decision === 'runtime_enforcement_unavailable' && mapping.readiness_stage !== 'runtime_claim_prohibited' && decision.allowed) {
+      addFailure(file, category, `${mapping.mapping_id}: runtime_enforcement_unavailable must not grant runtime permission`);
+    }
+  }
+
+  requiredConduitReadinessMappings.forEach(mappingId => {
+    if (!mappedIds.has(mappingId)) {
+      addFailure(file, category, `missing Conduit readiness mapping ${mappingId}`);
+    }
+  });
+  consumedPolicyDecisions.forEach(claimId => {
+    if (!mappedClaimIds.has(claimId)) {
+      addFailure(file, category, `consumed policy decision lacks Conduit mapping: ${claimId}`);
+    }
+  });
+
+  const capabilityStages = new Set(
+    requireArrayValue(consumer.contract_capability_mappings, file, category, 'contract_capability_mappings')
+      .map(item => item && item.capability_class)
+  );
+  [
+    'contract_declared',
+    'contract_structurally_valid',
+    'contract_palisade_compatible',
+    'contract_integration_ready',
+    'runtime_implemented',
+    'runtime_deployed',
+    'runtime_enforced'
+  ].forEach(stage => {
+    if (!capabilityStages.has(stage)) addFailure(file, category, `contract_capability_mappings missing ${stage}`);
+  });
+
+  if (consumer.operator_review_propagation_requirements?.current_repository_authorization_state !== 'not_requested') {
+    addFailure(file, category, 'Operator review current repository state must remain not_requested');
+  }
+  if (consumer.runtime_status_propagation_requirements?.runtime_enforcement_unavailable_blocks_runtime_claims !== true) {
+    addFailure(file, category, 'runtime status propagation must block runtime claims when enforcement is unavailable');
+  }
+  if (consumer.hypothetical_fixture_boundary?.fixture_allow_cases_authorize_current_claims !== false) {
+    addFailure(file, category, 'hypothetical fixture allow cases must not authorize current claims');
+  }
+  if (!consumer.preserved_existing_checks?.includes('operational claim scan')) {
+    addFailure(file, category, 'preserved_existing_checks must include operational claim scan');
+  }
+  if (!consumer.forbidden_runtime_inferences?.includes('Palisade allow repairs a structural defect')) {
+    addFailure(file, category, 'forbidden_runtime_inferences must block Palisade allow curing structural defects');
+  }
+
+  validateRuntimeBirthHandoff(consumer.runtime_birth_handoff || {});
+  if (decisionsByMapping.get('facade_to_conduit_input_acceptance')?.decision !== 'allow') {
+    addFailure(file, category, 'Palisade readiness decision for Facade-to-Conduit input acceptance must be allow');
+  }
+}
+
+function validateRuntimeBirthHandoff(handoff) {
+  const file = conduitConsumerContractPath;
+  const category = 'Palisade runtime birth handoff';
+  requiredRuntimeBirthHandoffFields.forEach(field => {
+    if (!(field in handoff)) addFailure(file, category, `runtime_birth_handoff missing ${field}`);
+  });
+  if (handoff.internal_entry_point !== 'scripts/palisade-policy-consumption.mjs') {
+    addFailure(file, category, 'runtime_birth_handoff.internal_entry_point must be scripts/palisade-policy-consumption.mjs');
+  }
+  if (handoff.policy_bundle_path !== palisadeBundlePath) {
+    addFailure(file, category, `runtime_birth_handoff.policy_bundle_path must be ${palisadeBundlePath}`);
+  }
+  validateIncludesAll(file, category, handoff.required_request_fields, requiredPalisadeInputFields, 'runtime_birth_handoff.required_request_fields');
+  validateIncludesAll(file, category, handoff.required_decision_fields, requiredPalisadeDecisionFields, 'runtime_birth_handoff.required_decision_fields');
+  validateIncludesAll(file, category, handoff.fail_closed_states, requiredConduitFailClosedStates, 'runtime_birth_handoff.fail_closed_states');
+  if (handoff.unsupported_version_behavior !== 'fail_closed') {
+    addFailure(file, category, 'runtime_birth_handoff.unsupported_version_behavior must be fail_closed');
+  }
+  if (handoff.deployment_excluded !== true) {
+    addFailure(file, category, 'runtime_birth_handoff.deployment_excluded must be true');
+  }
+  if (handoff.next_pass_name !== 'Palisade Runtime Birth 0.1 — Executable Policy Decision Boundary') {
+    addFailure(file, category, 'runtime_birth_handoff.next_pass_name must identify the executable policy decision boundary pass');
+  }
+  if (!Array.isArray(handoff.first_executable_test_cases) || handoff.first_executable_test_cases.length < 7) {
+    addFailure(file, category, 'runtime_birth_handoff.first_executable_test_cases must contain direct executable tests');
+  }
+  const handoffText = JSON.stringify(handoff).toLowerCase();
+  if (/readiness pass|mapping pass|audit-only|documentation pass/.test(handoffText)) {
+    addFailure(file, category, 'runtime_birth_handoff must not recommend another readiness, mapping, audit-only, or documentation pass');
+  }
+}
+
 function validateNexusVaultCompatibilityPolicy(policy) {
   const file = 'data/nexus-vault-version-compatibility.v1.json';
   const category = 'Track 3.24 NEXUS Vault compatibility policy';
@@ -4101,6 +4776,11 @@ const nexusVaultCompatibilityPipelineReportFixtures = parseJson('data/nexus-vaul
 const nexusVaultCompatibilityPipelineFailureInjectionFixtures = parseJson('data/nexus-vault-compatibility-pipeline-failure-injection-fixtures.v1.json');
 const nexusVaultCompatibilityPipelineFailureInjectionReportContract = parseJson('data/nexus-vault-compatibility-pipeline-failure-injection-report-contract.v1.json');
 const nexusVaultCompatibilityPipelineFailureInjectionReportFixtures = parseJson('data/nexus-vault-compatibility-pipeline-failure-injection-report-fixtures.v1.json');
+const palisadeManifest = parseJson(palisadeManifestPath);
+const palisadePolicy = parseJson(palisadePolicyPath);
+const palisadeInputSchema = parseJson(palisadeInputSchemaPath);
+const palisadeDecisionSchema = parseJson(palisadeDecisionSchemaPath);
+const conduitPalisadeConsumerContract = parseJson(conduitConsumerContractPath);
 
 validateAllDataJsonFilesParsed();
 
@@ -4137,6 +4817,24 @@ if (nexusAdapterContractV1) validateNexusAdapterContractV1(nexusAdapterContractV
 if (nexusImportAdapterReportContractV1) validateNexusImportAdapterReportContractV1(nexusImportAdapterReportContractV1);
 if (track3LocalReportExportManifest) validateTrack323ExportManifestContract(track3LocalReportExportManifest);
 if (conduitVersioningPolicy) validateConduitVersioningPolicy(conduitVersioningPolicy);
+if (
+  palisadeManifest
+  && palisadePolicy
+  && palisadeInputSchema
+  && palisadeDecisionSchema
+  && conduitPalisadeConsumerContract
+  && interfaceContractV1
+  && conduitVersioningPolicy
+) {
+  validateConduitPalisadeConsumption(
+    conduitPalisadeConsumerContract,
+    palisadePolicy,
+    palisadeInputSchema,
+    palisadeDecisionSchema,
+    interfaceContractV1,
+    conduitVersioningPolicy
+  );
+}
 if (nexusVaultVersionCompatibility) validateNexusVaultCompatibilityPolicy(nexusVaultVersionCompatibility);
 if (nexusVaultCompatibilityEvaluationFixtures) {
   validateTrack325VaultCompatibilityFixtures(nexusVaultCompatibilityEvaluationFixtures, nexusVaultVersionCompatibility);
@@ -4192,7 +4890,11 @@ const filesValidated = [
     ...dataFiles,
     ...track3TextFiles,
     ...requiredScriptFiles,
-    ...Array.from(parsed.keys())
+    ...Array.from(parsed.keys()),
+    conduitConsumerContractPath,
+    palisadePolicyPath,
+    palisadeInputSchemaPath,
+    palisadeDecisionSchemaPath
   ])
 ].sort();
 
