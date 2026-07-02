@@ -3,6 +3,15 @@ import {
   isPalisadeBoundaryFailure,
   isPalisadePolicyDecision
 } from "../../../palisade/runtime/v0/palisade-decision-boundary.mjs";
+import {
+  governedRuntimePathActionIdentifier,
+  governedRuntimePathClaimId,
+  performRuntimeGovernancePathAssessment,
+  runtimeGovernancePathAssessmentAdapterId,
+  runtimeGovernancePathAssessmentAdapterPath,
+  runtimeGovernancePathAssessmentResultType,
+  validateRuntimeGovernancePathAssessmentResult
+} from "./actions/runtime-governance-path-assessment.mjs";
 
 export const conduitGovernedInvocationPath = "conduit/runtime/v0/conduit-governed-invocation.mjs";
 export const canonicalConduitEntryPoint = "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction";
@@ -51,6 +60,15 @@ const prohibitedFields = new Set([
   "skip_validation",
   "fail_open",
   "allow_on_failure",
+  "action_adapter",
+  "adapter",
+  "adapter_function",
+  "adapter_module",
+  "adapter_path",
+  "action_registry",
+  "action_override",
+  "precomputed_action_result",
+  "skip_action",
   "runtime_enforcement_status",
   "runtime_status_override",
   "custom_policy_source",
@@ -81,7 +99,14 @@ function directFieldsWithProhibitedValues(value, prefix = "request") {
     .map((field) => `${prefix}.${field}`);
 }
 
-function makeAuditEventCandidate({ request, context, resultClass, policyDecision = null, boundaryFailure = null, downstream = null }) {
+function makeAuditEventCandidate({
+  request,
+  context,
+  resultClass,
+  policyDecision = null,
+  boundaryFailure = null,
+  downstream = null
+}) {
   return {
     event_type: "palisade_governed_conduit_invocation_candidate",
     durable_persistence: false,
@@ -94,6 +119,20 @@ function makeAuditEventCandidate({ request, context, resultClass, policyDecision
     policy_version: request?.policy_version || null,
     claim_id: request?.claim_id || null,
     requested_action: request?.requested_action || null,
+    action_identifier: request?.requested_action || null,
+    adapter_identifier: downstream?.adapter_identifier || null,
+    action_attempt_status: downstream?.attempted === true ? "attempted" : "not_attempted",
+    action_completion_status: downstream?.status || "not_attempted",
+    action_failure_classification: downstream?.failure_classification || null,
+    bounded_result_type: downstream?.result?.result_type || null,
+    bounded_result_summary: downstream?.result
+      ? {
+          result_type: downstream.result.result_type || null,
+          action_identifier: downstream.result.action_identifier || null,
+          sufficiency_status: downstream.result.sufficiency_status || null,
+          unsatisfied_component_count: downstream.result.unsatisfied_components?.length ?? null
+        }
+      : null,
     result_class: resultClass,
     policy_decision: policyDecision ? clone(policyDecision) : null,
     boundary_failure: boundaryFailure ? clone(boundaryFailure) : null,
@@ -222,6 +261,12 @@ function validateEnvelope(request, context) {
   if (!Array.isArray(request.current_repository_state_basis) || request.current_repository_state_basis.length === 0) {
     errors.push("request current_repository_state_basis must be a non-empty array");
   }
+  if (request.claim_id !== governedRuntimePathClaimId) {
+    errors.push(`unsupported governed action claim ${request.claim_id || "missing"}`);
+  }
+  if (request.requested_action !== governedRuntimePathActionIdentifier) {
+    errors.push(`unknown governed action identifier ${request.requested_action || "missing"}`);
+  }
   return errors;
 }
 
@@ -252,30 +297,44 @@ function policyDecisionBlockReasons(decision) {
   return reasons;
 }
 
-function validateDownstreamResult(value) {
-  if (!isObject(value)) return ["downstream returned a non-object result"];
-  const status = value.downstream_status || value.status;
-  if (!["completed", "ok", "success"].includes(status) && value.ok !== true) {
-    return ["downstream result did not report completed, ok, success, or ok:true"];
+function validateSameInvocationBinding({ request, context, palisadeRequest, policyDecision }) {
+  const errors = [];
+  if (policyDecision.claim_id !== request.claim_id) errors.push("decision claim_id does not match request");
+  if (policyDecision.requested_action !== request.requested_action) {
+    errors.push("decision requested_action does not match request");
   }
-  return [];
+  if (policyDecision.surface !== request.surface) errors.push("decision surface does not match request");
+  if (palisadeRequest.claim_id !== request.claim_id) errors.push("Palisade request claim_id does not match request");
+  if (palisadeRequest.requested_action !== request.requested_action) {
+    errors.push("Palisade request requested_action does not match request");
+  }
+  if (request.claim_id !== governedRuntimePathClaimId) errors.push("claim does not govern selected runtime path action");
+  if (request.requested_action !== governedRuntimePathActionIdentifier) {
+    errors.push("request action does not match selected runtime path action");
+  }
+  if (policyDecision.claim_id !== governedRuntimePathClaimId) {
+    errors.push("decision claim does not govern selected runtime path action");
+  }
+  if (policyDecision.requested_action !== governedRuntimePathActionIdentifier) {
+    errors.push("decision action does not cover selected runtime path action");
+  }
+  if (request.contract_version !== expectedContractVersion) errors.push("contract version drifted before action execution");
+  if (request.policy_version !== expectedPolicyVersion) errors.push("policy version drifted before action execution");
+  if (!isObject(context)) errors.push("context snapshot is not an object");
+  if (JSON.stringify(request.current_repository_state_basis) !== JSON.stringify(policyDecision.current_state_basis)) {
+    errors.push("current-state basis does not match the allowing decision");
+  }
+  return errors;
 }
 
-export async function boundedLocalConduitContinuation(invocation) {
-  return {
-    downstream_status: "completed",
-    adapter_classification: "bounded_local_adapter",
-    action_performed: "bounded local continuation acknowledgement only",
-    request_id: invocation.request.request_id,
-    trace_id: invocation.request.trace_id,
-    correlation_id: invocation.request.correlation_id
-  };
+function validateDownstreamResult(value, invocation) {
+  return validateRuntimeGovernancePathAssessmentResult(value, invocation);
 }
 
-export async function invokeGovernedConduitAction(
+async function invokeGovernedConduitActionInternal(
   request,
   context = {},
-  downstreamAdapter = boundedLocalConduitContinuation
+  actionAdapter = performRuntimeGovernancePathAssessment
 ) {
   const envelopeErrors = validateEnvelope(request, context);
   if (envelopeErrors.length > 0) {
@@ -353,16 +412,32 @@ export async function invokeGovernedConduitAction(
     });
   }
 
-  if (typeof downstreamAdapter !== "function") {
+  const bindingErrors = validateSameInvocationBinding({ request, context, palisadeRequest, policyDecision: palisadeResult });
+  if (bindingErrors.length > 0) {
     return makeClosedResult({
       request,
       context,
       palisadeRequest,
       resultClass: "downstream_failed",
-      failureClassification: "missing_downstream_adapter",
-      failureStage: "downstream_validation",
+      failureClassification: "same_invocation_binding_failed",
+      failureStage: "same_invocation_request_decision_action_binding",
       failureProvenance: conduitGovernedInvocationPath,
-      reasons: ["downstream continuation must be a function"],
+      reasons: bindingErrors,
+      policyEvaluationAttempted: true,
+      policyDecision: palisadeResult
+    });
+  }
+
+  if (typeof actionAdapter !== "function") {
+    return makeClosedResult({
+      request,
+      context,
+      palisadeRequest,
+      resultClass: "downstream_failed",
+      failureClassification: "missing_action_adapter",
+      failureStage: "action_adapter_validation",
+      failureProvenance: runtimeGovernancePathAssessmentAdapterPath,
+      reasons: ["selected action adapter must be a function"],
       policyEvaluationAttempted: true,
       policyDecision: palisadeResult
     });
@@ -370,19 +445,27 @@ export async function invokeGovernedConduitAction(
 
   let downstreamInvocationCount = 0;
   let downstreamResult;
+  const invocationSnapshot = {
+    request: clone(request),
+    context: clone(context),
+    palisade_request: clone(palisadeRequest),
+    policy_decision: clone(palisadeResult)
+  };
   try {
     downstreamInvocationCount += 1;
-    downstreamResult = await downstreamAdapter({
-      request: clone(request),
-      context: clone(context),
-      palisade_request: clone(palisadeRequest),
-      policy_decision: clone(palisadeResult),
+    downstreamResult = await actionAdapter({
+      ...invocationSnapshot,
       audit_event_candidate: makeAuditEventCandidate({
         request,
         context,
         resultClass: "permitted",
         policyDecision: palisadeResult,
-        downstream: { attempted: true, invocation_count: downstreamInvocationCount, status: "attempting" }
+        downstream: {
+          attempted: true,
+          invocation_count: downstreamInvocationCount,
+          status: "attempting",
+          adapter_identifier: runtimeGovernancePathAssessmentAdapterId
+        }
       })
     });
   } catch (error) {
@@ -390,8 +473,9 @@ export async function invokeGovernedConduitAction(
       attempted: true,
       invocation_count: downstreamInvocationCount,
       status: "failed",
-      failure_classification: "downstream_exception",
-      failure_provenance: "downstream_continuation",
+      adapter_identifier: runtimeGovernancePathAssessmentAdapterId,
+      failure_classification: "action_adapter_exception",
+      failure_provenance: runtimeGovernancePathAssessmentAdapterPath,
       error: failureFromError(error)
     };
     const result = {
@@ -399,7 +483,7 @@ export async function invokeGovernedConduitAction(
       allowed: false,
       policy_decision: clone(palisadeResult),
       palisade_boundary_failure: null,
-      reasons: ["downstream continuation failed after a valid allowing Palisade decision"],
+      reasons: ["selected action adapter failed after a valid allowing Palisade decision"],
       required_evidence: palisadeResult.required_evidence,
       missing_evidence: palisadeResult.missing_evidence,
       operator_review_required: palisadeResult.operator_review_required,
@@ -417,14 +501,15 @@ export async function invokeGovernedConduitAction(
     return result;
   }
 
-  const downstreamErrors = validateDownstreamResult(downstreamResult);
+  const downstreamErrors = validateDownstreamResult(downstreamResult, invocationSnapshot);
   if (downstreamErrors.length > 0) {
     const downstream = {
       attempted: true,
       invocation_count: downstreamInvocationCount,
       status: "failed",
-      failure_classification: "malformed_downstream_result",
-      failure_provenance: "downstream_continuation",
+      adapter_identifier: runtimeGovernancePathAssessmentAdapterId,
+      failure_classification: "malformed_action_result",
+      failure_provenance: runtimeGovernancePathAssessmentAdapterPath,
       reasons: downstreamErrors,
       result: clone(downstreamResult)
     };
@@ -455,6 +540,7 @@ export async function invokeGovernedConduitAction(
     attempted: true,
     invocation_count: downstreamInvocationCount,
     status: "completed",
+    adapter_identifier: runtimeGovernancePathAssessmentAdapterId,
     failure_classification: null,
     failure_provenance: null,
     result: clone(downstreamResult)
@@ -481,3 +567,19 @@ export async function invokeGovernedConduitAction(
   });
   return result;
 }
+
+export async function invokeGovernedConduitAction(request, context = {}) {
+  return invokeGovernedConduitActionInternal(request, context);
+}
+
+export async function invokeGovernedConduitActionForTestOnly(request, context = {}, actionAdapter) {
+  return invokeGovernedConduitActionInternal(request, context, actionAdapter);
+}
+
+export {
+  governedRuntimePathActionIdentifier,
+  governedRuntimePathClaimId,
+  runtimeGovernancePathAssessmentAdapterId,
+  runtimeGovernancePathAssessmentAdapterPath,
+  runtimeGovernancePathAssessmentResultType
+};

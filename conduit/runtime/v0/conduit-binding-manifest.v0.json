@@ -6,7 +6,16 @@
   "palisade_boundary_path": "palisade/runtime/v0/palisade-decision-boundary.mjs",
   "palisade_exported_function": "evaluatePalisadeDecision",
   "exported_conduit_function": "invokeGovernedConduitAction",
-  "governed_action_class": "internal_conduit_governed_policy_continuation",
+  "governed_action_class": "runtime_governance_path_sufficiency_assessment",
+  "selected_action_identifier": "evaluate_runtime_path_sufficiency",
+  "selected_palisade_claim_id": "runtime_governance_path_sufficiency",
+  "selected_requested_action": "evaluate_runtime_path_sufficiency",
+  "selected_policy_rule": "runtime-governance-path-sufficiency-decision",
+  "selected_policy_mapping": "palisade/policy-bundle.v0/policies/claim-capability-policy.json#rules[runtime-governance-path-sufficiency-decision]",
+  "selected_action_owning_layer": "Conduit internal runtime adapter using Palisade-owned runtime-governance-path component semantics",
+  "selected_domain_result_type": "runtime_governance_path_assessment",
+  "action_registry_created": false,
+  "action_registry_decision": "A direct fixed binding is used because only one governed internal action exists and no repository action-registry convention exists.",
   "direct_palisade_invocation": true,
   "palisade_evaluator_injectable": false,
   "duplicate_policy_evaluator": false,
@@ -21,7 +30,7 @@
     {
       "path": "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction",
       "classification": "canonical_governed",
-      "routing": "directly invokes evaluatePalisadeDecision before downstream continuation"
+      "routing": "directly invokes evaluatePalisadeDecision before the fixed runtime-governance-path assessment adapter"
     },
     {
       "path": "conduit/runtime/v0/conduit-governed-invocation.mjs#invokeGovernedConduitAction",
@@ -29,9 +38,19 @@
       "routing": "implementation exported through the canonical index surface"
     },
     {
+      "path": "conduit/runtime/v0/actions/runtime-governance-path-assessment.mjs#performRuntimeGovernancePathAssessment",
+      "classification": "routed_to_canonical",
+      "routing": "repository-owned action adapter imported only by the canonical Conduit invocation implementation"
+    },
+    {
+      "path": "conduit/runtime/v0/conduit-governed-invocation.mjs#invokeGovernedConduitActionForTestOnly",
+      "classification": "test_only",
+      "routing": "test-only adapter failure harness; not exported from the canonical index surface"
+    },
+    {
       "path": "scripts/palisade-policy-consumption.mjs",
       "classification": "non_governed",
-      "routing": "validator compatibility wrapper only; does not perform the governed downstream action class"
+      "routing": "validator compatibility wrapper only; does not perform the governed runtime-path action class"
     },
     {
       "path": "scripts/run-nexus-import-adapter-local.mjs",
@@ -74,17 +93,26 @@
       "routing": "deterministic local interface fixture action class; not a Conduit Palisade governed continuation"
     }
   ],
-  "downstream_adapter_classification": "bounded_local_adapter",
-  "downstream_adapter_path": "conduit/runtime/v0/conduit-governed-invocation.mjs#boundedLocalConduitContinuation",
-  "downstream_adapter_substantive_action": "bounded local continuation acknowledgement only; no Vault/NEXUS, model, release, public, network, or persistence action",
+  "downstream_adapter_classification": "repository_owned_internal_domain_adapter",
+  "downstream_adapter_path": "conduit/runtime/v0/actions/runtime-governance-path-assessment.mjs#performRuntimeGovernancePathAssessment",
+  "downstream_adapter_substantive_action": "constructs a validated runtime-governance-path assessment from the same invocation state basis allowed by Palisade; no Vault/NEXUS, model, release, public, network, or persistence action",
+  "action_result_validation": "conduit/runtime/v0/actions/runtime-governance-path-assessment.mjs#validateRuntimeGovernancePathAssessmentResult",
+  "same_invocation_request_decision_action_binding": "implemented for request, claim, requested_action, surface, contract version, policy version, trace, correlation, workspace/tenant context, and current-state basis inside the canonical invocation only",
+  "cross_invocation_replay_protection_status": "not_implemented",
+  "substantive_governed_internal_action_adapter_status": "implemented_for_runtime_governance_path_sufficiency_assessment",
+  "canonical_governed_route_status": "implemented_for_runtime_governance_path_sufficiency_assessment",
+  "hypothetical_policy_allow_reachability": "implemented_in_test_only_complete_evidence_fixture",
+  "current_evidence_policy_allow_reachability": "not_established",
   "internal_executable_policy_boundary_status": "implemented",
   "canonical_internal_conduit_binding_status": "implemented",
   "internal_executable_gate_status": "implemented",
+  "durable_decision_persistence_status": "not_implemented",
   "deployed_enforcement_status": "not_implemented",
   "public_enforcement_status": "not_implemented",
   "durable_enforcement_status": "not_implemented",
   "production_enforcement_status": "not_implemented",
   "audit_persistence_status": "not_implemented",
+  "durable_action_result_persistence_status": "not_implemented",
   "non_claims": [
     "This binding does not create public routes or public policy API behavior.",
     "This binding does not create deployed enforcement.",

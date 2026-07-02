@@ -1,8 +1,12 @@
 export {
-  boundedLocalConduitContinuation,
   canonicalConduitEntryPoint,
   conduitGovernedInvocationPath,
+  governedRuntimePathActionIdentifier,
+  governedRuntimePathClaimId,
   governedConduitResultClasses,
   invokeGovernedConduitAction,
-  palisadeDecisionBoundaryImportPath
+  palisadeDecisionBoundaryImportPath,
+  runtimeGovernancePathAssessmentAdapterId,
+  runtimeGovernancePathAssessmentAdapterPath,
+  runtimeGovernancePathAssessmentResultType
 } from "./conduit-governed-invocation.mjs";
