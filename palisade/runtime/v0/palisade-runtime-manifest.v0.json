@@ -8,7 +8,13 @@
   "request_contract_path": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.request_fields",
   "decision_contract_path": "data/interface-contract.v1.json#palisade_contract_readiness_boundary.decision_fields",
   "executable_entry_point": "palisade/runtime/v0/palisade-decision-boundary.mjs",
-  "exported_function": "evaluatePalisadeDecision",
+  "exported_function": "evaluatePalisadeCurrentStateDecision",
+  "legacy_policy_input_evaluator": "evaluatePalisadeDecision",
+  "current_state_evidence_contract": "palisade/runtime/v0/palisade-current-state-evidence-contract.v0.json",
+  "current_state_constructor": "palisade/runtime/v0/palisade-current-state-evidence.mjs",
+  "canonical_policy_input_construction": "internal_and_fixed_from_bound_repository_evidence",
+  "canonical_authorization_witness_source": "none",
+  "trusted_production_operator_authorizer_status": "not_implemented",
   "supported_invocation_modes": [
     "internal_module_import"
   ],
@@ -27,6 +33,9 @@
     "domain_result_type": "runtime_governance_path_assessment",
     "hypothetical_allow_reachability": "implemented_in_test_only_complete_evidence_fixture",
     "current_evidence_allow_reachability": "not_established",
+    "caller_policy_state_override": "rejected_on_canonical_path",
+    "caller_version_selection": "rejected_exact_match_assertion_only",
+    "evidence_contract_binding": "implemented",
     "cross_invocation_replay_protection": "not_implemented"
   },
   "internal_executable_policy_gate_status": "implemented",

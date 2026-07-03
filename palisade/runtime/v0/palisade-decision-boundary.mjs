@@ -10,6 +10,13 @@ import {
   palisadeManifestPath,
   palisadePolicyPath
 } from "./palisade-policy-engine.mjs";
+import {
+  annotateDecisionWithCurrentStateBinding,
+  constructCurrentStatePolicyInput,
+  constructTestOnlyCompletePolicyInput,
+  PalisadeCurrentStateEvidenceError,
+  palisadeRepositoryRoot
+} from "./palisade-current-state-evidence.mjs";
 
 export const palisadeDecisionBoundaryPath = "palisade/runtime/v0/palisade-decision-boundary.mjs";
 export const interfaceContractPath = "data/interface-contract.v1.json";
@@ -386,6 +393,65 @@ export function evaluatePalisadeDecision(request, options = {}) {
   }
 
   return decision;
+}
+
+export function evaluatePalisadeCurrentStateDecision({
+  envelope,
+  acquisitionPlan,
+  evidenceSnapshot,
+  authorizationWitness = null,
+  testOnlyCompleteEvidence = false,
+  repoRoot = palisadeRepositoryRoot()
+} = {}) {
+  let construction;
+  try {
+    construction = testOnlyCompleteEvidence
+      ? constructTestOnlyCompletePolicyInput({
+          envelope,
+          acquisitionPlan,
+          evidenceSnapshot,
+          authorizationWitness,
+          repoRoot
+        })
+      : constructCurrentStatePolicyInput({
+          envelope,
+          acquisitionPlan,
+          evidenceSnapshot,
+          authorizationWitness,
+          repoRoot
+        });
+  } catch (error) {
+    const failureClassification =
+      error instanceof PalisadeCurrentStateEvidenceError
+        ? error.failure_classification
+        : "policy_input_construction_failed";
+    return boundaryFailure({
+      stage: error.stage || "current_state_policy_input_construction",
+      failure_classification: failureClassification,
+      provenance: "palisade/runtime/v0/palisade-current-state-evidence.mjs",
+      reasons: error.reasons || [error.message],
+      request: envelope,
+      details: error.details || []
+    });
+  }
+
+  const decision = evaluatePalisadeDecision(construction.policy_input, { repoRoot });
+  if (isPalisadeBoundaryFailure(decision)) return decision;
+  if (!isPalisadePolicyDecision(decision)) {
+    return boundaryFailure({
+      stage: "decision_classification",
+      failure_classification: "malformed_palisade_decision",
+      provenance: palisadeDecisionBoundaryPath,
+      reasons: ["Palisade returned neither a policy decision nor a structured boundary failure"],
+      request: envelope
+    });
+  }
+  const annotatedDecision = annotateDecisionWithCurrentStateBinding(decision, construction);
+  Object.defineProperty(annotatedDecision, "palisade_internal", {
+    value: construction,
+    enumerable: false
+  });
+  return annotatedDecision;
 }
 
 export function isPalisadeBoundaryFailure(result) {

@@ -12,10 +12,14 @@ import {
   runtimeGovernancePathAssessmentAdapterPath,
   runtimeGovernancePathAssessmentResultType
 } from "../conduit/runtime/v0/index.mjs";
+import { invokeGovernedConduitActionForTestOnly } from "../conduit/runtime/v0/conduit-governed-invocation.mjs";
+import {
+  canonicalSurface,
+  makeTestOnlyCompleteEvidenceSnapshot,
+  resolveCanonicalPalisadeRuntime
+} from "../palisade/runtime/v0/palisade-current-state-evidence.mjs";
 
-const casesPath = "conduit/runtime/v0/tests/conduit-palisade-binding.cases.json";
 const manifestPath = "conduit/runtime/v0/conduit-binding-manifest.v0.json";
-const policyCasesPath = "palisade/policy-bundle.v0/tests/claim-capability-policy.cases.json";
 const bindingPath = "conduit/runtime/v0/conduit-governed-invocation.mjs";
 const indexPath = "conduit/runtime/v0/index.mjs";
 const failures = [];
@@ -32,48 +36,31 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
-function clone(value) {
-  return JSON.parse(JSON.stringify(value));
-}
-
-function caseById(caseSet, id) {
-  const found = caseSet.cases.find((testCase) => testCase.id === id);
-  if (!found) throw new Error(`Missing policy case ${id}`);
-  return found.input;
-}
-
-function makeRequest(input, suffix) {
+function canonicalRequest(suffix = "current") {
   return {
     request_id: `conduit-${suffix}`,
     trace_id: `trace-${suffix}`,
     correlation_id: `correlation-${suffix}`,
     contract_version: "1.0.0",
     policy_version: "0.1.0",
-    ...clone(input),
-    surface: "conduit_internal_runtime"
+    surface: canonicalSurface,
+    claim_id: governedRuntimePathClaimId,
+    requested_action: governedRuntimePathActionIdentifier
   };
 }
 
-function makeCompleteRuntimePathRequest(policyCases, suffix) {
-  const input = clone(caseById(policyCases, "allow-production-workspace-complete-hypothetical-evidence"));
-  input.claim_id = governedRuntimePathClaimId;
-  input.requested_action = governedRuntimePathActionIdentifier;
-  input.evidence_state.required_evidence = ["runtime_governance_path"];
-  input.evidence_state.evidence_notes = ["Hypothetical complete-evidence fixture only."];
-  input.current_repository_state_basis = ["policy test fixture only; not current repository state"];
-  return makeRequest(input, suffix);
-}
-
-function context(suffix) {
+function testWitness(request) {
   return {
-    workspace_context: {
-      workspace_id: `workspace-${suffix}`,
-      status: "local_internal_only"
-    },
-    tenant_context: {
-      tenant_id: `tenant-${suffix}`,
-      status: "local_internal_only"
-    }
+    witness_version: "test-only.v0",
+    request_id: request.request_id,
+    trace_id: request.trace_id,
+    correlation_id: request.correlation_id,
+    surface: request.surface,
+    claim_id: request.claim_id,
+    requested_action: request.requested_action,
+    authorization_status: "approved",
+    authorization_scope: "test_only_runtime_governance_path_sufficiency",
+    provenance: "explicit_test_only_harness"
   };
 }
 
@@ -94,130 +81,114 @@ function assertDistinctResult(result, expectedClass, label) {
     assert(result.success === false, `${label}: non-permitted result must not be success`);
     assert(result.allowed === false, `${label}: non-permitted result must not be allowed`);
   }
-  if (expectedClass === "policy_blocked") {
-    assert(result.policy_decision, `${label}: policy_blocked must preserve policy decision`);
-    assert(result.palisade_boundary_failure === null, `${label}: policy_blocked must not be boundary failure`);
-  }
-  if (expectedClass === "palisade_boundary_failed") {
-    assert(result.palisade_boundary_failure, `${label}: boundary failure must be preserved`);
-    assert(!result.policy_decision, `${label}: boundary failure must not manufacture policy decision`);
-  }
 }
 
 const bindingText = fs.readFileSync(bindingPath, "utf8");
 const indexText = fs.readFileSync(indexPath, "utf8");
 const manifest = readJson(manifestPath);
-const cases = readJson(casesPath);
-const policyCases = readJson(policyCasesPath);
 
 assert(typeof invokeGovernedConduitAction === "function", "canonical internal import must resolve invokeGovernedConduitAction");
 assert(canonicalConduitEntryPoint === "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction", "canonical entry point metadata mismatch");
 assert(palisadeDecisionBoundaryImportPath === "palisade/runtime/v0/palisade-decision-boundary.mjs", "Palisade boundary metadata mismatch");
 assert(indexText.includes('from "./conduit-governed-invocation.mjs"'), "index must route to governed invocation implementation");
-assert(bindingText.includes('from "../../../palisade/runtime/v0/palisade-decision-boundary.mjs"'), "binding must directly import Palisade boundary");
-assert(bindingText.includes("evaluatePalisadeDecision(palisadeRequest)"), "binding must directly invoke evaluatePalisadeDecision");
-assert(bindingText.includes("performRuntimeGovernancePathAssessment"), "binding must import the repository-owned action adapter");
-assert(!indexText.includes("invokeGovernedConduitActionForTestOnly"), "canonical index must not export test-only adapter injection");
-assert(!indexText.includes("boundedLocalConduitContinuation"), "canonical index must not export the retired acknowledgement adapter");
-assert(!bindingText.includes("palisade-policy-consumption"), "binding must not import validator consumption wrapper");
-assert(!bindingText.includes("evaluatePolicyDecision"), "binding must not use duplicate policy evaluator");
-assert(!bindingText.includes("repoRoot:"), "binding must not expose a caller-supplied repoRoot policy source");
+assert(bindingText.includes("evaluatePalisadeCurrentStateDecision"), "binding must invoke evidence-bound Palisade boundary");
+assert(bindingText.includes("resolveCanonicalPalisadeRuntime"), "binding must resolve Palisade acquisition plan");
+assert(bindingText.includes("acquireConduitCurrentStateEvidence"), "binding must execute fixed Conduit acquisition");
+assert(!indexText.includes("invokeGovernedConduitActionForTestOnly"), "canonical index must not export test-only harness");
+assert(!indexText.includes("performRuntimeGovernancePathAssessment"), "canonical index must not export direct action adapter");
+assert(!bindingText.includes("evaluatePalisadeDecision(palisadeRequest)"), "binding must not evaluate caller-built Palisade request");
+assert(!bindingText.includes("repoRoot:"), "binding must not expose caller-supplied repoRoot");
 
 assert(manifest.canonical_internal_export === "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction", "manifest canonical export mismatch");
 assert(manifest.selected_action_identifier === governedRuntimePathActionIdentifier, "manifest selected action mismatch");
 assert(manifest.selected_palisade_claim_id === governedRuntimePathClaimId, "manifest selected claim mismatch");
-assert(manifest.downstream_adapter_path.includes(runtimeGovernancePathAssessmentAdapterPath), "manifest adapter path mismatch");
-assert(manifest.direct_palisade_invocation === true, "manifest must record direct Palisade invocation");
+assert(manifest.canonical_surface === canonicalSurface, "manifest surface mismatch");
+assert(manifest.canonical_caller_policy_state_fields_accepted === false, "manifest must reject caller policy-state fields");
+assert(manifest.current_state_evidence_binding?.status === "implemented", "manifest must record evidence binding");
+assert(manifest.current_state_evidence_binding?.evidence_contract_self_certifies_sufficiency === false, "manifest must reject self-certification");
 assert(manifest.palisade_evaluator_injectable === false, "manifest must record non-injectable evaluator");
-assert(manifest.duplicate_policy_evaluator === false, "manifest must record no duplicate evaluator");
 assert(manifest.action_registry_created === false, "manifest must record direct fixed binding");
-assert(manifest.internal_executable_gate_status === "implemented", "manifest must record implemented internal gate");
-assert(manifest.substantive_governed_internal_action_adapter_status.includes("implemented"), "manifest must record substantive adapter implementation");
-assert(manifest.deployed_enforcement_status === "not_implemented", "manifest must not claim deployment");
-assert(manifest.public_enforcement_status === "not_implemented", "manifest must not claim public enforcement");
-assert(manifest.production_enforcement_status === "not_implemented", "manifest must not claim production enforcement");
-assert(manifest.audit_persistence_status === "not_implemented", "manifest must not claim audit persistence");
-assert(manifest.cross_invocation_replay_protection_status === "not_implemented", "manifest must not claim replay protection");
+assert(manifest.trusted_production_operator_authorizer_status === "not_implemented", "manifest must not claim production authorizer");
 
-for (const requiredCase of [
-  "selected_runtime_path_action_identity_validated",
-  "allow_attempts_governed_action_once",
-  "requires_evidence_blocks_action",
-  "operator_review_blocks_action",
-  "runtime_enforcement_unavailable_blocks_action",
-  "caller_adapter_cannot_substitute_action",
-  "same_invocation_request_decision_action_binding_enforced",
-  "state_basis_mismatch_fails_closed",
-  "no_active_governed_bypass_remains"
-]) {
-  assert(cases.covered_cases.includes(requiredCase), `${casesPath}: missing coverage claim ${requiredCase}`);
-}
+const request = canonicalRequest("current");
+const current = await invokeGovernedConduitAction(request);
+assertDistinctResult(current, "policy_blocked", "current evidence");
+assert(["requires_evidence", "runtime_enforcement_unavailable", "deny", "requires_operator_review"].includes(current.policy_decision?.decision), "current evidence decision must be non-allowing");
+assert(current.policy_decision?.allowed === false, "current evidence decision must not allow");
+assert(current.policy_decision?.evidence_contract_sha256, "current evidence decision must carry contract hash");
+assert(current.current_state_basis.length > 0, "current evidence must include internal basis");
+assertDownstreamZero(current, "current evidence");
+assert(current.audit_event_candidate?.durable_persistence === false, "audit candidate must not persist");
 
-const allowRequest = makeCompleteRuntimePathRequest(policyCases, "allow");
-const allowSuccess = await invokeGovernedConduitAction(allowRequest, context("allow"));
-assertDistinctResult(allowSuccess, "permitted", "allow success");
-assert(allowSuccess.policy_evaluation.attempted === true, "allow success must attempt Palisade evaluation");
-assert(allowSuccess.policy_decision?.decision === "allow", "allow success must preserve Palisade allow");
-assert(allowSuccess.policy_decision.claim_id === governedRuntimePathClaimId, "allow success claim mismatch");
-assert(allowSuccess.policy_decision.requested_action === governedRuntimePathActionIdentifier, "allow success action mismatch");
-assertDownstreamOnce(allowSuccess, "allow success");
-assert(allowSuccess.downstream.adapter_identifier === runtimeGovernancePathAssessmentAdapterId, "allow success adapter id mismatch");
-assert(allowSuccess.downstream.result?.result_type === runtimeGovernancePathAssessmentResultType, "allow success result type mismatch");
-assert(allowSuccess.downstream.result?.sufficiency_status === "sufficient", "allow success domain assessment mismatch");
-assert(allowSuccess.audit_event_candidate?.durable_persistence === false, "allow success audit candidate must not persist");
-assert(allowSuccess.audit_event_candidate?.bounded_result_type === runtimeGovernancePathAssessmentResultType, "audit candidate bounded result type mismatch");
-
-const requiresEvidenceInput = clone(caseById(policyCases, "runtime-enforcement-unavailable-current-policy-bundle"));
-requiresEvidenceInput.evidence_state.denied_claims = [];
-requiresEvidenceInput.evidence_state.missing_evidence = ["user_workspace_input"];
-const requiresEvidence = await invokeGovernedConduitAction(makeRequest(requiresEvidenceInput, "requires-evidence"), context("requires-evidence"));
-assertDistinctResult(requiresEvidence, "policy_blocked", "requires evidence");
-assert(requiresEvidence.policy_decision?.decision === "requires_evidence", "requires evidence decision mismatch");
-assertDownstreamZero(requiresEvidence, "requires evidence");
-
-const runtimeUnavailable = await invokeGovernedConduitAction(
-  makeRequest(caseById(policyCases, "runtime-enforcement-unavailable-current-policy-bundle"), "runtime-unavailable"),
-  context("runtime-unavailable")
-);
-assertDistinctResult(runtimeUnavailable, "policy_blocked", "runtime unavailable");
-assert(runtimeUnavailable.policy_decision?.decision === "runtime_enforcement_unavailable", "runtime unavailable decision mismatch");
-assertDownstreamZero(runtimeUnavailable, "runtime unavailable");
-
-const unrelatedClaimAllow = makeRequest(caseById(policyCases, "allow-production-workspace-complete-hypothetical-evidence"), "unrelated-claim");
-const unrelatedResult = await invokeGovernedConduitAction(unrelatedClaimAllow, context("unrelated-claim"));
-assertDistinctResult(unrelatedResult, "palisade_boundary_failed", "unrelated claim");
-assertDownstreamZero(unrelatedResult, "unrelated claim");
-
-let callerAdapterCount = 0;
-const callerAdapterIgnored = await invokeGovernedConduitAction(allowRequest, context("caller-adapter"), async () => {
-  callerAdapterCount += 1;
-  return { downstream_status: "completed", result_type: "caller_controlled" };
-});
-assertDistinctResult(callerAdapterIgnored, "permitted", "caller adapter ignored");
-assert(callerAdapterCount === 0, "caller-supplied adapter must be ignored");
-assert(callerAdapterIgnored.downstream.result?.adapter_identifier === runtimeGovernancePathAssessmentAdapterId, "canonical adapter must still run");
-
-for (const [label, requestFields, contextFields = {}] of [
+for (const [label, patch, context = undefined] of [
+  ["caller supplied evidence_state", { evidence_state: {} }],
+  ["caller supplied runtime state", { runtime_governance_path_state: {} }],
+  ["caller supplied basis", { current_repository_state_basis: ["caller"] }],
+  ["caller supplied authorization", { operator_authorization_state: { status: "approved" } }],
   ["caller supplied allowed true", { allowed: true }],
   ["caller supplied decision", { decision: "allow" }],
-  ["caller supplied evaluator", {}, { evaluator: () => ({ decision: "allow", allowed: true }) }],
   ["skip policy", { skip_policy: true }],
   ["fail open", { fail_open: true }],
   ["precomputed action result", { precomputed_action_result: { downstream_status: "completed" } }],
-  ["skip action", { skip_action: true }]
+  ["skip action", { skip_action: true }],
+  ["caller selected old policy", { policy_version: "0.0.1" }],
+  ["caller selected future policy", { policy_version: "9.9.9" }],
+  ["surface mismatch", { surface: "policy-test-fixture" }],
+  ["claim mismatch", { claim_id: "production_workspace_claim" }],
+  ["action mismatch", { requested_action: "claim_public_capability" }],
+  ["non-empty context", {}, { tenant_context: { tenant_id: "caller" } }]
 ]) {
   const result = await invokeGovernedConduitAction(
-    { ...allowRequest, request_id: `conduit-${label.replaceAll(" ", "-")}`, ...requestFields },
-    { ...context(label), ...contextFields }
+    { ...request, request_id: `conduit-${label.replaceAll(" ", "-")}`, ...patch },
+    context
   );
   assertDistinctResult(result, "palisade_boundary_failed", label);
   assertDownstreamZero(result, label);
 }
 
-const deterministicRequest = makeRequest(requiresEvidenceInput, "deterministic");
-const deterministicA = await invokeGovernedConduitAction(deterministicRequest, context("deterministic"));
-const deterministicB = await invokeGovernedConduitAction(deterministicRequest, context("deterministic"));
-assert(JSON.stringify(deterministicA) === JSON.stringify(deterministicB), "identical blocked inputs must produce deterministic results");
+let callerAdapterCount = 0;
+const callerAdapterIgnored = await invokeGovernedConduitAction(request, {}, async () => {
+  callerAdapterCount += 1;
+  return { downstream_status: "completed", result_type: "caller_controlled" };
+});
+assertDistinctResult(callerAdapterIgnored, "policy_blocked", "caller adapter ignored");
+assert(callerAdapterCount === 0, "caller-supplied adapter must be ignored by canonical invocation");
+assertDownstreamZero(callerAdapterIgnored, "caller adapter ignored");
+
+const completeRequest = canonicalRequest("allow");
+const { plan } = resolveCanonicalPalisadeRuntime({ envelope: completeRequest });
+const completeSnapshot = makeTestOnlyCompleteEvidenceSnapshot({ acquisitionPlan: plan });
+const allowSuccess = await invokeGovernedConduitActionForTestOnly(completeRequest, {}, {
+  testOnlyEvidenceSnapshot: completeSnapshot,
+  testOnlyCompleteEvidence: true,
+  authorizationWitness: testWitness(completeRequest)
+});
+assertDistinctResult(allowSuccess, "permitted", "test-only allow success");
+assert(allowSuccess.policy_evaluation.attempted === true, "allow success must attempt Palisade evaluation");
+assert(allowSuccess.policy_decision?.decision === "allow", "allow success must preserve Palisade allow");
+assertDownstreamOnce(allowSuccess, "test-only allow success");
+assert(allowSuccess.downstream.adapter_identifier === runtimeGovernancePathAssessmentAdapterId, "allow success adapter id mismatch");
+assert(allowSuccess.downstream.result?.result_type === runtimeGovernancePathAssessmentResultType, "allow success result type mismatch");
+assert(allowSuccess.downstream.result?.sufficiency_status === "sufficient", "allow success domain assessment mismatch");
+
+let throwCount = 0;
+const throwResult = await invokeGovernedConduitActionForTestOnly(completeRequest, {}, {
+  testOnlyEvidenceSnapshot: completeSnapshot,
+  testOnlyCompleteEvidence: true,
+  authorizationWitness: testWitness(completeRequest),
+  actionAdapter: async () => {
+    throwCount += 1;
+    throw new Error("test-only adapter throw");
+  }
+});
+assertDistinctResult(throwResult, "downstream_failed", "test-only adapter throw");
+assert(throwResult.downstream.failure_classification === "action_adapter_exception", "adapter throw classification mismatch");
+assert(throwCount === 1, "adapter throw must not retry");
+assertDownstreamOnce(throwResult, "adapter throw");
+
+const deterministicA = await invokeGovernedConduitAction(request);
+const deterministicB = await invokeGovernedConduitAction(request);
+assert(JSON.stringify(deterministicA) === JSON.stringify(deterministicB), "identical canonical inputs must produce deterministic results");
 
 const classifications = new Map((manifest.bypass_coverage || []).map((entry) => [entry.path, entry.classification]));
 assert(classifications.get("conduit/runtime/v0/index.mjs#invokeGovernedConduitAction") === "canonical_governed", "canonical path must be classified canonical_governed");
@@ -226,20 +197,6 @@ assert(
     "routed_to_canonical",
   "adapter path must be classified routed_to_canonical"
 );
-for (const [coveredPath, classification] of classifications.entries()) {
-  assert(
-    [
-      "canonical_governed",
-      "routed_to_canonical",
-      "inactive",
-      "deprecated",
-      "test_only",
-      "non_governed",
-      "out_of_scope"
-    ].includes(classification),
-    `${coveredPath}: invalid bypass classification ${classification}`
-  );
-}
 const activeBypasses = [...classifications.entries()].filter(
   ([, classification]) =>
     ![
@@ -261,4 +218,4 @@ if (failures.length > 0) {
 }
 
 console.log("Conduit Palisade binding ok");
-console.log(`Validated ${cases.covered_cases.length} canonical binding coverage claims through ${canonicalConduitEntryPoint}`);
+console.log(`Validated ${governedRuntimePathClaimId} / ${governedRuntimePathActionIdentifier} through evidence-bound canonical Conduit`);

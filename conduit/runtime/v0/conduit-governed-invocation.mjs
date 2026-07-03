@@ -1,8 +1,18 @@
 import {
-  evaluatePalisadeDecision,
+  evaluatePalisadeCurrentStateDecision,
   isPalisadeBoundaryFailure,
   isPalisadePolicyDecision
 } from "../../../palisade/runtime/v0/palisade-decision-boundary.mjs";
+import {
+  canonicalClaimId,
+  canonicalRequestedAction,
+  canonicalSurface,
+  resolveCanonicalPalisadeRuntime
+} from "../../../palisade/runtime/v0/palisade-current-state-evidence.mjs";
+import {
+  acquireConduitCurrentStateEvidence,
+  ConduitCurrentStateEvidenceError
+} from "./conduit-current-state-evidence.mjs";
 import {
   governedRuntimePathActionIdentifier,
   governedRuntimePathClaimId,
@@ -24,37 +34,54 @@ export const governedConduitResultClasses = new Set([
   "downstream_failed"
 ]);
 
-const expectedContractVersion = "1.0.0";
-const expectedPolicyVersion = "0.1.0";
-
-const requiredEnvelopeFields = [
+const canonicalEnvelopeFields = new Set([
   "request_id",
   "trace_id",
   "correlation_id",
   "contract_version",
-  "policy_version"
-];
-
-const requiredPalisadeRequestFields = [
+  "policy_version",
   "surface",
   "claim_id",
-  "requested_action",
+  "requested_action"
+]);
+
+const prohibitedFieldNames = new Set([
   "evidence_state",
+  "current_evidence",
+  "required_evidence",
+  "missing_evidence",
+  "denied_claims",
   "production_workspace_threshold_state",
   "runtime_governance_path_state",
+  "component_state",
+  "component_states",
+  "component_order",
+  "verified_components",
+  "current_repository_state_basis",
+  "repository_state_basis",
+  "evidence_source",
+  "evidence_sources",
+  "evidence_provider",
+  "evidence_registry",
+  "source_path",
+  "source_paths",
+  "repoRoot",
+  "repo_root",
   "operator_authorization_state",
-  "current_repository_state_basis"
-];
-
-const prohibitedFields = new Set([
+  "operator_authorization",
+  "operator_approval",
+  "authorization_witness",
+  "approval_record",
+  "authorization_override",
+  "authorization_provider",
   "allowed",
   "decision",
   "policy_decision",
   "precomputed_decision",
-  "evaluator",
+  "precomputed_action_result",
   "policy_evaluator",
-  "palisade_evaluator",
   "custom_evaluator",
+  "palisade_evaluator",
   "policy_bypass",
   "skip_policy",
   "skip_validation",
@@ -62,19 +89,12 @@ const prohibitedFields = new Set([
   "allow_on_failure",
   "action_adapter",
   "adapter",
-  "adapter_function",
-  "adapter_module",
   "adapter_path",
-  "action_registry",
   "action_override",
-  "precomputed_action_result",
   "skip_action",
-  "runtime_enforcement_status",
-  "runtime_status_override",
-  "custom_policy_source",
-  "policy_source",
-  "repoRoot",
-  "repo_root"
+  "test_fixture",
+  "fixture_path",
+  "complete_evidence_fixture"
 ]);
 
 function isObject(value) {
@@ -92,11 +112,17 @@ function failureFromError(error) {
   };
 }
 
-function directFieldsWithProhibitedValues(value, prefix = "request") {
-  if (!isObject(value)) return [];
-  return Object.keys(value)
-    .filter((field) => prohibitedFields.has(field))
-    .map((field) => `${prefix}.${field}`);
+function findProhibitedNestedFields(value, prefix = "request") {
+  if (!isObject(value) && !Array.isArray(value)) return [];
+  const entries = Array.isArray(value) ? value.entries() : Object.entries(value);
+  const found = [];
+  for (const [key, nested] of entries) {
+    const fieldName = String(key);
+    const path = Array.isArray(value) ? `${prefix}[${fieldName}]` : `${prefix}.${fieldName}`;
+    if (prohibitedFieldNames.has(fieldName)) found.push(path);
+    if (isObject(nested) || Array.isArray(nested)) found.push(...findProhibitedNestedFields(nested, path));
+  }
+  return found;
 }
 
 function makeAuditEventCandidate({
@@ -113,8 +139,8 @@ function makeAuditEventCandidate({
     request_id: request?.request_id || null,
     trace_id: request?.trace_id || null,
     correlation_id: request?.correlation_id || null,
-    workspace_context: clone(context?.workspace_context || null),
-    tenant_context: clone(context?.tenant_context || null),
+    workspace_context: null,
+    tenant_context: null,
     contract_version: request?.contract_version || null,
     policy_version: request?.policy_version || null,
     claim_id: request?.claim_id || null,
@@ -137,7 +163,8 @@ function makeAuditEventCandidate({
     policy_decision: policyDecision ? clone(policyDecision) : null,
     boundary_failure: boundaryFailure ? clone(boundaryFailure) : null,
     downstream: downstream ? clone(downstream) : null,
-    persistence_status: "not_persisted"
+    persistence_status: "not_persisted",
+    context_boundary: isObject(context) && Object.keys(context).length === 0 ? "empty_context_only" : "rejected_or_absent"
   };
 }
 
@@ -148,8 +175,8 @@ function baseResult({ request, context, palisadeRequest, resultClass, policyEval
     request_id: request?.request_id || null,
     trace_id: request?.trace_id || null,
     correlation_id: request?.correlation_id || null,
-    workspace_context: clone(context?.workspace_context || null),
-    tenant_context: clone(context?.tenant_context || null),
+    workspace_context: null,
+    tenant_context: null,
     contract_version: request?.contract_version || null,
     policy_version: request?.policy_version || null,
     claim_id: palisadeRequest?.claim_id || request?.claim_id || null,
@@ -158,7 +185,7 @@ function baseResult({ request, context, palisadeRequest, resultClass, policyEval
     palisade_boundary_path: palisadeDecisionBoundaryImportPath,
     policy_evaluation: {
       attempted: policyEvaluationAttempted,
-      evaluator: "evaluatePalisadeDecision",
+      evaluator: "evaluatePalisadeCurrentStateDecision",
       evaluator_injectable: false
     },
     downstream,
@@ -227,55 +254,40 @@ function makeClosedResult({
   return result;
 }
 
-function validateEnvelope(request, context) {
+function validateCanonicalEnvelope(request, context) {
   const errors = [];
-  if (!isObject(request)) {
-    return ["request must be an object"];
-  }
-  if (!isObject(context)) {
-    errors.push("context must be an object");
-  }
-  for (const field of requiredEnvelopeFields) {
-    if (typeof request[field] !== "string" || request[field].trim() === "") {
-      errors.push(`request missing envelope field ${field}`);
-    }
-  }
-  for (const field of requiredPalisadeRequestFields) {
-    if (!(field in request)) {
-      errors.push(`request missing Palisade field ${field}`);
-    }
-  }
-  if (request.contract_version !== expectedContractVersion) {
-    errors.push(`unsupported contract version ${request.contract_version || "missing"}`);
-  }
-  if (request.policy_version !== expectedPolicyVersion) {
-    errors.push(`unsupported policy version ${request.policy_version || "missing"}`);
-  }
-  const prohibited = [
-    ...directFieldsWithProhibitedValues(request, "request"),
-    ...directFieldsWithProhibitedValues(context, "context")
+  if (!isObject(request)) return ["request must be an object"];
+  const nestedProhibited = [
+    ...findProhibitedNestedFields(request, "request"),
+    ...findProhibitedNestedFields(context, "context")
   ];
-  if (prohibited.length > 0) {
-    errors.push(`prohibited caller-controlled bypass field(s): ${prohibited.join(", ")}`);
+  if (nestedProhibited.length > 0) {
+    errors.push(`prohibited caller-controlled field(s): ${nestedProhibited.join(", ")}`);
   }
-  if (!Array.isArray(request.current_repository_state_basis) || request.current_repository_state_basis.length === 0) {
-    errors.push("request current_repository_state_basis must be a non-empty array");
+  for (const field of Object.keys(request)) {
+    if (!canonicalEnvelopeFields.has(field)) errors.push(`unknown canonical request field ${field}`);
   }
-  if (request.claim_id !== governedRuntimePathClaimId) {
-    errors.push(`unsupported governed action claim ${request.claim_id || "missing"}`);
+  for (const field of canonicalEnvelopeFields) {
+    if (typeof request[field] !== "string" || request[field].trim() === "") {
+      errors.push(`request missing canonical envelope field ${field}`);
+    }
   }
+  if (request.surface !== canonicalSurface) errors.push(`unsupported governed surface ${request.surface || "missing"}`);
+  if (request.claim_id !== canonicalClaimId) errors.push(`unsupported governed claim ${request.claim_id || "missing"}`);
+  if (request.requested_action !== canonicalRequestedAction) {
+    errors.push(`unsupported governed action ${request.requested_action || "missing"}`);
+  }
+  if (request.claim_id !== governedRuntimePathClaimId) errors.push("claim does not match governed runtime path claim");
   if (request.requested_action !== governedRuntimePathActionIdentifier) {
-    errors.push(`unknown governed action identifier ${request.requested_action || "missing"}`);
+    errors.push("requested action does not match governed runtime path action");
+  }
+  if (context === undefined || context === null) return errors;
+  if (!isObject(context)) {
+    errors.push("context must be omitted or an empty object");
+  } else if (Object.keys(context).length > 0) {
+    errors.push("canonical context must be empty");
   }
   return errors;
-}
-
-function constructPalisadeRequest(request) {
-  const palisadeRequest = {};
-  for (const field of requiredPalisadeRequestFields) {
-    palisadeRequest[field] = clone(request[field]);
-  }
-  return palisadeRequest;
 }
 
 function policyDecisionBlockReasons(decision) {
@@ -297,32 +309,26 @@ function policyDecisionBlockReasons(decision) {
   return reasons;
 }
 
-function validateSameInvocationBinding({ request, context, palisadeRequest, policyDecision }) {
+function validateSameInvocationBinding({ request, context, palisadeRequest, policyDecision, evidenceSnapshot }) {
   const errors = [];
-  if (policyDecision.claim_id !== request.claim_id) errors.push("decision claim_id does not match request");
-  if (policyDecision.requested_action !== request.requested_action) {
-    errors.push("decision requested_action does not match request");
+  if (policyDecision.claim_id !== palisadeRequest.claim_id) errors.push("decision claim_id does not match Palisade request");
+  if (policyDecision.requested_action !== palisadeRequest.requested_action) {
+    errors.push("decision requested_action does not match Palisade request");
   }
-  if (policyDecision.surface !== request.surface) errors.push("decision surface does not match request");
-  if (palisadeRequest.claim_id !== request.claim_id) errors.push("Palisade request claim_id does not match request");
-  if (palisadeRequest.requested_action !== request.requested_action) {
-    errors.push("Palisade request requested_action does not match request");
+  if (policyDecision.surface !== palisadeRequest.surface) errors.push("decision surface does not match Palisade request");
+  if (palisadeRequest.claim_id !== canonicalClaimId) errors.push("Palisade request claim_id does not match canonical claim");
+  if (palisadeRequest.requested_action !== canonicalRequestedAction) {
+    errors.push("Palisade request requested_action does not match canonical action");
   }
-  if (request.claim_id !== governedRuntimePathClaimId) errors.push("claim does not govern selected runtime path action");
-  if (request.requested_action !== governedRuntimePathActionIdentifier) {
-    errors.push("request action does not match selected runtime path action");
-  }
-  if (policyDecision.claim_id !== governedRuntimePathClaimId) {
-    errors.push("decision claim does not govern selected runtime path action");
-  }
-  if (policyDecision.requested_action !== governedRuntimePathActionIdentifier) {
-    errors.push("decision action does not cover selected runtime path action");
-  }
-  if (request.contract_version !== expectedContractVersion) errors.push("contract version drifted before action execution");
-  if (request.policy_version !== expectedPolicyVersion) errors.push("policy version drifted before action execution");
-  if (!isObject(context)) errors.push("context snapshot is not an object");
-  if (JSON.stringify(request.current_repository_state_basis) !== JSON.stringify(policyDecision.current_state_basis)) {
+  if (!isObject(context) || Object.keys(context).length !== 0) errors.push("context snapshot is not empty");
+  if (JSON.stringify(palisadeRequest.current_repository_state_basis) !== JSON.stringify(policyDecision.current_state_basis)) {
     errors.push("current-state basis does not match the allowing decision");
+  }
+  if (policyDecision.evidence_snapshot_hash !== evidenceSnapshot.snapshot_hash) {
+    errors.push("evidence snapshot hash does not match decision");
+  }
+  if (!policyDecision.evidence_contract_sha256 || !policyDecision.acquisition_plan_hash) {
+    errors.push("decision is missing evidence-contract binding");
   }
   return errors;
 }
@@ -331,16 +337,13 @@ function validateDownstreamResult(value, invocation) {
   return validateRuntimeGovernancePathAssessmentResult(value, invocation);
 }
 
-async function invokeGovernedConduitActionInternal(
-  request,
-  context = {},
-  actionAdapter = performRuntimeGovernancePathAssessment
-) {
-  const envelopeErrors = validateEnvelope(request, context);
+async function invokeGovernedConduitActionInternal(request, context = {}, options = {}) {
+  const normalizedContext = context ?? {};
+  const envelopeErrors = validateCanonicalEnvelope(request, normalizedContext);
   if (envelopeErrors.length > 0) {
     return makeClosedResult({
       request: isObject(request) ? request : {},
-      context: isObject(context) ? context : {},
+      context: isObject(normalizedContext) ? normalizedContext : {},
       resultClass: "palisade_boundary_failed",
       failureClassification: "malformed_conduit_request",
       failureStage: "conduit_envelope_validation",
@@ -349,27 +352,43 @@ async function invokeGovernedConduitActionInternal(
     });
   }
 
-  let palisadeRequest;
+  let acquisitionPlan;
+  let evidenceSnapshot;
   try {
-    palisadeRequest = constructPalisadeRequest(request);
+    acquisitionPlan = resolveCanonicalPalisadeRuntime({ envelope: request }).plan;
+    evidenceSnapshot =
+      options.testOnlyEvidenceSnapshot ||
+      acquireConduitCurrentStateEvidence(acquisitionPlan);
   } catch (error) {
     return makeClosedResult({
       request,
-      context,
+      context: normalizedContext,
       resultClass: "palisade_boundary_failed",
-      failureClassification: "malformed_palisade_request_construction",
-      failureStage: "palisade_request_construction",
-      failureProvenance: conduitGovernedInvocationPath,
-      reasons: [error.message]
+      failureClassification:
+        error instanceof ConduitCurrentStateEvidenceError
+          ? error.failure_classification
+          : error.failure_classification || "current_state_evidence_acquisition_failed",
+      failureStage: error.stage || "current_state_evidence_acquisition",
+      failureProvenance: error instanceof ConduitCurrentStateEvidenceError ? "conduit/runtime/v0/conduit-current-state-evidence.mjs" : conduitGovernedInvocationPath,
+      reasons: error.reasons || [error.message],
+      details: error.details || []
     });
   }
 
-  const palisadeResult = evaluatePalisadeDecision(palisadeRequest);
+  const palisadeResult = evaluatePalisadeCurrentStateDecision({
+    envelope: request,
+    acquisitionPlan,
+    evidenceSnapshot,
+    authorizationWitness: options.authorizationWitness || null,
+    testOnlyCompleteEvidence: options.testOnlyCompleteEvidence === true
+  });
+  const palisadeInternal = palisadeResult?.palisade_internal || null;
+  const palisadeRequest = palisadeInternal?.policy_input || null;
 
   if (isPalisadeBoundaryFailure(palisadeResult)) {
     return makeClosedResult({
       request,
-      context,
+      context: normalizedContext,
       palisadeRequest,
       resultClass: "palisade_boundary_failed",
       failureClassification: palisadeResult.failure_classification,
@@ -381,16 +400,16 @@ async function invokeGovernedConduitActionInternal(
     });
   }
 
-  if (!isPalisadePolicyDecision(palisadeResult)) {
+  if (!isPalisadePolicyDecision(palisadeResult) || !palisadeRequest) {
     return makeClosedResult({
       request,
-      context,
+      context: normalizedContext,
       palisadeRequest,
       resultClass: "palisade_boundary_failed",
       failureClassification: "malformed_palisade_decision",
       failureStage: "palisade_decision_classification",
       failureProvenance: palisadeDecisionBoundaryImportPath,
-      reasons: ["Palisade returned neither a policy decision nor a structured boundary failure"],
+      reasons: ["Palisade returned neither a policy decision with internal state nor a structured boundary failure"],
       policyEvaluationAttempted: true
     });
   }
@@ -399,7 +418,7 @@ async function invokeGovernedConduitActionInternal(
   if (blockReasons.length > 0) {
     return makeClosedResult({
       request,
-      context,
+      context: normalizedContext,
       palisadeRequest,
       resultClass: "policy_blocked",
       failureClassification: "non_allowing_policy_decision",
@@ -412,11 +431,17 @@ async function invokeGovernedConduitActionInternal(
     });
   }
 
-  const bindingErrors = validateSameInvocationBinding({ request, context, palisadeRequest, policyDecision: palisadeResult });
+  const bindingErrors = validateSameInvocationBinding({
+    request,
+    context: normalizedContext,
+    palisadeRequest,
+    policyDecision: palisadeResult,
+    evidenceSnapshot
+  });
   if (bindingErrors.length > 0) {
     return makeClosedResult({
       request,
-      context,
+      context: normalizedContext,
       palisadeRequest,
       resultClass: "downstream_failed",
       failureClassification: "same_invocation_binding_failed",
@@ -428,10 +453,11 @@ async function invokeGovernedConduitActionInternal(
     });
   }
 
+  const actionAdapter = options.actionAdapter || performRuntimeGovernancePathAssessment;
   if (typeof actionAdapter !== "function") {
     return makeClosedResult({
       request,
-      context,
+      context: normalizedContext,
       palisadeRequest,
       resultClass: "downstream_failed",
       failureClassification: "missing_action_adapter",
@@ -447,9 +473,11 @@ async function invokeGovernedConduitActionInternal(
   let downstreamResult;
   const invocationSnapshot = {
     request: clone(request),
-    context: clone(context),
+    context: clone(normalizedContext),
     palisade_request: clone(palisadeRequest),
-    policy_decision: clone(palisadeResult)
+    policy_decision: clone(palisadeResult),
+    evidence_snapshot: clone(evidenceSnapshot),
+    acquisition_plan: clone(acquisitionPlan)
   };
   try {
     downstreamInvocationCount += 1;
@@ -457,7 +485,7 @@ async function invokeGovernedConduitActionInternal(
       ...invocationSnapshot,
       audit_event_candidate: makeAuditEventCandidate({
         request,
-        context,
+        context: normalizedContext,
         resultClass: "permitted",
         policyDecision: palisadeResult,
         downstream: {
@@ -479,7 +507,7 @@ async function invokeGovernedConduitActionInternal(
       error: failureFromError(error)
     };
     const result = {
-      ...baseResult({ request, context, palisadeRequest, resultClass: "downstream_failed", policyEvaluationAttempted: true, downstream }),
+      ...baseResult({ request, context: normalizedContext, palisadeRequest, resultClass: "downstream_failed", policyEvaluationAttempted: true, downstream }),
       allowed: false,
       policy_decision: clone(palisadeResult),
       palisade_boundary_failure: null,
@@ -493,7 +521,7 @@ async function invokeGovernedConduitActionInternal(
     };
     result.audit_event_candidate = makeAuditEventCandidate({
       request,
-      context,
+      context: normalizedContext,
       resultClass: "downstream_failed",
       policyDecision: palisadeResult,
       downstream
@@ -514,7 +542,7 @@ async function invokeGovernedConduitActionInternal(
       result: clone(downstreamResult)
     };
     const result = {
-      ...baseResult({ request, context, palisadeRequest, resultClass: "downstream_failed", policyEvaluationAttempted: true, downstream }),
+      ...baseResult({ request, context: normalizedContext, palisadeRequest, resultClass: "downstream_failed", policyEvaluationAttempted: true, downstream }),
       allowed: false,
       policy_decision: clone(palisadeResult),
       palisade_boundary_failure: null,
@@ -528,7 +556,7 @@ async function invokeGovernedConduitActionInternal(
     };
     result.audit_event_candidate = makeAuditEventCandidate({
       request,
-      context,
+      context: normalizedContext,
       resultClass: "downstream_failed",
       policyDecision: palisadeResult,
       downstream
@@ -546,7 +574,7 @@ async function invokeGovernedConduitActionInternal(
     result: clone(downstreamResult)
   };
   const result = {
-    ...baseResult({ request, context, palisadeRequest, resultClass: "permitted", policyEvaluationAttempted: true, downstream }),
+    ...baseResult({ request, context: normalizedContext, palisadeRequest, resultClass: "permitted", policyEvaluationAttempted: true, downstream }),
     allowed: true,
     policy_decision: clone(palisadeResult),
     palisade_boundary_failure: null,
@@ -560,7 +588,7 @@ async function invokeGovernedConduitActionInternal(
   };
   result.audit_event_candidate = makeAuditEventCandidate({
     request,
-    context,
+    context: normalizedContext,
     resultClass: "permitted",
     policyDecision: palisadeResult,
     downstream
@@ -572,8 +600,8 @@ export async function invokeGovernedConduitAction(request, context = {}) {
   return invokeGovernedConduitActionInternal(request, context);
 }
 
-export async function invokeGovernedConduitActionForTestOnly(request, context = {}, actionAdapter) {
-  return invokeGovernedConduitActionInternal(request, context, actionAdapter);
+export async function invokeGovernedConduitActionForTestOnly(request, context = {}, options = {}) {
+  return invokeGovernedConduitActionInternal(request, context, options);
 }
 
 export {

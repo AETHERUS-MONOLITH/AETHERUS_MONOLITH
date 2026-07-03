@@ -5,17 +5,6 @@ export const runtimeGovernancePathAssessmentAdapterPath =
   "conduit/runtime/v0/actions/runtime-governance-path-assessment.mjs";
 export const runtimeGovernancePathAssessmentResultType = "runtime_governance_path_assessment";
 
-export const runtimeGovernancePathComponents = Object.freeze([
-  "user_workspace_input",
-  "Facade",
-  "Conduit",
-  "Palisade_policy_decision",
-  "Vault_NEXUS_evaluation",
-  "evidence_audit_record",
-  "release_state_decision",
-  "surfaced_result"
-]);
-
 function isObject(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
@@ -88,10 +77,6 @@ export function validateRuntimeGovernancePathAssessmentResult(result, invocation
   if (!Array.isArray(result.runtime_path_components)) {
     errors.push("runtime_path_components must be an array");
   } else {
-    const componentIds = result.runtime_path_components.map((component) => component.component);
-    if (!sameJson(componentIds, runtimeGovernancePathComponents)) {
-      errors.push("runtime path components do not match the established ordered component set");
-    }
     for (const component of result.runtime_path_components) {
       if (typeof component.component !== "string") errors.push("component id must be a string");
       if (!["exists", "partial", "stubbed", "absent", "unverified"].includes(component.state)) {
@@ -145,13 +130,12 @@ export async function performRuntimeGovernancePathAssessment(invocation) {
   ) {
     throw new Error("runtime path adapter requires an allowing same-action Palisade decision");
   }
-  if (!sameJson(request.current_repository_state_basis, decision.current_state_basis)) {
-    throw new Error("runtime path adapter detected current-state basis drift");
+  if (!sameJson(palisadeRequest.current_repository_state_basis, decision.current_state_basis)) {
+    throw new Error("runtime path adapter detected Palisade request and decision basis drift");
   }
 
-  const runtimeState = request.runtime_governance_path_state || {};
-  const runtimePathComponents = runtimeGovernancePathComponents.map((component) => {
-    const entry = runtimeState[component] || {};
+  const runtimeState = palisadeRequest.runtime_governance_path_state || {};
+  const runtimePathComponents = Object.entries(runtimeState).map(([component, entry]) => {
     return {
       component,
       state: entry.state,

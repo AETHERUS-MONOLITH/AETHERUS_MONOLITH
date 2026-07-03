@@ -4,8 +4,9 @@
   "canonical_conduit_entry_point": "conduit/runtime/v0/index.mjs",
   "canonical_internal_export": "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction",
   "palisade_boundary_path": "palisade/runtime/v0/palisade-decision-boundary.mjs",
-  "palisade_exported_function": "evaluatePalisadeDecision",
+  "palisade_exported_function": "evaluatePalisadeCurrentStateDecision",
   "exported_conduit_function": "invokeGovernedConduitAction",
+  "canonical_surface": "conduit_internal_runtime",
   "governed_action_class": "runtime_governance_path_sufficiency_assessment",
   "selected_action_identifier": "evaluate_runtime_path_sufficiency",
   "selected_palisade_claim_id": "runtime_governance_path_sufficiency",
@@ -17,6 +18,22 @@
   "action_registry_created": false,
   "action_registry_decision": "A direct fixed binding is used because only one governed internal action exists and no repository action-registry convention exists.",
   "direct_palisade_invocation": true,
+  "canonical_caller_policy_state_fields_accepted": false,
+  "canonical_context": "empty_object_only",
+  "canonical_versions": {
+    "contract_version": "data/interface-contract.v1.json#metadata.version",
+    "policy_version": "palisade/policy-bundle.v0/manifest.json#version",
+    "caller_behavior": "exact_match_assertion_only"
+  },
+  "current_state_evidence_binding": {
+    "status": "implemented",
+    "evidence_contract": "palisade/runtime/v0/palisade-current-state-evidence-contract.v0.json",
+    "palisade_plan_resolver": "palisade/runtime/v0/palisade-current-state-evidence.mjs#resolveCanonicalPalisadeRuntime",
+    "conduit_acquisition": "conduit/runtime/v0/conduit-current-state-evidence.mjs#acquireConduitCurrentStateEvidence",
+    "palisade_state_constructor": "palisade/runtime/v0/palisade-current-state-evidence.mjs#constructCurrentStatePolicyInput",
+    "canonical_authorization": "truthful_no_witness_no_trusted_authorizer_implemented",
+    "evidence_contract_self_certifies_sufficiency": false
+  },
   "palisade_evaluator_injectable": false,
   "duplicate_policy_evaluator": false,
   "fail_closed": true,
@@ -30,7 +47,7 @@
     {
       "path": "conduit/runtime/v0/index.mjs#invokeGovernedConduitAction",
       "classification": "canonical_governed",
-      "routing": "directly invokes evaluatePalisadeDecision before the fixed runtime-governance-path assessment adapter"
+      "routing": "resolves one Palisade evidence contract, acquires fixed repository evidence, invokes evaluatePalisadeCurrentStateDecision, and dispatches the fixed adapter only after allow"
     },
     {
       "path": "conduit/runtime/v0/conduit-governed-invocation.mjs#invokeGovernedConduitAction",
@@ -45,7 +62,7 @@
     {
       "path": "conduit/runtime/v0/conduit-governed-invocation.mjs#invokeGovernedConduitActionForTestOnly",
       "classification": "test_only",
-      "routing": "test-only adapter failure harness; not exported from the canonical index surface"
+      "routing": "test-only adapter and complete-evidence harness; not exported from the canonical index surface"
     },
     {
       "path": "scripts/palisade-policy-consumption.mjs",
@@ -95,14 +112,15 @@
   ],
   "downstream_adapter_classification": "repository_owned_internal_domain_adapter",
   "downstream_adapter_path": "conduit/runtime/v0/actions/runtime-governance-path-assessment.mjs#performRuntimeGovernancePathAssessment",
-  "downstream_adapter_substantive_action": "constructs a validated runtime-governance-path assessment from the same invocation state basis allowed by Palisade; no Vault/NEXUS, model, release, public, network, or persistence action",
+  "downstream_adapter_substantive_action": "constructs a validated runtime-governance-path assessment from the Palisade-constructed invocation state allowed by Palisade; no Vault/NEXUS, model, release, public, network, or persistence action",
   "action_result_validation": "conduit/runtime/v0/actions/runtime-governance-path-assessment.mjs#validateRuntimeGovernancePathAssessmentResult",
-  "same_invocation_request_decision_action_binding": "implemented for request, claim, requested_action, surface, contract version, policy version, trace, correlation, workspace/tenant context, and current-state basis inside the canonical invocation only",
+  "same_invocation_request_decision_action_binding": "implemented for request, trace, correlation, canonical contract and policy versions, fixed surface, fixed claim, fixed requested_action, evidence contract identity, acquisition plan hash, evidence snapshot hash, Palisade current-state basis, canonical authorization representation, policy decision, fixed adapter identity, and empty context",
   "cross_invocation_replay_protection_status": "not_implemented",
   "substantive_governed_internal_action_adapter_status": "implemented_for_runtime_governance_path_sufficiency_assessment",
   "canonical_governed_route_status": "implemented_for_runtime_governance_path_sufficiency_assessment",
   "hypothetical_policy_allow_reachability": "implemented_in_test_only_complete_evidence_fixture",
   "current_evidence_policy_allow_reachability": "not_established",
+  "trusted_production_operator_authorizer_status": "not_implemented",
   "internal_executable_policy_boundary_status": "implemented",
   "canonical_internal_conduit_binding_status": "implemented",
   "internal_executable_gate_status": "implemented",

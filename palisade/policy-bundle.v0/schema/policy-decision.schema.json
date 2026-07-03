@@ -96,6 +96,30 @@
           }
         }
       }
+    },
+    "evidence_contract_id": {
+      "type": "string"
+    },
+    "evidence_contract_version": {
+      "type": "string"
+    },
+    "evidence_contract_sha256": {
+      "type": "string"
+    },
+    "acquisition_plan_hash": {
+      "type": "string"
+    },
+    "evidence_snapshot_hash": {
+      "type": "string"
+    },
+    "current_state_basis_hash": {
+      "type": "string"
+    },
+    "policy_input_hash": {
+      "type": "string"
+    },
+    "authorization_state_hash": {
+      "type": "string"
     }
   }
 }

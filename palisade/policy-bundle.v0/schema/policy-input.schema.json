@@ -115,6 +115,22 @@
         },
         "review_reason": {
           "type": "string"
+        },
+        "positive_witness": {
+          "type": "string",
+          "enum": [
+            "absent",
+            "present"
+          ]
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "source": {
+          "type": "string"
+        },
+        "provenance": {
+          "type": "string"
         }
       }
     },
