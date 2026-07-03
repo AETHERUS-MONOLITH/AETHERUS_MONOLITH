@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "geo/schema/endpoint-registry.schema.json",
+  "type": "object",
+  "required": ["schema_version", "registry_version", "endpoints"],
+  "properties": {
+    "schema_version": { "const": "geo.endpoint_registry.v1" },
+    "registry_version": { "const": "geo-0.1" },
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "requested_url", "entities", "role", "expected_content_class", "redirects_permitted", "doi_resolution_permitted", "checks"],
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "requested_url": { "type": "string", "pattern": "^https://" },
+          "entities": { "type": "array", "items": { "type": "string", "pattern": "^entity:" } },
+          "role": { "type": "string" },
+          "expected_content_class": { "enum": ["html", "json", "text", "unknown"] },
+          "redirects_permitted": { "type": "boolean" },
+          "doi_resolution_permitted": { "type": "boolean" },
+          "checks": { "type": "array", "items": { "enum": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"] } }
+        }
+      }
+    }
+  }
+}

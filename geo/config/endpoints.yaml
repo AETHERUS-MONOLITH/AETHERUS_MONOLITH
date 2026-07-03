@@ -1,0 +1,66 @@
+{
+  "schema_version": "geo.endpoint_registry.v1",
+  "registry_version": "geo-0.1",
+  "endpoints": [
+    {
+      "key": "home_camilocarlone",
+      "requested_url": "https://camilocarlone.com/",
+      "entities": ["entity:aetherus"],
+      "role": "project_homepage",
+      "expected_content_class": "html",
+      "redirects_permitted": true,
+      "doi_resolution_permitted": false,
+      "checks": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"]
+    },
+    {
+      "key": "taa_publication_page",
+      "requested_url": "https://camilocarlone.com/the-apologetic-authority/",
+      "entities": ["entity:the_apologetic_authority", "entity:camilo_carlone"],
+      "role": "publication_page",
+      "expected_content_class": "html",
+      "redirects_permitted": true,
+      "doi_resolution_permitted": false,
+      "checks": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"]
+    },
+    {
+      "key": "aetherus_pages",
+      "requested_url": "https://aetherus-monolith.pages.dev/",
+      "entities": ["entity:aetherus"],
+      "role": "project_pages_surface",
+      "expected_content_class": "html",
+      "redirects_permitted": true,
+      "doi_resolution_permitted": false,
+      "checks": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"]
+    },
+    {
+      "key": "taa_zenodo_doi",
+      "requested_url": "https://doi.org/10.5281/zenodo.20788207",
+      "entities": ["entity:the_apologetic_authority"],
+      "role": "doi_record",
+      "expected_content_class": "html",
+      "redirects_permitted": true,
+      "doi_resolution_permitted": true,
+      "checks": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"]
+    },
+    {
+      "key": "aetherus_github_org",
+      "requested_url": "https://github.com/AETHERUS-MONOLITH",
+      "entities": ["entity:aetherus"],
+      "role": "project_repository_surface",
+      "expected_content_class": "html",
+      "redirects_permitted": true,
+      "doi_resolution_permitted": false,
+      "checks": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"]
+    },
+    {
+      "key": "lesswrong_camilo_profile",
+      "requested_url": "https://www.lesswrong.com/users/camilocarlone",
+      "entities": ["entity:camilo_carlone"],
+      "role": "candidate_personal_profile",
+      "expected_content_class": "html",
+      "redirects_permitted": true,
+      "doi_resolution_permitted": false,
+      "checks": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"]
+    }
+  ]
+}

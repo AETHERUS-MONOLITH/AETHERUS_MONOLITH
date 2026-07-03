@@ -1,0 +1,999 @@
+{
+  "schema_version": "geo.baseline_report.v1",
+  "run": {
+    "id": "geo-0.1-live",
+    "mode": "live",
+    "generated_at": "2026-07-03T17:54:21.955Z"
+  },
+  "source_truth_version": "geo-0.1",
+  "endpoint_registry_version": "geo-0.1",
+  "validator_version": "geo-0.1.0",
+  "environment": {
+    "node": "v25.6.1",
+    "platform": "darwin",
+    "arch": "arm64",
+    "hostname_hash": "90e339db27ad59a1"
+  },
+  "request_count": 6,
+  "fetch_outcomes": [
+    {
+      "endpoint_key": "home_camilocarlone",
+      "requested_url": "https://camilocarlone.com/",
+      "final_url": "https://camilocarlone.com/",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:26.489Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 17200,
+      "raw_sha256": "29cf327a77fd05778b7caa8efd38c4cfdb182877c98733bc0a305b1734ce82ac",
+      "normalized_sha256": "24bd20200c064ec236dfb2f1ea6c2ff4931e1a63c8f79d122f9fa8f947765373",
+      "failure": null
+    },
+    {
+      "endpoint_key": "taa_publication_page",
+      "requested_url": "https://camilocarlone.com/the-apologetic-authority/",
+      "final_url": "https://camilocarlone.com/the-apologetic-authority/",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:26.757Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 145025,
+      "raw_sha256": "8ee65ce9c0b1e858cd02b4f55c050f7cabe8a766d28ca81dbd961400e61d3536",
+      "normalized_sha256": "317eb5308c1506c83e46f34f1587b0e91e85dd211af28be43ab8f4eb7c5e8b23",
+      "failure": null
+    },
+    {
+      "endpoint_key": "aetherus_pages",
+      "requested_url": "https://aetherus-monolith.pages.dev/",
+      "final_url": "https://aetherus-monolith.pages.dev/",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:26.901Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 17200,
+      "raw_sha256": "29cf327a77fd05778b7caa8efd38c4cfdb182877c98733bc0a305b1734ce82ac",
+      "normalized_sha256": "24bd20200c064ec236dfb2f1ea6c2ff4931e1a63c8f79d122f9fa8f947765373",
+      "failure": null
+    },
+    {
+      "endpoint_key": "taa_zenodo_doi",
+      "requested_url": "https://doi.org/10.5281/zenodo.20788207",
+      "final_url": "https://zenodo.org/records/20788207",
+      "redirect_chain": [
+        {
+          "from": "https://doi.org/10.5281/zenodo.20788207",
+          "to": "https://zenodo.org/doi/10.5281/zenodo.20788207",
+          "status": 302
+        },
+        {
+          "from": "https://zenodo.org/doi/10.5281/zenodo.20788207",
+          "to": "https://zenodo.org/records/20788207",
+          "status": 302
+        }
+      ],
+      "observed_at": "2026-07-03T17:52:27.080Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 78875,
+      "raw_sha256": "14d61ea3230f5d0545653412adc9e8540a7f8bad4c16ab322fa26606a13617e0",
+      "normalized_sha256": "ecd4749ca93e69cdc3e37be13639410c70cdad8ee65a6006439cce4b512e5cb4",
+      "failure": null
+    },
+    {
+      "endpoint_key": "aetherus_github_org",
+      "requested_url": "https://github.com/AETHERUS-MONOLITH",
+      "final_url": "https://github.com/AETHERUS-MONOLITH",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:27.981Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 193407,
+      "raw_sha256": "3ae2bd048477a7667d719cbbf45684822c356445657d951cea6b3f810be6def4",
+      "normalized_sha256": "94fb695a6c667919d5b4fed115b0026f7441a5644571f2c4fb0ff3b25295918b",
+      "failure": null
+    },
+    {
+      "endpoint_key": "lesswrong_camilo_profile",
+      "requested_url": "https://www.lesswrong.com/users/camilocarlone",
+      "final_url": "https://www.lesswrong.com/users/camilocarlone",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:28.405Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 229790,
+      "raw_sha256": "8f1c22a770da47938fbe4a33e18b6620616cdaa32debd43b34c338a9df8fab24",
+      "normalized_sha256": "587b3e2ccec718b40d8aef6c2095552476b3607f7242e63ea5cfce569490989d",
+      "failure": null
+    }
+  ],
+  "findings": {
+    "identity": [
+      {
+        "id": "geo-identity-source-truth-pass",
+        "category": "identity",
+        "endpoint_key": null,
+        "entity_keys": [
+          "entity:camilo_carlone",
+          "entity:aetherus",
+          "entity:the_apologetic_authority"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Source-truth identity invariants are valid.",
+        "evidence": {
+          "checked_invariants": 8
+        },
+        "reproducibility": {
+          "analysis_version": "geo.identity.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      }
+    ],
+    "endpoint_availability": [
+      {
+        "id": "geo-endpoint-aetherus_github_org",
+        "category": "endpoint_availability",
+        "endpoint_key": "aetherus_github_org",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Endpoint responded within configured availability boundaries.",
+        "evidence": {
+          "requested_url": "https://github.com/AETHERUS-MONOLITH",
+          "final_url": "https://github.com/AETHERUS-MONOLITH",
+          "redirect_chain": [],
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "byte_count": 193407,
+          "failure": null,
+          "expected_content_class": "html"
+        },
+        "reproducibility": {
+          "analysis_version": "geo.endpoint_availability.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-endpoint-aetherus_pages",
+        "category": "endpoint_availability",
+        "endpoint_key": "aetherus_pages",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Endpoint responded within configured availability boundaries.",
+        "evidence": {
+          "requested_url": "https://aetherus-monolith.pages.dev/",
+          "final_url": "https://aetherus-monolith.pages.dev/",
+          "redirect_chain": [],
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "byte_count": 17200,
+          "failure": null,
+          "expected_content_class": "html"
+        },
+        "reproducibility": {
+          "analysis_version": "geo.endpoint_availability.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-endpoint-home_camilocarlone",
+        "category": "endpoint_availability",
+        "endpoint_key": "home_camilocarlone",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Endpoint responded within configured availability boundaries.",
+        "evidence": {
+          "requested_url": "https://camilocarlone.com/",
+          "final_url": "https://camilocarlone.com/",
+          "redirect_chain": [],
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "byte_count": 17200,
+          "failure": null,
+          "expected_content_class": "html"
+        },
+        "reproducibility": {
+          "analysis_version": "geo.endpoint_availability.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-endpoint-lesswrong_camilo_profile",
+        "category": "endpoint_availability",
+        "endpoint_key": "lesswrong_camilo_profile",
+        "entity_keys": [
+          "entity:camilo_carlone"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Endpoint responded within configured availability boundaries.",
+        "evidence": {
+          "requested_url": "https://www.lesswrong.com/users/camilocarlone",
+          "final_url": "https://www.lesswrong.com/users/camilocarlone",
+          "redirect_chain": [],
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "byte_count": 229790,
+          "failure": null,
+          "expected_content_class": "html"
+        },
+        "reproducibility": {
+          "analysis_version": "geo.endpoint_availability.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-endpoint-taa_publication_page",
+        "category": "endpoint_availability",
+        "endpoint_key": "taa_publication_page",
+        "entity_keys": [
+          "entity:the_apologetic_authority",
+          "entity:camilo_carlone"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Endpoint responded within configured availability boundaries.",
+        "evidence": {
+          "requested_url": "https://camilocarlone.com/the-apologetic-authority/",
+          "final_url": "https://camilocarlone.com/the-apologetic-authority/",
+          "redirect_chain": [],
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "byte_count": 145025,
+          "failure": null,
+          "expected_content_class": "html"
+        },
+        "reproducibility": {
+          "analysis_version": "geo.endpoint_availability.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-endpoint-taa_zenodo_doi",
+        "category": "endpoint_availability",
+        "endpoint_key": "taa_zenodo_doi",
+        "entity_keys": [
+          "entity:the_apologetic_authority"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Endpoint responded within configured availability boundaries.",
+        "evidence": {
+          "requested_url": "https://doi.org/10.5281/zenodo.20788207",
+          "final_url": "https://zenodo.org/records/20788207",
+          "redirect_chain": [
+            {
+              "from": "https://doi.org/10.5281/zenodo.20788207",
+              "to": "https://zenodo.org/doi/10.5281/zenodo.20788207",
+              "status": 302
+            },
+            {
+              "from": "https://zenodo.org/doi/10.5281/zenodo.20788207",
+              "to": "https://zenodo.org/records/20788207",
+              "status": 302
+            }
+          ],
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "byte_count": 78875,
+          "failure": null,
+          "expected_content_class": "html"
+        },
+        "reproducibility": {
+          "analysis_version": "geo.endpoint_availability.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      }
+    ],
+    "backlink": [
+      {
+        "id": "geo-backlink-aetherus_github_org",
+        "category": "backlink",
+        "endpoint_key": "aetherus_github_org",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Authorized seed backlinks are not universally discoverable from this seed response; this is not an identity invalidation.",
+        "evidence": {
+          "discovered_seed_links": [
+            "https://camilocarlone.com/"
+          ],
+          "absent_seed_links": [
+            "https://camilocarlone.com/the-apologetic-authority/",
+            "https://aetherus-monolith.pages.dev/",
+            "https://doi.org/10.5281/zenodo.20788207",
+            "https://www.lesswrong.com/users/camilocarlone"
+          ]
+        },
+        "reproducibility": {
+          "analysis_version": "geo.backlink.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-backlink-aetherus_pages",
+        "category": "backlink",
+        "endpoint_key": "aetherus_pages",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Authorized seed backlinks are not universally discoverable from this seed response; this is not an identity invalidation.",
+        "evidence": {
+          "discovered_seed_links": [],
+          "absent_seed_links": [
+            "https://camilocarlone.com/",
+            "https://camilocarlone.com/the-apologetic-authority/",
+            "https://doi.org/10.5281/zenodo.20788207",
+            "https://github.com/AETHERUS-MONOLITH",
+            "https://www.lesswrong.com/users/camilocarlone"
+          ]
+        },
+        "reproducibility": {
+          "analysis_version": "geo.backlink.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-backlink-home_camilocarlone",
+        "category": "backlink",
+        "endpoint_key": "home_camilocarlone",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Authorized seed backlinks are not universally discoverable from this seed response; this is not an identity invalidation.",
+        "evidence": {
+          "discovered_seed_links": [],
+          "absent_seed_links": [
+            "https://camilocarlone.com/the-apologetic-authority/",
+            "https://aetherus-monolith.pages.dev/",
+            "https://doi.org/10.5281/zenodo.20788207",
+            "https://github.com/AETHERUS-MONOLITH",
+            "https://www.lesswrong.com/users/camilocarlone"
+          ]
+        },
+        "reproducibility": {
+          "analysis_version": "geo.backlink.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-backlink-lesswrong_camilo_profile",
+        "category": "backlink",
+        "endpoint_key": "lesswrong_camilo_profile",
+        "entity_keys": [
+          "entity:camilo_carlone"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Authorized seed backlinks are not universally discoverable from this seed response; this is not an identity invalidation.",
+        "evidence": {
+          "discovered_seed_links": [],
+          "absent_seed_links": [
+            "https://camilocarlone.com/",
+            "https://camilocarlone.com/the-apologetic-authority/",
+            "https://aetherus-monolith.pages.dev/",
+            "https://doi.org/10.5281/zenodo.20788207",
+            "https://github.com/AETHERUS-MONOLITH"
+          ]
+        },
+        "reproducibility": {
+          "analysis_version": "geo.backlink.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-backlink-taa_publication_page",
+        "category": "backlink",
+        "endpoint_key": "taa_publication_page",
+        "entity_keys": [
+          "entity:the_apologetic_authority",
+          "entity:camilo_carlone"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Authorized seed backlinks are not universally discoverable from this seed response; this is not an identity invalidation.",
+        "evidence": {
+          "discovered_seed_links": [
+            "https://camilocarlone.com/the-apologetic-authority/",
+            "https://doi.org/10.5281/zenodo.20788207"
+          ],
+          "absent_seed_links": [
+            "https://camilocarlone.com/",
+            "https://aetherus-monolith.pages.dev/",
+            "https://github.com/AETHERUS-MONOLITH",
+            "https://www.lesswrong.com/users/camilocarlone"
+          ]
+        },
+        "reproducibility": {
+          "analysis_version": "geo.backlink.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-backlink-taa_zenodo_doi",
+        "category": "backlink",
+        "endpoint_key": "taa_zenodo_doi",
+        "entity_keys": [
+          "entity:the_apologetic_authority"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Authorized seed backlinks are not universally discoverable from this seed response; this is not an identity invalidation.",
+        "evidence": {
+          "discovered_seed_links": [
+            "https://camilocarlone.com/the-apologetic-authority/"
+          ],
+          "absent_seed_links": [
+            "https://camilocarlone.com/",
+            "https://aetherus-monolith.pages.dev/",
+            "https://github.com/AETHERUS-MONOLITH",
+            "https://www.lesswrong.com/users/camilocarlone"
+          ]
+        },
+        "reproducibility": {
+          "analysis_version": "geo.backlink.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      }
+    ],
+    "metadata": [
+      {
+        "id": "geo-metadata-aetherus_pages-canonical-absent",
+        "category": "metadata",
+        "endpoint_key": "aetherus_pages",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Canonical URL metadata is absent or not extractable from this endpoint.",
+        "evidence": {
+          "canonical_urls": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.metadata.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-metadata-home_camilocarlone-canonical-absent",
+        "category": "metadata",
+        "endpoint_key": "home_camilocarlone",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Canonical URL metadata is absent or not extractable from this endpoint.",
+        "evidence": {
+          "canonical_urls": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.metadata.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-metadata-taa-source-public-type-contradiction",
+        "category": "metadata",
+        "endpoint_key": "taa_publication_page",
+        "entity_keys": [
+          "entity:the_apologetic_authority",
+          "entity:camilo_carlone"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Contradiction: observed public JSON-LD type ScholarlyArticle differs from GEO source-truth type Report; GEO 0.1 reports rather than repairs it.",
+        "evidence": {
+          "source_truth_type": "Report",
+          "observed_public_type": "ScholarlyArticle"
+        },
+        "reproducibility": {
+          "analysis_version": "geo.metadata.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      }
+    ],
+    "jsonld": [
+      {
+        "id": "geo-jsonld-aetherus_github_org-structured-data-absent",
+        "category": "jsonld",
+        "endpoint_key": "aetherus_github_org",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "structured_data_absent: no JSON-LD block was observed; this is separate from fetch availability.",
+        "evidence": {
+          "jsonld_blocks": 0
+        },
+        "reproducibility": {
+          "analysis_version": "geo.jsonld.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-jsonld-aetherus_pages-structured-data-absent",
+        "category": "jsonld",
+        "endpoint_key": "aetherus_pages",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "structured_data_absent: no JSON-LD block was observed; this is separate from fetch availability.",
+        "evidence": {
+          "jsonld_blocks": 0
+        },
+        "reproducibility": {
+          "analysis_version": "geo.jsonld.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-jsonld-home_camilocarlone-structured-data-absent",
+        "category": "jsonld",
+        "endpoint_key": "home_camilocarlone",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "structured_data_absent: no JSON-LD block was observed; this is separate from fetch availability.",
+        "evidence": {
+          "jsonld_blocks": 0
+        },
+        "reproducibility": {
+          "analysis_version": "geo.jsonld.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-jsonld-lesswrong_camilo_profile-structured-data-absent",
+        "category": "jsonld",
+        "endpoint_key": "lesswrong_camilo_profile",
+        "entity_keys": [
+          "entity:camilo_carlone"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "structured_data_absent: no JSON-LD block was observed; this is separate from fetch availability.",
+        "evidence": {
+          "jsonld_blocks": 0
+        },
+        "reproducibility": {
+          "analysis_version": "geo.jsonld.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-jsonld-taa-source-type-contradiction",
+        "category": "jsonld",
+        "endpoint_key": "taa_publication_page",
+        "entity_keys": [
+          "entity:the_apologetic_authority",
+          "entity:camilo_carlone"
+        ],
+        "status": "finding",
+        "severity": "warning",
+        "message": "Contradiction: observed JSON-LD type ScholarlyArticle differs from source-truth type Report.",
+        "evidence": {
+          "source_truth_type": "Report",
+          "observed_types": [
+            "ScholarlyArticle"
+          ]
+        },
+        "reproducibility": {
+          "analysis_version": "geo.jsonld.v1",
+          "deterministic": true
+        },
+        "validator_version": "geo-0.1.0"
+      }
+    ],
+    "reproducibility": [
+      {
+        "id": "geo-reproducibility-aetherus_github_org",
+        "category": "reproducibility",
+        "endpoint_key": "aetherus_github_org",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Raw and normalized evidence hashes or structured failure state are present.",
+        "evidence": {
+          "raw_sha256": "3ae2bd048477a7667d719cbbf45684822c356445657d951cea6b3f810be6def4",
+          "normalized_sha256": "94fb695a6c667919d5b4fed115b0026f7441a5644571f2c4fb0ff3b25295918b",
+          "failure": null
+        },
+        "reproducibility": {
+          "analysis_version": "geo.reproducibility.v1",
+          "deterministic": true,
+          "evidence_hash": "2e00ae71d060288f45fa3523a1a4b4b3e6a69f23a9d0502dc46f05084281745e"
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-reproducibility-aetherus_pages",
+        "category": "reproducibility",
+        "endpoint_key": "aetherus_pages",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Raw and normalized evidence hashes or structured failure state are present.",
+        "evidence": {
+          "raw_sha256": "29cf327a77fd05778b7caa8efd38c4cfdb182877c98733bc0a305b1734ce82ac",
+          "normalized_sha256": "24bd20200c064ec236dfb2f1ea6c2ff4931e1a63c8f79d122f9fa8f947765373",
+          "failure": null
+        },
+        "reproducibility": {
+          "analysis_version": "geo.reproducibility.v1",
+          "deterministic": true,
+          "evidence_hash": "2e00ae71d060288f45fa3523a1a4b4b3e6a69f23a9d0502dc46f05084281745e"
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-reproducibility-home_camilocarlone",
+        "category": "reproducibility",
+        "endpoint_key": "home_camilocarlone",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Raw and normalized evidence hashes or structured failure state are present.",
+        "evidence": {
+          "raw_sha256": "29cf327a77fd05778b7caa8efd38c4cfdb182877c98733bc0a305b1734ce82ac",
+          "normalized_sha256": "24bd20200c064ec236dfb2f1ea6c2ff4931e1a63c8f79d122f9fa8f947765373",
+          "failure": null
+        },
+        "reproducibility": {
+          "analysis_version": "geo.reproducibility.v1",
+          "deterministic": true,
+          "evidence_hash": "2e00ae71d060288f45fa3523a1a4b4b3e6a69f23a9d0502dc46f05084281745e"
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-reproducibility-lesswrong_camilo_profile",
+        "category": "reproducibility",
+        "endpoint_key": "lesswrong_camilo_profile",
+        "entity_keys": [
+          "entity:camilo_carlone"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Raw and normalized evidence hashes or structured failure state are present.",
+        "evidence": {
+          "raw_sha256": "8f1c22a770da47938fbe4a33e18b6620616cdaa32debd43b34c338a9df8fab24",
+          "normalized_sha256": "587b3e2ccec718b40d8aef6c2095552476b3607f7242e63ea5cfce569490989d",
+          "failure": null
+        },
+        "reproducibility": {
+          "analysis_version": "geo.reproducibility.v1",
+          "deterministic": true,
+          "evidence_hash": "2e00ae71d060288f45fa3523a1a4b4b3e6a69f23a9d0502dc46f05084281745e"
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-reproducibility-taa_publication_page",
+        "category": "reproducibility",
+        "endpoint_key": "taa_publication_page",
+        "entity_keys": [
+          "entity:the_apologetic_authority",
+          "entity:camilo_carlone"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Raw and normalized evidence hashes or structured failure state are present.",
+        "evidence": {
+          "raw_sha256": "8ee65ce9c0b1e858cd02b4f55c050f7cabe8a766d28ca81dbd961400e61d3536",
+          "normalized_sha256": "317eb5308c1506c83e46f34f1587b0e91e85dd211af28be43ab8f4eb7c5e8b23",
+          "failure": null
+        },
+        "reproducibility": {
+          "analysis_version": "geo.reproducibility.v1",
+          "deterministic": true,
+          "evidence_hash": "2e00ae71d060288f45fa3523a1a4b4b3e6a69f23a9d0502dc46f05084281745e"
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-reproducibility-taa_zenodo_doi",
+        "category": "reproducibility",
+        "endpoint_key": "taa_zenodo_doi",
+        "entity_keys": [
+          "entity:the_apologetic_authority"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Raw and normalized evidence hashes or structured failure state are present.",
+        "evidence": {
+          "raw_sha256": "14d61ea3230f5d0545653412adc9e8540a7f8bad4c16ab322fa26606a13617e0",
+          "normalized_sha256": "ecd4749ca93e69cdc3e37be13639410c70cdad8ee65a6006439cce4b512e5cb4",
+          "failure": null
+        },
+        "reproducibility": {
+          "analysis_version": "geo.reproducibility.v1",
+          "deterministic": true,
+          "evidence_hash": "2e00ae71d060288f45fa3523a1a4b4b3e6a69f23a9d0502dc46f05084281745e"
+        },
+        "validator_version": "geo-0.1.0"
+      }
+    ],
+    "chunk_readability": [
+      {
+        "id": "geo-chunk-aetherus_github_org",
+        "category": "chunk_readability",
+        "endpoint_key": "aetherus_github_org",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Advisory chunk readability heuristics did not flag this endpoint.",
+        "evidence": {
+          "metrics": {
+            "text_char_count": 4013,
+            "word_count": 575,
+            "heading_count": 11,
+            "link_count": 113,
+            "longest_token_chars": 17,
+            "excerpt": "AETHERUS-MONOLITH (Camilo ) · GitHub Skip to content Navigation Menu Toggle navigation Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry New Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code change"
+          },
+          "reasons": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.chunk_readability.v1",
+          "deterministic": true,
+          "advisory_only": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-chunk-aetherus_pages",
+        "category": "chunk_readability",
+        "endpoint_key": "aetherus_pages",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Advisory chunk readability heuristics did not flag this endpoint.",
+        "evidence": {
+          "metrics": {
+            "text_char_count": 4981,
+            "word_count": 643,
+            "heading_count": 10,
+            "link_count": 10,
+            "longest_token_chars": 21,
+            "excerpt": "AETHERUS MONOLITH - AI Governance Architecture AETHERUS &middot; MONOLITH AI Governance & Model-Behavior Risk Architecture Architecture Evidence Artifacts Publications The Apologetic Authority Workspace Preview Authenticated Surface Methodology Contact Staged Governance Product Surface Deterministic Governance Interface Govern AI behavior. Control the path from intent to release. AETHERUS MONOLITH is a staged governa"
+          },
+          "reasons": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.chunk_readability.v1",
+          "deterministic": true,
+          "advisory_only": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-chunk-home_camilocarlone",
+        "category": "chunk_readability",
+        "endpoint_key": "home_camilocarlone",
+        "entity_keys": [
+          "entity:aetherus"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Advisory chunk readability heuristics did not flag this endpoint.",
+        "evidence": {
+          "metrics": {
+            "text_char_count": 4981,
+            "word_count": 643,
+            "heading_count": 10,
+            "link_count": 10,
+            "longest_token_chars": 21,
+            "excerpt": "AETHERUS MONOLITH - AI Governance Architecture AETHERUS &middot; MONOLITH AI Governance & Model-Behavior Risk Architecture Architecture Evidence Artifacts Publications The Apologetic Authority Workspace Preview Authenticated Surface Methodology Contact Staged Governance Product Surface Deterministic Governance Interface Govern AI behavior. Control the path from intent to release. AETHERUS MONOLITH is a staged governa"
+          },
+          "reasons": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.chunk_readability.v1",
+          "deterministic": true,
+          "advisory_only": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-chunk-lesswrong_camilo_profile",
+        "category": "chunk_readability",
+        "endpoint_key": "lesswrong_camilo_profile",
+        "entity_keys": [
+          "entity:camilo_carlone"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Advisory chunk readability heuristics did not flag this endpoint.",
+        "evidence": {
+          "metrics": {
+            "text_char_count": 678,
+            "word_count": 85,
+            "heading_count": 5,
+            "link_count": 4,
+            "longest_token_chars": 14,
+            "excerpt": "x This website requires javascript to properly function. Consider activating javascript to get access to all site functionality. LESSWRONG LW Login camilocarlone — LessWrong camilocarlone camilocarlone Subscribe Message Interested in AI alignment, governance, and the structures that make intelligence accountable. Currently working on constitutional governance, observability, and institutional control surfaces for AI "
+          },
+          "reasons": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.chunk_readability.v1",
+          "deterministic": true,
+          "advisory_only": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-chunk-taa_publication_page",
+        "category": "chunk_readability",
+        "endpoint_key": "taa_publication_page",
+        "entity_keys": [
+          "entity:the_apologetic_authority",
+          "entity:camilo_carlone"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Advisory chunk readability heuristics did not flag this endpoint.",
+        "evidence": {
+          "metrics": {
+            "text_char_count": 116992,
+            "word_count": 16013,
+            "heading_count": 56,
+            "link_count": 83,
+            "longest_token_chars": 118,
+            "excerpt": "The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone AETHERUS MONOLITH Canonical Publication Route The Apologetic Authority A Structural Critique of Anthropic's Constitution for Claude Camilo Carlone · AETHERUS — AI Governance Infrastructure · v1.0.1 Final Manuscript · May 2026 Publication Status Final manuscript yes Version v1.0.1 — Final Manuscript Canonical route "
+          },
+          "reasons": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.chunk_readability.v1",
+          "deterministic": true,
+          "advisory_only": true
+        },
+        "validator_version": "geo-0.1.0"
+      },
+      {
+        "id": "geo-chunk-taa_zenodo_doi",
+        "category": "chunk_readability",
+        "endpoint_key": "taa_zenodo_doi",
+        "entity_keys": [
+          "entity:the_apologetic_authority"
+        ],
+        "status": "pass",
+        "severity": "info",
+        "message": "Advisory chunk readability heuristics did not flag this endpoint.",
+        "evidence": {
+          "metrics": {
+            "text_char_count": 3484,
+            "word_count": 413,
+            "heading_count": 31,
+            "link_count": 52,
+            "longest_token_chars": 107,
+            "excerpt": "The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude | Zenodo Skip to main You are using an outdated browser. Please upgrade your browser to improve your experience. Communities My dashboard Log in Sign up Published June 21, 2026 | Version v1.0.1 Report Open The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude Authors/Creators Carlone, Camilo 1 Show "
+          },
+          "reasons": []
+        },
+        "reproducibility": {
+          "analysis_version": "geo.chunk_readability.v1",
+          "deterministic": true,
+          "advisory_only": true
+        },
+        "validator_version": "geo-0.1.0"
+      }
+    ]
+  },
+  "unresolved_variables": [
+    "entity:camilo_carlone public_jsonld_id",
+    "entity:camilo_carlone ORCID",
+    "entity:camilo_carlone Wikidata",
+    "entity:aetherus public_jsonld_id",
+    "entity:aetherus legal-company or institutional status",
+    "entity:the_apologetic_authority public_jsonld_id"
+  ],
+  "contradictions": [
+    {
+      "id": "geo-metadata-taa-source-public-type-contradiction",
+      "category": "metadata",
+      "endpoint_key": "taa_publication_page",
+      "entity_keys": [
+        "entity:the_apologetic_authority",
+        "entity:camilo_carlone"
+      ],
+      "status": "finding",
+      "severity": "warning",
+      "message": "Contradiction: observed public JSON-LD type ScholarlyArticle differs from GEO source-truth type Report; GEO 0.1 reports rather than repairs it.",
+      "evidence": {
+        "source_truth_type": "Report",
+        "observed_public_type": "ScholarlyArticle"
+      },
+      "reproducibility": {
+        "analysis_version": "geo.metadata.v1",
+        "deterministic": true
+      },
+      "validator_version": "geo-0.1.0"
+    },
+    {
+      "id": "geo-jsonld-taa-source-type-contradiction",
+      "category": "jsonld",
+      "endpoint_key": "taa_publication_page",
+      "entity_keys": [
+        "entity:the_apologetic_authority",
+        "entity:camilo_carlone"
+      ],
+      "status": "finding",
+      "severity": "warning",
+      "message": "Contradiction: observed JSON-LD type ScholarlyArticle differs from source-truth type Report.",
+      "evidence": {
+        "source_truth_type": "Report",
+        "observed_types": [
+          "ScholarlyArticle"
+        ]
+      },
+      "reproducibility": {
+        "analysis_version": "geo.jsonld.v1",
+        "deterministic": true
+      },
+      "validator_version": "geo-0.1.0"
+    }
+  ],
+  "advisory_findings": [],
+  "structural_findings_hash": "a6aa2a9378b4c6c3f9600ea0e677ee63b385b94d238076aa8509a328dd54c33b",
+  "boundary_statements": [
+    "No public surface was modified by GEO 0.1.",
+    "No model API, paid service, authenticated request, cookie, browser profile, or crawler expansion is used.",
+    "Endpoint availability, backlink discoverability, identity consistency, JSON-LD structure, reproducibility, and advisory chunk readability are separate finding categories.",
+    "Absent JSON-LD is classified as structured_data_absent, not retrieval failure.",
+    "Advisory chunk findings cannot independently fail the report."
+  ],
+  "overall_classification": "completed_with_findings"
+}

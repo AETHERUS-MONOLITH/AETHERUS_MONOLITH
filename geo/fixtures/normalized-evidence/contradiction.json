@@ -1,0 +1,5 @@
+{
+  "fixture": "source-truth/public-metadata type contradiction is surfaced rather than repaired",
+  "source_truth_type": "Report",
+  "observed_public_type": "ScholarlyArticle"
+}

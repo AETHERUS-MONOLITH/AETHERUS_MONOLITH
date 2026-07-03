@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "geo/schema/claims.schema.json",
+  "type": "object",
+  "required": ["schema_version", "source_truth_version", "claims"],
+  "properties": {
+    "schema_version": { "const": "geo.source.claims.v1" },
+    "source_truth_version": { "const": "geo-0.1" },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "subject", "predicate", "status", "source_references", "provenance"],
+        "properties": {
+          "key": { "type": "string", "pattern": "^claim:[a-z0-9_]+$" },
+          "subject": { "type": "string", "pattern": "^entity:[a-z0-9_]+$" },
+          "predicate": { "type": "string" },
+          "value": {},
+          "object_entity": { "type": "string", "pattern": "^entity:[a-z0-9_]+$" },
+          "status": { "enum": ["confirmed", "unresolved", "contradiction"] },
+          "source_references": { "type": "array", "items": { "type": "string" } },
+          "provenance": { "type": "string" }
+        }
+      }
+    }
+  }
+}

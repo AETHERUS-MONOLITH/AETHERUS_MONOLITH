@@ -1,0 +1,83 @@
+{
+  "schema_version": "geo.source.entities.v1",
+  "source_truth_version": "geo-0.1",
+  "entities": [
+    {
+      "id": "entity:camilo_carlone",
+      "key": "camilo_carlone",
+      "source_type": "Person",
+      "name": "Camilo Carlone",
+      "public_jsonld_id": null,
+      "identifiers": {
+        "orcid": null,
+        "wikidata": null
+      },
+      "same_as": [],
+      "controlled_surfaces": [],
+      "canonical_url": null,
+      "related_entities": [],
+      "candidate_relations": [
+        {
+          "url": "https://www.lesswrong.com/users/camilocarlone",
+          "relation": "candidate_personal_profile",
+          "status": "unresolved",
+          "basis": "authorized endpoint registry; not promoted to same_as in GEO 0.1"
+        }
+      ],
+      "boundary_statements": [
+        "AETHERUS-controlled project or organization surfaces are not personal same_as identifiers for Camilo Carlone."
+      ]
+    },
+    {
+      "id": "entity:aetherus",
+      "key": "aetherus",
+      "source_type": "Project",
+      "name": "AETHERUS",
+      "public_jsonld_id": null,
+      "identifiers": {
+        "legal_company": null,
+        "institution": null
+      },
+      "same_as": [],
+      "controlled_surfaces": [
+        "https://github.com/AETHERUS-MONOLITH",
+        "https://aetherus-monolith.pages.dev/",
+        "https://camilocarlone.com/"
+      ],
+      "canonical_url": null,
+      "related_entities": [],
+      "candidate_relations": [],
+      "boundary_statements": [
+        "AETHERUS is source-typed as a Project, not a legal company, employer, publisher, research institution, or formal organization."
+      ]
+    },
+    {
+      "id": "entity:the_apologetic_authority",
+      "key": "the_apologetic_authority",
+      "source_type": "Report",
+      "name": "The Apologetic Authority",
+      "title": "The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude",
+      "public_jsonld_id": null,
+      "identifiers": {
+        "doi": "10.5281/zenodo.20788207"
+      },
+      "same_as": [],
+      "controlled_surfaces": [
+        "https://camilocarlone.com/the-apologetic-authority/",
+        "https://doi.org/10.5281/zenodo.20788207"
+      ],
+      "canonical_url": "https://camilocarlone.com/the-apologetic-authority/",
+      "related_entities": [
+        {
+          "entity": "entity:camilo_carlone",
+          "relation": "author",
+          "status": "confirmed"
+        }
+      ],
+      "candidate_relations": [],
+      "boundary_statements": [
+        "The source-truth type is Report; observed public structured-data type differences are reported as contradictions rather than repaired in GEO 0.1."
+      ]
+    }
+  ]
+}

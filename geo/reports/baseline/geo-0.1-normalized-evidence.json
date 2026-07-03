@@ -1,0 +1,378 @@
+{
+  "schema_version": "geo.normalized_evidence.v1",
+  "validator_version": "geo-0.1.0",
+  "extraction_version": "geo.extraction.v1",
+  "policy": {
+    "user_agent": "AETHERUS-GEO-0.1-Structural-Baseline/1.0 (+https://github.com/AETHERUS-MONOLITH/AETHERUS_MONOLITH)",
+    "timeout_ms": 10000,
+    "redirect_limit": 5,
+    "response_size_limit_bytes": 750000,
+    "excerpt_size_limit_chars": 420,
+    "raw_run_path": ".geo-runs/geo-0.1/",
+    "raw_material_retained": false,
+    "request_retries": 0
+  },
+  "observations": [
+    {
+      "endpoint_key": "home_camilocarlone",
+      "requested_url": "https://camilocarlone.com/",
+      "final_url": "https://camilocarlone.com/",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:26.489Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 17200,
+      "raw_sha256": "29cf327a77fd05778b7caa8efd38c4cfdb182877c98733bc0a305b1734ce82ac",
+      "normalized_sha256": "24bd20200c064ec236dfb2f1ea6c2ff4931e1a63c8f79d122f9fa8f947765373",
+      "validator_version": "geo-0.1.0",
+      "extraction_version": "geo.extraction.v1",
+      "entities": [
+        "entity:aetherus"
+      ],
+      "endpoint_role": "project_homepage",
+      "expected_content_class": "html",
+      "checks": [
+        "availability",
+        "backlinks",
+        "metadata",
+        "jsonld",
+        "reproducibility",
+        "chunk_readability"
+      ],
+      "failure": null,
+      "canonical_urls": [],
+      "publication_metadata": {
+        "title": "AETHERUS MONOLITH - AI Governance Architecture",
+        "description": "",
+        "author": "",
+        "citation_doi": "",
+        "citation_publication_date": "",
+        "publication_status": "",
+        "og_type": ""
+      },
+      "discovered_seed_links": [],
+      "jsonld": [],
+      "text_metrics": {
+        "text_char_count": 4981,
+        "word_count": 643,
+        "heading_count": 10,
+        "link_count": 10,
+        "longest_token_chars": 21,
+        "excerpt": "AETHERUS MONOLITH - AI Governance Architecture AETHERUS &middot; MONOLITH AI Governance & Model-Behavior Risk Architecture Architecture Evidence Artifacts Publications The Apologetic Authority Workspace Preview Authenticated Surface Methodology Contact Staged Governance Product Surface Deterministic Governance Interface Govern AI behavior. Control the path from intent to release. AETHERUS MONOLITH is a staged governa"
+      },
+      "evidence_excerpt": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <title>AETHERUS MONOLITH - AI Governance Architecture</title> <link rel=\"icon\" href=\"data:,\"> <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"> <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin> <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght"
+    },
+    {
+      "endpoint_key": "taa_publication_page",
+      "requested_url": "https://camilocarlone.com/the-apologetic-authority/",
+      "final_url": "https://camilocarlone.com/the-apologetic-authority/",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:26.757Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 145025,
+      "raw_sha256": "8ee65ce9c0b1e858cd02b4f55c050f7cabe8a766d28ca81dbd961400e61d3536",
+      "normalized_sha256": "317eb5308c1506c83e46f34f1587b0e91e85dd211af28be43ab8f4eb7c5e8b23",
+      "validator_version": "geo-0.1.0",
+      "extraction_version": "geo.extraction.v1",
+      "entities": [
+        "entity:the_apologetic_authority",
+        "entity:camilo_carlone"
+      ],
+      "endpoint_role": "publication_page",
+      "expected_content_class": "html",
+      "checks": [
+        "availability",
+        "backlinks",
+        "metadata",
+        "jsonld",
+        "reproducibility",
+        "chunk_readability"
+      ],
+      "failure": null,
+      "canonical_urls": [
+        "https://camilocarlone.com/the-apologetic-authority/"
+      ],
+      "publication_metadata": {
+        "title": "The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone",
+        "description": "A structural critique of Anthropic",
+        "author": "Camilo Carlone",
+        "citation_doi": "10.5281/zenodo.20788207",
+        "citation_publication_date": "2026-06-21",
+        "publication_status": "v1.0.1 — Final Manuscript; DOI minted; Zenodo archive deposited; PDF available",
+        "og_type": "article"
+      },
+      "discovered_seed_links": [
+        "https://camilocarlone.com/the-apologetic-authority/",
+        "https://doi.org/10.5281/zenodo.20788207"
+      ],
+      "jsonld": [
+        {
+          "parse_status": "parsed",
+          "top_level": "object",
+          "types": [
+            "ScholarlyArticle"
+          ],
+          "ids": [],
+          "names": [
+            "The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude"
+          ],
+          "same_as": [
+            "https://doi.org/10.5281/zenodo.20788207",
+            "https://doi.org/10.5281/zenodo.20788206"
+          ],
+          "url_values": [
+            "https://camilocarlone.com/the-apologetic-authority/",
+            "https://camilocarlone.com/the-apologetic-authority/",
+            "https://doi.org/10.5281/zenodo.20788207"
+          ]
+        }
+      ],
+      "text_metrics": {
+        "text_char_count": 116992,
+        "word_count": 16013,
+        "heading_count": 56,
+        "link_count": 83,
+        "longest_token_chars": 118,
+        "excerpt": "The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone AETHERUS MONOLITH Canonical Publication Route The Apologetic Authority A Structural Critique of Anthropic's Constitution for Claude Camilo Carlone · AETHERUS — AI Governance Infrastructure · v1.0.1 Final Manuscript · May 2026 Publication Status Final manuscript yes Version v1.0.1 — Final Manuscript Canonical route "
+      },
+      "evidence_excerpt": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <title>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone</title> <meta name=\"description\" content=\"A structural critique of Anthropic's Constitution for Claude as an AI governance instrument, focused on authority, auditability, obse"
+    },
+    {
+      "endpoint_key": "aetherus_pages",
+      "requested_url": "https://aetherus-monolith.pages.dev/",
+      "final_url": "https://aetherus-monolith.pages.dev/",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:26.901Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 17200,
+      "raw_sha256": "29cf327a77fd05778b7caa8efd38c4cfdb182877c98733bc0a305b1734ce82ac",
+      "normalized_sha256": "24bd20200c064ec236dfb2f1ea6c2ff4931e1a63c8f79d122f9fa8f947765373",
+      "validator_version": "geo-0.1.0",
+      "extraction_version": "geo.extraction.v1",
+      "entities": [
+        "entity:aetherus"
+      ],
+      "endpoint_role": "project_pages_surface",
+      "expected_content_class": "html",
+      "checks": [
+        "availability",
+        "backlinks",
+        "metadata",
+        "jsonld",
+        "reproducibility",
+        "chunk_readability"
+      ],
+      "failure": null,
+      "canonical_urls": [],
+      "publication_metadata": {
+        "title": "AETHERUS MONOLITH - AI Governance Architecture",
+        "description": "",
+        "author": "",
+        "citation_doi": "",
+        "citation_publication_date": "",
+        "publication_status": "",
+        "og_type": ""
+      },
+      "discovered_seed_links": [],
+      "jsonld": [],
+      "text_metrics": {
+        "text_char_count": 4981,
+        "word_count": 643,
+        "heading_count": 10,
+        "link_count": 10,
+        "longest_token_chars": 21,
+        "excerpt": "AETHERUS MONOLITH - AI Governance Architecture AETHERUS &middot; MONOLITH AI Governance & Model-Behavior Risk Architecture Architecture Evidence Artifacts Publications The Apologetic Authority Workspace Preview Authenticated Surface Methodology Contact Staged Governance Product Surface Deterministic Governance Interface Govern AI behavior. Control the path from intent to release. AETHERUS MONOLITH is a staged governa"
+      },
+      "evidence_excerpt": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <title>AETHERUS MONOLITH - AI Governance Architecture</title> <link rel=\"icon\" href=\"data:,\"> <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"> <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin> <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght"
+    },
+    {
+      "endpoint_key": "taa_zenodo_doi",
+      "requested_url": "https://doi.org/10.5281/zenodo.20788207",
+      "final_url": "https://zenodo.org/records/20788207",
+      "redirect_chain": [
+        {
+          "from": "https://doi.org/10.5281/zenodo.20788207",
+          "to": "https://zenodo.org/doi/10.5281/zenodo.20788207",
+          "status": 302
+        },
+        {
+          "from": "https://zenodo.org/doi/10.5281/zenodo.20788207",
+          "to": "https://zenodo.org/records/20788207",
+          "status": 302
+        }
+      ],
+      "observed_at": "2026-07-03T17:52:27.080Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 78875,
+      "raw_sha256": "14d61ea3230f5d0545653412adc9e8540a7f8bad4c16ab322fa26606a13617e0",
+      "normalized_sha256": "ecd4749ca93e69cdc3e37be13639410c70cdad8ee65a6006439cce4b512e5cb4",
+      "validator_version": "geo-0.1.0",
+      "extraction_version": "geo.extraction.v1",
+      "entities": [
+        "entity:the_apologetic_authority"
+      ],
+      "endpoint_role": "doi_record",
+      "expected_content_class": "html",
+      "checks": [
+        "availability",
+        "backlinks",
+        "metadata",
+        "jsonld",
+        "reproducibility",
+        "chunk_readability"
+      ],
+      "failure": null,
+      "canonical_urls": [
+        "https://zenodo.org/records/20788207"
+      ],
+      "publication_metadata": {
+        "title": "The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude | Zenodo",
+        "description": "The Apologetic Authority is a structural critique of Anthropic’s Constitution for Claude. It examines constitutional AI as a governance architecture, with attention to authority delegation, aspirational language, opacity, auditability, model self-description, institutional accountability, and the limits of constitutional framing as a safety mechanism. The manuscript argues that constitutional language can create an apologetic authority structure: a system in which the appearance of principled constraint may obscure unresolved questions of authorship, enforcement, revision, responsibility, and evidentiary traceability. This record archives version v1.0.1 of the manuscript and links it to the canonical web publication surface. Its evidentiary status is an independent AI governance and model-behavior analysis. Journal publication, institutional reporting, product release, and official Anthropic assessment remain outside the record’s claim boundary.",
+        "author": "Carlone, Camilo",
+        "citation_doi": "10.5281/zenodo.20788207",
+        "citation_publication_date": "",
+        "publication_status": "",
+        "og_type": ""
+      },
+      "discovered_seed_links": [
+        "https://camilocarlone.com/the-apologetic-authority/"
+      ],
+      "jsonld": [
+        {
+          "parse_status": "parsed",
+          "top_level": "object",
+          "types": [
+            "https://schema.org/ScholarlyArticle"
+          ],
+          "ids": [
+            "https://doi.org/10.5281/zenodo.20788207"
+          ],
+          "names": [
+            "The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude"
+          ],
+          "same_as": [],
+          "url_values": [
+            "https://zenodo.org/records/20788207",
+            "https://doi.org/10.5281/zenodo.20788207"
+          ]
+        }
+      ],
+      "text_metrics": {
+        "text_char_count": 3484,
+        "word_count": 413,
+        "heading_count": 31,
+        "link_count": 52,
+        "longest_token_chars": 107,
+        "excerpt": "The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude | Zenodo Skip to main You are using an outdated browser. Please upgrade your browser to improve your experience. Communities My dashboard Log in Sign up Published June 21, 2026 | Version v1.0.1 Report Open The Apologetic Authority: A Structural Critique of Anthropic's Constitution for Claude Authors/Creators Carlone, Camilo 1 Show "
+      },
+      "evidence_excerpt": "<!DOCTYPE html> <html lang=\"en\" dir=\"ltr\"> <head> <meta charset=\"utf-8\"> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <meta name=\"google-site-verification\" content=\"5fPGCLllnWrvFxH9QWI0l1TadV7byeEvfPcyK2VkS_s\"/> <meta name=\"google-site-verification\" content=\"Rp5zp04IKW-s1IbpTOGB7Z6XY60oloZD5C3kTM-AiY4\"/> <meta name=\"generator\" content=\"Inve"
+    },
+    {
+      "endpoint_key": "aetherus_github_org",
+      "requested_url": "https://github.com/AETHERUS-MONOLITH",
+      "final_url": "https://github.com/AETHERUS-MONOLITH",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:27.981Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 193407,
+      "raw_sha256": "3ae2bd048477a7667d719cbbf45684822c356445657d951cea6b3f810be6def4",
+      "normalized_sha256": "94fb695a6c667919d5b4fed115b0026f7441a5644571f2c4fb0ff3b25295918b",
+      "validator_version": "geo-0.1.0",
+      "extraction_version": "geo.extraction.v1",
+      "entities": [
+        "entity:aetherus"
+      ],
+      "endpoint_role": "project_repository_surface",
+      "expected_content_class": "html",
+      "checks": [
+        "availability",
+        "backlinks",
+        "metadata",
+        "jsonld",
+        "reproducibility",
+        "chunk_readability"
+      ],
+      "failure": null,
+      "canonical_urls": [
+        "https://github.com/AETHERUS-MONOLITH"
+      ],
+      "publication_metadata": {
+        "title": "AETHERUS-MONOLITH (Camilo ) · GitHub",
+        "description": "Interested in AI alignment, governance, and the structures that make intelligence accountable. - AETHERUS-MONOLITH",
+        "author": "",
+        "citation_doi": "",
+        "citation_publication_date": "",
+        "publication_status": "",
+        "og_type": "profile"
+      },
+      "discovered_seed_links": [
+        "https://camilocarlone.com/"
+      ],
+      "jsonld": [],
+      "text_metrics": {
+        "text_char_count": 4013,
+        "word_count": 575,
+        "heading_count": 11,
+        "link_count": 113,
+        "longest_token_chars": 17,
+        "excerpt": "AETHERUS-MONOLITH (Camilo ) · GitHub Skip to content Navigation Menu Toggle navigation Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry New Integrate external tools DEVELOPER WORKFLOWS Actions Automate any workflow Codespaces Instant dev environments Issues Plan and track work Code Review Manage code change"
+      },
+      "evidence_excerpt": "<!DOCTYPE html> <html lang=\"en\" data-color-mode=\"auto\" data-light-theme=\"light\" data-dark-theme=\"dark\" data-a11y-animated-images=\"system\" data-a11y-link-underlines=\"true\" > <head> <meta charset=\"utf-8\"> <link rel=\"dns-prefetch\" href=\"https://github.githubassets.com\"> <link rel=\"dns-prefetch\" href=\"https://avatars.githubusercontent.com\"> <link rel=\"dns-prefetch\" href=\"https://github-cloud.s3.amazonaws.com\"> <link rel="
+    },
+    {
+      "endpoint_key": "lesswrong_camilo_profile",
+      "requested_url": "https://www.lesswrong.com/users/camilocarlone",
+      "final_url": "https://www.lesswrong.com/users/camilocarlone",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T17:52:28.405Z",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "byte_count": 229790,
+      "raw_sha256": "8f1c22a770da47938fbe4a33e18b6620616cdaa32debd43b34c338a9df8fab24",
+      "normalized_sha256": "587b3e2ccec718b40d8aef6c2095552476b3607f7242e63ea5cfce569490989d",
+      "validator_version": "geo-0.1.0",
+      "extraction_version": "geo.extraction.v1",
+      "entities": [
+        "entity:camilo_carlone"
+      ],
+      "endpoint_role": "candidate_personal_profile",
+      "expected_content_class": "html",
+      "checks": [
+        "availability",
+        "backlinks",
+        "metadata",
+        "jsonld",
+        "reproducibility",
+        "chunk_readability"
+      ],
+      "failure": null,
+      "canonical_urls": [
+        "https://www.lesswrong.com/"
+      ],
+      "publication_metadata": {
+        "title": "camilocarlone — LessWrong",
+        "description": "camilocarlone&#x27;s profile on LessWrong — A community blog devoted to refining the art of rationality",
+        "author": "",
+        "citation_doi": "",
+        "citation_publication_date": "",
+        "publication_status": "",
+        "og_type": "article"
+      },
+      "discovered_seed_links": [],
+      "jsonld": [],
+      "text_metrics": {
+        "text_char_count": 678,
+        "word_count": 85,
+        "heading_count": 5,
+        "link_count": 4,
+        "longest_token_chars": 14,
+        "excerpt": "x This website requires javascript to properly function. Consider activating javascript to get access to all site functionality. LESSWRONG LW Login camilocarlone — LessWrong camilocarlone camilocarlone Subscribe Message Interested in AI alignment, governance, and the structures that make intelligence accountable. Currently working on constitutional governance, observability, and institutional control surfaces for AI "
+      },
+      "evidence_excerpt": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/975f1d0b77893c4a.css\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/21765c38810fa9db.css\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/64d4d318f45fbf93.css\" data-precedence=\"next\"/><link rel=\"st"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "geo/schema/baseline-report.schema.json",
+  "type": "object",
+  "required": ["schema_version", "run", "source_truth_version", "endpoint_registry_version", "validator_version", "environment", "request_count", "fetch_outcomes", "findings", "unresolved_variables", "contradictions", "advisory_findings", "structural_findings_hash", "boundary_statements", "overall_classification"],
+  "properties": {
+    "schema_version": { "const": "geo.baseline_report.v1" },
+    "run": { "type": "object" },
+    "source_truth_version": { "type": "string" },
+    "endpoint_registry_version": { "type": "string" },
+    "validator_version": { "type": "string" },
+    "environment": { "type": "object" },
+    "request_count": { "type": "number" },
+    "fetch_outcomes": { "type": "array" },
+    "findings": { "type": "object" },
+    "unresolved_variables": { "type": "array" },
+    "contradictions": { "type": "array" },
+    "advisory_findings": { "type": "array" },
+    "structural_findings_hash": { "type": "string" },
+    "boundary_statements": { "type": "array" },
+    "overall_classification": { "enum": ["completed", "completed_with_findings", "completed_with_endpoint_failures"] }
+  }
+}

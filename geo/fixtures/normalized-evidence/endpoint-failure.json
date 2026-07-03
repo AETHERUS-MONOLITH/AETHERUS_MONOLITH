@@ -1,0 +1,10 @@
+{
+  "fixture": "endpoint failure produces endpoint finding without identity contradiction",
+  "observation": {
+    "endpoint_key": "fixture_failure",
+    "entities": ["entity:aetherus"],
+    "status": null,
+    "failure": "timeout",
+    "checks": ["availability"]
+  }
+}

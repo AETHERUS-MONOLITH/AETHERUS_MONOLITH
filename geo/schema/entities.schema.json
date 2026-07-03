@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "geo/schema/entities.schema.json",
+  "type": "object",
+  "required": ["schema_version", "source_truth_version", "entities"],
+  "properties": {
+    "schema_version": { "const": "geo.source.entities.v1" },
+    "source_truth_version": { "const": "geo-0.1" },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "key", "source_type", "name", "public_jsonld_id", "identifiers", "same_as", "controlled_surfaces", "canonical_url", "related_entities", "candidate_relations", "boundary_statements"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^entity:[a-z0-9_]+$" },
+          "key": { "type": "string" },
+          "source_type": { "enum": ["Person", "Project", "Report"] },
+          "name": { "type": "string" },
+          "title": { "type": "string" },
+          "public_jsonld_id": { "type": ["string", "null"] },
+          "identifiers": { "type": "object" },
+          "same_as": { "type": "array", "items": { "type": "string" } },
+          "controlled_surfaces": { "type": "array", "items": { "type": "string" } },
+          "canonical_url": { "type": ["string", "null"] },
+          "related_entities": { "type": "array" },
+          "candidate_relations": { "type": "array" },
+          "boundary_statements": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

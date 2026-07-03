@@ -1,0 +1,98 @@
+{
+  "schema_version": "geo.source.claims.v1",
+  "source_truth_version": "geo-0.1",
+  "claims": [
+    {
+      "key": "claim:camilo_carlone_name",
+      "subject": "entity:camilo_carlone",
+      "predicate": "name",
+      "value": "Camilo Carlone",
+      "status": "confirmed",
+      "source_references": [
+        "the-apologetic-authority/index.html meta author"
+      ],
+      "provenance": "authoritative_repository_publication_surface"
+    },
+    {
+      "key": "claim:aetherus_project_source_type",
+      "subject": "entity:aetherus",
+      "predicate": "source_type",
+      "value": "Project",
+      "status": "confirmed",
+      "source_references": [
+        "index.html AETHERUS MONOLITH public project surface"
+      ],
+      "provenance": "operator_governed_boundary"
+    },
+    {
+      "key": "claim:taa_report_source_type",
+      "subject": "entity:the_apologetic_authority",
+      "predicate": "source_type",
+      "value": "Report",
+      "status": "confirmed",
+      "source_references": [
+        "the-apologetic-authority/index.html visible Zenodo archive status: archived report"
+      ],
+      "provenance": "authoritative_repository_publication_surface"
+    },
+    {
+      "key": "claim:taa_author_camilo",
+      "subject": "entity:the_apologetic_authority",
+      "predicate": "author",
+      "object_entity": "entity:camilo_carlone",
+      "status": "confirmed",
+      "source_references": [
+        "the-apologetic-authority/index.html citation_author metadata"
+      ],
+      "provenance": "authoritative_repository_publication_surface"
+    },
+    {
+      "key": "claim:taa_canonical_url",
+      "subject": "entity:the_apologetic_authority",
+      "predicate": "canonical_url",
+      "value": "https://camilocarlone.com/the-apologetic-authority/",
+      "status": "confirmed",
+      "source_references": [
+        "the-apologetic-authority/index.html canonical link"
+      ],
+      "provenance": "authoritative_repository_publication_surface"
+    },
+    {
+      "key": "claim:taa_version_doi",
+      "subject": "entity:the_apologetic_authority",
+      "predicate": "doi",
+      "value": "10.5281/zenodo.20788207",
+      "status": "confirmed",
+      "source_references": [
+        "the-apologetic-authority/index.html citation_doi metadata"
+      ],
+      "provenance": "authoritative_repository_publication_surface"
+    },
+    {
+      "key": "claim:camilo_public_identifiers_unresolved",
+      "subject": "entity:camilo_carlone",
+      "predicate": "public_identifiers",
+      "value": {
+        "public_jsonld_id": null,
+        "orcid": null,
+        "wikidata": null
+      },
+      "status": "unresolved",
+      "source_references": [
+        "GEO 0.1 operator boundary"
+      ],
+      "provenance": "operator_governed_unresolved_field"
+    },
+    {
+      "key": "claim:taa_public_type_contradiction_expected",
+      "subject": "entity:the_apologetic_authority",
+      "predicate": "observed_public_jsonld_type",
+      "value": "ScholarlyArticle",
+      "status": "contradiction",
+      "source_references": [
+        "the-apologetic-authority/index.html application/ld+json"
+      ],
+      "provenance": "baseline_observation_to_be_reported_not_repaired"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "geo.source.entities.v1",
+  "source_truth_version": "geo-0.1",
+  "entities": [
+    { "id": "entity:camilo_carlone", "key": "camilo_carlone", "source_type": "Person", "name": "Camilo Carlone", "public_jsonld_id": null, "identifiers": {}, "same_as": [], "controlled_surfaces": [], "canonical_url": null, "related_entities": [], "candidate_relations": [], "boundary_statements": [] },
+    { "id": "entity:aetherus", "key": "aetherus", "source_type": "Organization", "name": "AETHERUS", "public_jsonld_id": null, "identifiers": {}, "same_as": [], "controlled_surfaces": [], "canonical_url": null, "related_entities": [], "candidate_relations": [], "boundary_statements": [] },
+    { "id": "entity:the_apologetic_authority", "key": "the_apologetic_authority", "source_type": "Report", "name": "The Apologetic Authority", "public_jsonld_id": null, "identifiers": {}, "same_as": [], "controlled_surfaces": [], "canonical_url": null, "related_entities": [], "candidate_relations": [], "boundary_statements": [] }
+  ]
+}

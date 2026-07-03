@@ -1,0 +1,16 @@
+{
+  "schema_version": "geo.endpoint_registry.v1",
+  "registry_version": "geo-0.1",
+  "endpoints": [
+    {
+      "key": "fixture_extra_endpoint",
+      "requested_url": "https://example.com/",
+      "entities": ["entity:aetherus"],
+      "role": "fixture_extra",
+      "expected_content_class": "html",
+      "redirects_permitted": true,
+      "doi_resolution_permitted": false,
+      "checks": ["availability", "metadata", "jsonld"]
+    }
+  ]
+}

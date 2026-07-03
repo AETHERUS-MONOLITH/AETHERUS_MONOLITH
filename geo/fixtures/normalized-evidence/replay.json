@@ -1,0 +1,39 @@
+{
+  "schema_version": "geo.normalized_evidence.v1",
+  "validator_version": "geo-0.1.0",
+  "extraction_version": "geo.extraction.v1",
+  "policy": {
+    "excerpt_size_limit_chars": 420,
+    "response_size_limit_bytes": 750000,
+    "timeout_ms": 10000,
+    "redirect_limit": 5,
+    "raw_material_retained": false
+  },
+  "observations": [
+    {
+      "endpoint_key": "fixture_endpoint",
+      "requested_url": "https://example.com/",
+      "final_url": "https://example.com/",
+      "redirect_chain": [],
+      "observed_at": "2026-07-03T00:00:00.000Z",
+      "status": 200,
+      "content_type": "text/html",
+      "byte_count": 120,
+      "raw_sha256": "fixture-raw",
+      "normalized_sha256": "fixture-normalized",
+      "validator_version": "geo-0.1.0",
+      "extraction_version": "geo.extraction.v1",
+      "entities": ["entity:aetherus"],
+      "endpoint_role": "fixture",
+      "expected_content_class": "html",
+      "checks": ["availability", "backlinks", "metadata", "jsonld", "reproducibility", "chunk_readability"],
+      "failure": null,
+      "canonical_urls": [],
+      "publication_metadata": { "title": "Fixture" },
+      "discovered_seed_links": [],
+      "jsonld": [],
+      "text_metrics": { "text_char_count": 7, "word_count": 1, "heading_count": 0, "link_count": 0, "longest_token_chars": 7, "excerpt": "Fixture" },
+      "evidence_excerpt": "Fixture"
+    }
+  ]
+}

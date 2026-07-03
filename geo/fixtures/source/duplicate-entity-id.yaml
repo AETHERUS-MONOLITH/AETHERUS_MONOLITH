@@ -1,0 +1,8 @@
+{
+  "schema_version": "geo.source.entities.v1",
+  "source_truth_version": "geo-0.1",
+  "entities": [
+    { "id": "entity:camilo_carlone", "key": "camilo_carlone", "source_type": "Person", "name": "Camilo Carlone", "public_jsonld_id": null, "identifiers": {}, "same_as": [], "controlled_surfaces": [], "canonical_url": null, "related_entities": [], "candidate_relations": [], "boundary_statements": [] },
+    { "id": "entity:camilo_carlone", "key": "duplicate", "source_type": "Person", "name": "Duplicate", "public_jsonld_id": null, "identifiers": {}, "same_as": [], "controlled_surfaces": [], "canonical_url": null, "related_entities": [], "candidate_relations": [], "boundary_statements": [] }
+  ]
+}
