@@ -1,0 +1,136 @@
+{
+  "contract_id": "protected-operator-principal-substrate-contract.v0",
+  "version": "0.1.0",
+  "status": "local_substrate",
+  "baseline_commit": "42025cf039d3bdc966a042da7169414db74cc593",
+  "purpose": "Define a private, explicit Operator-principal assignment substrate for workspace-scoped future policy evaluation without deriving authority from authentication, membership, ownership, browser input, repository state, or environment state.",
+  "owning_architecture": {
+    "immediate_product_owner": "§1 / Facade protected workspace and authentication architecture",
+    "implementation_substrate": "Supabase/PostgreSQL",
+    "future_policy_consumer": "Palisade",
+    "future_transport_consumer": "Conduit",
+    "top_level_giant": "not_a_new_top_level_AETHERUS_Giant"
+  },
+  "trusted_owner": "postgres",
+  "object_paths": {
+    "authority_table": "private.workspace_operator_principals",
+    "principal_resolution_core": "private.resolve_current_operator_principal_core(uuid)"
+  },
+  "table_path": "private.workspace_operator_principals",
+  "resolver_path": "private.resolve_current_operator_principal_core(uuid)",
+  "identity_source": "auth.uid() only; caller-supplied user identifiers are not trusted",
+  "principal_type": "human_operator",
+  "authority_class": "workspace_operator_principal",
+  "status_vocabulary": [
+    "active",
+    "suspended",
+    "revoked"
+  ],
+  "permitted_transitions": [
+    "active->active",
+    "active->suspended",
+    "active->revoked",
+    "suspended->suspended",
+    "suspended->active",
+    "suspended->revoked",
+    "revoked->revoked"
+  ],
+  "prohibited_transitions": [
+    "revoked->active",
+    "revoked->suspended"
+  ],
+  "foreign_key_lifecycle": {
+    "workspace_id": "references public.workspaces(id) on delete restrict",
+    "user_id": "references auth.users(id) on delete restrict",
+    "cascade_deletion_authorized": false
+  },
+  "uniqueness_and_reprovisioning_rules": {
+    "non_revoked_unique_assignment": "At most one active or suspended assignment exists for the same workspace_id and user_id.",
+    "expired_non_revoked_assignment_blocks_replacement": true,
+    "reprovisioning_requires_explicit_revocation": true,
+    "revoked_rows_do_not_block_new_assignment": true,
+    "replacement_requires_new_assignment_uuid": true,
+    "replacement_requires_new_provisioning_authorization_reference": true,
+    "replacement_requires_new_provisioning_execution_reference": true,
+    "replacement_requires_new_validity_interval": true,
+    "revoked_row_reactivation_allowed": false,
+    "revoked_row_provenance_overwrite_allowed": false
+  },
+  "provisioning_provenance": {
+    "provisioning_method": "explicit_authorized_admin_sql",
+    "provisioned_by_kind": "supabase_project_administrator",
+    "provisioned_by_reference": "required nonempty administrative executor reference; not an auth.users identity placeholder",
+    "provisioning_authorization_reference": "required nonempty external authorization reference for administrative provisioning only",
+    "provisioning_execution_reference": "required nonempty execution reference for the administrative SQL operation",
+    "forbidden_material": [
+      "credentials",
+      "passwords",
+      "access tokens",
+      "refresh tokens",
+      "service-role keys",
+      "JWTs",
+      "session tokens",
+      "invented authenticated-user IDs representing the SQL administrator"
+    ]
+  },
+  "grant_posture": {
+    "private_schema": {
+      "PUBLIC": "no USAGE, no CREATE",
+      "anon": "no USAGE, no CREATE",
+      "authenticated": "no USAGE, no CREATE"
+    },
+    "authority_table": {
+      "PUBLIC": "no privileges",
+      "anon": "no privileges",
+      "authenticated": "no privileges"
+    },
+    "resolver_function": {
+      "PUBLIC": "no EXECUTE",
+      "anon": "no EXECUTE",
+      "authenticated": "no EXECUTE"
+    },
+    "lifecycle_function": {
+      "PUBLIC": "no EXECUTE",
+      "anon": "no EXECUTE",
+      "authenticated": "no EXECUTE"
+    }
+  },
+  "private_schema_posture": {
+    "schema": "private",
+    "owner": "postgres",
+    "data_api_exposure": "not_added",
+    "browser_roles_have_schema_usage": false,
+    "existing_schema_conflict_behavior": "fail migration application if a pre-existing private schema is not owned by postgres"
+  },
+  "no_client_access_rule": "Browser-facing roles receive no schema usage, table privileges, permissive RLS policy, resolver execute grant, public wrapper, general RPC, or membership-based access path.",
+  "bootstrap_rule": "The migration creates zero positive Operator-principal rows; the first assignment remains a separately authorized administrative SQL operation.",
+  "static_validation_boundary": "The repository validator inspects only explicit tracked paths and reports static structure evidence, not runtime database proof.",
+  "executable_validation_boundary": "Executable database validation is authorized only through an existing repository-supported ephemeral harness; absent that harness, behavior remains not executably verified locally.",
+  "live_application_boundary": "No live Supabase migration application, project write, Operator provisioning, authorization issuance, approval, witness, replay state, deployment, or push is part of this phase.",
+  "future_palisade_relationship": "Palisade may later consume the private resolved Operator principal as one input after a separately authorized access boundary exists; this phase does not change Palisade policy or runtime behavior.",
+  "future_conduit_relationship": "Conduit may later transport authorization flows after separate authorization; this phase does not change Conduit behavior.",
+  "authority_distinctions_preserved": [
+    "authenticated identity",
+    "workspace membership",
+    "workspace ownership",
+    "explicit Operator-principal assignment",
+    "action-specific approval"
+  ],
+  "only_authority_constructed_in_this_pass": "explicit Operator-principal assignment",
+  "nonclaims": {
+    "live migration application": "not performed",
+    "Operator principal provisioned": "no",
+    "live principal resolution": "not verified",
+    "authorization issuer": "not implemented",
+    "positive approval": "not implemented",
+    "positive witness": "not implemented",
+    "authorization challenge": "not implemented",
+    "nonce or replay state": "not implemented",
+    "atomic authorization consumption": "not implemented",
+    "Palisade approval path": "unchanged",
+    "Conduit authorization behavior": "unchanged",
+    "public wrapper": "not implemented",
+    "browser resolver": "not implemented",
+    "production authorization": "not established"
+  }
+}

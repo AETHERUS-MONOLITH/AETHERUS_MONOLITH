@@ -56,7 +56,7 @@
     "keep_public": 27,
     "remove_from_public_navigation_later": 13,
     "needs_operator_review": 4,
-    "consolidate_later": 9,
+    "consolidate_later": 10,
     "archive_later": 15,
     "keep_public_but_rename_later": 6,
     "handoff_only_later": 10
@@ -2240,6 +2240,26 @@
         "select_canonical_rollup_target",
         "extract_stable_content",
         "remove_duplicate_public_navigation_after_rollup_exists"
+      ],
+      "operator_review_required": false,
+      "safe_to_remove_from_public_navigation_later": true,
+      "safe_to_archive_later": false,
+      "safe_to_consolidate_later": true,
+      "destructive_change_allowed_now": false
+    },
+    {
+      "path": "data/protected-operator-principal-substrate-contract.v0.json",
+      "source_inventory_status": "consolidate_later",
+      "current_public_discoverability": {
+        "from_readme": false,
+        "from_data_docs_json": false
+      },
+      "routing_action": "consolidate_later",
+      "routing_reason": "Private Operator-principal authority substrate contract should remain bounded implementation architecture and not be promoted as live authorization behavior.",
+      "later_execution_requirements": [
+        "preserve_claim_boundaries",
+        "keep_private_substrate_distinct_from_live_authorization",
+        "consolidate_into_canonical_architecture_rollup_later"
       ],
       "operator_review_required": false,
       "safe_to_remove_from_public_navigation_later": true,
