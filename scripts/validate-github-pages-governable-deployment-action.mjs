@@ -80,6 +80,19 @@ export async function validateRepository() {
       throw new Error("deployed Edge source equality receipt missing");
     }
     if (receipt.secret_values_in_receipt !== false) throw new Error("receipt secret-value boundary mismatch");
+    if (boundary.supabase.verification_status === "database_edge_and_live_oidc_verified") {
+      if (receipt.live_oidc_verification_status !== "success" || receipt.live_non_deploying_verification.run_attempt !== 1) {
+        throw new Error("live non-deploying verification receipt mismatch");
+      }
+      for (const field of [
+        "verification_upload_pages_artifact_invocations",
+        "verification_deploy_pages_invocations",
+        "production_workflow_invocations",
+        "repository_artifacts_created_by_pass",
+        "pages_site_deployments_caused_by_pass",
+        "outward_publications_caused_by_pass"
+      ]) if (receipt.non_occurrence[field] !== 0) throw new Error(`non-occurrence receipt mismatch: ${field}`);
+    }
   }
   return true;
 }

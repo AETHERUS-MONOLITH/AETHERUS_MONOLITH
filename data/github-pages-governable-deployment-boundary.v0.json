@@ -16,7 +16,11 @@
     "upload_pages_artifact_invocations": 0,
     "deploy_pages_invocations": 0,
     "outward_publication_effects": 0,
-    "excluded_from_action_manifest": true
+    "excluded_from_action_manifest": true,
+    "final_run_id": 29519661300,
+    "final_run_attempt": 1,
+    "final_workflow_sha": "049ac25314d102efdc69ea3ac39e1107dbd50b3b",
+    "final_conclusion": "success"
   },
   "supabase": {
     "project_ref": "hdakjutdomuvyiohxzeb",
@@ -25,16 +29,20 @@
     "edge_function_slug": "github-pages-operator-resolution-v0",
     "verify_jwt": false,
     "application_status": "applied_verified",
-    "verification_status": "database_and_edge_deployment_verified_live_oidc_pending",
+    "verification_status": "database_edge_and_live_oidc_verified",
     "migration_identity": "20260716171600/github_pages_operator_resolution_bridge_v0",
     "edge_deployment_id": "74c50a17-0e0b-4bad-8321-6af0828468e2",
     "edge_deployment_version": 1
   },
   "non_occurrence": {
+    "verification_upload_pages_artifact_invocations": 0,
+    "verification_deploy_pages_invocations": 0,
     "production_workflow_invocations": 0,
     "pages_artifacts_uploaded_by_pass": 0,
     "pages_deployments_caused_by_pass": 0,
-    "outward_publications_caused_by_pass": 0
+    "outward_publications_caused_by_pass": 0,
+    "github_environment_deployment_records": 2,
+    "github_environment_deployment_records_are_pages_site_deployments": false
   },
   "future_authorization_attachment_point": "defined_unverified",
   "authorization_lifecycle": "not_implemented",
