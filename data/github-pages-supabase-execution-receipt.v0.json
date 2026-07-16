@@ -1,0 +1,67 @@
+{
+  "schema_version": "0.1",
+  "classification": "authorized_external_supabase_execution_receipt",
+  "executor": "Codex connected Supabase execution environment",
+  "repository_commit_sha": "314d8a186df06738dfb1c41b3fae159f33f2b286",
+  "project_ref": "hdakjutdomuvyiohxzeb",
+  "migration": {
+    "source_path": "supabase/migrations/20260716_0001_github_pages_operator_resolution_bridge_v0.sql",
+    "source_sha256": "0e44bee905715467eb854644c5f87eb611e4935a20bac97bcb391733c64bee6e",
+    "identity": "20260716171600/github_pages_operator_resolution_bridge_v0",
+    "application_timestamp": "2026-07-16T17:16:00Z",
+    "application_result": "success"
+  },
+  "database_verification": {
+    "function_identity": "private.resolve_github_pages_operator_evidence_v0()",
+    "argument_count": 0,
+    "owner": "postgres",
+    "security_definer": true,
+    "volatility": "volatile",
+    "search_path": "empty",
+    "public_execute": false,
+    "anon_schema_usage": false,
+    "anon_execute": false,
+    "authenticated_schema_usage": false,
+    "authenticated_execute": false,
+    "service_role_schema_usage": true,
+    "service_role_execute": true,
+    "bounded_result_count": 1,
+    "operator_principal_id": "e438b03c-c708-4cba-94e4-e106ee9958c4",
+    "workspace_id": "9abed891-7950-4937-a2aa-4b957d8a4bd1",
+    "principal_type": "human_operator",
+    "authority_class": "workspace_operator_principal",
+    "status": "active",
+    "resolution_status": "resolved"
+  },
+  "preservation_evidence": {
+    "existing_resolver_definition_md5_before": "5c8d46b38aecdf5871cd508f926fcd05",
+    "existing_resolver_definition_md5_after": "5c8d46b38aecdf5871cd508f926fcd05",
+    "operator_assignment_count_before": 1,
+    "operator_assignment_count_after": 1,
+    "operator_assignment_state_md5_before": "54d2b8e1df456df1c1dcd24f56ac7f07",
+    "operator_assignment_state_md5_after": "54d2b8e1df456df1c1dcd24f56ac7f07"
+  },
+  "edge_function": {
+    "slug": "github-pages-operator-resolution-v0",
+    "deployment_id": "74c50a17-0e0b-4bad-8321-6af0828468e2",
+    "version": 1,
+    "status": "ACTIVE",
+    "deployment_timestamp": "2026-07-16T17:18:02.060Z",
+    "verify_jwt": false,
+    "entrypoint_sha256": "c160b528dd0ae624526ea50abd3fbefeb5b642680b59fae6a056314b2cf34d42",
+    "support_source_sha256": "3eb26c57c52ecf3691dc1ceb1995266f7cd0df65df50215523a44745c811b013",
+    "deployed_entrypoint_exact_match": true,
+    "deployed_support_source_exact_match": true,
+    "fixed_issuer": "https://token.actions.githubusercontent.com",
+    "fixed_audience": "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0",
+    "unauthenticated_post_status": 401,
+    "unauthenticated_post_result": "invalid_bearer_token"
+  },
+  "secret_names_without_values": [
+    "SUPABASE_DB_URL"
+  ],
+  "credential_custody": "Supabase-hosted Edge Function server secret only",
+  "advisor_result": "no new finding identified for the fixed private bridge; unrelated pre-existing project advisories remain",
+  "live_oidc_verification_status": "pending_non_deploying_workflow",
+  "secret_values_in_receipt": false
+}

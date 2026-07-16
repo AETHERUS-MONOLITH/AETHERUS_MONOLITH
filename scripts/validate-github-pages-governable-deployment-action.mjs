@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { FIXED } from "./lib/github-pages-governable.mjs";
+import { digestObject, FIXED, sha256 } from "./lib/github-pages-governable.mjs";
 
 const expected = {
   schema_version: "0.1",
@@ -57,6 +57,30 @@ export async function validateRepository() {
     throw new Error("fixed artifact binding missing");
   }
   if (production.includes("on:\n  push:")) throw new Error("production push trigger detected");
+
+  const boundary = JSON.parse(await fs.readFile("data/github-pages-governable-deployment-boundary.v0.json", "utf8"));
+  if (boundary.supabase.application_status === "applied_verified") {
+    const executionPackage = JSON.parse(await fs.readFile("data/github-pages-supabase-execution-package.v0.json", "utf8"));
+    const receipt = JSON.parse(await fs.readFile("data/github-pages-supabase-execution-receipt.v0.json", "utf8"));
+    const migration = await fs.readFile(executionPackage.migration.path);
+    if (sha256(migration) !== executionPackage.migration.sha256 || receipt.migration.source_sha256 !== executionPackage.migration.sha256) {
+      throw new Error("migration receipt digest mismatch");
+    }
+    const sourceManifest = [];
+    for (const [sourcePath, expectedHash] of [
+      [executionPackage.edge_function.entrypoint, executionPackage.edge_function.entrypoint_sha256],
+      [executionPackage.edge_function.support_source, executionPackage.edge_function.support_source_sha256]
+    ]) {
+      const actualHash = sha256(await fs.readFile(sourcePath));
+      if (actualHash !== expectedHash) throw new Error(`Edge source digest mismatch: ${sourcePath}`);
+      sourceManifest.push({ path: sourcePath, sha256: actualHash });
+    }
+    if (digestObject(sourceManifest) !== executionPackage.edge_function.source_manifest_sha256) throw new Error("Edge source manifest digest mismatch");
+    if (receipt.edge_function.deployed_entrypoint_exact_match !== true || receipt.edge_function.deployed_support_source_exact_match !== true) {
+      throw new Error("deployed Edge source equality receipt missing");
+    }
+    if (receipt.secret_values_in_receipt !== false) throw new Error("receipt secret-value boundary mismatch");
+  }
   return true;
 }
 

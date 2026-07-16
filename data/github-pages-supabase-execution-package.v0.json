@@ -1,0 +1,67 @@
+{
+  "schema_version": "0.1",
+  "classification": "exact_committed_supabase_execution_package",
+  "repository_commit_sha": "314d8a186df06738dfb1c41b3fae159f33f2b286",
+  "project_ref": "hdakjutdomuvyiohxzeb",
+  "project_name": "aetherus-monolith-dev",
+  "region": "eu-west-2",
+  "migration": {
+    "path": "supabase/migrations/20260716_0001_github_pages_operator_resolution_bridge_v0.sql",
+    "complete_sql_source": "the complete authoritative SQL is the exact committed file at repository_commit_sha",
+    "sha256": "0e44bee905715467eb854644c5f87eb611e4935a20bac97bcb391733c64bee6e",
+    "application_name": "github_pages_operator_resolution_bridge_v0"
+  },
+  "edge_function": {
+    "slug": "github-pages-operator-resolution-v0",
+    "entrypoint": "supabase/functions/github-pages-operator-resolution-v0/index.ts",
+    "entrypoint_sha256": "c160b528dd0ae624526ea50abd3fbefeb5b642680b59fae6a056314b2cf34d42",
+    "support_source": "supabase/functions/github-pages-operator-resolution-v0/lib.ts",
+    "support_source_sha256": "3eb26c57c52ecf3691dc1ceb1995266f7cd0df65df50215523a44745c811b013",
+    "source_manifest_sha256": "79b986b273aaa07b958939383c0c61650a8ebba40c58d2226f1b5fbe4d8e7a95",
+    "verify_jwt": false,
+    "fixed_issuer": "https://token.actions.githubusercontent.com",
+    "fixed_audience": "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0"
+  },
+  "required_server_secret_names": [
+    "SUPABASE_DB_URL"
+  ],
+  "credential_custody": "Supabase-hosted Edge Function server secret only; no value is included in this package",
+  "application_sequence": [
+    "verify repository commit and every listed SHA-256",
+    "apply only the committed migration SQL to hdakjutdomuvyiohxzeb",
+    "verify bridge identity, owner, search path, signature, and role privileges",
+    "verify the existing resolver and fixed assignment hashes are unchanged",
+    "deploy only the two committed Edge source files under github-pages-operator-resolution-v0 with verify_jwt=false",
+    "read back the deployed source and prove exact byte equality",
+    "verify unauthenticated requests fail closed",
+    "return the bounded receipt without secret values"
+  ],
+  "post_application_sql_expectations": {
+    "bridge_identity": "private.resolve_github_pages_operator_evidence_v0()",
+    "owner": "postgres",
+    "security_definer": true,
+    "search_path": "empty fixed search_path",
+    "argument_count": 0,
+    "public_execute": false,
+    "anon_execute": false,
+    "authenticated_execute": false,
+    "service_role_execute": true,
+    "result_cardinality": 1
+  },
+  "receipt_required_fields": [
+    "repository_commit_sha",
+    "migration_identity",
+    "migration_sha256",
+    "migration_application_timestamp",
+    "database_function_and_privilege_evidence",
+    "existing_resolver_before_after_hash",
+    "operator_assignment_before_after_hash",
+    "edge_deployment_id",
+    "edge_deployment_version",
+    "edge_deployment_timestamp",
+    "verify_jwt",
+    "deployed_source_exact_match",
+    "negative_authentication_result",
+    "secret_names_without_values"
+  ]
+}

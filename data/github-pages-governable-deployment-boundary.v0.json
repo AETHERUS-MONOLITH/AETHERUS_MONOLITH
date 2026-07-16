@@ -24,8 +24,11 @@
     "migration_path": "supabase/migrations/20260716_0001_github_pages_operator_resolution_bridge_v0.sql",
     "edge_function_slug": "github-pages-operator-resolution-v0",
     "verify_jwt": false,
-    "application_status": "not_applied",
-    "verification_status": "not_verified"
+    "application_status": "applied_verified",
+    "verification_status": "database_and_edge_deployment_verified_live_oidc_pending",
+    "migration_identity": "20260716171600/github_pages_operator_resolution_bridge_v0",
+    "edge_deployment_id": "74c50a17-0e0b-4bad-8321-6af0828468e2",
+    "edge_deployment_version": 1
   },
   "non_occurrence": {
     "production_workflow_invocations": 0,
