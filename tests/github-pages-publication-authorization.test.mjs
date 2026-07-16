@@ -10,6 +10,7 @@ const runtimeFix = (await fs.readFile("supabase/migrations/20260716_0003_github_
 const conflictFix = (await fs.readFile("supabase/migrations/20260716_0004_github_pages_publication_authorization_v0_conflict_fix.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
 const fkIndexes = (await fs.readFile("supabase/migrations/20260716_0005_github_pages_publication_authorization_v0_fk_indexes.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
 const effectConstraint = (await fs.readFile("supabase/migrations/20260716_0006_github_pages_publication_authorization_v0_effect_constraint.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
+const consumptionOperatorCheck = (await fs.readFile("supabase/migrations/20260716_0007_github_pages_publication_authorization_v0_consumption_operator_check.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
 const workflow = await fs.readFile(".github/workflows/pages-runtime-config.yml", "utf8");
 const authorization = JSON.parse(await fs.readFile("contracts/github-pages-publication-authorization-v0.json", "utf8"));
 const manifest = JSON.parse(await fs.readFile("contracts/github-pages-publication-final-manifest-v0.json", "utf8"));
@@ -77,6 +78,13 @@ test("decision binds auth.uid and the fixed principal resolver", () => {
   assert.match(normalized, /auth\.uid\(\) is distinct from '4702d528-f7a7-4a04-a991-3176bec69f52'/);
   assert.match(normalized, /resolve_current_operator_principal_core\('9abed891-7950-4937-a2aa-4b957d8a4bd1'/);
   assert.match(normalized, /e438b03c-c708-4cba-94e4-e106ee9958c4/);
+});
+
+test("consumption re-resolves the fixed active Operator and fails terminally", () => {
+  assert.match(consumptionOperatorCheck, /resolve_github_pages_operator_evidence_v0\(\)/);
+  assert.match(consumptionOperatorCheck, /operator_assignment_invalid/);
+  assert.match(consumptionOperatorCheck, /operator_assignment_unresolved/);
+  assert.match(consumptionOperatorCheck, /else 'consumption_failed' end/);
 });
 
 test("authorization TTL uses database transaction time and artifact expiry", () => {

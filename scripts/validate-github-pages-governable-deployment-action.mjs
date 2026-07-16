@@ -40,6 +40,7 @@ export async function validateRepository() {
   await fs.access("supabase/migrations/20260716_0004_github_pages_publication_authorization_v0_conflict_fix.sql");
   await fs.access("supabase/migrations/20260716_0005_github_pages_publication_authorization_v0_fk_indexes.sql");
   await fs.access("supabase/migrations/20260716_0006_github_pages_publication_authorization_v0_effect_constraint.sql");
+  await fs.access("supabase/migrations/20260716_0007_github_pages_publication_authorization_v0_consumption_operator_check.sql");
   await fs.access("scripts/build-github-pages-final-action-manifest.mjs");
   return true;
 }

@@ -45,5 +45,6 @@
   "direct_table_access": "prohibited",
   "row_level_security": "enabled_and_forced",
   "terminal_mutability": "prohibited",
-  "replay_semantics": "one_consumption_attempt_per_fixed_request_key"
+  "replay_semantics": "one_consumption_attempt_per_fixed_request_key",
+  "consumption_operator_revalidation": "the exact fixed active Operator assignment is re-resolved immediately before consumption"
 }

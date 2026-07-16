@@ -40,7 +40,8 @@
         "20260716201201/github_pages_publication_authorization_v0_runtime_fix",
         "20260716201403/github_pages_publication_authorization_v0_conflict_fix",
         "20260716201741/github_pages_publication_authorization_v0_fk_indexes",
-        "20260716202019/github_pages_publication_authorization_v0_effect_constraint"
+        "20260716202019/github_pages_publication_authorization_v0_effect_constraint",
+        "20260716202716/github_pages_publication_authorization_v0_consumption_operator_check"
       ],
       "edge_functions": [
         {
