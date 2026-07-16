@@ -61,10 +61,10 @@ jobs:
         run: |
           node --input-type=module <<'NODE'
           import fs from "node:fs/promises";
+          import { validateOperatorEvidence } from "./scripts/lib/github-pages-governable.mjs";
           const token = await fs.readFile(`${process.env.RUNNER_TEMP}/github-pages-oidc-token`, "utf8");
           const body = { classification: "non_deploying_topology_verification", repository: process.env.GITHUB_REPOSITORY, ref: process.env.GITHUB_REF, run_id: process.env.GITHUB_RUN_ID, workflow_sha: process.env.WORKFLOW_SHA, workspace_id: process.env.WORKSPACE_ID };
           const response = await fetch(process.env.EDGE_FUNCTION_URL, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify(body), redirect: "error" });
           if (!response.ok) throw new Error(`Operator verification failed: ${response.status}`);
-          const evidence = JSON.parse(await response.text());
-          if (evidence.workspace_id !== process.env.WORKSPACE_ID || evidence.status !== "active" || evidence.resolution_status !== "resolved") throw new Error("bounded Operator evidence mismatch");
+          validateOperatorEvidence(JSON.parse(await response.text()));
           NODE
