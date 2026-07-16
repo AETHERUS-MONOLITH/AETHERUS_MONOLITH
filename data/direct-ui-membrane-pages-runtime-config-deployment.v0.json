@@ -46,7 +46,7 @@
     }
   ],
   "workflow_behavior": {
-    "runs_on_push_to_main": true,
+    "runs_on_push_to_main": false,
     "allows_workflow_dispatch": true,
     "uses_least_pages_permissions": true,
     "uses_github_pages_environment": true,
@@ -56,7 +56,11 @@
     "fails_closed_when_required_variables_absent": true,
     "does_not_print_runtime_config_values": true,
     "uploads_pages_artifact": true,
-    "deploys_pages_artifact": true
+    "deploys_pages_artifact": true,
+    "deployment_trigger_is_manual_only": true,
+    "governable_action_boundary": "github_pages_outward_publication@0.1",
+    "fixed_artifact_name": "github-pages-governable-v0-1",
+    "immutable_action_references": true
   },
   "secret_and_value_boundary": {
     "actual_supabase_values_committed": false,

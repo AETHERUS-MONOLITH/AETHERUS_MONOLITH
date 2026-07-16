@@ -1,0 +1,70 @@
+name: Verify GitHub Pages governable boundary
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Verify fixed requester and first attempt
+        env:
+          ACTOR: ${{ github.actor }}
+          ACTOR_ID: ${{ github.actor_id }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          test "$ACTOR" = "AETHERUS-MONOLITH"
+          test "$ACTOR_ID" = "264210171"
+          test "$ACTOR" = "$TRIGGERING_ACTOR"
+          test "$RUN_ATTEMPT" = "1"
+          test "$GITHUB_REPOSITORY" = "AETHERUS-MONOLITH/AETHERUS_MONOLITH"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$GITHUB_WORKFLOW" = "Verify GitHub Pages governable boundary"
+          test "$GITHUB_EVENT_NAME" = "workflow_dispatch"
+
+      - name: Checkout exact triggering commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Validate fixed topology
+        run: node scripts/validate-github-pages-governable-deployment-action.mjs
+
+      - name: Acquire fixed-audience GitHub OIDC token
+        env:
+          OIDC_AUDIENCE: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs/promises";
+          const url = new URL(process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
+          url.searchParams.set("audience", process.env.OIDC_AUDIENCE);
+          const response = await fetch(url, { headers: { authorization: `Bearer ${process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN}` }, redirect: "error" });
+          if (!response.ok) throw new Error(`OIDC acquisition failed: ${response.status}`);
+          const payload = await response.json();
+          if (typeof payload.value !== "string" || !payload.value) throw new Error("OIDC response missing token");
+          await fs.writeFile(`${process.env.RUNNER_TEMP}/github-pages-oidc-token`, payload.value, { mode: 0o600 });
+          NODE
+
+      - name: Verify fixed Operator resolution without deployment
+        env:
+          EDGE_FUNCTION_URL: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+          WORKSPACE_ID: 9abed891-7950-4937-a2aa-4b957d8a4bd1
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs/promises";
+          const token = await fs.readFile(`${process.env.RUNNER_TEMP}/github-pages-oidc-token`, "utf8");
+          const body = { classification: "non_deploying_topology_verification", repository: process.env.GITHUB_REPOSITORY, ref: process.env.GITHUB_REF, run_id: process.env.GITHUB_RUN_ID, workflow_sha: process.env.WORKFLOW_SHA, workspace_id: process.env.WORKSPACE_ID };
+          const response = await fetch(process.env.EDGE_FUNCTION_URL, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify(body), redirect: "error" });
+          if (!response.ok) throw new Error(`Operator verification failed: ${response.status}`);
+          const evidence = JSON.parse(await response.text());
+          if (evidence.workspace_id !== process.env.WORKSPACE_ID || evidence.status !== "active" || evidence.resolution_status !== "resolved") throw new Error("bounded Operator evidence mismatch");
+          NODE

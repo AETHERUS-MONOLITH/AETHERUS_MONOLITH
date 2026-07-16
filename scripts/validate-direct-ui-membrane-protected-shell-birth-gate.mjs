@@ -80,7 +80,10 @@ const boundedAuthFiles = [
 const allowedServerSecretFiles = new Set([
   recordPath,
   "scripts/validate-direct-ui-membrane-protected-shell-birth-gate.mjs",
-  ".env.example"
+  ".env.example",
+  "supabase/migrations/20260716_0001_github_pages_operator_resolution_bridge_v0.sql",
+  "supabase/functions/github-pages-operator-resolution-v0/index.ts",
+  "test/github-pages-governable-deployment-action.test.mjs"
 ]);
 
 const serverSecretTerms = [

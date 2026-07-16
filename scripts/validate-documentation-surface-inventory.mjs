@@ -133,7 +133,11 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/direct-ui-membrane-protected-workspace-persistence.v0.json",
   "scripts/validate-direct-ui-membrane-protected-workspace-persistence.mjs",
   "data/public-surface-execution-audit.v0.json",
-  "scripts/validate-public-surface-execution-audit.mjs"
+  "scripts/validate-public-surface-execution-audit.mjs",
+  "data/github-pages-governable-deployment-action.v0.json",
+  "data/github-pages-governable-deployment-boundary.v0.json",
+  "data/github-pages-supabase-execution-package.v0.json",
+  "data/github-pages-supabase-execution-receipt.v0.json"
 ]);
 
 const inventory = readJson(inventoryPath);

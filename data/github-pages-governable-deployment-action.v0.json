@@ -1,0 +1,82 @@
+{
+  "schema_version": "0.1",
+  "action_type": "github_pages_outward_publication",
+  "action_version": "0.1",
+  "action_identifier": "github_pages_outward_publication@0.1",
+  "workspace_id": "9abed891-7950-4937-a2aa-4b957d8a4bd1",
+  "repository": "AETHERUS-MONOLITH/AETHERUS_MONOLITH",
+  "repository_id": "1167751543",
+  "repository_owner": "AETHERUS-MONOLITH",
+  "repository_owner_id": "264210171",
+  "repository_ref": "refs/heads/main",
+  "production_workflow_path": ".github/workflows/pages-runtime-config.yml",
+  "production_workflow_name": "Deploy Pages with runtime config",
+  "pages_environment": "github-pages",
+  "canonical_public_target": "https://camilocarlone.com/",
+  "artifact_name": "github-pages-governable-v0-1",
+  "maximum_artifact_uploads": 1,
+  "maximum_deployments": 1,
+  "permitted_effect": "replace the current GitHub Pages deployment for the canonical target with the exact bound uploaded artifact",
+  "requester": {
+    "actor": "AETHERUS-MONOLITH",
+    "actor_id": "264210171",
+    "triggering_actor_must_equal_actor": true,
+    "run_attempt": 1
+  },
+  "operator_resolution": {
+    "operator_user_id": "4702d528-f7a7-4a04-a991-3176bec69f52",
+    "bridge": "private.resolve_github_pages_operator_evidence_v0()",
+    "edge_function_slug": "github-pages-operator-resolution-v0",
+    "oidc_issuer": "https://token.actions.githubusercontent.com",
+    "oidc_audience": "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0"
+  },
+  "immutable_actions": [
+    {
+      "repository": "actions/checkout",
+      "commit_sha": "11bd71901bbe5b1630ceea73d27597364c9af683",
+      "metadata_path": "action.yml",
+      "purpose": "checkout the exact triggering commit"
+    },
+    {
+      "repository": "actions/configure-pages",
+      "commit_sha": "983d7736d9b0ae728b81ab479565c72886d7745b",
+      "metadata_path": "action.yml",
+      "purpose": "configure GitHub Pages without enabling an alternate target"
+    },
+    {
+      "repository": "actions/upload-pages-artifact",
+      "commit_sha": "56afc609e74202658d3ffba0e8f6dda462b719fa",
+      "metadata_path": "action.yml",
+      "purpose": "perform the sole fixed-name Pages artifact upload"
+    },
+    {
+      "repository": "actions/deploy-pages",
+      "commit_sha": "d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e",
+      "metadata_path": "action.yml",
+      "purpose": "perform the sole Pages deployment of the bound artifact"
+    }
+  ],
+  "prohibitions": [
+    "repository_mutation_by_deployment_workflow",
+    "database_mutation",
+    "operator_principal_mutation",
+    "secret_mutation",
+    "non_pages_deployment",
+    "second_target",
+    "second_workspace_mapping",
+    "second_artifact_route",
+    "second_deployment_executor",
+    "caller_selected_repository",
+    "caller_selected_workspace",
+    "caller_selected_requester",
+    "caller_selected_ref",
+    "caller_selected_target",
+    "caller_selected_artifact",
+    "caller_selected_executor"
+  ],
+  "future_authorization_attachment_point": "defined_unverified",
+  "authorization_lifecycle": "not_implemented",
+  "atomic_authorization_consumption": "not_implemented",
+  "replay_rejection": "not_implemented",
+  "terminal_authorization_failure": "not_implemented"
+}

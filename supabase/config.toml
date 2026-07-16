@@ -1,0 +1,2 @@
+[functions.github-pages-operator-resolution-v0]
+verify_jwt = false

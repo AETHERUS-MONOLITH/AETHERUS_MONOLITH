@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "classification": "governable_deployment_action_boundary",
+  "action_identifier": "github_pages_outward_publication@0.1",
+  "baseline_commit": "7bb26b9c9af4689c459a09bb208f1518dfeb336a",
+  "production_workflow": {
+    "path": ".github/workflows/pages-runtime-config.yml",
+    "trigger": "workflow_dispatch",
+    "upload_pages_artifact_invocations": 1,
+    "deploy_pages_invocations": 1,
+    "invoked_by_this_pass": false
+  },
+  "verification_infrastructure": {
+    "path": ".github/workflows/github-pages-boundary-verification.yml",
+    "trigger": "workflow_dispatch",
+    "upload_pages_artifact_invocations": 0,
+    "deploy_pages_invocations": 0,
+    "outward_publication_effects": 0,
+    "excluded_from_action_manifest": true
+  },
+  "supabase": {
+    "project_ref": "hdakjutdomuvyiohxzeb",
+    "region": "eu-west-2",
+    "migration_path": "supabase/migrations/20260716_0001_github_pages_operator_resolution_bridge_v0.sql",
+    "edge_function_slug": "github-pages-operator-resolution-v0",
+    "verify_jwt": false,
+    "application_status": "not_applied",
+    "verification_status": "not_verified"
+  },
+  "non_occurrence": {
+    "production_workflow_invocations": 0,
+    "pages_artifacts_uploaded_by_pass": 0,
+    "pages_deployments_caused_by_pass": 0,
+    "outward_publications_caused_by_pass": 0
+  },
+  "future_authorization_attachment_point": "defined_unverified",
+  "authorization_lifecycle": "not_implemented",
+  "atomic_authorization_consumption": "not_implemented",
+  "replay_rejection": "not_implemented",
+  "terminal_authorization_failure": "not_implemented",
+  "phase_3_status": "not_triggered",
+  "phase_4_status": "not_started",
+  "phase_5_status": "not_started",
+  "palisade_status": "unchanged",
+  "conduit_status": "unchanged"
+}

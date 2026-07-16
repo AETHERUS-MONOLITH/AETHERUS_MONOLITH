@@ -83,20 +83,18 @@ async function assertMissing(paths, label) {
 function assertWorkflowStaticStructure(workflowText) {
   for (const snippet of [
     "on:",
-    "push:",
-    "branches:",
-    "main",
     "workflow_dispatch:",
     "contents: read",
+    "actions: read",
     "pages: write",
     "id-token: write",
     "environment:",
     "name: github-pages",
-    "actions/checkout@v4",
-    "actions/configure-pages@v5",
-    "git archive --format=tar HEAD | tar -x -C _site",
-    "actions/upload-pages-artifact@v3",
-    "actions/deploy-pages@v4"
+    "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+    "actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b",
+    "git archive --format=tar \"$GITHUB_SHA\" | tar -x -C _site",
+    "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa",
+    "actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e"
   ]) {
     if (!workflowText.includes(snippet)) fail(`${workflowPath} missing ${snippet}`);
   }
@@ -105,7 +103,7 @@ function assertWorkflowStaticStructure(workflowText) {
     if (!workflowText.includes(variable)) fail(`${workflowPath} missing ${variable}`);
   }
 
-  if (!workflowText.includes('path.join("_site", "js", "aetherus-runtime-config.js")')) {
+  if (!workflowText.includes('"_site/js/aetherus-runtime-config.js"')) {
     fail(`${workflowPath} must generate runtime config only in _site`);
   }
   if (!workflowText.includes("globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG")) {
@@ -114,10 +112,10 @@ function assertWorkflowStaticStructure(workflowText) {
   if (!workflowText.includes("SUPABASE_URL") || !workflowText.includes("SUPABASE_PUBLISHABLE_KEY")) {
     fail(`${workflowPath} must emit accepted public config field names`);
   }
-  if (!workflowText.includes("process.exit(1)")) {
+  if (!workflowText.includes("throw new Error")) {
     fail(`${workflowPath} must fail closed when required variables are absent`);
   }
-  if (!workflowText.includes("Missing required GitHub Actions repository variable(s):")) {
+  if (!workflowText.includes("Missing required GitHub Actions repository variable:")) {
     fail(`${workflowPath} must report missing variable names without values`);
   }
   if (workflowText.includes("SUPABASE_ANON_KEY")) {
@@ -164,7 +162,10 @@ async function assertNoCommittedValues() {
   ];
 
   for (const filePath of filesToCheck) {
-    const text = await readText(filePath);
+    const text = (await readText(filePath)).replaceAll(
+      "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0",
+      "FIXED_GOVERNANCE_EDGE_FUNCTION"
+    );
     for (const { label, pattern } of forbiddenValuePatterns) {
       if (pattern.test(text)) fail(`${filePath} contains forbidden ${label}`);
     }
@@ -233,7 +234,6 @@ if (record.fallback_public_config_name !== "SUPABASE_ANON_KEY") {
 
 const workflowBehavior = record.workflow_behavior || {};
 for (const flag of [
-  "runs_on_push_to_main",
   "allows_workflow_dispatch",
   "uses_least_pages_permissions",
   "uses_github_pages_environment",
@@ -246,6 +246,9 @@ for (const flag of [
   "deploys_pages_artifact"
 ]) {
   if (workflowBehavior[flag] !== true) fail(`workflow_behavior.${flag} must be true`);
+}
+if (workflowBehavior.runs_on_push_to_main !== false) {
+  fail("workflow_behavior.runs_on_push_to_main must be false");
 }
 
 const valueBoundary = record.secret_and_value_boundary || {};
