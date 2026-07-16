@@ -1,2 +1,11 @@
 [functions.github-pages-operator-resolution-v0]
 verify_jwt = false
+
+[functions.github-pages-authorization-request-v0]
+verify_jwt = false
+
+[functions.github-pages-authorization-decision-v0]
+verify_jwt = false
+
+[functions.github-pages-authorization-consumption-v0]
+verify_jwt = false

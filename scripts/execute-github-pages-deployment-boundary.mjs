@@ -1,32 +1,28 @@
 import fs from "node:fs/promises";
-import { canonicalJson, digestObject, FIXED } from "./lib/github-pages-governable.mjs";
-import { validateRepository } from "./validate-github-pages-governable-deployment-action.mjs";
+import { digestObject, FIXED } from "./lib/github-pages-governable.mjs";
 
-await validateRepository();
 const directory = process.env.EVIDENCE_DIRECTORY || `${process.env.RUNNER_TEMP}/github-pages-governable-evidence`;
-const names = ["source-evidence", "runtime-config-evidence", "built-artifact-evidence", "operator-resolution-evidence", "action-manifest", "uploaded-artifact-evidence"];
-const evidence = Object.fromEntries(await Promise.all(names.map(async (name) => [name, JSON.parse(await fs.readFile(`${directory}/${name}.json`, "utf8"))])));
-const artifact = evidence["uploaded-artifact-evidence"];
-const manifest = evidence["action-manifest"];
-if (artifact.action_manifest_sha256 !== manifest.action_manifest_sha256) throw new Error("manifest binding mismatch");
-if (artifact.built_artifact_sha256 !== evidence["built-artifact-evidence"].built_artifact_sha256) throw new Error("artifact digest binding mismatch");
-if (artifact.artifact_name !== FIXED.artifactName) throw new Error("artifact name mismatch");
-if (artifact.workflow_run_id !== String(process.env.GITHUB_RUN_ID) || artifact.run_attempt !== 1) throw new Error("run identity mismatch");
-
+const [manifestText, consumptionText] = await Promise.all([
+  fs.readFile(`${directory}/final-action-manifest.json`, "utf8"),
+  fs.readFile(`${directory}/authorization-consumption-receipt.json`, "utf8")
+]);
+const manifest = JSON.parse(manifestText);
+const consumption = JSON.parse(consumptionText);
+if (consumption.status !== "consumed") throw new Error("authorization is not consumed");
+if (consumption.action_manifest_sha256 !== manifest.action_manifest_sha256) throw new Error("consumed manifest binding mismatch");
+if (String(consumption.artifact_id) !== String(manifest.artifact_id)) throw new Error("consumed artifact binding mismatch");
+if (manifest.artifact_name !== FIXED.artifactName || manifest.canonical_public_target !== FIXED.target) throw new Error("deployment target binding mismatch");
+if (manifest.maximum_artifact_uploads !== 1 || manifest.maximum_deployments !== 1) throw new Error("effect cardinality mismatch");
 const permit = {
-  classification: "action_boundary_preconditions_satisfied",
+  classification: "action_specific_authorization_consumed",
   action_identifier: FIXED.actionIdentifier,
+  request_id: consumption.request_id,
   action_manifest_sha256: manifest.action_manifest_sha256,
-  artifact_id: artifact.artifact_id,
-  artifact_name: FIXED.artifactName,
-  target: FIXED.target,
-  permitted_effect: "replace the current GitHub Pages deployment for the canonical target with the exact bound uploaded artifact",
-  maximum_deployments: 1,
-  future_authorization_attachment_point: "defined_unverified",
-  authorization_lifecycle: "not_implemented"
+  consumption_receipt_sha256: consumption.consumption_receipt_sha256,
+  artifact_id: manifest.artifact_id,
+  artifact_name: manifest.artifact_name,
+  target: manifest.canonical_public_target,
+  maximum_deployments: 1
 };
-if (/authorized|approved|authorization_valid|authorization_consumed|replay_safe|terminal_authorization_failure/.test(canonicalJson(permit))) {
-  throw new Error("structural permit contains prohibited authorization claim");
-}
-await fs.writeFile(`${directory}/structural-permit.json`, `${JSON.stringify({ ...permit, structural_permit_sha256: digestObject(permit) }, null, 2)}\n`, { mode: 0o600 });
-process.stdout.write("action_boundary_preconditions_satisfied\n");
+await fs.writeFile(`${directory}/deployment-permit.json`, `${JSON.stringify({ ...permit, deployment_permit_sha256: digestObject(permit) }, null, 2)}\n`, { mode: 0o600 });
+process.stdout.write("action_specific_authorization_consumed\n");

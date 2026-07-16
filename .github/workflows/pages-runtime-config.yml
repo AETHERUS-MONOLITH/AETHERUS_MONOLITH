@@ -48,6 +48,7 @@ jobs:
           test "$GITHUB_REF" = "refs/heads/main"
           test "$GITHUB_WORKFLOW" = "Deploy Pages with runtime config"
           test "$GITHUB_EVENT_NAME" = "workflow_dispatch"
+          test "$GITHUB_RUN_ATTEMPT" = "1"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           test -z "$(git status --porcelain --untracked-files=no)"
 
@@ -68,12 +69,8 @@ jobs:
           import fs from "node:fs/promises";
           const names = ["AETHERUS_SUPABASE_URL", "AETHERUS_SUPABASE_PUBLISHABLE_KEY"];
           for (const name of names) if (!process.env[name]) throw new Error(`Missing required GitHub Actions repository variable: ${name}`);
-          const publicConfig = {
-            SUPABASE_URL: process.env.AETHERUS_SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY: process.env.AETHERUS_SUPABASE_PUBLISHABLE_KEY
-          };
           await fs.mkdir("_site/js", { recursive: true });
-          await fs.writeFile("_site/js/aetherus-runtime-config.js", `globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG = ${JSON.stringify(publicConfig)};\n`);
+          await fs.writeFile("_site/js/aetherus-runtime-config.js", `globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG = ${JSON.stringify({ SUPABASE_URL: process.env.AETHERUS_SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY: process.env.AETHERUS_SUPABASE_PUBLISHABLE_KEY })};\n`);
           NODE
 
       - name: Construct checkout, runtime, and built-artifact evidence
@@ -85,9 +82,10 @@ jobs:
           node scripts/build-github-pages-deployment-evidence.mjs source
           node scripts/build-github-pages-deployment-evidence.mjs artifact
 
-      - name: Acquire fixed-audience GitHub OIDC token
+      - name: Acquire Operator-resolution GitHub OIDC token
         env:
           OIDC_AUDIENCE: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0
+          OIDC_OUTPUT: ${{ runner.temp }}/github-pages-operator-oidc-token
         run: |
           node --input-type=module <<'NODE'
           import fs from "node:fs/promises";
@@ -97,34 +95,25 @@ jobs:
           if (!response.ok) throw new Error(`OIDC acquisition failed: ${response.status}`);
           const payload = await response.json();
           if (typeof payload.value !== "string" || !payload.value) throw new Error("OIDC response missing token");
-          await fs.writeFile(`${process.env.RUNNER_TEMP}/github-pages-oidc-token`, payload.value, { mode: 0o600 });
+          await fs.writeFile(process.env.OIDC_OUTPUT, payload.value, { mode: 0o600 });
           NODE
 
-      - name: Request fixed Operator resolution
+      - name: Request and validate fixed Operator resolution
         env:
           EDGE_FUNCTION_URL: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0
           WORKSPACE_ID: 9abed891-7950-4937-a2aa-4b957d8a4bd1
           WORKFLOW_SHA: ${{ github.workflow_sha }}
+          OPERATOR_RESPONSE_PATH: ${{ runner.temp }}/operator-resolution.json
         run: |
           node --input-type=module <<'NODE'
           import fs from "node:fs/promises";
-          const token = await fs.readFile(`${process.env.RUNNER_TEMP}/github-pages-oidc-token`, "utf8");
+          const token = await fs.readFile(`${process.env.RUNNER_TEMP}/github-pages-operator-oidc-token`, "utf8");
           const body = { classification: "production_action", repository: process.env.GITHUB_REPOSITORY, ref: process.env.GITHUB_REF, run_id: process.env.GITHUB_RUN_ID, workflow_sha: process.env.WORKFLOW_SHA, workspace_id: process.env.WORKSPACE_ID };
           const response = await fetch(process.env.EDGE_FUNCTION_URL, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify(body), redirect: "error" });
           if (!response.ok) throw new Error(`Operator resolution failed: ${response.status}`);
-          await fs.writeFile(`${process.env.RUNNER_TEMP}/operator-resolution.json`, await response.text(), { mode: 0o600 });
+          await fs.writeFile(process.env.OPERATOR_RESPONSE_PATH, await response.text(), { mode: 0o600 });
           NODE
-
-      - name: Validate bounded Operator-resolution evidence
-        env:
-          OPERATOR_RESPONSE_PATH: ${{ runner.temp }}/operator-resolution.json
-        run: node scripts/build-github-pages-deployment-evidence.mjs operator
-
-      - name: Construct final action manifest
-        run: node scripts/build-github-pages-deployment-evidence.mjs manifest
-
-      - name: Validate complete action boundary
-        run: node scripts/validate-github-pages-governable-deployment-action.mjs
+          node scripts/build-github-pages-deployment-evidence.mjs operator
 
       - name: Upload exact Pages artifact
         id: upload_pages_artifact
@@ -139,8 +128,65 @@ jobs:
           UPLOADED_ARTIFACT_ID: ${{ steps.upload_pages_artifact.outputs.artifact_id }}
         run: node scripts/verify-github-pages-uploaded-artifact.mjs
 
-      - name: Construct structural pre-deployment permit
-        run: node scripts/execute-github-pages-deployment-boundary.mjs
+      - name: Acquire authorization-request GitHub OIDC token
+        env:
+          OIDC_AUDIENCE: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-authorization-request-v0
+          OIDC_OUTPUT: ${{ runner.temp }}/github-pages-authorization-request-oidc-token
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs/promises";
+          const url = new URL(process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
+          url.searchParams.set("audience", process.env.OIDC_AUDIENCE);
+          const response = await fetch(url, { headers: { authorization: `Bearer ${process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN}` }, redirect: "error" });
+          if (!response.ok) throw new Error(`OIDC acquisition failed: ${response.status}`);
+          const payload = await response.json();
+          if (typeof payload.value !== "string" || !payload.value) throw new Error("OIDC response missing token");
+          await fs.writeFile(process.env.OIDC_OUTPUT, payload.value, { mode: 0o600 });
+          NODE
+
+      - name: Construct and validate final action manifest
+        env:
+          AUTHORIZATION_REQUEST_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-authorization-request-oidc-token
+        run: |
+          node scripts/build-github-pages-final-action-manifest.mjs
+          node scripts/validate-github-pages-governable-deployment-action.mjs
+
+      - name: Create action-specific authorization request
+        env:
+          AUTHORIZATION_REQUEST_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-authorization-request-oidc-token
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/request-github-pages-publication-authorization.mjs create
+
+      - name: Await fixed Operator decision
+        timeout-minutes: 16
+        env:
+          AUTHORIZATION_REQUEST_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-authorization-request-oidc-token
+        run: node scripts/request-github-pages-publication-authorization.mjs await
+
+      - name: Acquire authorization-consumption GitHub OIDC token
+        env:
+          OIDC_AUDIENCE: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-authorization-consumption-v0
+          OIDC_OUTPUT: ${{ runner.temp }}/github-pages-authorization-consumption-oidc-token
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs/promises";
+          const url = new URL(process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
+          url.searchParams.set("audience", process.env.OIDC_AUDIENCE);
+          const response = await fetch(url, { headers: { authorization: `Bearer ${process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN}` }, redirect: "error" });
+          if (!response.ok) throw new Error(`OIDC acquisition failed: ${response.status}`);
+          const payload = await response.json();
+          if (typeof payload.value !== "string" || !payload.value) throw new Error("OIDC response missing token");
+          await fs.writeFile(process.env.OIDC_OUTPUT, payload.value, { mode: 0o600 });
+          NODE
+
+      - name: Consume authorization and construct deployment permit
+        env:
+          AUTHORIZATION_CONSUMPTION_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-authorization-consumption-oidc-token
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          node scripts/consume-github-pages-publication-authorization.mjs
+          node scripts/execute-github-pages-deployment-boundary.mjs
 
       - name: Deploy the bound Pages artifact
         id: deployment
@@ -155,6 +201,6 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from "node:fs/promises";
           const directory = `${process.env.RUNNER_TEMP}/github-pages-governable-evidence`;
-          const permit = JSON.parse(await fs.readFile(`${directory}/structural-permit.json`, "utf8"));
-          await fs.writeFile(`${directory}/deployment-result.json`, `${JSON.stringify({ classification: "pages_deployment_result_evidence", structural_permit_sha256: permit.structural_permit_sha256, page_url: process.env.PAGE_URL }, null, 2)}\n`, { mode: 0o600 });
+          const permit = JSON.parse(await fs.readFile(`${directory}/deployment-permit.json`, "utf8"));
+          await fs.writeFile(`${directory}/deployment-result.json`, `${JSON.stringify({ classification: "pages_deployment_result_evidence", deployment_permit_sha256: permit.deployment_permit_sha256, page_url: process.env.PAGE_URL }, null, 2)}\n`, { mode: 0o600 });
           NODE

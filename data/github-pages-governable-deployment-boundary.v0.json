@@ -32,7 +32,43 @@
     "verification_status": "database_edge_and_live_oidc_verified",
     "migration_identity": "20260716171600/github_pages_operator_resolution_bridge_v0",
     "edge_deployment_id": "74c50a17-0e0b-4bad-8321-6af0828468e2",
-    "edge_deployment_version": 1
+    "edge_deployment_version": 1,
+    "phase_4_authorization": {
+      "status": "applied_verified",
+      "migration_identities": [
+        "20260716200848/github_pages_publication_authorization_v0",
+        "20260716201201/github_pages_publication_authorization_v0_runtime_fix",
+        "20260716201403/github_pages_publication_authorization_v0_conflict_fix",
+        "20260716201741/github_pages_publication_authorization_v0_fk_indexes",
+        "20260716202019/github_pages_publication_authorization_v0_effect_constraint"
+      ],
+      "edge_functions": [
+        {
+          "slug": "github-pages-authorization-request-v0",
+          "deployment_id": "217bd90e-6ece-47fb-9085-ef1155eb0f69",
+          "version": 2,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        },
+        {
+          "slug": "github-pages-authorization-decision-v0",
+          "deployment_id": "a59b2c50-c459-4641-a7fd-7abbf6150d9f",
+          "version": 1,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        },
+        {
+          "slug": "github-pages-authorization-consumption-v0",
+          "deployment_id": "543ee4ae-7979-4e8c-ba5c-0b1e7fee2ddf",
+          "version": 2,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        }
+      ],
+      "rolled_back_state_machine_verification": "pass",
+      "durable_test_authorization_rows": 0,
+      "durable_test_event_rows": 0
+    }
   },
   "non_occurrence": {
     "verification_upload_pages_artifact_invocations": 0,
@@ -44,13 +80,13 @@
     "github_environment_deployment_records": 2,
     "github_environment_deployment_records_are_pages_site_deployments": false
   },
-  "future_authorization_attachment_point": "defined_unverified",
-  "authorization_lifecycle": "not_implemented",
-  "atomic_authorization_consumption": "not_implemented",
-  "replay_rejection": "not_implemented",
-  "terminal_authorization_failure": "not_implemented",
+  "authorization_attachment_point": "implemented_verified",
+  "authorization_lifecycle": "action_specific_replay_safe_v0",
+  "atomic_authorization_consumption": "implemented",
+  "replay_rejection": "implemented",
+  "terminal_authorization_failure": "implemented",
   "phase_3_status": "not_triggered",
-  "phase_4_status": "not_started",
+  "phase_4_status": "implemented_verified",
   "phase_5_status": "not_started",
   "palisade_status": "unchanged",
   "conduit_status": "unchanged"

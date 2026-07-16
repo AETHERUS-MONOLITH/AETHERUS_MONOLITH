@@ -74,9 +74,11 @@
     "caller_selected_artifact",
     "caller_selected_executor"
   ],
-  "future_authorization_attachment_point": "defined_unverified",
-  "authorization_lifecycle": "not_implemented",
-  "atomic_authorization_consumption": "not_implemented",
-  "replay_rejection": "not_implemented",
-  "terminal_authorization_failure": "not_implemented"
+  "authorization_attachment_point": "implemented_verified",
+  "authorization_contract": "contracts/github-pages-publication-authorization-v0.json",
+  "final_manifest_contract": "contracts/github-pages-publication-final-manifest-v0.json",
+  "authorization_lifecycle": "action_specific_replay_safe_v0",
+  "atomic_authorization_consumption": "implemented",
+  "replay_rejection": "implemented",
+  "terminal_authorization_failure": "implemented"
 }

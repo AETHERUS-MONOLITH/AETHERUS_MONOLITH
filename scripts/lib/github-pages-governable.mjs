@@ -6,7 +6,9 @@ export const FIXED = Object.freeze({
   schemaVersion: "0.1",
   actionIdentifier: "github_pages_outward_publication@0.1",
   workspaceId: "9abed891-7950-4937-a2aa-4b957d8a4bd1",
+  operatorPrincipalId: "e438b03c-c708-4cba-94e4-e106ee9958c4",
   operatorUserId: "4702d528-f7a7-4a04-a991-3176bec69f52",
+  operatorAuthorityVersion: "Operator Principal Application and Provisioning 0.1 — Phase 2B",
   repository: "AETHERUS-MONOLITH/AETHERUS_MONOLITH",
   repositoryId: "1167751543",
   repositoryOwner: "AETHERUS-MONOLITH",
@@ -19,7 +21,12 @@ export const FIXED = Object.freeze({
   target: "https://camilocarlone.com/",
   artifactName: "github-pages-governable-v0-1",
   issuer: "https://token.actions.githubusercontent.com",
-  audience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0",
+  operatorResolutionAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0",
+  authorizationRequestAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-authorization-request-v0",
+  authorizationConsumptionAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-authorization-consumption-v0",
+  authorizationContractVersion: "github-pages-publication-authorization-v0",
+  authorizationTtlSeconds: 300,
+  authorizationWaitSeconds: 900,
   productionWorkflow: "Deploy Pages with runtime config",
   productionWorkflowPath: ".github/workflows/pages-runtime-config.yml",
   verificationWorkflow: "Verify GitHub Pages governable boundary",
@@ -74,7 +81,7 @@ function requiredString(value, label) {
 }
 
 export function expectedWorkflowContext(classification) {
-  if (classification === "production_action") {
+  if (["production_action", "authorization_request", "authorization_consumption"].includes(classification)) {
     return { name: FIXED.productionWorkflow, path: FIXED.productionWorkflowPath };
   }
   if (classification === "non_deploying_topology_verification") {
@@ -93,7 +100,8 @@ export function validateOidcClaims(claims, body, nowSeconds = Math.floor(Date.no
   const skew = 30;
   exact(claims.iss, FIXED.issuer, "issuer");
   const audiences = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
-  if (audiences.length !== 1 || audiences[0] !== FIXED.audience) throw new Error("audience mismatch");
+  const expectedAudience = optionsAudience(body.classification);
+  if (audiences.length !== 1 || audiences[0] !== expectedAudience) throw new Error("audience mismatch");
   for (const field of ["exp", "iat", "nbf"]) {
     if (!Number.isInteger(claims[field])) throw new Error(`${field} is required`);
   }
@@ -129,6 +137,13 @@ export function validateOidcClaims(claims, body, nowSeconds = Math.floor(Date.no
   exact(body.workflow_sha, claims.workflow_sha, "body workflow_sha");
   exact(body.run_id, claims.run_id, "body run_id");
   return { claims, classification: body.classification, workflow };
+}
+
+function optionsAudience(classification) {
+  if (classification === "production_action") return FIXED.operatorResolutionAudience;
+  if (classification === "authorization_request") return FIXED.authorizationRequestAudience;
+  if (classification === "authorization_consumption") return FIXED.authorizationConsumptionAudience;
+  throw new Error("unsupported OIDC audience classification");
 }
 
 export async function verifyGitHubOidcToken(token, body, options = {}) {
