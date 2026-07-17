@@ -62,21 +62,14 @@ jobs:
 
       - name: Generate runtime public config
         env:
-          AETHERUS_SUPABASE_URL: ${{ vars.AETHERUS_SUPABASE_URL }}
-          AETHERUS_SUPABASE_PUBLISHABLE_KEY: ${{ vars.AETHERUS_SUPABASE_PUBLISHABLE_KEY }}
-        run: |
-          node --input-type=module <<'NODE'
-          import fs from "node:fs/promises";
-          const names = ["AETHERUS_SUPABASE_URL", "AETHERUS_SUPABASE_PUBLISHABLE_KEY"];
-          for (const name of names) if (!process.env[name]) throw new Error(`Missing required GitHub Actions repository variable: ${name}`);
-          await fs.mkdir("_site/js", { recursive: true });
-          await fs.writeFile("_site/js/aetherus-runtime-config.js", `globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG = ${JSON.stringify({ SUPABASE_URL: process.env.AETHERUS_SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY: process.env.AETHERUS_SUPABASE_PUBLISHABLE_KEY })};\n`);
-          NODE
+          AETHERUS_SUPABASE_URL: ${{ secrets.AETHERUS_SUPABASE_URL }}
+          AETHERUS_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.AETHERUS_SUPABASE_PUBLISHABLE_KEY }}
+        run: node scripts/generate-github-pages-runtime-config.mjs
 
       - name: Construct checkout, runtime, and built-artifact evidence
         env:
-          AETHERUS_SUPABASE_URL: ${{ vars.AETHERUS_SUPABASE_URL }}
-          AETHERUS_SUPABASE_PUBLISHABLE_KEY: ${{ vars.AETHERUS_SUPABASE_PUBLISHABLE_KEY }}
+          AETHERUS_SUPABASE_URL: ${{ secrets.AETHERUS_SUPABASE_URL }}
+          AETHERUS_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.AETHERUS_SUPABASE_PUBLISHABLE_KEY }}
           GITHUB_WORKFLOW_SHA: ${{ github.workflow_sha }}
         run: |
           node scripts/build-github-pages-deployment-evidence.mjs source

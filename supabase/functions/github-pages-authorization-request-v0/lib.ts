@@ -26,6 +26,115 @@ const manifestKeys = [
   "authorization_contract_version","action_manifest_sha256"
 ].sort();
 
+export type RejectionStage =
+  | "route"
+  | "request_size"
+  | "bearer_syntax"
+  | "body_parse"
+  | "body_shape"
+  | "manifest_validation"
+  | "oidc_validation"
+  | "requester_evidence"
+  | "artifact_verification"
+  | "database_credential"
+  | "database_connection"
+  | "database_request"
+  | "database_cardinality";
+
+export const REJECTION_REASON_CODES = Object.freeze([
+  "route_mismatch",
+  "request_too_large",
+  "invalid_bearer_syntax",
+  "body_parse_failed",
+  "body_shape_invalid",
+  "create_field_set_mismatch",
+  "manifest_validation_failed",
+  "oidc_signature_failed",
+  "oidc_issuer_mismatch",
+  "oidc_audience_mismatch",
+  "oidc_temporal_invalid",
+  "oidc_repository_mismatch",
+  "oidc_repository_id_mismatch",
+  "oidc_owner_mismatch",
+  "oidc_actor_mismatch",
+  "oidc_actor_id_mismatch",
+  "oidc_triggering_actor_mismatch",
+  "oidc_workflow_mismatch",
+  "oidc_workflow_sha_mismatch",
+  "oidc_ref_mismatch",
+  "oidc_event_mismatch",
+  "oidc_run_mismatch",
+  "oidc_run_attempt_mismatch",
+  "oidc_source_commit_mismatch",
+  "requester_oidc_evidence_mismatch",
+  "artifact_authentication_failed",
+  "artifact_not_found",
+  "artifact_mismatch",
+  "artifact_run_mismatch",
+  "artifact_attempt_mismatch",
+  "artifact_expired",
+  "database_credential_unavailable",
+  "database_connection_failed",
+  "database_request_rejected",
+  "database_result_cardinality_mismatch",
+  "internal_indeterminate_failure"
+] as const);
+
+export type RejectionReasonCode = typeof REJECTION_REASON_CODES[number];
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "";
+}
+
+export function classifyRejection(stage: RejectionStage, error?: unknown): RejectionReasonCode {
+  const message = errorMessage(error);
+  if (stage === "route") return "route_mismatch";
+  if (stage === "request_size") return "request_too_large";
+  if (stage === "bearer_syntax") return "invalid_bearer_syntax";
+  if (stage === "body_parse") return "body_parse_failed";
+  if (stage === "body_shape") return message.includes("create fields mismatch") ? "create_field_set_mismatch" : "body_shape_invalid";
+  if (stage === "manifest_validation") return "manifest_validation_failed";
+  if (stage === "requester_evidence") return "requester_oidc_evidence_mismatch";
+  if (stage === "database_credential") return "database_credential_unavailable";
+  if (stage === "database_connection") return "database_connection_failed";
+  if (stage === "database_request") return "database_request_rejected";
+  if (stage === "database_cardinality") return "database_result_cardinality_mismatch";
+  if (stage === "oidc_validation") {
+    if (message.includes("issuer mismatch")) return "oidc_issuer_mismatch";
+    if (message.includes("audience mismatch")) return "oidc_audience_mismatch";
+    if (/\b(exp|iat|nbf) is required\b|token time boundary invalid/.test(message)) return "oidc_temporal_invalid";
+    if (message.includes("repository_id mismatch")) return "oidc_repository_id_mismatch";
+    if (message.includes("repository mismatch")) return "oidc_repository_mismatch";
+    if (message.includes("repository_owner_id mismatch") || message.includes("repository_owner mismatch")) return "oidc_owner_mismatch";
+    if (message.includes("actor_id mismatch")) return "oidc_actor_id_mismatch";
+    if (message.includes("triggering_actor mismatch")) return "oidc_triggering_actor_mismatch";
+    if (message.includes("actor mismatch")) return "oidc_actor_mismatch";
+    if (message.includes("workflow SHA binding mismatch")) return "oidc_workflow_sha_mismatch";
+    if (message.includes("workflow_ref mismatch") || message.includes("workflow mismatch")) return "oidc_workflow_mismatch";
+    if (message.includes("ref mismatch") || message.includes("ref_type mismatch")) return "oidc_ref_mismatch";
+    if (message.includes("event_name mismatch")) return "oidc_event_mismatch";
+    if (message.includes("run attempt") || message.includes("run_attempt mismatch")) return "oidc_run_attempt_mismatch";
+    if (message.includes("run ID binding mismatch")) return "oidc_run_mismatch";
+    if (message.includes("source commit binding mismatch")) return "oidc_source_commit_mismatch";
+    if (/algorithm mismatch|key identity|signing key|signature|malformed JWT/.test(message)) return "oidc_signature_failed";
+    return "internal_indeterminate_failure";
+  }
+  if (stage === "artifact_verification") {
+    if (/GitHub (artifact|run) API status (401|403)/.test(message)) return "artifact_authentication_failed";
+    if (/GitHub artifact API status 404/.test(message)) return "artifact_not_found";
+    if (message.includes("workflow run attempt")) return "artifact_attempt_mismatch";
+    if (message.includes("artifact expiry") || message.includes("artifact expired")) return "artifact_expired";
+    if (message.includes("artifact run") || message.includes("workflow run ID") || message.includes("workflow run source commit")) return "artifact_run_mismatch";
+    if (/artifact (ID|name|upload time)/.test(message)) return "artifact_mismatch";
+    return "internal_indeterminate_failure";
+  }
+  return "internal_indeterminate_failure";
+}
+
+export function createDatabaseParameters(validated: { manifest: Record<string, unknown>; requestKeySha256: string }): unknown[] {
+  return [validated.manifest, validated.manifest.action_manifest_sha256, validated.requestKeySha256];
+}
+
 function decode(segment: string): Uint8Array {
   if (!/^[A-Za-z0-9_-]+$/.test(segment)) throw new Error("malformed JWT segment");
   const base64 = segment.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(segment.length / 4) * 4, "=");
@@ -59,6 +168,10 @@ export function canonicalJson(value: unknown): string { return JSON.stringify(ca
 export async function sha256(value: string): Promise<string> {
   const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
   return [...new Uint8Array(bytes)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+export async function verifyRequesterEvidence(token: string, expectedSha256: unknown): Promise<void> {
+  if (await sha256(token) !== expectedSha256) throw new Error("requester OIDC evidence mismatch");
 }
 
 export async function verifyGitHubOidc(token: string, audience: string, binding: { run_id: unknown; workflow_sha: unknown; source_commit_sha: unknown }) {
@@ -95,7 +208,8 @@ export async function verifyGitHubOidc(token: string, audience: string, binding:
     repository: FIXED.repository, repository_id: FIXED.repositoryId, repository_owner: FIXED.repositoryOwner,
     repository_owner_id: FIXED.repositoryOwnerId, repository_visibility: "public", ref: FIXED.ref, ref_type: "branch",
     workflow: FIXED.workflow, workflow_ref: `${FIXED.repository}/${FIXED.workflowPath}@${FIXED.ref}`, environment: FIXED.environment,
-    event_name: "workflow_dispatch", actor: FIXED.actor, actor_id: FIXED.actorId, run_attempt: "1", runner_environment: "github-hosted"
+    event_name: "workflow_dispatch", actor: FIXED.actor, actor_id: FIXED.actorId, triggering_actor: FIXED.actor,
+    run_attempt: "1", runner_environment: "github-hosted"
   };
   for (const [field,value] of Object.entries(expected)) exact(claims[field], value, field);
   exact(claims.run_id, binding.run_id, "run ID binding");
