@@ -29,7 +29,7 @@ const body = {
 function claims(overrides = {}) {
   return {
     iss: FIXED.issuer,
-    aud: FIXED.audience,
+    aud: FIXED.operatorResolutionAudience,
     exp: now + 300,
     iat: now - 10,
     nbf: now - 10,

@@ -28,7 +28,7 @@ const response = await fetch(FIXED.authorizationConsumptionAudience, {
 const text = await response.text();
 let receipt;
 try { receipt = JSON.parse(text); } catch { throw new Error(`consumption endpoint returned non-JSON status ${response.status}`); }
-if (!response.ok) throw new Error(`authorization consumption failed with ${response.status}: ${receipt.error || "request rejected"}`);
+if (!response.ok) throw new Error(`authorization consumption failed with ${response.status}: ${receipt.terminal_failure_code || receipt.error || "request rejected"}`);
 for (const [field, expected] of [
   ["status", "consumed"],
   ["request_id", request.request_id],

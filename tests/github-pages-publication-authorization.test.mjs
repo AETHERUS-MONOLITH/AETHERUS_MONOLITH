@@ -11,6 +11,7 @@ const conflictFix = (await fs.readFile("supabase/migrations/20260716_0004_github
 const fkIndexes = (await fs.readFile("supabase/migrations/20260716_0005_github_pages_publication_authorization_v0_fk_indexes.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
 const effectConstraint = (await fs.readFile("supabase/migrations/20260716_0006_github_pages_publication_authorization_v0_effect_constraint.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
 const consumptionOperatorCheck = (await fs.readFile("supabase/migrations/20260716_0007_github_pages_publication_authorization_v0_consumption_operator_check.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
+const corrective = (await fs.readFile("supabase/migrations/20260717122122_github_pages_publication_authorization_v0_corrective_closure.sql", "utf8")).replace(/\s+/g, " ").toLowerCase();
 const workflow = await fs.readFile(".github/workflows/pages-runtime-config.yml", "utf8");
 const authorization = JSON.parse(await fs.readFile("contracts/github-pages-publication-authorization-v0.json", "utf8"));
 const manifest = JSON.parse(await fs.readFile("contracts/github-pages-publication-final-manifest-v0.json", "utf8"));
@@ -36,11 +37,11 @@ test("final manifest contract is exact and digest-only for sensitive evidence", 
 
 test("OIDC, GitHub run, and permitted effect bind the source action exactly", async () => {
   assert.match(effectConstraint, /permitted_effect = 'replace the current github pages deployment/);
-  for (const slug of ["request","consumption"]) {
-    const lib = await fs.readFile(`supabase/functions/github-pages-authorization-${slug}-v0/lib.ts`, "utf8");
-    assert.match(lib, /claims\.sha/);
-    assert.match(lib, /run\.head_sha/);
-  }
+  const requestLib = await fs.readFile("supabase/functions/github-pages-authorization-request-v0/lib.ts", "utf8");
+  assert.match(requestLib, /claims\.sha/);
+  assert.match(requestLib, /run\.head_sha/);
+  assert.match(corrective, /v_claims->>'sha'/);
+  assert.match(corrective, /v_run->>'head_sha'/);
 });
 
 test("canonical digest is order-independent for object keys", () => {
@@ -101,6 +102,47 @@ test("request creation is collision-safe and replay tuple is unique", () => {
   assert.match(normalized, /github_pages_publication_authorizations_v0_replay_tuple_uidx/);
   assert.match(conflictFix, /unique using index github_pages_publication_authorizations_v0_request_key_uidx/);
   assert.match(conflictFix, /on conflict on constraint github_pages_publication_authorizations_v0_request_key_unique do nothing/);
+});
+
+test("corrective request identity is database-derived, stable, and independently unique", () => {
+  const identityStart = corrective.indexOf("function private.github_pages_publication_execution_identity_v0");
+  const identityEnd = corrective.indexOf("$$;", identityStart);
+  const identityBody = corrective.slice(identityStart, identityEnd);
+  for (const field of ["action_identifier","workspace_id","repository","repository_id","repository_ref","workflow_path","workflow_sha","workflow_run_id","run_attempt","uploaded_artifact_id","uploaded_artifact_name","environment","canonical_public_target","deploy_executor_sha"]) {
+    assert.match(identityBody, new RegExp(`'${field}'`));
+  }
+  for (const excluded of ["action_manifest_sha256","source_commit_sha","source_tree_sha","runtime_config_evidence_sha256","built_artifact_sha256","requester_actor_id","operator_resolution_evidence_sha256"]) {
+    assert.doesNotMatch(identityBody, new RegExp(excluded));
+  }
+  assert.match(corrective, /unique \(execution_identity_sha256\)/);
+  assert.match(corrective, /pg_advisory_xact_lock\(pg_catalog\.hashtextextended\(v_execution_identity/);
+  assert.match(corrective, /conflicting_binding_for_execution_identity/);
+});
+
+test("corrective Operator resolver counts every applicable assignment before deciding cardinality", () => {
+  const start = corrective.indexOf("function private.resolve_github_pages_operator_cardinality_v0");
+  const end = corrective.indexOf("$$;", start);
+  const body = corrective.slice(start, end);
+  assert.match(body, /count\(\*\)/);
+  assert.match(body, /suspended_at is null/);
+  assert.match(body, /revoked_at is null/);
+  assert.doesNotMatch(body, /limit 1/);
+  assert.match(corrective, /operator_assignment_ambiguous/);
+});
+
+test("corrective consumption owns trusted binding terminalization", async () => {
+  const edge = await fs.readFile("supabase/functions/github-pages-authorization-consumption-v0/index.ts", "utf8");
+  const lib = await fs.readFile("supabase/functions/github-pages-authorization-consumption-v0/lib.ts", "utf8");
+  assert.match(edge, /buildObservedBinding/);
+  assert.match(edge, /consume_github_pages_publication_authorization_v0\(\$1::uuid,\$2::jsonb,\$3::text\)/);
+  assert.match(corrective, /artifact_verification_indeterminate/);
+  for (const code of ["manifest_mismatch","artifact_mismatch","requester_mismatch","repository_mismatch","workspace_mismatch","workflow_mismatch","run_mismatch","run_attempt_mismatch","source_mismatch","runtime_config_mismatch","dependency_mismatch","target_mismatch","environment_mismatch","effect_mismatch","executor_mismatch","operator_assignment_unresolved","operator_assignment_ambiguous","operator_mismatch","authorization_not_yet_valid","authorization_expired","artifact_expired"]) {
+    assert.match(corrective, new RegExp(`'${code}'`));
+  }
+  const trustStart = lib.indexOf("export async function verifyTrustEnvelope");
+  const trustEnd = lib.indexOf("function normalizedArtifact", trustStart);
+  const trustBody = lib.slice(trustStart, trustEnd);
+  assert.doesNotMatch(trustBody, /claims\.(repository|actor|workflow|run_id|run_attempt|sha)/);
 });
 
 test("consumption locks, conditionally updates, and fails closed", () => {

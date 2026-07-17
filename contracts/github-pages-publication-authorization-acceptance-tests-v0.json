@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1",
+  "contract_id": "github-pages-publication-authorization-acceptance-tests-v0",
+  "action_identifier": "github_pages_outward_publication@0.1",
+  "test_count": 17,
+  "required_ledger_fields": [
+    "test_id",
+    "title",
+    "preconditions",
+    "execution_environment",
+    "execution_method",
+    "expected_result",
+    "observed_result",
+    "authorization_state_before",
+    "authorization_state_after",
+    "event_rows_created",
+    "sequence_or_identity_effects",
+    "cleanup_result",
+    "evidence_file_reference",
+    "result"
+  ],
+  "environments": {
+    "disposable_postgresql": "destructive, concurrency, substitution, cardinality, invalidation, and Edge-to-database integration cases",
+    "accepted_live_project": "migration/deployment readback plus one explicitly rolled-back lifecycle smoke test"
+  },
+  "tests": [
+    { "test_id": "AT-01", "title": "Exact valid request creation", "environment": "disposable_postgresql", "method": "dynamic_database" },
+    { "test_id": "AT-02", "title": "Idempotent identical request retry", "environment": "disposable_postgresql", "method": "dynamic_database" },
+    { "test_id": "AT-03", "title": "Conflicting duplicate request", "environment": "disposable_postgresql", "method": "dynamic_database_subcases" },
+    { "test_id": "AT-04", "title": "Unsupported action", "environment": "disposable_postgresql", "method": "dynamic_database" },
+    { "test_id": "AT-05", "title": "Requester substitution", "environment": "local_edge_and_disposable_postgresql", "method": "signed_fixture_subcases" },
+    { "test_id": "AT-06", "title": "Operator authorization", "environment": "disposable_postgresql", "method": "dynamic_database" },
+    { "test_id": "AT-07", "title": "Separate acts for self-authorization", "environment": "local_edge_and_disposable_postgresql", "method": "authenticated_actor_separation" },
+    { "test_id": "AT-08", "title": "Operator rejection", "environment": "disposable_postgresql", "method": "dynamic_database" },
+    { "test_id": "AT-09", "title": "Non-Operator decision rejection", "environment": "local_edge_and_disposable_postgresql", "method": "authenticated_negative_cases" },
+    { "test_id": "AT-10", "title": "Double decision concurrency", "environment": "disposable_postgresql", "method": "two_sessions_with_barrier" },
+    { "test_id": "AT-11", "title": "Valid atomic consumption", "environment": "disposable_postgresql", "method": "dynamic_database" },
+    { "test_id": "AT-12", "title": "Double-consumption concurrency", "environment": "disposable_postgresql", "method": "two_sessions_with_barrier" },
+    { "test_id": "AT-13", "title": "Replay after consumption", "environment": "disposable_postgresql", "method": "dynamic_database" },
+    { "test_id": "AT-14", "title": "Manifest substitution", "environment": "local_edge_and_disposable_postgresql", "method": "terminal_substitution_subcases" },
+    { "test_id": "AT-15", "title": "Artifact substitution", "environment": "local_edge_and_disposable_postgresql", "method": "mocked_authoritative_artifact_subcases" },
+    { "test_id": "AT-16", "title": "Requester substitution at consumption", "environment": "local_edge_and_disposable_postgresql", "method": "signed_claim_substitution_subcases" },
+    { "test_id": "AT-17", "title": "Operator assignment invalidation", "environment": "disposable_postgresql", "method": "cardinality_and_invalidation_subcases" }
+  ]
+}

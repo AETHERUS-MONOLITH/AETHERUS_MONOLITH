@@ -35,7 +35,7 @@
   "authorization_function": "private.decide_github_pages_publication_authorization_v0(uuid,text,text)",
   "request_function": "private.create_github_pages_publication_authorization_v0(jsonb,text,text)",
   "status_function": "private.resolve_github_pages_publication_authorization_v0(uuid,text)",
-  "consumption_function": "private.consume_github_pages_publication_authorization_v0(uuid,jsonb,text,text,text)",
+  "consumption_function": "private.consume_github_pages_publication_authorization_v0(uuid,jsonb,text)",
   "request_edge_function": "github-pages-authorization-request-v0",
   "decision_edge_function": "github-pages-authorization-decision-v0",
   "consumption_edge_function": "github-pages-authorization-consumption-v0",
@@ -45,6 +45,31 @@
   "direct_table_access": "prohibited",
   "row_level_security": "enabled_and_forced",
   "terminal_mutability": "prohibited",
-  "replay_semantics": "one_consumption_attempt_per_fixed_request_key",
-  "consumption_operator_revalidation": "the exact fixed active Operator assignment is re-resolved immediately before consumption"
+  "execution_identity": {
+    "algorithm": "sha256",
+    "derivation_owner": "database",
+    "canonical_tuple_fields": [
+      "action_identifier",
+      "workspace_id",
+      "repository",
+      "repository_id",
+      "repository_ref",
+      "workflow_path",
+      "workflow_sha",
+      "workflow_run_id",
+      "run_attempt",
+      "uploaded_artifact_id",
+      "uploaded_artifact_name",
+      "environment",
+      "canonical_public_target",
+      "deploy_executor_sha"
+    ],
+    "mutable_binding_fields_excluded": true,
+    "unique_constraint": "github_pages_pub_auth_v0_execution_identity_unique"
+  },
+  "replay_semantics": "one_consumption_attempt_per_database_derived_execution_identity",
+  "authenticated_binding_mismatch_semantics": "known authorized requests become terminal in the database for every determinate trusted mismatch",
+  "indeterminate_artifact_semantics": "fail closed without consuming or terminalizing a binding mismatch",
+  "operator_cardinality": "exactly one active applicable workspace Operator; zero and multiple both fail closed",
+  "consumption_operator_revalidation": "exact cardinality and the approved Operator identity are revalidated immediately before consumption"
 }

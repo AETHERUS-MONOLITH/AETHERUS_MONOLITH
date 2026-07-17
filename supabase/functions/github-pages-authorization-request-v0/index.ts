@@ -38,5 +38,11 @@ Deno.serve(async (request:Request) => {
     finally { await sql.end({timeout:2}); }
     if (!Array.isArray(rows) || rows.length !== 1) throw new Error("database result cardinality mismatch");
     return json(200,rows[0]);
-  } catch { return json(401,{error:"authorization_request_denied"}); }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (message.includes("conflicting_binding_for_execution_identity")) {
+      return json(409,{error:"conflicting_binding_for_execution_identity"});
+    }
+    return json(401,{error:"authorization_request_denied"});
+  }
 });
