@@ -146,7 +146,7 @@ function observed(value, claimOverrides = {}, artifactOverrides = {}) {
   return { claims: claims(value, claimOverrides), manifest: value, artifact_verification: artifact(value, artifactOverrides) };
 }
 function consume(requestId, binding) {
-  return jsonLine(run(`select row_to_json(r) from private.consume_github_pages_publication_authorization_v0(${sqlLiteral(requestId)}::uuid,${jsonLiteral(binding)},${sqlLiteral("5".repeat(64))}) as r;`));
+  return jsonLine(run(`select row_to_json(r) from private.consume_github_pages_publication_authorization_phase4_core_v0(${sqlLiteral(requestId)}::uuid,${jsonLiteral(binding)},${sqlLiteral("5".repeat(64))}) as r;`));
 }
 function state(requestId) { return scalar(`select status from private.github_pages_publication_authorizations_v0 where request_id=${sqlLiteral(requestId)}::uuid;`); }
 function authorizeFixture(coordinate) { const value = manifest(coordinate); const created = create(value); decision(created.request_id, "authorize"); return { value, created }; }
@@ -230,7 +230,7 @@ record(10,{preconditions:"pending request",execution_method:"two psql sessions r
 // AT-11 through AT-13
 const at11=authorizeFixture(110);const at11Receipt=consume(at11.created.request_id,observed(at11.value));assert.equal(at11Receipt.deployment_permit,true);assert.equal(at11Receipt.status,"consumed");
 record(11,{preconditions:"authorized request and one exact active Operator",execution_method:"atomic observed-binding consumption",expected_result:"one consumed event and one deployment permit",observed_result:at11Receipt,authorization_state_before:"authorized",authorization_state_after:"consumed",event_rows_created:1,sequence_or_identity_effects:counts(at11.created.request_id)});
-const at12=authorizeFixture(120);const consumeSql=`select row_to_json(r) from private.consume_github_pages_publication_authorization_v0(${sqlLiteral(at12.created.request_id)}::uuid,${jsonLiteral(observed(at12.value))},${sqlLiteral("5".repeat(64))}) r;`;
+const at12=authorizeFixture(120);const consumeSql=`select row_to_json(r) from private.consume_github_pages_publication_authorization_phase4_core_v0(${sqlLiteral(at12.created.request_id)}::uuid,${jsonLiteral(observed(at12.value))},${sqlLiteral("5".repeat(64))}) r;`;
 const at12Race=await race(consumeSql,consumeSql,4012);const at12Rows=at12Race.map((item)=>jsonLine(item.stdout));assert.equal(at12Rows.filter((row)=>row.deployment_permit===true).length,1);assert.equal(Number(scalar(`select count(*) from private.github_pages_publication_authorization_events_v0 where request_id=${sqlLiteral(at12.created.request_id)}::uuid and event_type='consumed';`)),1);
 concurrency.AT_12={sessions:at12Race,winner_count:1,permits:at12Rows.map((row)=>row.deployment_permit),final_state:state(at12.created.request_id),barrier:"pg_advisory_lock(4012)"};
 record(12,{preconditions:"authorized request",execution_method:"two psql sessions released by advisory-lock barrier",expected_result:"one permit and one consumed event",observed_result:concurrency.AT_12,authorization_state_before:"authorized",authorization_state_after:"consumed",event_rows_created:1,sequence_or_identity_effects:counts(at12.created.request_id)});
@@ -252,7 +252,7 @@ record(15,{preconditions:"separate authorized fixtures and mocked authoritative 
 // AT-16
 const at16Cases={actor:{actor:"wrong"},actor_id:{actor_id:"999"},repository:{repository:"wrong/repo"},repository_id:{repository_id:"999"},workflow:{workflow:"wrong"},workflow_sha:{workflow_sha:"e".repeat(40)},run_id:{run_id:"999"},run_attempt:{run_attempt:"2"},ref:{ref:"refs/heads/wrong"},event:{event_name:"push"}};
 let at16Index=0;for(const [name,change] of Object.entries(at16Cases)){const fixture=authorizeFixture(160+at16Index++);const receipt=consume(fixture.created.request_id,observed(fixture.value,change));assert.equal(receipt.status,"consumption_failed");assert.equal(consume(fixture.created.request_id,observed(fixture.value)).deployment_permit,false);substitution[`AT-16:${name}`]=receipt.terminal_failure_code;}
-const unknownBefore=counts();runFailure(`select * from private.consume_github_pages_publication_authorization_v0('123e4567-e89b-12d3-a456-426614174000'::uuid,${jsonLiteral(observed(manifest(169)))},${sqlLiteral("5".repeat(64))});`,/unknown_request_id/);assert.deepEqual(counts(),unknownBefore);
+const unknownBefore=counts();runFailure(`select * from private.consume_github_pages_publication_authorization_phase4_core_v0('123e4567-e89b-12d3-a456-426614174000'::uuid,${jsonLiteral(observed(manifest(169)))},${sqlLiteral("5".repeat(64))});`,/unknown_request_id/);assert.deepEqual(counts(),unknownBefore);
 record(16,{preconditions:"trusted signed-claim context and separate authorized fixtures",execution_method:"ten claim substitutions through database observed-binding contract; invalid-signature suite in Edge tests",expected_result:"trusted mismatches terminal; untrusted/unknown ID no mutation",observed_result:substitution,authorization_state_before:"authorized",authorization_state_after:"consumption_failed",event_rows_created:"one per trusted determinate subcase",sequence_or_identity_effects:{unknown_request_mutation:0}});
 
 // AT-17 scenarios execute inside transactions and deliberately roll back assignment changes.
@@ -263,7 +263,7 @@ function at17Scenario(coordinate, mutationSql) {
     select pg_catalog.set_config('request.jwt.claim.sub',${sqlLiteral(fixedUser)},true);
     select row_to_json(r) from private.decide_github_pages_publication_authorization_v0((select request_id from private.github_pages_publication_authorizations_v0 where action_manifest_sha256=${sqlLiteral(value.action_manifest_sha256)}),'authorize',null) r;
     ${mutationSql}
-    select row_to_json(r) from private.consume_github_pages_publication_authorization_v0((select request_id from private.github_pages_publication_authorizations_v0 where action_manifest_sha256=${sqlLiteral(value.action_manifest_sha256)}),${jsonLiteral(binding)},${sqlLiteral("5".repeat(64))}) r;
+    select row_to_json(r) from private.consume_github_pages_publication_authorization_phase4_core_v0((select request_id from private.github_pages_publication_authorizations_v0 where action_manifest_sha256=${sqlLiteral(value.action_manifest_sha256)}),${jsonLiteral(binding)},${sqlLiteral("5".repeat(64))}) r;
     rollback;`;
   const output=run(sql);const rows=output.split("\n").map((line)=>line.trim()).filter((line)=>line.startsWith("{")).map(JSON.parse);return rows.at(-1);
 }

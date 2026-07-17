@@ -179,7 +179,7 @@ test("workflow constructs final manifest after artifact verification", () => {
 });
 
 test("consumption is immediately adjacent to the sole deployment", () => {
-  const consume = workflow.indexOf("Consume authorization and construct deployment permit");
+  const consume = workflow.indexOf("Invoke fixed Conduit route and require deployment permit");
   const deploy = workflow.indexOf("Deploy the bound Pages artifact");
   assert.ok(consume > 0 && deploy > consume);
   assert.equal((workflow.slice(consume, deploy).match(/^\s*- name:/gm) || []).length, 1);

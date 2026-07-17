@@ -163,10 +163,10 @@ jobs:
           AUTHORIZATION_REQUEST_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-authorization-request-oidc-token
         run: node scripts/request-github-pages-publication-authorization.mjs await
 
-      - name: Acquire authorization-consumption GitHub OIDC token
+      - name: Acquire Palisade-evaluation GitHub OIDC token
         env:
-          OIDC_AUDIENCE: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-authorization-consumption-v0
-          OIDC_OUTPUT: ${{ runner.temp }}/github-pages-authorization-consumption-oidc-token
+          OIDC_AUDIENCE: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-palisade-evaluation-v0
+          OIDC_OUTPUT: ${{ runner.temp }}/github-pages-palisade-evaluation-oidc-token
         run: |
           node --input-type=module <<'NODE'
           import fs from "node:fs/promises";
@@ -179,14 +179,33 @@ jobs:
           await fs.writeFile(process.env.OIDC_OUTPUT, payload.value, { mode: 0o600 });
           NODE
 
-      - name: Consume authorization and construct deployment permit
+      - name: Evaluate and persist exact Palisade decision
         env:
-          AUTHORIZATION_CONSUMPTION_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-authorization-consumption-oidc-token
-          GITHUB_TOKEN: ${{ github.token }}
+          PALISADE_EVALUATION_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-palisade-evaluation-oidc-token
+        run: node scripts/evaluate-github-pages-palisade.mjs
+
+      - name: Acquire Conduit-invocation GitHub OIDC token
+        env:
+          OIDC_AUDIENCE: https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-conduit-invocation-v0
+          OIDC_OUTPUT: ${{ runner.temp }}/github-pages-conduit-invocation-oidc-token
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs/promises";
+          const url = new URL(process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
+          url.searchParams.set("audience", process.env.OIDC_AUDIENCE);
+          const response = await fetch(url, { headers: { authorization: `Bearer ${process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN}` }, redirect: "error" });
+          if (!response.ok) throw new Error(`OIDC acquisition failed: ${response.status}`);
+          const payload = await response.json();
+          if (typeof payload.value !== "string" || !payload.value) throw new Error("OIDC response missing token");
+          await fs.writeFile(process.env.OIDC_OUTPUT, payload.value, { mode: 0o600 });
+          NODE
+
+      - name: Invoke fixed Conduit route and require deployment permit
+        env:
+          CONDUIT_INVOCATION_OIDC_TOKEN_PATH: ${{ runner.temp }}/github-pages-conduit-invocation-oidc-token
         run: |
           test "$GITHUB_RUN_ATTEMPT" = "1"
-          node scripts/consume-github-pages-publication-authorization.mjs
-          node scripts/execute-github-pages-deployment-boundary.mjs
+          node scripts/invoke-github-pages-conduit.mjs
 
       - name: Deploy the bound Pages artifact
         id: deployment

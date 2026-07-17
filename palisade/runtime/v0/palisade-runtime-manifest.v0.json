@@ -1,6 +1,19 @@
 {
   "runtime_id": "palisade-internal-policy-decision-boundary.v0",
   "version": "0.1.0",
+  "github_pages_action_specific_enforcement": {
+    "status": "implemented_for_fixed_phase4_pages_boundary",
+    "policy_path": "palisade/policy-bundle.v0/policies/github-pages-outward-publication-policy.v0.json",
+    "input_schema_path": "palisade/policy-bundle.v0/schema/github-pages-outward-publication-input.schema.json",
+    "decision_schema_path": "palisade/policy-bundle.v0/schema/github-pages-outward-publication-decision.schema.json",
+    "evaluator_path": "palisade/runtime/v0/palisade-github-pages-policy-engine.v0.mjs",
+    "decision_boundary_path": "palisade/runtime/v0/palisade-github-pages-decision-boundary.v0.mjs",
+    "server_boundary": "github-pages-palisade-evaluation-v0",
+    "durable_table": "private.github_pages_palisade_decisions_v0",
+    "supported_consequential_actions": 1,
+    "authorization_issuer": false,
+    "phase4_is_sole_authority": true
+  },
   "policy_bundle_path": "palisade/policy-bundle.v0/",
   "policy_bundle_version": "0.1.0",
   "input_schema_path": "palisade/policy-bundle.v0/schema/policy-input.schema.json",

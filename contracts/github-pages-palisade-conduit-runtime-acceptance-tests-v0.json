@@ -1,0 +1,37 @@
+{
+  "contract_id": "github-pages-palisade-conduit-runtime-acceptance-tests-v0",
+  "version": "0.5",
+  "test_count": 25,
+  "required_ledger_fields": [
+    "test_id", "title", "preconditions", "execution_environment", "execution_method", "expected_result",
+    "observed_result", "palisade_decision", "conduit_state", "phase4_state_before", "phase4_state_after",
+    "persistent_rows_events", "permit_count", "deployment_invocation_count", "cleanup", "evidence_reference", "result"
+  ],
+  "tests": [
+    {"test_id":"P5-AT-01","title":"Exact policy tuple","preconditions":"Versioned Phase 5 policy artifacts","environment":"node_and_disposable_postgresql_17","method":"Dynamic evaluator and database tuple execution","expected_result":"One exact tuple and no second consequential action"},
+    {"test_id":"P5-AT-02","title":"Valid Palisade allow","preconditions":"Exact authorized Phase 4 fixture","environment":"disposable_postgresql_17","method":"Persisted Palisade evaluation","expected_result":"One allow and zero consumption"},
+    {"test_id":"P5-AT-03","title":"Policy denial","preconditions":"Determinate failed predicate","environment":"node_and_disposable_postgresql_17","method":"Dynamic policy invocation","expected_result":"Persisted deny, unchanged Phase 4, zero permit"},
+    {"test_id":"P5-AT-04","title":"Requires evidence","preconditions":"Mandatory evidence omitted","environment":"node","method":"Dynamic evaluator invocation","expected_result":"requires_evidence and zero dispatch"},
+    {"test_id":"P5-AT-05","title":"Requires Operator review","preconditions":"Pending Phase 4 request","environment":"disposable_postgresql_17","method":"Persisted Palisade evaluation","expected_result":"requires_operator_review and zero dispatch"},
+    {"test_id":"P5-AT-06","title":"Runtime unavailable","preconditions":"Authoritative runtime dependency unavailable","environment":"node_failure_injection","method":"Dynamic boundary failure injection","expected_result":"runtime_enforcement_unavailable and zero permit"},
+    {"test_id":"P5-AT-07","title":"Caller decision injection","preconditions":"Fixed request validators","environment":"node","method":"Inject each prohibited field","expected_result":"Every injection rejected"},
+    {"test_id":"P5-AT-08","title":"Exact Conduit envelope","preconditions":"Fixed envelope contract","environment":"node","method":"Exact, omitted, substituted, and extra field invocations","expected_result":"Only exact envelope accepted"},
+    {"test_id":"P5-AT-09","title":"Non-allow Conduit block","preconditions":"Persisted non-allow decisions","environment":"disposable_postgresql_17","method":"Prepare Conduit for each non-allow class","expected_result":"policy_blocked and zero consumption"},
+    {"test_id":"P5-AT-10","title":"Same-invocation binding","preconditions":"Valid decision and envelope","environment":"node_and_disposable_postgresql_17","method":"Substitute each required identity","expected_result":"Each substitution prevents consumption"},
+    {"test_id":"P5-AT-11","title":"Valid governed consumption","preconditions":"Exact allow and Conduit invocation","environment":"disposable_postgresql_17","method":"Full non-deploying database path","expected_result":"One consumption and one permit"},
+    {"test_id":"P5-AT-12","title":"Policy decision replay","preconditions":"Allow bound to first fixture","environment":"disposable_postgresql_17","method":"Replay against alternate bindings","expected_result":"Zero second consumption and permit"},
+    {"test_id":"P5-AT-13","title":"Conduit invocation replay","preconditions":"Completed invocation","environment":"disposable_postgresql_17","method":"Invoke prepare and consume again","expected_result":"Zero second consumption and permit"},
+    {"test_id":"P5-AT-14","title":"Concurrent Conduit invocation","preconditions":"One exact authorized fixture","environment":"two_disposable_postgresql_17_sessions","method":"Barrier-synchronized race","expected_result":"One consumption, permit, and consumed event"},
+    {"test_id":"P5-AT-15","title":"Phase 4 terminal-state propagation","preconditions":"Rejected, expired, consumed, and consumption_failed fixtures","environment":"node_and_disposable_postgresql_17","method":"Evaluate or dispatch each terminal state","expected_result":"No allow or permit"},
+    {"test_id":"P5-AT-16","title":"Operator invalidation propagation","preconditions":"Allow then invalidate Operator","environment":"disposable_postgresql_17","method":"Invalidate between policy and consumption","expected_result":"Terminal Phase 4 failure and no permit"},
+    {"test_id":"P5-AT-17","title":"Authorization expiry between policy and consumption","preconditions":"Allow before bounded expiry","environment":"disposable_postgresql_17","method":"Advance authoritative database time fixture","expected_result":"Expired or failed consumption and no permit"},
+    {"test_id":"P5-AT-18","title":"Artifact substitution after policy evaluation","preconditions":"Persisted allow","environment":"disposable_postgresql_17","method":"Substitute observed artifact evidence","expected_result":"Terminal mismatch and no permit"},
+    {"test_id":"P5-AT-19","title":"Infrastructure indeterminacy","preconditions":"Failure injection points","environment":"node_failure_injection","method":"Inject each persistence and endpoint failure","expected_result":"Every path fails closed"},
+    {"test_id":"P5-AT-20","title":"Decision durability","preconditions":"Fixtures for five decision classes","environment":"disposable_postgresql_17","method":"Persist and read back each decision","expected_result":"Append-only exact bound evidence"},
+    {"test_id":"P5-AT-21","title":"Conduit durability","preconditions":"Fixtures for five terminal states","environment":"disposable_postgresql_17","method":"Persist and read back each state","expected_result":"Exact invocation and result evidence"},
+    {"test_id":"P5-AT-22","title":"Post-consumption receipt mismatch","preconditions":"Successful isolated consumption","environment":"disposable_postgresql_17","method":"Alter receipt before completion","expected_result":"No permit, consumed Phase 4, discrepancy persisted"},
+    {"test_id":"P5-AT-23","title":"Workflow fail-closed cardinality","preconditions":"Production workflow and simulator","environment":"node","method":"Static topology plus dynamic simulation","expected_result":"Only valid permit reaches simulated deploy once"},
+    {"test_id":"P5-AT-24","title":"Existing-route regression","preconditions":"Existing Palisade and Conduit suites","environment":"node","method":"Execute unchanged suites","expected_result":"All prior behavior passes"},
+    {"test_id":"P5-AT-25","title":"Live rollback and residue accounting","preconditions":"Applied live Phase 5 objects and zero rows","environment":"authorized_supabase_project_transaction","method":"Synthetic full path followed by rollback","expected_result":"Zero rows, assignments, unexplained sequence effects, or deployment effects"}
+  ]
+}

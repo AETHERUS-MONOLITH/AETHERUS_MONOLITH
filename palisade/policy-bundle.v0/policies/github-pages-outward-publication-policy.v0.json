@@ -1,0 +1,78 @@
+{
+  "policy_id": "github-pages-outward-publication-authority-v0",
+  "version": "0.5.0",
+  "owner": "Palisade",
+  "status": "action_specific_runtime_enforcement",
+  "input_schema": "../schema/github-pages-outward-publication-input.schema.json",
+  "decision_schema": "../schema/github-pages-outward-publication-decision.schema.json",
+  "tuple": {
+    "policy_surface": "github_pages_outward_publication_boundary",
+    "claim_id": "github_pages_outward_publication_authority",
+    "requested_action": "github_pages_outward_publication@0.1",
+    "policy_rule_id": "github-pages-outward-publication-authority-v0",
+    "policy_owner": "Palisade",
+    "action_owner": "Phase 4 action-specific authorization boundary",
+    "transport_owner": "Conduit",
+    "effect_executor": "actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e"
+  },
+  "fixed_bindings": {
+    "action_identifier": "github_pages_outward_publication@0.1",
+    "workspace_id": "9abed891-7950-4937-a2aa-4b957d8a4bd1",
+    "repository": "AETHERUS-MONOLITH/AETHERUS_MONOLITH",
+    "repository_id": "1167751543",
+    "repository_ref": "refs/heads/main",
+    "workflow_path": ".github/workflows/pages-runtime-config.yml",
+    "artifact_name": "github-pages-governable-v0-1",
+    "canonical_public_target": "https://camilocarlone.com/",
+    "environment": "github-pages",
+    "run_attempt": 1,
+    "deploy_executor_sha": "d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e"
+  },
+  "allow_rule": {
+    "type": "all_predicates_exactly_true",
+    "predicates": [
+      "fixed_action_tuple_match",
+      "authorization_state_authorized",
+      "authorization_currently_usable",
+      "authorization_not_expired",
+      "artifact_not_expired",
+      "operator_cardinality_exactly_one",
+      "approved_operator_still_valid",
+      "request_identity_match",
+      "execution_identity_match",
+      "manifest_digest_match",
+      "artifact_binding_match",
+      "runtime_binding_match",
+      "dependency_binding_match",
+      "target_effect_executor_match",
+      "replay_state_unused",
+      "consumption_state_not_consumed"
+    ]
+  },
+  "decision_outputs": [
+    "allow",
+    "deny",
+    "requires_evidence",
+    "requires_operator_review",
+    "runtime_enforcement_unavailable"
+  ],
+  "decision_semantics": {
+    "allow": "Every mandatory predicate is established by Phase 4 status, repository constants, and current run evidence.",
+    "deny": "At least one authoritative, determinate predicate fails.",
+    "requires_evidence": "Mandatory authoritative evidence is absent or materially incomplete.",
+    "requires_operator_review": "The Phase 4 request remains pending without a terminal Operator decision.",
+    "runtime_enforcement_unavailable": "A required authoritative runtime or persistence component cannot be evaluated."
+  },
+  "authorization_boundary": {
+    "palisade_issues_authorization": false,
+    "conduit_issues_authorization": false,
+    "phase4_is_sole_authorization_owner": true,
+    "phase4_is_sole_consumption_owner": true,
+    "non_allow_consumes_authorization": false
+  },
+  "scope": {
+    "supported_consequential_actions": 1,
+    "generalized_release_authority": false,
+    "action_registry": false
+  }
+}

@@ -69,10 +69,10 @@ export async function validateRepository() {
   const uses=[...(production+verification).matchAll(/uses:\s*([^\s]+)/g)].map(match=>match[1]);
   for(const reference of uses)assert(/@[0-9a-f]{40}$/.test(reference),`mutable action reference ${reference}`);
   assert(production.includes("id: upload_pages_artifact")&&production.includes("artifact_name: github-pages-governable-v0-1"),"fixed artifact binding missing");
-  const order=["Upload exact Pages artifact","Verify current-run artifact identity","Construct and validate final action manifest","Create action-specific authorization request","Await fixed Operator decision","Consume authorization and construct deployment permit","Deploy the bound Pages artifact"].map(label=>production.indexOf(label));
+  const order=["Upload exact Pages artifact","Verify current-run artifact identity","Construct and validate final action manifest","Create action-specific authorization request","Await fixed Operator decision","Evaluate and persist exact Palisade decision","Invoke fixed Conduit route and require deployment permit","Deploy the bound Pages artifact"].map(label=>production.indexOf(label));
   assert(order.every(index=>index>=0),"authorization workflow stage missing");
   assert(order.every((index,position)=>position===0||index>order[position-1]),"authorization workflow order mismatch");
-  assert((production.slice(order[5],order[6]).match(/^\s*- name:/gm)||[]).length===1,"step inserted between consumption and deployment");
+  assert((production.slice(order[6],order[7]).match(/^\s*- name:/gm)||[]).length===1,"step inserted between consumption and deployment");
   for(const slug of ["request","decision","consumption"]){
     const section=`[functions.github-pages-authorization-${slug}-v0]\nverify_jwt = false`;
     const config=await fs.readFile("supabase/config.toml","utf8"); assert(config.includes(section),`function config missing: ${slug}`);
@@ -85,6 +85,7 @@ export async function validateRepository() {
   await fs.access("supabase/migrations/20260716_0006_github_pages_publication_authorization_v0_effect_constraint.sql");
   await fs.access("supabase/migrations/20260716_0007_github_pages_publication_authorization_v0_consumption_operator_check.sql");
   await fs.access("supabase/migrations/20260717122122_github_pages_publication_authorization_v0_corrective_closure.sql");
+  await fs.access("supabase/migrations/20260717140755_github_pages_palisade_conduit_runtime_integration_v0.sql");
   await fs.access("scripts/build-github-pages-final-action-manifest.mjs");
   return true;
 }

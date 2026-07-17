@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "owner": "Palisade",
   "status": "construction",
+  "action_specific_enforcement": {
+    "policy": "palisade/policy-bundle.v0/policies/github-pages-outward-publication-policy.v0.json",
+    "input_schema": "palisade/policy-bundle.v0/schema/github-pages-outward-publication-input.schema.json",
+    "decision_schema": "palisade/policy-bundle.v0/schema/github-pages-outward-publication-decision.schema.json",
+    "policy_surface": "github_pages_outward_publication_boundary",
+    "claim_id": "github_pages_outward_publication_authority",
+    "requested_action": "github_pages_outward_publication@0.1",
+    "policy_rule_id": "github-pages-outward-publication-authority-v0",
+    "supported_consequential_actions": 1,
+    "phase4_is_sole_authority": true,
+    "conduit_is_fixed_transport": true
+  },
   "claim_boundary": {
     "domain": "claim_capability_release_state",
     "purpose": "Evaluate whether structured evidence supports public claim, surface advancement, runtime exposure, or release-authority language.",

@@ -24,6 +24,8 @@ export const FIXED = Object.freeze({
   operatorResolutionAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0",
   authorizationRequestAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-authorization-request-v0",
   authorizationConsumptionAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-authorization-consumption-v0",
+  palisadeEvaluationAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-palisade-evaluation-v0",
+  conduitInvocationAudience: "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-conduit-invocation-v0",
   authorizationContractVersion: "github-pages-publication-authorization-v0",
   authorizationTtlSeconds: 300,
   authorizationWaitSeconds: 900,

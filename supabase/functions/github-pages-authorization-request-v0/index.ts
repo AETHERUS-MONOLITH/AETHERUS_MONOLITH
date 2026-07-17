@@ -27,7 +27,7 @@ Deno.serve(async (request:Request) => {
     } else if (body.operation === "status") {
       if (JSON.stringify(Object.keys(body).sort()) !== JSON.stringify(["action_manifest_sha256","operation","request_id","run_id","source_commit_sha","workflow_sha"])) throw new Error("status fields mismatch");
       await verifyGitHubOidc(match[1],FIXED.requestAudience,{run_id:body.run_id,workflow_sha:body.workflow_sha,source_commit_sha:body.source_commit_sha});
-      query = "select * from private.resolve_github_pages_publication_authorization_v0($1::uuid,$2::text)";
+      query = "select * from private.resolve_github_pages_publication_authorization_phase5_v0($1::uuid,$2::text)";
       params = [body.request_id,body.action_manifest_sha256];
     } else throw new Error("operation invalid");
     const databaseUrl = Deno.env.get("SUPABASE_DB_URL");

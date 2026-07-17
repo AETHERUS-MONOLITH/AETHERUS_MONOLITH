@@ -9,3 +9,9 @@ verify_jwt = false
 
 [functions.github-pages-authorization-consumption-v0]
 verify_jwt = false
+
+[functions.github-pages-palisade-evaluation-v0]
+verify_jwt = false
+
+[functions.github-pages-conduit-invocation-v0]
+verify_jwt = false

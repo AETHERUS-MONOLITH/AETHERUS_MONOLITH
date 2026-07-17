@@ -1,0 +1,41 @@
+{
+  "contract_id": "github-pages-palisade-conduit-runtime-integration-v0",
+  "version": "0.5",
+  "selected_action": "github_pages_outward_publication@0.1",
+  "policy_tuple": {
+    "policy_surface": "github_pages_outward_publication_boundary",
+    "claim_id": "github_pages_outward_publication_authority",
+    "requested_action": "github_pages_outward_publication@0.1",
+    "policy_rule_id": "github-pages-outward-publication-authority-v0",
+    "policy_owner": "Palisade",
+    "action_owner": "Phase 4 action-specific authorization boundary",
+    "transport_owner": "Conduit",
+    "effect_executor": "actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e"
+  },
+  "canonical_conduit_entry": "conduit/runtime/v0/index.mjs#invokeGithubPagesOutwardPublicationV0",
+  "server_boundaries": ["github-pages-palisade-evaluation-v0", "github-pages-conduit-invocation-v0"],
+  "phase4_interfaces": {
+    "request_and_status": "github-pages-authorization-request-v0",
+    "operator_decision": "github-pages-authorization-decision-v0",
+    "atomic_consumption": "private.consume_github_pages_publication_authorization_v0(uuid,jsonb,text)"
+  },
+  "governed_invocation_tuple": [
+    "action_identifier", "policy_surface", "claim_id", "requested_action", "request_id", "authorization_record_id",
+    "execution_identity_sha256", "action_manifest_sha256", "workspace_id", "repository_id", "repository_ref",
+    "workflow_path", "workflow_sha", "workflow_run_id", "run_attempt", "artifact_id", "artifact_name",
+    "built_artifact_sha256", "canonical_public_target", "environment", "permitted_effect", "deploy_executor_sha",
+    "phase4_status_receipt_sha256", "palisade_decision_id", "palisade_decision_sha256", "conduit_invocation_id"
+  ],
+  "canonicalization": "recursive_key_sorted_json_utf8_sha256",
+  "ordering": [
+    "phase4_status", "palisade_attempt_persisted", "palisade_evaluated", "palisade_terminal_persisted",
+    "conduit_invocation_persisted", "same_invocation_verified", "phase4_atomic_consumption",
+    "conduit_result_persisted", "deployment_permit_validated", "sole_pinned_deploy_executor"
+  ],
+  "authorization_issuers": ["Phase 4 Operator decision boundary"],
+  "deployment_permit_rule": "Only a consumed Conduit result with an exact Phase 4 receipt may set deployment_permit true.",
+  "supported_consequential_action_count": 1,
+  "generic_action_registry": false,
+  "generic_policy_service": false,
+  "generic_dispatch_service": false
+}
