@@ -1,0 +1,114 @@
+{
+  "schema_version": "0.1",
+  "classification": "phase_4_corrective_closure_receipt",
+  "action_identifier": "github_pages_outward_publication@0.1",
+  "repository": "AETHERUS-MONOLITH/AETHERUS_MONOLITH",
+  "branch": "main",
+  "execution_baseline_commit": "846a33fdb64c7fd459fe007669ffe29b79333f24",
+  "implementation_commit": "065a779899c7c13faaf17a9b0596b8da91cc19d0",
+  "defect_disposition": {
+    "X1": "closed_by_stable_execution_identity_and_conflicting_binding_rejection",
+    "X2": "closed_by_exact_operator_cardinality_resolution",
+    "X3": "closed_by_database_terminalization_of_determinate_consumption_failures",
+    "X4": "closed_by_atomic_row_locking_and_one_time_permit_consumption",
+    "X5": "closed_by_complete_dynamic_acceptance_and_live_evidence"
+  },
+  "migration": {
+    "path": "supabase/migrations/20260717122122_github_pages_publication_authorization_v0_corrective_closure.sql",
+    "sha256": "14bb037cf8f3eb610ca10127aa58d515cb5f70c3ed593c0b467e77db963ad9a5",
+    "live_identity": "20260717124338/github_pages_publication_authorization_v0_corrective_closure",
+    "live_status": "applied_verified"
+  },
+  "edge_deployments": [
+    {
+      "slug": "github-pages-authorization-request-v0",
+      "deployment_id": "217bd90e-6ece-47fb-9085-ef1155eb0f69",
+      "version": 3,
+      "status": "ACTIVE",
+      "index_sha256": "140d0e34a53469717235e5c449a8876cf5c6541d99722646a5232bff7937fd54",
+      "library_sha256": "ddc939bc57c6c3c762d778ade3d641d47231147ff246cf86d3a1d0e66f96591d",
+      "deployed_source_exact": true
+    },
+    {
+      "slug": "github-pages-authorization-consumption-v0",
+      "deployment_id": "543ee4ae-7979-4e8c-ba5c-0b1e7fee2ddf",
+      "version": 3,
+      "status": "ACTIVE",
+      "index_sha256": "c261309846157c292ae2c8d4ddc48a0cb2d9d1e6738abad6f5d2aeba022be593",
+      "library_sha256": "7f07cbedb134cd27fcc436d850b35e9b92e1ab257b95f9fbf031b405c40878ff",
+      "deployed_source_exact": true
+    }
+  ],
+  "acceptance_tests": [
+    {"id":"AT-01","title":"Exact valid request creation","result":"PASS"},
+    {"id":"AT-02","title":"Idempotent identical request retry","result":"PASS"},
+    {"id":"AT-03","title":"Conflicting duplicate request","result":"PASS"},
+    {"id":"AT-04","title":"Unsupported action","result":"PASS"},
+    {"id":"AT-05","title":"Requester substitution","result":"PASS"},
+    {"id":"AT-06","title":"Operator authorization","result":"PASS"},
+    {"id":"AT-07","title":"Separate acts for self-authorization","result":"PASS"},
+    {"id":"AT-08","title":"Operator rejection","result":"PASS"},
+    {"id":"AT-09","title":"Non-Operator decision rejection","result":"PASS"},
+    {"id":"AT-10","title":"Double decision concurrency","result":"PASS"},
+    {"id":"AT-11","title":"Valid atomic consumption","result":"PASS"},
+    {"id":"AT-12","title":"Double-consumption concurrency","result":"PASS"},
+    {"id":"AT-13","title":"Replay after consumption","result":"PASS"},
+    {"id":"AT-14","title":"Manifest substitution","result":"PASS"},
+    {"id":"AT-15","title":"Artifact substitution","result":"PASS"},
+    {"id":"AT-16","title":"Requester substitution at consumption","result":"PASS"},
+    {"id":"AT-17","title":"Operator assignment invalidation","result":"PASS"}
+  ],
+  "dynamic_test_environment": {
+    "database": "disposable PostgreSQL 17",
+    "canonical_migrations_applied": true,
+    "actual_parallel_sessions_used": true,
+    "AT_10": {"winner_count": 1, "final_state": "authorized", "authorized_event_count": 1},
+    "AT_12": {"winner_count": 1, "permit_results": [false, true], "final_state": "consumed"},
+    "operator_cardinality": {
+      "exactly_one": {"terminal_failure_code": null, "deployment_permit": true},
+      "zero": {"terminal_failure_code": "operator_assignment_unresolved", "deployment_permit": false},
+      "multiple": {"terminal_failure_code": "operator_assignment_ambiguous", "deployment_permit": false},
+      "suspended_revoked_or_expired": {"terminal_failure_code": "operator_assignment_unresolved", "deployment_permit": false},
+      "replaced_or_identity_changed": {"terminal_failure_code": "operator_mismatch", "deployment_permit": false}
+    },
+    "evidence_sha256": "f5e99dcb3ec4a43e690e9a5589dc90bb890ec457ac8cf5946b600bef727e6d30",
+    "database_destroyed": true,
+    "remaining_disposable_resources": 0
+  },
+  "live_verification": {
+    "project_ref": "hdakjutdomuvyiohxzeb",
+    "verified_at": "2026-07-17T12:53:10.753965Z",
+    "authorization_rows_before": 0,
+    "authorization_rows_after": 0,
+    "event_rows_before": 0,
+    "event_rows_after": 0,
+    "audit_sequence_before": 12,
+    "audit_sequence_after": 15,
+    "allocated_audit_ids": [13, 14, 15],
+    "expected_sequence_advance": 3,
+    "observed_sequence_advance": 3,
+    "unexplained_sequence_advance": 0,
+    "lifecycle": ["request_created", "authorized", "consumed", "replay_rejected"],
+    "transaction_rolled_back": true,
+    "durable_test_residue": 0,
+    "active_operator_assignments_before": 1,
+    "active_operator_assignments_after": 1
+  },
+  "security_readback": {
+    "row_level_security_forced": true,
+    "public_table_select": false,
+    "private_schema_usage_for_anon_authenticated_and_service_role": false,
+    "phase_4_objects_owned_by_postgres": true,
+    "new_phase_4_security_advisor_findings": 0
+  },
+  "non_occurrence": {
+    "production_workflow_invocations": 0,
+    "pages_artifacts_uploaded": 0,
+    "pages_deployments": 0,
+    "outward_publications": 0,
+    "phase_5_changes": 0,
+    "palisade_changes": 0,
+    "conduit_changes": 0
+  },
+  "terminal_result": "PASS"
+}
