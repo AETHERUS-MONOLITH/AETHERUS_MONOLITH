@@ -166,7 +166,7 @@ for (const boundary of publication.does_not_claim) {
 }
 
 assertIncludes(sitemap, `<loc>${url}</loc>`, "sitemap canonical route");
-assertIncludes(sitemap, "<lastmod>2026-06-18</lastmod>", "sitemap grounded lastmod");
+assertIncludes(sitemap, "<lastmod>2026-06-22</lastmod>", "sitemap grounded lastmod");
 assertIncludes(robots, "User-agent: *", "robots user-agent");
 assertIncludes(robots, "Allow: /", "robots allow all");
 assertIncludes(robots, "Sitemap: https://camilocarlone.com/sitemap.xml", "robots sitemap reference");
