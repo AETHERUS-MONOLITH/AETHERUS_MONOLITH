@@ -38,7 +38,25 @@ async function invoke(token, body) {
   const text = await response.text();
   let payload;
   try { payload = JSON.parse(text); } catch { throw new Error(`authorization endpoint returned non-JSON status ${response.status}`); }
-  if (!response.ok) throw new Error(`authorization endpoint failed with ${response.status}: ${payload.error || "request rejected"}`);
+  if (!response.ok) {
+    const diagnosticId = typeof payload.diagnostic_id === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(payload.diagnostic_id)
+      ? payload.diagnostic_id
+      : null;
+    const evidence = {
+      schema_version: "0.1",
+      classification: "authorization_request_failure_evidence",
+      observed_at: new Date().toISOString(),
+      request_operation: body?.operation === "create" || body?.operation === "status" ? body.operation : "unknown",
+      http_status: response.status,
+      http_response_class: `${Math.floor(response.status / 100)}xx`,
+      error: "authorization_request_denied",
+      diagnostic_id: diagnosticId
+    };
+    await fs.mkdir(directory,{recursive:true});
+    await fs.writeFile(`${directory}/authorization-request-failure.json`,`${JSON.stringify(evidence,null,2)}\n`,{mode:0o600});
+    if (diagnosticId) process.stderr.write(`authorization_request_diagnostic_id=${diagnosticId}\n`);
+    throw new Error(`authorization endpoint failed with ${response.status}: authorization_request_denied${diagnosticId ? ` diagnostic_id=${diagnosticId}` : ""}`);
+  }
   return payload;
 }
 

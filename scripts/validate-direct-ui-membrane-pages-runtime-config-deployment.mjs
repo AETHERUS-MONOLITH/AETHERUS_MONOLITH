@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 
 const recordPath = "data/direct-ui-membrane-pages-runtime-config-deployment.v0.json";
 const workflowPath = ".github/workflows/pages-runtime-config.yml";
+const generatorPath = "scripts/generate-github-pages-runtime-config.mjs";
 const runtimeConfigArtifactPath = "js/aetherus-runtime-config.js";
 const runtimeConfigSourcePath = runtimeConfigArtifactPath;
 const envExamplePath = ".env.example";
@@ -24,9 +25,9 @@ const authPages = [
   }
 ];
 
-const requiredVars = [
-  "vars.AETHERUS_SUPABASE_URL",
-  "vars.AETHERUS_SUPABASE_PUBLISHABLE_KEY"
+const requiredSecrets = [
+  "secrets.AETHERUS_SUPABASE_URL",
+  "secrets.AETHERUS_SUPABASE_PUBLISHABLE_KEY"
 ];
 
 const forbiddenEnvFiles = [
@@ -80,7 +81,7 @@ async function assertMissing(paths, label) {
   }
 }
 
-function assertWorkflowStaticStructure(workflowText) {
+function assertWorkflowStaticStructure(workflowText, generatorText) {
   for (const snippet of [
     "on:",
     "workflow_dispatch:",
@@ -93,33 +94,37 @@ function assertWorkflowStaticStructure(workflowText) {
     "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
     "actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b",
     "git archive --format=tar \"$GITHUB_SHA\" | tar -x -C _site",
+    "node scripts/generate-github-pages-runtime-config.mjs",
     "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa",
     "actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e"
   ]) {
     if (!workflowText.includes(snippet)) fail(`${workflowPath} missing ${snippet}`);
   }
 
-  for (const variable of requiredVars) {
-    if (!workflowText.includes(variable)) fail(`${workflowPath} missing ${variable}`);
+  for (const secret of requiredSecrets) {
+    if ((workflowText.match(new RegExp(secret.replaceAll(".","\\."),"g")) || []).length !== 2) {
+      fail(`${workflowPath} must consume ${secret} exactly twice`);
+    }
   }
+  if (/vars\.AETHERUS_SUPABASE_(URL|PUBLISHABLE_KEY)/.test(workflowText)) fail(`${workflowPath} must not consume stale repository variables`);
 
-  if (!workflowText.includes('"_site/js/aetherus-runtime-config.js"')) {
-    fail(`${workflowPath} must generate runtime config only in _site`);
+  if (!generatorText.includes('"_site/js/aetherus-runtime-config.js"')) {
+    fail(`${generatorPath} must generate runtime config only in _site`);
   }
-  if (!workflowText.includes("globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG")) {
-    fail(`${workflowPath} must assign the expected runtime public config global`);
+  if (!generatorText.includes("globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG")) {
+    fail(`${generatorPath} must assign the expected runtime public config global`);
   }
-  if (!workflowText.includes("SUPABASE_URL") || !workflowText.includes("SUPABASE_PUBLISHABLE_KEY")) {
-    fail(`${workflowPath} must emit accepted public config field names`);
+  if (!generatorText.includes("SUPABASE_URL") || !generatorText.includes("SUPABASE_PUBLISHABLE_KEY")) {
+    fail(`${generatorPath} must emit accepted public config field names`);
   }
-  if (!workflowText.includes("throw new Error")) {
-    fail(`${workflowPath} must fail closed when required variables are absent`);
+  if (!generatorText.includes("throw new Error")) {
+    fail(`${generatorPath} must fail closed when required secrets are absent`);
   }
-  if (!workflowText.includes("Missing required GitHub Actions repository variable:")) {
-    fail(`${workflowPath} must report missing variable names without values`);
+  if (!generatorText.includes("Missing required GitHub Actions repository value:")) {
+    fail(`${generatorPath} must report missing value names without values`);
   }
-  if (workflowText.includes("SUPABASE_ANON_KEY")) {
-    fail(`${workflowPath} must not generate fallback anon key config in this pass`);
+  if (generatorText.includes("SUPABASE_ANON_KEY")) {
+    fail(`${generatorPath} must not generate fallback anon key config in this pass`);
   }
 }
 
@@ -162,8 +167,8 @@ async function assertNoCommittedValues() {
   ];
 
   for (const filePath of filesToCheck) {
-    const text = (await readText(filePath)).replaceAll(
-      "https://hdakjutdomuvyiohxzeb.supabase.co/functions/v1/github-pages-operator-resolution-v0",
+    const text = (await readText(filePath)).replace(
+      /https:\/\/hdakjutdomuvyiohxzeb\.supabase\.co\/functions\/v1\/github-pages-[a-z0-9-]+/g,
       "FIXED_GOVERNANCE_EDGE_FUNCTION"
     );
     for (const { label, pattern } of forbiddenValuePatterns) {
@@ -180,6 +185,7 @@ if (await exists(runtimeConfigSourcePath)) {
 
 const record = await readJson(recordPath);
 const workflowText = await readText(workflowPath);
+const generatorText = await readText(generatorPath);
 
 if (record.schema_version !== "0.1") fail("schema_version must be 0.1");
 if (
@@ -289,7 +295,7 @@ for (const entry of record.runtime_config_load_order || []) {
   }
 }
 
-assertWorkflowStaticStructure(workflowText);
+assertWorkflowStaticStructure(workflowText,generatorText);
 await assertAuthPageScriptOrder();
 await assertMissing(forbiddenEnvFiles, "env file");
 await assertEnvExampleEmpty();

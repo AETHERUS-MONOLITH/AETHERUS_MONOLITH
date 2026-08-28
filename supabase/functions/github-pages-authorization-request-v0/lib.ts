@@ -82,6 +82,75 @@ export const REJECTION_REASON_CODES = Object.freeze([
 
 export type RejectionReasonCode = typeof REJECTION_REASON_CODES[number];
 
+export type DiagnosticContext = {
+  operation?: unknown;
+  repository_id?: unknown;
+  workflow_sha?: unknown;
+  run_id?: unknown;
+  run_attempt?: unknown;
+  manifest_sha256?: unknown;
+  artifact_id?: unknown;
+  token_sha256?: unknown;
+};
+
+export type AuthorizationRequestDiagnostic = {
+  diagnostic_id: string;
+  timestamp: string;
+  function_name: "github-pages-authorization-request-v0";
+  function_version: string;
+  request_operation: string;
+  repository_id: string | null;
+  workflow_sha: string | null;
+  run_id: string | null;
+  run_attempt: string | null;
+  manifest_sha256: string | null;
+  artifact_id: string | null;
+  token_sha256: string | null;
+  rejection_stage: RejectionStage;
+  bounded_reason_code: RejectionReasonCode;
+  exception_class: string;
+  http_response_class: string;
+};
+
+function bounded(value: unknown, pattern: RegExp): string | null {
+  const normalized = typeof value === "string" || typeof value === "number" ? String(value) : "";
+  return pattern.test(normalized) ? normalized : null;
+}
+
+function exceptionClass(error: unknown): string {
+  if (error === undefined) return "none";
+  const name = error instanceof Error ? error.name : "non_error";
+  return /^[A-Za-z0-9_.-]{1,128}$/.test(name) ? name : "Error";
+}
+
+export function buildRejectionDiagnostic(
+  diagnosticId: string,
+  functionVersion: string,
+  stage: RejectionStage,
+  status: number,
+  error?: unknown,
+  context: DiagnosticContext = {}
+): AuthorizationRequestDiagnostic {
+  return {
+    diagnostic_id: diagnosticId,
+    timestamp: new Date().toISOString(),
+    function_name: "github-pages-authorization-request-v0",
+    function_version: /^[0-9]{1,20}$/.test(functionVersion) ? functionVersion : "unknown",
+    request_operation: bounded(context.operation, /^(create|status)$/) || "unknown",
+    repository_id: bounded(context.repository_id, /^[0-9]{1,32}$/),
+    workflow_sha: bounded(context.workflow_sha, /^[0-9a-f]{40}$/),
+    run_id: bounded(context.run_id, /^[0-9]{1,32}$/),
+    run_attempt: bounded(context.run_attempt, /^[0-9]{1,10}$/),
+    manifest_sha256: bounded(context.manifest_sha256, /^[0-9a-f]{64}$/),
+    artifact_id: bounded(context.artifact_id, /^[0-9]{1,32}$/),
+    token_sha256: bounded(context.token_sha256, /^[0-9a-f]{64}$/),
+    rejection_stage: stage,
+    bounded_reason_code: classifyRejection(stage, error),
+    exception_class: exceptionClass(error),
+    http_response_class: `${Math.floor(status / 100)}xx`
+  };
+}
+
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : "";
 }

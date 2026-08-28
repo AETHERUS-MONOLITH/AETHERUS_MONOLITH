@@ -151,8 +151,8 @@ test("all required bounded reason codes are present and externally suppressed", 
   ];
   assert.deepEqual([...REJECTION_REASON_CODES], required);
   const source = await fs.readFile(requestIndexPath, "utf8");
-  assert.match(source, /return json\(401,\{error:"authorization_request_denied"\}\)/);
-  assert.doesNotMatch(source, /return json\(401,\{error:classifyRejection/);
+  assert.match(source, /return json\(status,\{error:"authorization_request_denied",diagnostic_id:diagnosticId\}\)/);
+  assert.doesNotMatch(source, /return json\([^\n]+error:classifyRejection/);
 });
 
 test("signed synthetic OIDC substitutions fail with exact bounded classifications", async () => {
@@ -170,7 +170,10 @@ test("signed synthetic OIDC substitutions fail with exact bounded classification
       assert.equal(classifyRejection("requester_evidence", error), "requester_oidc_evidence_mismatch");
       return true;
     });
-    const tampered = `${valid.slice(0, -1)}${valid.endsWith("a") ? "b" : "a"}`;
+    const [tamperedHeader,tamperedPayload,tamperedSignature] = valid.split(".");
+    const corruptedSignature = Buffer.from(tamperedSignature,"base64url");
+    corruptedSignature[0] ^= 0x01;
+    const tampered = `${tamperedHeader}.${tamperedPayload}.${corruptedSignature.toString("base64url")}`;
     await assert.rejects(
       () => verifyGitHubOidc(tampered, FIXED.requestAudience, {
         run_id: manifest.run_id,
