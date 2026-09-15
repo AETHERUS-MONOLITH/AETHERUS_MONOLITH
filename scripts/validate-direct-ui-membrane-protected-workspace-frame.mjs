@@ -7,31 +7,24 @@ const recordPath = "data/direct-ui-membrane-protected-workspace-frame.v0.json";
 const callbackScriptPath = "js/supabase-auth-callback.js";
 
 const requiredProtectedShellPhrases = [
-  "Protected workspace frame",
-  "Protected workspace path",
-  "AETHERUS Review Workspace",
-  "Workspace Overview",
-  "Evidence Packet",
-  "Release Review",
-  "Trace / Activity",
-  "Settings / Members",
+  "Current Work",
+  "Object",
+  "Evidence",
+  "Decision → Result",
+  "Inspect evidence",
   "Stage candidate",
   "Run local review",
   "Save workspace state",
   "Load saved workspace state",
   "No evidence packet is loaded yet.",
-  "No release candidate is queued.",
+  "No active release candidate is queued.",
   "No persistent activity has been recorded.",
-  "No members are configured in this frame.",
   "This frame can save and load bounded release-review workspace state"
 ];
 
 const requiredNavigationTargets = [
-  "#workspace-overview",
-  "#evidence-packet",
-  "#release-review",
-  "#trace-activity",
-  "#settings-members"
+  "index.html",
+  "auth-login.html"
 ];
 
 const protectedBoundaryPhrases = [
@@ -39,8 +32,8 @@ const protectedBoundaryPhrases = [
   "Denial without a session is expected guard behavior",
   "data-protected-shell-boundary",
   "js/supabase-protected-shell.js",
-  "Authenticated save/load loop",
-  "Session-scoped Supabase state",
+  "authenticated save/load loop",
+  "session-scoped Supabase state",
   "Operational evidence pending",
   "Customer data outside scope",
   "Static evaluation mode",
@@ -110,13 +103,7 @@ if (!previewWorkspace.includes("Interactive workspace preview")) {
   fail(`${previewWorkspacePath}: must remain the interactive workspace preview`);
 }
 
-for (const phrase of [
-  "Workspace Overview",
-  "Evidence Packet",
-  "Release Review",
-  "Trace / Activity",
-  "Settings / Members"
-]) {
+for (const phrase of ["Current Work", "Inspect evidence", "Run local review"]) {
   if (taaRoute.includes(phrase)) {
     fail(`${taaRoutePath}: workspace functionality must not be placed under the TAA route`);
   }

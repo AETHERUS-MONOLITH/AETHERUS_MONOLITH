@@ -9,20 +9,20 @@ const recordPath = "data/direct-ui-membrane-protected-workspace-interaction.v0.j
 const requiredShellPhrases = [
   "Stage candidate",
   "Run local review",
-  "local release candidate",
-  "sample release candidate",
+  "Local release candidate",
+  "Sample release candidate",
   "Review blocked",
   "Incomplete operational evidence",
   "Operational evidence packet missing",
   "Release authority unavailable",
   "Operational evidence pending",
-  "tenant and customer context outside this frame",
+  "Tenant and customer context outside this frame",
   "Save workspace state",
   "Load saved workspace state",
   "no external release action is performed",
-  "Evidence Packet",
-  "Release Review",
-  "Trace / Activity"
+  "Inspect evidence",
+  "Decision → Result",
+  "Local activity"
 ];
 
 const requiredScriptPhrases = [
@@ -133,7 +133,7 @@ for (const [filePath, text] of [
 if (!previewWorkspace.includes("Interactive workspace preview")) {
   fail(`${previewWorkspacePath}: must remain the interactive workspace preview`);
 }
-for (const phrase of ["Release Review", "Run local review", "local release candidate", "Review blocked"]) {
+for (const phrase of ["Decision → Result", "Run local review", "Local release candidate", "Review blocked"]) {
   if (previewWorkspace.includes(phrase)) {
     fail(`${previewWorkspacePath}: protected interaction must not be added to preview workspace`);
   }

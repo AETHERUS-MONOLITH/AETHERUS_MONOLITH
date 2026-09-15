@@ -1,71 +1,34 @@
 import fs from "node:fs";
 
-const indexPath = "index.html";
-const scriptPath = "js/trace-viewer.js";
-const cssPath = "css/style.css";
-
 const failures = [];
+const read = path => fs.readFileSync(path, "utf8");
+const include = (text, value, label) => { if (!text.includes(value)) failures.push(`${label}: missing "${value}"`); };
+const exclude = (text, value, label) => { if (text.includes(value)) failures.push(`${label}: must not include "${value}"`); };
 
-function readText(path) {
-  return fs.readFileSync(path, "utf8");
-}
+const index = read("index.html");
+const script = read("js/trace-viewer.js");
+const css = read("css/operator-surfaces.css");
 
-function fail(message) {
-  failures.push(message);
-}
+for (const value of [
+  "operator-disclosure--evidence",
+  "Selected proof",
+  "A decision is only as strong as its evidence.",
+  "This public scenario is a deterministic browser-side evaluation",
+  'aria-label="Public scenario evidence"',
+  'id="pipeline-related-evidence"',
+  'id="related-evidence-list"'
+]) include(index, value, "public proof surface");
 
-function assertIncludes(text, needle, label) {
-  if (!text.includes(needle)) fail(`${label}: missing "${needle}"`);
-}
-
-function assertNotIncludes(text, needle, label) {
-  if (text.includes(needle)) fail(`${label}: must not include "${needle}"`);
-}
-
-function assertPattern(text, pattern, label) {
-  if (!pattern.test(text)) fail(`${label}: pattern not found (${pattern})`);
-}
-
-const index = readText(indexPath);
-const script = readText(scriptPath);
-const css = readText(cssPath);
-
-assertIncludes(index, "command-deck-section", "homepage Command Deck wrapper");
-assertIncludes(index, "GOVERNANCE PIPELINE // EVIDENCE", "Command Deck section label");
-assertIncludes(index, "Every layer should reference supporting proof.", "Command Deck title");
-assertIncludes(
-  index,
-  "Select a deterministic governance scenario to inspect its modeled verdict",
-  "Command Deck explanation"
-);
-assertIncludes(index, 'aria-label="AETHERUS Command Deck"', "Command Deck region");
-assertIncludes(index, 'id="pipeline-related-evidence"', "related evidence panel");
-assertIncludes(index, 'id="related-evidence-list"', "related evidence list");
-assertNotIncludes(index, "pipeline-control-map compact-controls", "dense stage control block");
-
-for (const required of [
+for (const value of [
   "DEFAULT_SCENARIO_ID = 'adapter_failure_escalate'",
-  "AETHERUS Command Deck",
-  "AETHERUS &middot; MONOLITH",
-  "Evidence Surface",
-  "Context: Governance Pipeline",
-  "Mode: Static Evaluation",
-  "Read-only",
+  "AETHERUS evidence artifact",
   "Deterministic prototype trace",
   "Static browser-side evaluation",
   "Local fixture data",
   "Not live AI execution",
   "Not a production audit ledger",
-  "DETERMINISTIC GOVERNANCE SCENARIO",
-  "Scenario Signal",
-  "VERDICT CORE",
-  "Release Gate Decision",
-  "View Decision Path",
-  "Evidence Readiness",
-  "WHY BLOCKED",
-  "REQUIRED EVIDENCE",
-  "BOUNDARY",
-  "RAW TRACE",
+  "Deterministic governance scenario",
+  "Modeled result",
   "WHY THIS VERDICT?",
   "OPERATIONAL EVIDENCE NEEDED",
   "NON-OPERATIONAL BOUNDARIES",
@@ -79,60 +42,40 @@ for (const required of [
   "Authenticated actor identity",
   "Security review",
   "This surface is not a production SaaS dashboard or customer workspace.",
-  "Operational readiness:"
-]) {
-  assertIncludes(script, required, "Command Deck renderer contract");
-}
+  "Operational readiness:",
+  "window.AetherusPipeline.showRelatedByStage"
+]) include(script, value, "Proof Object renderer contract");
 
-for (const forbidden of [
+for (const value of [
   "Live Governance Console",
   "Production Audit Dashboard",
   "Runtime Control Center",
   "Customer Workspace",
-  "trace-readout",
-  "Operational Evidence Required"
-]) {
-  assertNotIncludes(script, forbidden, "Command Deck forbidden copy/legacy readout");
-}
+  "command-telemetry-grid",
+  'role="tablist"'
+]) exclude(script, value, "removed peer-dashboard language");
 
-assertPattern(script, /role="tablist"/, "Command Deck tablist role");
-assertPattern(script, /role="tab"/, "Command Deck tab role");
-assertPattern(script, /role="tabpanel"/, "Command Deck panel role");
-assertPattern(script, /tab\.id === state\.activeTab \? '' : 'hidden'/, "inactive tab hidden state");
-assertPattern(script, /state\.activeTab = 'why-blocked';\s+renderDeck\('selector'\)/, "scenario change tab reset");
-assertPattern(script, /event\.key === 'ArrowRight'/, "tab keyboard next");
-assertPattern(script, /event\.key === 'ArrowLeft'/, "tab keyboard previous");
-assertPattern(script, /event\.key === 'Home'/, "tab keyboard home");
-assertPattern(script, /event\.key === 'End'/, "tab keyboard end");
-assertPattern(script, /window\.AetherusPipeline\.showRelatedByStage/, "related evidence handoff");
-
-for (const requiredCss of [
-  ".command-deck-section",
-  ".trace-viewer.command-deck-mount",
-  ".command-selector-shell",
-  ".command-telemetry-grid",
-  ".command-card-signal",
-  ".command-card-verdict",
-  ".command-card-readiness",
-  ".command-tab-row",
-  ".command-tab-panel[hidden]",
-  ".command-deck-footer",
+for (const value of [
+  ".proof-object",
+  ".proof-object__header",
+  ".proof-object__body",
+  ".proof-object__layers",
+  ".proof-layer",
+  ".proof-evidence-list",
+  ".proof-raw-fields",
   "@media (max-width: 1199px)",
   "@media (max-width: 767px)",
-  "@media (max-width: 480px)"
-]) {
-  assertIncludes(css, requiredCss, "Command Deck CSS contract");
-}
+  "@media (max-width: 360px)"
+]) include(css, value, "Proof Object CSS contract");
 
-assertPattern(css, /\.command-telemetry-grid\s*\{[^}]*grid-template-columns:\s*repeat\(12, minmax\(0, 1fr\)\)/s, "desktop 12-column grid");
-assertPattern(css, /\.command-card-verdict\s*\{[^}]*grid-column:\s*span 6/s, "desktop verdict emphasis");
-assertPattern(css, /\.command-card-signal,\s*\n\.command-card-readiness\s*\{[^}]*grid-column:\s*span 3/s, "desktop side card allocation");
-assertPattern(css, /\.command-tab-row\s*\{[^}]*overflow-x:\s*auto/s, "mobile-safe tab scrolling");
+if (!/details class=\"proof-layer\"/.test(script)) failures.push("Proof Object: native layered disclosures missing");
+if (!/details class=\"proof-layer\" open/.test(script)) failures.push("Proof Object: default decision-basis layer missing");
+if (!/select\?\.addEventListener\('change'/.test(script)) failures.push("Proof Object: scenario selector change binding missing");
 
 if (failures.length) {
-  console.error("Command Deck validation failed:");
+  console.error("Proof Object validation failed:");
   failures.forEach(failure => console.error(`- ${failure}`));
   process.exit(1);
 }
 
-console.log("Command Deck validation passed.");
+console.log("Proof Object validation passed.");

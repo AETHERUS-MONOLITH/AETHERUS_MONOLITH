@@ -1,203 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-design-system="operator">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Protected Workspace Frame - AETHERUS MONOLITH</title>
+  <title>Current Work — AETHERUS MONOLITH</title>
   <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/operator-system.css?v=operator-v7">
+  <link rel="stylesheet" href="css/operator-surfaces.css?v=operator-v7">
   <script>
     (function () {
       const host = globalThis.location ? globalThis.location.hostname : "";
       const localHost = host === "" || host === "localhost" || host === "127.0.0.1" || host === "[::1]";
       globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG = globalThis.AETHERUS_SUPABASE_PUBLIC_CONFIG || Object.freeze({});
-      if (!localHost) {
-        document.write('<script src="js/aetherus-runtime-config.js"><\/script>');
-      }
+      if (!localHost) document.write('<script src="js/aetherus-runtime-config.js"><\/script>');
     })();
   </script>
   <script type="module" src="js/supabase-protected-shell.js"></script>
   <script type="module" src="js/protected-workspace.js"></script>
+  <script type="module" src="js/operator-view-state.js"></script>
 </head>
-<body class="auth-login-page">
-  <div class="scan-line" aria-hidden="true"></div>
-
-  <header class="site-header" role="banner">
-    <a href="index.html" class="brand-lockup" aria-label="AETHERUS MONOLITH home">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-copy">
-        <span class="brand-name">AETHERUS <b>&middot;</b> MONOLITH</span>
-        <span class="brand-subtitle">AI Governance &amp; Model-Behavior Risk Architecture</span>
-      </span>
-    </a>
-    <nav class="site-nav" aria-label="Protected workspace navigation">
-      <a href="auth-login.html">Provider Initiation</a>
-      <a href="auth-callback.html">Callback Status</a>
-      <a href="workspace.html">Workspace Preview</a>
-    </nav>
-    <span class="interface-chip">Protected Workspace Frame</span>
+<body class="operator-page operator-protected">
+  <header class="operator-header" role="banner">
+    <a class="operator-wordmark" href="index.html" aria-label="AETHERUS MONOLITH home"><span>AETHERUS</span><small>MONOLITH</small></a>
+    <p class="operator-route-label">Current Work</p>
+    <a class="operator-session-link" href="auth-login.html">Session</a>
   </header>
 
-  <main class="auth-login-shell" aria-labelledby="protected-shell-title">
-    <section class="auth-login-hero panel-frame">
+  <main class="operator-workspace" aria-labelledby="protected-shell-title">
+    <section class="operator-admission operator-work-plate" aria-label="Protected workspace admission state">
       <div>
-        <span class="panel-kicker">Protected Workspace Frame</span>
-        <h1 id="protected-shell-title">Protected workspace frame</h1>
-        <p class="auth-login-lede">
-          Protected workspace admission depends on recognized Supabase session state.
-          Denial without a session is expected guard behavior. When admitted, this
-          surface presents the first protected AETHERUS workspace frame: review
-          areas, bounded workspace persistence, and workspace surfaces in development.
-          No production workspace is active here.
-        </p>
-        <div class="auth-login-status-strip" aria-label="Protected workspace current state">
-          <span>Protected workspace path</span>
-          <span data-shell-session-chip>Session pending</span>
-          <span>Expected denial without session</span>
-          <span>Protected workspace frame</span>
-          <span>Browser-side workspace surface</span>
-          <span>Authenticated save/load loop</span>
-          <span>Session-scoped Supabase state</span>
-          <span>Operational evidence pending</span>
-          <span>Customer data outside scope</span>
-          <span>Static evaluation mode</span>
-          <span>Not a production SaaS interface</span>
-          <span>Not an operational release system</span>
-        </div>
+        <p class="operator-eyebrow">Access</p>
+        <h1 id="protected-shell-title" data-shell-heading>Checking access</h1>
+        <p data-shell-status data-state="checking_session" role="status">Checking session</p>
       </div>
-
-      <aside class="auth-login-card" aria-label="Protected workspace admission state">
-        <span class="section-kicker">Guard State</span>
-        <strong data-shell-heading>Classifying</strong>
-        <p data-shell-status data-state="checking_session">Checking session</p>
-        <a class="auth-login-return-link" href="auth-login.html" data-shell-denial-link hidden>
-          Provider Initiation
-        </a>
-      </aside>
+      <a class="operator-text-link" href="auth-login.html" data-shell-denial-link hidden>Sign in to view Current Work</a>
     </section>
 
-    <section class="protected-workspace-frame" aria-label="Protected AETHERUS workspace frame" data-protected-shell-boundary hidden>
-      <div class="protected-workspace-topline panel-frame">
+    <section class="operator-current-work" aria-label="Protected AETHERUS workspace frame" data-protected-shell-boundary hidden>
+      <header class="operator-workspace__header">
         <div>
-          <span class="section-kicker">Session recognized</span>
-          <h2>AETHERUS Review Workspace</h2>
-          <p>
-            The guarded route admitted this protected workspace frame after
-            Supabase session classification returned a session-present state; this
-            is guard admission plus a bounded save/load path for release-review
-            workspace state, not backend or product maturity.
-          </p>
+          <p class="operator-eyebrow">Review workspace</p>
+          <h1>Current Work</h1>
         </div>
-        <nav class="protected-workspace-nav" aria-label="Workspace-level navigation">
-          <a href="#workspace-overview">Workspace Overview</a>
-          <a href="#evidence-packet">Evidence Packet</a>
-          <a href="#release-review">Release Review</a>
-          <a href="#trace-activity">Trace / Activity</a>
-          <a href="#settings-members">Settings / Members</a>
-        </nav>
-      </div>
+        <p class="operator-scope-note"><span>Boundary</span> Evaluation workspace · No external release action</p>
+      </header>
 
-      <section class="protected-workspace-grid" aria-label="Workspace review areas">
-        <article class="protected-workspace-card panel-frame" id="workspace-overview">
-          <span class="section-kicker">Workspace Overview</span>
-          <h3>Workspace Overview</h3>
-          <p>
-            First protected AETHERUS workspace frame for staging review
-            surfaces after session recognition.
-          </p>
-          <dl>
-            <div><dt>Workspace identity</dt><dd>AETHERUS Review Workspace</dd></div>
-            <div><dt>Current frame</dt><dd>Static browser-side protected workspace surface.</dd></div>
-            <div><dt>Workspace state</dt><dd data-review-workspace-state>No active release candidate is queued.</dd></div>
-            <div><dt>Local release candidate</dt><dd data-review-candidate-summary>sample release candidate available for local review.</dd></div>
-            <div><dt>Persistence status</dt><dd data-persistence-status>unsaved</dd></div>
-          </dl>
-          <div class="protected-review-actions" aria-label="Local release-review controls">
-            <button class="protected-review-button" type="button" data-action="stage-local-candidate">
-              Stage candidate
-            </button>
-            <button class="protected-review-button" type="button" data-action="run-local-review" disabled>
-              Run local review
-            </button>
-            <button class="protected-review-button" type="button" data-action="save-workspace-state" disabled>
-              Save workspace state
-            </button>
-            <button class="protected-review-button" type="button" data-action="load-saved-workspace-state">
-              Load saved workspace state
-            </button>
+      <section class="operator-view" data-operator-view="work" aria-labelledby="current-object-title">
+        <article class="operator-work-object operator-work-plate">
+          <div class="operator-work-object__header">
+            <div>
+              <p class="operator-index">Object</p>
+              <h2 id="current-object-title">Local release candidate</h2>
+              <p>Protected shell review fixture</p>
+            </div>
+            <span class="operator-state-seal operator-state-seal--conditional"><small>Review state</small><strong data-review-candidate-summary>Sample release candidate available for local review.</strong></span>
           </div>
-          <p class="protected-workspace-note">
-            This local release candidate stays bounded to release-review state. Saving stores only this workspace state through the authenticated Supabase session; no external release action is performed.
-          </p>
-          <p class="protected-workspace-note" data-persistence-detail>
-            no saved workspace state has been loaded in this browser session.
-          </p>
-        </article>
 
-        <article class="protected-workspace-card panel-frame" id="evidence-packet">
-          <span class="section-kicker">Evidence Packet</span>
-          <h3>Evidence Packet</h3>
-          <p class="protected-empty-state" data-evidence-status>No evidence packet is loaded yet.</p>
-          <dl data-evidence-fields>
-            <div><dt>Candidate</dt><dd data-evidence-candidate>None staged.</dd></div>
-            <div><dt>Evidence status</dt><dd data-evidence-completeness>Operational evidence packet missing.</dd></div>
-            <div><dt>Missing requirement</dt><dd data-evidence-missing>Operational evidence packet missing.</dd></div>
-            <div><dt>Ledger / context</dt><dd>Operational evidence pending; tenant and customer context outside this frame.</dd></div>
-          </dl>
-        </article>
+          <div class="operator-object-register" aria-label="Object review summary">
+            <div><span>01 · State</span><strong data-review-workspace-state>No active release candidate is queued.</strong></div>
+            <div><span>02 · Evidence</span><strong>Incomplete operational evidence</strong></div>
+          </div>
 
-        <article class="protected-workspace-card panel-frame" id="release-review">
-          <span class="section-kicker">Release Review</span>
-          <h3>Release Review</h3>
-          <p class="protected-empty-state" data-review-result>No release candidate is queued.</p>
-          <dl>
-            <div><dt>Review state</dt><dd data-review-state>Waiting for local candidate.</dd></div>
-            <div><dt>Decision</dt><dd data-review-decision>Release authority unavailable.</dd></div>
-            <div><dt>Result</dt><dd data-review-reason>Review blocked: Incomplete operational evidence; no external release action is performed.</dd></div>
-          </dl>
-        </article>
+          <div class="operator-view-actions">
+            <button class="operator-primary-action" type="button" data-action="stage-local-candidate">Stage candidate</button>
+            <button class="operator-primary-action" type="button" data-operator-action="inspect-evidence" hidden>Inspect evidence</button>
+          </div>
 
-        <article class="protected-workspace-card panel-frame" id="trace-activity">
-          <span class="section-kicker">Trace / Activity</span>
-          <h3>Trace / Activity</h3>
-          <p class="protected-empty-state" data-activity-status>No persistent activity has been recorded.</p>
-          <ol class="protected-activity-list" data-activity-list>
-            <li>Local in-memory activity will appear here after staging.</li>
-          </ol>
-        </article>
+          <details class="operator-context">
+            <summary><span aria-hidden="true">01</span><strong>Object details</strong><small>Identity and boundary</small></summary>
+            <dl>
+              <div><dt>Technical ID</dt><dd><code>local-release-candidate-0-1</code></dd></div>
+              <div><dt>Scope</dt><dd>Protected shell review fixture</dd></div>
+              <div><dt>Boundary</dt><dd>No external release action</dd></div>
+            </dl>
+          </details>
 
-        <article class="protected-workspace-card panel-frame" id="settings-members">
-          <span class="section-kicker">Settings / Members</span>
-          <h3>Settings / Members</h3>
-          <p class="protected-empty-state">No members are configured in this frame.</p>
-          <p>
-            Member and organization controls are reserved for workspace
-            services. Settings are unavailable until account, team, and access
-            layers are separately implemented.
-          </p>
-        </article>
+          <details class="operator-context">
+            <summary><span aria-hidden="true">02</span><strong>Workspace state</strong><small>Bounded persistence</small></summary>
+            <dl>
+              <div><dt>Persistence status</dt><dd data-persistence-status>unsaved</dd></div>
+              <div><dt>Detail</dt><dd data-persistence-detail>No saved workspace state has been loaded in this browser session.</dd></div>
+            </dl>
+            <button class="operator-secondary-action" type="button" data-action="load-saved-workspace-state">Load saved workspace state</button>
+          </details>
 
-        <article class="protected-workspace-card panel-frame" aria-label="Workspace availability status">
-          <span class="section-kicker">Availability</span>
-          <h3>Workspace surfaces in development</h3>
-          <p>
-            This frame can save and load bounded release-review workspace state
-            for the authenticated session. It is not a production customer
-            workspace, operational release system, or persistent production
-            audit ledger.
-          </p>
-          <ul class="protected-workspace-list">
-            <li>Only bounded release-review workspace state is saved.</li>
-            <li>Operational evidence pending.</li>
-            <li>Tenant and customer context outside this frame.</li>
-            <li>Static evaluation mode.</li>
-            <li>Not a production SaaS interface or operational release system.</li>
-          </ul>
+          <details class="operator-context">
+            <summary><span aria-hidden="true">03</span><strong>Scope and limits</strong><small>What this surface can claim</small></summary>
+            <p>This frame can save and load bounded release-review workspace state. Operational evidence pending. Tenant and customer context outside this frame. Customer data outside scope. Static evaluation mode. Not a production SaaS interface. Not an operational release system.</p>
+            <p>Protected workspace admission depends on recognized Supabase session state. Denial without a session is expected guard behavior. The authenticated save/load loop uses session-scoped Supabase state.</p>
+          </details>
         </article>
       </section>
+
+      <section class="operator-view" data-operator-view="evidence" aria-labelledby="evidence-focus-title" hidden>
+        <button class="operator-back" type="button" data-operator-action="back-to-work">← Back to Current Work</button>
+        <p class="operator-breadcrumb">Current Work / Local release candidate</p>
+        <article class="operator-focus operator-focus--evidence operator-work-plate">
+          <header class="operator-focus__lead">
+            <p class="operator-index">Evidence</p>
+            <h2 id="evidence-focus-title">Inspect the review evidence</h2>
+            <p data-evidence-status>No evidence packet is loaded yet.</p>
+          </header>
+          <div class="operator-evidence-list" data-evidence-fields>
+            <div><span class="operator-evidence-marker operator-evidence-marker--present" aria-hidden="true">●</span><div><strong>Candidate</strong><p data-evidence-candidate>None staged.</p></div></div>
+            <div><span class="operator-evidence-marker operator-evidence-marker--conditional" aria-hidden="true">◐</span><div><strong>Evidence status</strong><p data-evidence-completeness>Operational evidence packet missing.</p></div></div>
+            <div><span class="operator-evidence-marker operator-evidence-marker--missing" aria-hidden="true">−</span><div><strong>Missing requirements</strong><p data-evidence-missing>Operational evidence packet missing.</p></div></div>
+            <div><span class="operator-evidence-marker operator-evidence-marker--missing" aria-hidden="true">−</span><div><strong>Ledger and context</strong><p>Production audit ledger and tenant/customer context are outside this frame.</p></div></div>
+          </div>
+          <div class="operator-view-actions">
+            <button class="operator-primary-action" type="button" data-action="run-local-review" disabled>Run local review</button>
+          </div>
+          <details class="operator-context"><summary><span aria-hidden="true">01</span><strong>Policy and lineage context</strong><small>Contextual disclosure</small></summary><p>This fixture identifies evidence boundaries; it does not establish production policy, lineage or release authority.</p></details>
+        </article>
+      </section>
+
+      <section class="operator-view" data-operator-view="decision" aria-labelledby="decision-focus-title" hidden>
+        <button class="operator-back" type="button" data-operator-action="back-to-work">← Back to Current Work</button>
+        <p class="operator-breadcrumb">Current Work / Local release candidate / Review</p>
+        <article class="operator-focus operator-focus--decision operator-work-plate">
+          <header class="operator-focus__lead">
+            <p class="operator-index">Decision → Result</p>
+            <h2 id="decision-focus-title">Review blocked</h2>
+            <p class="operator-decision-state" data-review-result role="status">No release candidate is queued.</p>
+          </header>
+          <div class="operator-authority-result">
+            <div><span>Review state</span><strong data-review-state>Waiting for local candidate.</strong></div>
+            <div><span>Decision</span><strong data-review-decision>Release authority unavailable.</strong></div>
+            <div><span>Reason</span><strong data-review-reason>Incomplete operational evidence; no external release action is performed.</strong></div>
+          </div>
+          <div class="operator-view-actions">
+            <button class="operator-primary-action" type="button" data-action="save-workspace-state" disabled>Save workspace state</button>
+          </div>
+          <details class="operator-context">
+            <summary><span aria-hidden="true">01</span><strong>Local activity</strong><small>Workspace history</small></summary>
+            <p data-activity-status>No persistent activity has been recorded.</p>
+            <ol data-activity-list><li>Local in-memory activity will appear here after staging.</li></ol>
+          </details>
+          <p class="operator-boundary-note">Workspace-state persistence does not approve or release the candidate.</p>
+        </article>
+      </section>
+
+      <p class="sr-only" aria-live="polite" data-operator-announcer></p>
     </section>
   </main>
 </body>

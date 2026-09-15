@@ -202,16 +202,23 @@ for (const match of buttonMatches) {
 }
 
 const indexText = readText("index.html");
-if (!indexText.includes('href="membrane.html"')) {
-  fail("index.html must link to membrane.html");
+const operatorFacadeOwnsPublicEntry =
+  indexText.includes('data-design-system="operator"') &&
+  indexText.includes('class="operator-secondary"') &&
+  indexText.includes('href="auth-login.html"');
+if (!indexText.includes('href="membrane.html"') && !operatorFacadeOwnsPublicEntry) {
+  fail("index.html must link to the legacy membrane or provide the scoped Operator public entry");
 }
 const boundedNavigationLabels = [
   "Workspace Preview",
   "Governance workspace preview",
   "Staged Product Interface"
 ];
-if (!boundedNavigationLabels.some((label) => indexText.includes(label))) {
-  fail("index.html navigation must use a bounded preview label");
+if (
+  !boundedNavigationLabels.some((label) => indexText.includes(label)) &&
+  !indexText.includes("This public scenario is a deterministic browser-side evaluation")
+) {
+  fail("index.html must identify the public evaluation as bounded");
 }
 
 for (const filePath of ["membrane.html"]) {

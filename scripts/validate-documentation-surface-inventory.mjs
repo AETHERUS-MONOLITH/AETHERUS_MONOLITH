@@ -63,6 +63,7 @@ function sortedTopLevelFiles(directory, extension) {
 }
 
 const postInventoryCorrectionArtifacts = new Set([
+  "data/github-pages-publication-authorization-corrective-receipt.v0.json",
   "data/documentation-surface-routing-plan.v1.json",
   "scripts/validate-documentation-surface-routing-plan.mjs",
   "data/documentation-public-navigation-pruning.v1.json",

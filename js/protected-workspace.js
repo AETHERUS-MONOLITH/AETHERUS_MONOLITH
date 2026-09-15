@@ -69,7 +69,8 @@ const nodes = {
   activityStatus: document.querySelector("[data-activity-status]"),
   activityList: document.querySelector("[data-activity-list]"),
   persistenceStatus: document.querySelector("[data-persistence-status]"),
-  persistenceDetail: document.querySelector("[data-persistence-detail]")
+  persistenceDetail: document.querySelector("[data-persistence-detail]"),
+  protectedBoundary: document.querySelector("[data-protected-shell-boundary]")
 };
 
 let supabaseClientResultPromise;
@@ -169,6 +170,19 @@ function renderReviewState() {
   if (nodes.loadButton) {
     nodes.loadButton.disabled = reviewState.persistenceStatus === "loading";
   }
+  if (nodes.protectedBoundary) {
+    nodes.protectedBoundary.dataset.candidateStaged = String(reviewState.candidateStaged);
+    nodes.protectedBoundary.dataset.reviewRun = String(reviewState.reviewRun);
+    nodes.protectedBoundary.dataset.persistenceStatus = reviewState.persistenceStatus;
+    nodes.protectedBoundary.dispatchEvent(new CustomEvent("aetherus:review-state", {
+      bubbles: true,
+      detail: {
+        candidateStaged: reviewState.candidateStaged,
+        reviewRun: reviewState.reviewRun,
+        persistenceStatus: reviewState.persistenceStatus
+      }
+    }));
+  }
   renderActivity();
 }
 
@@ -196,6 +210,10 @@ function runLocalReview() {
     "Release authority unavailable; no external release action performed."
   ];
   renderReviewState();
+  nodes.protectedBoundary?.dispatchEvent(new CustomEvent("aetherus:review-complete", {
+    bubbles: true,
+    detail: { result: localReleaseCandidate.releaseReview.result }
+  }));
 }
 
 function createPersistencePayload() {

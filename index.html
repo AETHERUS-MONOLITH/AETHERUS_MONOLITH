@@ -1,307 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-design-system="operator">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AETHERUS MONOLITH - AI Governance Architecture</title>
+  <title>AETHERUS MONOLITH — Inspectable AI governance</title>
+  <meta name="description" content="A staged AETHERUS governance interface for inspectable evidence and traceable decisions.">
   <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,450&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/operator-system.css?v=operator-v7">
+  <link rel="stylesheet" href="css/operator-surfaces.css?v=operator-v8">
 </head>
-<body>
-  <div class="scan-line" aria-hidden="true"></div>
-
-  <header class="site-header" role="banner">
-    <a href="#" class="brand-lockup" aria-label="AETHERUS MONOLITH home">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-copy">
-        <span class="brand-name">AETHERUS <b>&middot;</b> MONOLITH</span>
-        <span class="brand-subtitle">AI Governance &amp; Model-Behavior Risk Architecture</span>
-      </span>
+<body class="operator-page operator-public">
+  <header class="operator-header" role="banner">
+    <a class="operator-wordmark" href="#top" aria-label="AETHERUS MONOLITH home">
+      <span>AETHERUS</span>
+      <small>MONOLITH</small>
     </a>
-    <nav class="site-nav" aria-label="Primary navigation">
+    <nav class="operator-menu__panel" aria-label="Primary navigation">
+      <a href="#research">Research</a>
       <a href="#architecture">Architecture</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#artifacts">Artifacts</a>
-      <div class="nav-item--has-dropdown">
-        <button class="nav-dropdown-trigger" type="button" aria-haspopup="true" aria-controls="publications-menu">Publications</button>
-        <div class="nav-dropdown-panel" id="publications-menu" role="menu" aria-label="Publications">
-          <a role="menuitem" href="/the-apologetic-authority/">The Apologetic Authority</a>
-        </div>
-      </div>
-      <a href="membrane.html">Workspace Preview</a>
-      <a aria-label="Authenticated Surface provider initiation" href="auth-login.html">Authenticated Surface</a>
-      <a href="#methodology">Methodology</a>
-      <a href="mailto:contact@camilocarlone.com">Contact</a>
+      <a href="#contact">Contact</a>
+      <a href="auth-login.html">Access</a>
     </nav>
-    <span class="interface-chip">Staged Governance Product Surface</span>
+    <details class="operator-menu">
+      <summary>Menu</summary>
+      <nav class="operator-menu__mobile-panel" aria-label="Mobile navigation">
+        <a href="#research">Research</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#contact">Contact</a>
+        <a href="auth-login.html">Access</a>
+      </nav>
+    </details>
   </header>
 
-  <main>
-    <section class="cutaway-hero" aria-labelledby="hero-title">
-      <aside class="thesis-panel panel-frame">
-        <span class="panel-kicker">Deterministic Governance Interface</span>
-        <h1 id="hero-title">Govern AI behavior. Control the path from intent to release.</h1>
-        <p>
-          AETHERUS MONOLITH is a staged governance product surface for governing model behavior
-          through explicit authority, verifiable evidence, and traceable decisions.
-        </p>
-        <p>
-          In this static browser-side evaluation, outputs are represented through a disciplined
-          stack of controls, each tied to evidence and bounded by authority.
-        </p>
-
-        <dl class="doctrine-list" aria-label="AETHERUS doctrine">
-          <div>
-            <dt>Authority Boundaries</dt>
-            <dd>Explicit permissioning and override scope define who can decide and when.</dd>
-          </div>
-          <div>
-            <dt>Verifiable Evidence</dt>
-            <dd>Each modeled decision is tied to lineage and reviewable proof concepts.</dd>
-          </div>
-          <div>
-            <dt>Risk-Aware by Design</dt>
-            <dd>Risk is classified and contextualized before the prototype represents progression.</dd>
-          </div>
-          <div>
-            <dt>Release Eligibility</dt>
-            <dd>Only eligible modeled outputs with complete proof are shown in the release corridor.</dd>
-          </div>
-        </dl>
-
-        <p class="disclaimer-box">Staged governance interface for deterministic scenarios, evidence requirements, and claim boundaries.</p>
-        <p class="disclaimer-box">
-          Provider-backed access path: authenticated-surface entry and provider initiation only,
-          not a production SaaS interface or customer workspace.
-        </p>
-        <a class="auth-login-return-link" aria-label="Authenticated Surface provider initiation" href="auth-login.html">Authenticated Surface</a>
+  <main id="top">
+    <section class="operator-hero" aria-labelledby="hero-title">
+      <div class="operator-hero__copy">
+        <p class="operator-eyebrow">Evidence-led AI governance</p>
+        <h1 id="hero-title">Govern AI behavior. Make each decision inspectable.</h1>
+        <p class="operator-hero__lede">AETHERUS connects authority, evidence and traceable decisions in a staged governance interface.</p>
+        <a class="operator-primary-action operator-primary-action--hero" href="#evidence"><span>Explore a review</span><span aria-hidden="true">↘</span></a>
+      </div>
+      <figure class="operator-identity">
+        <picture>
+          <source media="(max-width: 640px)" srcset="assets/identity/aetherus-mark-hero-mobile-480.webp 480w, assets/identity/aetherus-mark-hero-mobile-720.webp 720w" sizes="calc(100vw - 32px)">
+          <source srcset="assets/identity/aetherus-mark-hero-960.webp 960w, assets/identity/aetherus-mark-hero-1440.webp 1440w" sizes="(min-width: 1200px) 610px, 50vw">
+          <img src="assets/identity/aetherus-mark-hero-960.webp" width="960" height="720" alt="A warm porcelain AETHERUS mark with four equal woven arms and an open center" fetchpriority="high">
+        </picture>
+      </figure>
+      <aside class="operator-hero__boundary" aria-label="Evaluation boundary">
+        <span>Current maturity</span>
+        <strong>Static evaluation</strong>
+        <p>Operational evidence pending.</p>
       </aside>
+    </section>
 
-      <section class="stack-stage" id="architecture" aria-labelledby="stack-title">
-        <div class="stack-header">
-          <span>Governance Stack Cutaway</span>
+    <section class="operator-proof" id="evidence" aria-labelledby="proof-title">
+      <header class="operator-section-intro">
+        <p class="operator-eyebrow">Selected proof</p>
+        <h2 id="proof-title">A decision is only as strong as its evidence.</h2>
+        <p>This public scenario is a deterministic browser-side evaluation. It demonstrates how evidence and a modeled result can be inspected; it is separate from authenticated workspace state.</p>
+      </header>
+      <article class="operator-review operator-proof-preview">
+        <div class="operator-review__object">
+          <p class="operator-index">Proof object · 04</p>
+          <h3>Adapter failure escalation</h3>
+          <p>A representative public fixture with a bounded verdict and explicit evidence requirements.</p>
         </div>
+        <div class="operator-review__result">
+          <span class="operator-result-seal operator-result-seal--blocked"><small>Modeled result</small><strong>Blocked</strong></span>
+          <p>Review the reason and required evidence before interpreting the modeled outcome.</p>
+        </div>
+      </article>
+      <details class="operator-disclosure operator-disclosure--evidence">
+        <summary><span><small>Evidence artifact</small> Inspect scenario evidence</span><span aria-hidden="true">Open proof</span></summary>
+        <div class="operator-disclosure__body">
+          <div class="trace-viewer command-deck-mount" id="governance-trace-viewer" role="region" aria-label="Public scenario evidence">
+            <div class="proof-object-skeleton" role="status">Deterministic prototype trace loading from local fixtures.</div>
+          </div>
+        </div>
+      </details>
+    </section>
 
-        <div class="stack-cutaway" role="region" aria-labelledby="stack-title">
-          <h2 id="stack-title" class="sr-only">Layered governance stack cutaway</h2>
-          <ol class="stack-layers" aria-label="Governance stack layers">
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="INPUT_FRAME" data-stage-label="Input / Context" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">01</span>
-                <span class="layer-copy"><strong>Input / Context</strong><small>Prompt, intent, context, assumptions, constraints</small></span>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="AUTHORITY_CHECK" data-stage-label="Authority" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">02</span>
-                <span class="layer-copy"><strong>Authority</strong><small>Authority roots, delegation, intent scope</small></span>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="WHOLE_SYSTEM" data-stage-label="Provenance" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">03</span>
-                <span class="layer-copy"><strong>Provenance</strong><small>Origin, lineage, data and model pedigree</small></span>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="RISK_CLASSIFICATION" data-stage-label="Risk Classification" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">04</span>
-                <span class="layer-copy"><strong>Risk Classification</strong><small>Model-behavior risk surface and taxonomy</small></span>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="GATE_DECISION" data-stage-label="Governance Gates" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">05</span>
-                <span class="layer-copy"><strong>Governance Gates</strong><small>Policy evaluation model with explicit outcomes</small></span>
-              </button>
-            </li>
-            <li class="state-layer">
-              <div class="stack-layer stack-layer-static">
-                <span class="layer-number">06</span>
-                <span class="layer-copy"><strong>State Chambers</strong><small>Mutually exclusive outcomes and actions</small></span>
-              </div>
-              <div class="state-chambers" aria-label="State chambers">
-                <button type="button" class="state-chamber freeze" data-stage-key="RECOVERY_PATH" data-stage-label="Freeze Chamber" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                  <span>Freeze</span><small>Represent halted propagation and hold</small>
-                </button>
-                <button type="button" class="state-chamber repair" data-stage-key="RECOVERY_PATH" data-stage-label="Repair Chamber" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                  <span>Repair</span><small>Mitigate, correct, and validate</small>
-                </button>
-                <button type="button" class="state-chamber escalate" data-stage-key="RECOVERY_PATH" data-stage-label="Escalate Chamber" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                  <span>Escalate</span><small>Raise for review and decision</small>
-                </button>
+    <section class="operator-secondary" aria-label="Architecture and research">
+      <details class="operator-disclosure" id="architecture">
+        <summary><span><small>Architecture</small> Inspect the governance stack</span><span aria-hidden="true">Open</span></summary>
+        <div class="operator-disclosure__body">
+          <p class="operator-disclosure__intro">The stack explains the staged governance model. It is not default product navigation or evidence of operational release authority.</p>
+          <ol class="operator-stack" aria-label="Governance stack layers">
+            <li><button type="button" data-view-node="input-context" data-stage-key="INPUT_FRAME" data-stage-label="Input / Context"><span>01</span><strong>Input / Context</strong><small>Intent, assumptions and constraints</small></button></li>
+            <li><button type="button" data-view-node="authority" data-stage-key="AUTHORITY_CHECK" data-stage-label="Authority"><span>02</span><strong>Authority</strong><small>Authority roots and scope</small></button></li>
+            <li><button type="button" data-view-node="provenance" data-stage-key="WHOLE_SYSTEM" data-stage-label="Provenance"><span>03</span><strong>Provenance</strong><small>Origin and lineage</small></button></li>
+            <li><button type="button" data-view-node="risk-classification" data-stage-key="RISK_CLASSIFICATION" data-stage-label="Risk Classification"><span>04</span><strong>Risk Classification</strong><small>Contextual model-behavior risk</small></button></li>
+            <li><button type="button" data-view-node="governance-gates" data-stage-key="GATE_DECISION" data-stage-label="Governance Gates"><span>05</span><strong>Governance Gates</strong><small>Policy evaluation and outcome</small></button></li>
+            <li class="operator-stack__group">
+              <div class="operator-stack__group-label"><span>06</span><strong>State Chambers</strong><small>Select a contextual outcome path</small></div>
+              <div class="operator-stack__chambers">
+                <button type="button" data-view-node="state-chambers-freeze" data-stage-key="RECOVERY_PATH" data-stage-label="Freeze Chamber">Freeze</button>
+                <button type="button" data-view-node="state-chambers-repair" data-stage-key="RECOVERY_PATH" data-stage-label="Repair Chamber">Repair</button>
+                <button type="button" data-view-node="state-chambers-escalate" data-stage-key="RECOVERY_PATH" data-stage-label="Escalate Chamber">Escalate</button>
               </div>
             </li>
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="AUDIT_RELEASE" data-stage-label="Audit Layer" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">07</span>
-                <span class="layer-copy"><strong>Audit Layer</strong><small>Record model, verification, and attestation concepts</small></span>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="S5" data-stage-label="Artifact Lineage" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">08</span>
-                <span class="layer-copy"><strong>Artifact Lineage</strong><small>Lineage graph across artifacts</small></span>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="stack-layer" data-stage-key="AUDIT_RELEASE" data-stage-label="Release Eligibility" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">09</span>
-                <span class="layer-copy"><strong>Release Eligibility</strong><small>Eligibility assessment, conditions, constraints</small></span>
-              </button>
-            </li>
-            <li>
-              <button type="button" class="stack-layer release-layer" data-stage-key="AUDIT_RELEASE" data-stage-label="Release Corridor" aria-controls="pipeline-related-evidence" aria-pressed="false">
-                <span class="layer-number">10</span>
-                <span class="layer-copy"><strong>Release Corridor</strong><small>Modeled release path with controls</small></span>
-              </button>
-            </li>
+            <li><button type="button" data-view-node="audit-layer" data-stage-key="AUDIT_RELEASE" data-stage-label="Audit Layer"><span>07</span><strong>Audit Layer</strong><small>Reviewable record model</small></button></li>
+            <li><button type="button" data-view-node="artifact-lineage" data-stage-key="S5" data-stage-label="Artifact Lineage"><span>08</span><strong>Artifact Lineage</strong><small>Artifact and version relations</small></button></li>
+            <li><button type="button" data-view-node="release-eligibility" data-stage-key="AUDIT_RELEASE" data-stage-label="Release Eligibility"><span>09</span><strong>Release Eligibility</strong><small>Conditions and constraints</small></button></li>
+            <li><button type="button" data-view-node="release-corridor" data-stage-key="AUDIT_RELEASE" data-stage-label="Release Corridor"><span>10</span><strong>Release Corridor</strong><small>Modeled path; no external action</small></button></li>
           </ol>
-        </div>
-      </section>
-
-      <aside class="taxonomy-panel panel-frame" aria-label="Stack taxonomy legend">
-        <h2>Taxonomy Legend</h2>
-        <ol class="taxonomy-list">
-          <li><strong>Input Boundary</strong><span>Defines the modeled scope of what enters the system.</span></li>
-          <li><strong>Authority Boundary</strong><span>Establishes who could direct, approve, and act in the model.</span></li>
-          <li><strong>Provenance Chain</strong><span>Represents origin and lineage for modeled inputs.</span></li>
-          <li><strong>Risk Context Layer</strong><span>Contextual risk understanding.</span></li>
-          <li><strong>Governance Gates</strong><span>Policy-based evaluation model with explicit outcomes.</span></li>
-          <li><strong>State Chambers</strong><span>Controlled outcome paths with distinct modeled actions.</span></li>
-          <li><strong>Audit Layer</strong><span>Reviewable record model for actions and decisions.</span></li>
-          <li><strong>Artifact Lineage</strong><span>Traceability across artifacts, versions, and relations.</span></li>
-          <li><strong>Eligibility Boundary</strong><span>Modeled eligibility check before release.</span></li>
-          <li><strong>Release Corridor</strong><span>Modeled path to release with conditions.</span></li>
-        </ol>
-      </aside>
-    </section>
-
-    <section class="lower-panels" id="evidence" aria-label="Governance model summary">
-      <article class="analysis-panel panel-frame" id="problem">
-        <span class="section-kicker">The Governance Gap</span>
-        <h2>Ungoverned outputs become hard to inspect.</h2>
-        <p>
-          Without a governed pathway, model outputs can be hard to evaluate against
-          authority checks, provenance review, risk state, gates, audit boundaries,
-          or release criteria.
-        </p>
-        <div class="comparison-strip" aria-label="Ungoverned versus governed flow">
-          <div>
-            <strong>Ungoverned Flow</strong>
-            <small>Intent -> model -> output -> action</small>
-            <span>No authority, provenance, gate, or audit boundary.</span>
-          </div>
-          <div>
-            <strong>Governed Release</strong>
-            <small>Input -> authority -> evidence -> eligibility</small>
-            <span>Constrained by lineage, risk, audit, and release proof.</span>
+          <div class="related-evidence-panel" id="pipeline-related-evidence" aria-live="polite">
+            <div class="related-evidence-copy"><span>Related evidence</span><strong>Choose a layer</strong><p>Inspect one layer at a time to see its supporting research.</p></div>
+            <ul id="related-evidence-list"><li>Evidence links are loaded from local artefact metadata.</li></ul>
           </div>
         </div>
-      </article>
+      </details>
 
-      <article class="analysis-panel panel-frame" id="methodology">
-        <span class="section-kicker">System Architecture</span>
-        <h2>Layered controls define structure before operation.</h2>
-        <p>
-          AETHERUS describes the structure, constraints, and observable evidence
-          needed to govern model-behavior risk before productization.
-        </p>
-        <div class="mini-grid">
-          <span>Authority Layer</span>
-          <span>Governance Gates</span>
-          <span>Risk Model</span>
-          <span>Artifact Lineage</span>
-          <span>Auditability Layer</span>
-          <span>Human Control Surface</span>
+      <details class="operator-disclosure" id="research">
+        <summary><span><small>Research</small> Read the supporting evidence</span><span aria-hidden="true">Open</span></summary>
+        <div class="operator-disclosure__body artifact-surfaces">
+          <nav class="operator-research-nav" aria-label="Research collection">
+            <a href="#research-library">Evidence library</a>
+            <a href="the-apologetic-authority/">The Apologetic Authority</a>
+          </nav>
+          <a class="operator-publication-object" href="the-apologetic-authority/" aria-labelledby="taa-object-title">
+            <span class="operator-publication-object__folio">AETHERUS Research · Monograph 01</span>
+            <span class="operator-publication-object__body">
+              <small>Final manuscript · v1.0.1</small>
+              <strong id="taa-object-title">The Apologetic Authority</strong>
+              <span>A Structural Critique of Anthropic's Constitution for Claude</span>
+            </span>
+            <span class="operator-publication-object__meta"><span>44 pages · A4</span><span>Open publication ↗</span></span>
+          </a>
+          <div class="operator-research-library" id="research-library">
+            <section><h3>Architecture &amp; Governance</h3><div class="docs-grid" id="docs-governance"></div><div class="doc-detail-panel" id="detail-governance" tabindex="-1" aria-live="polite"></div></section>
+            <section><h3>Pipeline Methodology</h3><div class="docs-grid" id="docs-pipeline"></div><div class="doc-detail-panel" id="detail-pipeline" tabindex="-1" aria-live="polite"></div></section>
+            <section><h3>Artefact Evidence</h3><div class="docs-grid" id="docs-artifacts"></div><div class="doc-detail-panel" id="detail-artifacts" tabindex="-1" aria-live="polite"></div></section>
+          </div>
         </div>
-        <p class="micro-note">Prototype foundation: evidence references, artifact references, time anchors.</p>
-      </article>
-
-    </section>
-
-    <section class="pipeline-evidence-section command-deck-section analysis-panel evidence-panel-anchor panel-frame" aria-labelledby="pipeline-evidence-title" aria-label="Governance Pipeline to Evidence">
-      <div class="command-deck-intro">
-        <span class="section-kicker">GOVERNANCE PIPELINE // EVIDENCE</span>
-        <h2 id="pipeline-evidence-title">Every layer should reference supporting proof.</h2>
-        <p>
-          Select a deterministic governance scenario to inspect its modeled verdict,
-          evidence readiness, and claim boundary.
-        </p>
-      </div>
-      <div class="trace-viewer command-deck-mount" id="governance-trace-viewer" role="region" aria-label="AETHERUS Command Deck">
-        <div class="command-deck-skeleton" role="status">
-          Deterministic prototype trace loading from local fixtures.
-        </div>
-      </div>
-      <div class="related-evidence-panel command-deck-related-evidence" id="pipeline-related-evidence" aria-live="polite" aria-atomic="true">
-        <div class="related-evidence-copy">
-          <span>Related Evidence</span>
-          <strong>Stack-to-evidence binding</strong>
-          <p>Select a stack layer, or inspect the active scenario, to see which research artefacts support that part of the governance model.</p>
-        </div>
-        <ul class="related-evidence-list" id="related-evidence-list">
-          <li>Evidence links are loaded from local artefact metadata.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="artifacts-section panel-frame" id="artifacts" aria-labelledby="artifacts-title">
-      <div class="artifacts-intro">
-        <span class="section-kicker">Evidence Artefacts</span>
-        <h2 id="artifacts-title">Curated research and evidence modules.</h2>
-        <p>
-          These artefacts define the conceptual architecture, prototype evidence,
-          and methodology behind AETHERUS MONOLITH. Each card names its claim,
-          evidence type, boundary, and related stack stage.
-        </p>
-      </div>
-
-      <div class="artifact-surfaces" aria-label="Evidence module groups">
-        <div>
-          <h3>Architecture &amp; Governance</h3>
-          <div class="docs-grid" id="docs-governance" aria-label="Governance research modules"></div>
-          <div class="doc-detail-panel" id="detail-governance" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
-        </div>
-        <div>
-          <h3>Pipeline Methodology</h3>
-          <div class="docs-grid" id="docs-pipeline" aria-label="Pipeline governance modules"></div>
-          <div class="doc-detail-panel" id="detail-pipeline" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
-        </div>
-        <div>
-          <h3>Artefact Evidence</h3>
-          <div class="docs-grid" id="docs-artifacts" aria-label="Research and artifact modules"></div>
-          <div class="doc-detail-panel" id="detail-artifacts" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
-        </div>
-      </div>
+      </details>
     </section>
   </main>
 
-  <footer class="footer-status" id="contact" role="contentinfo">
-    <div class="footer-statement">
-      <span class="brand-mark small" aria-hidden="true"></span>
-      <p>
-        AETHERUS MONOLITH is a static, claim-bounded governance product surface for
-        AI systems, deterministic scenario logic, and operational-evidence readiness.
-      </p>
+  <footer class="operator-footer" id="contact">
+    <section class="operator-contact" aria-labelledby="contact-title">
+      <p class="operator-eyebrow">Direct correspondence</p>
+      <h2 id="contact-title">A considered question deserves a direct route.</h2>
+      <p>For AETHERUS research and governance enquiries, write to the project directly.</p>
+      <a class="operator-contact__address" href="mailto:contact@camilocarlone.com"><span>contact@camilocarlone.com</span><span>Open correspondence ↗</span></a>
+    </section>
+    <div class="operator-footer__boundary">
+      <p>AETHERUS MONOLITH</p>
+      <p>Static evaluation. Operational evidence and release authority remain outside this public surface.</p>
     </div>
-    <dl class="status-band">
-      <div><dt>Scope</dt><dd>Governance Product Surface</dd></div>
-      <div><dt>Maturity</dt><dd>Staged Construction</dd></div>
-      <div><dt>Intent</dt><dd>Advance Governed Release Readiness</dd></div>
-      <div><dt>Status</dt><dd>Pending Operational Evidence</dd></div>
-    </dl>
-    <p class="footer-disclaimer">Operational use is a legitimate future threshold event only after runtime, evidence, audit, auth, and release-authority requirements are implemented and validated; this surface does not claim that threshold has been reached.</p>
   </footer>
 
-  <script defer src="js/app.js"></script>
-  <script defer src="js/grid.js"></script>
   <script defer src="js/pipeline.js"></script>
   <script defer src="js/docs.js"></script>
   <script defer src="js/governance-engine.js"></script>
-  <script defer src="js/trace-viewer.js?v=command-deck-focus-1"></script>
+  <script defer src="js/trace-viewer.js?v=operator-proof-1"></script>
+  <script defer src="js/operator-navigation.js?v=operator-nav-1"></script>
 </body>
 </html>

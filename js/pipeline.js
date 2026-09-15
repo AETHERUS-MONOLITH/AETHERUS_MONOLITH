@@ -42,6 +42,21 @@
     AUDIT_RELEASE: 'Audit / release eligibility'
   };
 
+  const viewNodeToStageKey = Object.freeze({
+    'input-context': 'INPUT_FRAME',
+    authority: 'AUTHORITY_CHECK',
+    provenance: 'WHOLE_SYSTEM',
+    'risk-classification': 'RISK_CLASSIFICATION',
+    'governance-gates': 'GATE_DECISION',
+    'state-chambers-freeze': 'RECOVERY_PATH',
+    'state-chambers-repair': 'RECOVERY_PATH',
+    'state-chambers-escalate': 'RECOVERY_PATH',
+    'audit-layer': 'AUDIT_RELEASE',
+    'artifact-lineage': 'S5',
+    'release-eligibility': 'AUDIT_RELEASE',
+    'release-corridor': 'AUDIT_RELEASE'
+  });
+
   const NODE_ORDER = ['G_IDEM', 'S1', 'G1', 'G1A', 'S2', 'G2', 'S3', 'S4', 'G4', 'S5'];
 
   let frozen = false;
@@ -52,6 +67,18 @@
     document.querySelectorAll('[data-node-id]').forEach(el => {
       el.classList.remove('active', 'failure');
       el.setAttribute('aria-pressed', 'false');
+    });
+    document.querySelectorAll('[data-view-node]').forEach(el => {
+      el.classList.remove('active', 'failure');
+      el.setAttribute('aria-pressed', 'false');
+    });
+  }
+
+  function setInspectedViewNodeActive(stageEl) {
+    document.querySelectorAll('[data-view-node]').forEach(el => {
+      const isActive = el === stageEl;
+      el.classList.toggle('active', isActive);
+      el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
   }
 
@@ -159,7 +186,7 @@
       }
 
       nodeEl.addEventListener('click', activate);
-      nodeEl.addEventListener('keydown', (e) => {
+      if (nodeEl.tagName !== 'BUTTON') nodeEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           activate();
@@ -175,14 +202,15 @@
 
       function activate() {
         if (frozen) return;
-        const stageKey = stageEl.getAttribute('data-stage-key');
+        const viewNode = stageEl.getAttribute('data-view-node');
+        const stageKey = viewNode ? viewNodeToStageKey[viewNode] : stageEl.getAttribute('data-stage-key');
         clearAllActive();
-        setControlStageActive(stageKey);
-        showRelatedEvidence(stageKey, getStageLabel(stageEl, stageKey));
+        setInspectedViewNodeActive(stageEl);
+        showRelatedEvidence(stageKey || 'UNKNOWN', stageKey ? getStageLabel(stageEl, stageKey) : 'Unknown');
       }
 
       stageEl.addEventListener('click', activate);
-      stageEl.addEventListener('keydown', (e) => {
+      if (stageEl.tagName !== 'BUTTON') stageEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           activate();
@@ -251,7 +279,6 @@
     },
 
     showRelatedByStage(stageKey) {
-      setControlStageActive(stageKey);
       showRelatedEvidence(stageKey, controlStageLabels[stageKey] || stageKey);
     },
 

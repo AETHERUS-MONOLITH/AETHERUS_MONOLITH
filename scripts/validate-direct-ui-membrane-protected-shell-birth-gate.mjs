@@ -114,10 +114,11 @@ const forbiddenImplementationPatterns = [
 ];
 
 const protectedShellRequiredPhrases = [
-  "Protected workspace path",
-  "Session recognized",
-  "Authenticated save/load loop",
-  "Session-scoped Supabase state",
+  "Current Work",
+  "Checking session",
+  "Protected shell review fixture",
+  "authenticated save/load loop",
+  "session-scoped Supabase state",
   "Operational evidence pending",
   "Customer data outside scope",
   "Static evaluation mode",
@@ -157,11 +158,10 @@ const callbackRequiredBoundaryPhrases = [
 const protectedShellMessagingRequiredPhrases = [
   "Protected workspace admission depends on recognized Supabase session state",
   "Denial without a session is expected guard behavior",
-  "production workspace is",
-  "Expected denial without session",
-  "guard admission plus a bounded save/load path",
-  "Authenticated save/load loop",
-  "Session-scoped Supabase state",
+  "No external release action",
+  "bounded release-review workspace state",
+  "authenticated save/load loop",
+  "session-scoped Supabase state",
   "Operational evidence pending",
   "Customer data outside scope",
   "Static evaluation mode",
@@ -453,7 +453,7 @@ async function assertHomepageNavigationExposure(record) {
   if (exposure.exposure_implemented !== true) fail("homepage navigation exposure must be implemented");
   if (exposure.homepage_file !== homepagePath) fail("homepage navigation exposure must name index.html");
   if (exposure.exposed_route !== loginSurfacePath) fail("homepage navigation exposure must point to auth-login.html");
-  if (exposure.visible_link_label !== "Authenticated Surface") {
+  if (exposure.visible_link_label !== "Access") {
     fail("homepage navigation exposure visible link label mismatch");
   }
   if (exposure.birth_claim_expanded !== false) fail("homepage navigation must not expand the birth claim");
@@ -480,14 +480,11 @@ async function assertHomepageNavigationExposure(record) {
   if (!routePattern.test(homepageText)) {
     fail(`${homepagePath} must expose a visible ${exposure.visible_link_label} link to ${loginSurfacePath}`);
   }
-  if (!homepageText.includes("Provider-backed access path")) {
-    fail(`${homepagePath} must describe the provider-backed access path boundary`);
+  if (!homepageText.includes("Static evaluation")) {
+    fail(`${homepagePath} must retain the static-evaluation boundary`);
   }
-  if (!homepageText.includes("authenticated-surface entry and provider initiation only")) {
-    fail(`${homepagePath} must bound the exposed path to authenticated-surface entry and provider initiation`);
-  }
-  if (!homepageText.includes("not a production SaaS interface or customer workspace")) {
-    fail(`${homepagePath} must deny production SaaS interface/customer workspace implications`);
+  if (!homepageText.includes("Operational evidence pending")) {
+    fail(`${homepagePath} must retain the operational-evidence boundary`);
   }
 
   for (const { label, pattern } of homepageForbiddenExposurePatterns) {
