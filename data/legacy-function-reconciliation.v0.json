@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1",
+  "purpose": "Migrate useful legacy functions without reviving permanent Agent roles.",
+  "source_evidence": {
+    "ip_dossier_root": "ExportBlock-DOSSIER/DOSSIER",
+    "reviewed_artifacts": [
+      "AGENT 3 — Business Advisor",
+      "AGENT 4 — Pipeline Orchestrator",
+      "SYSTEM STATE EXPORT AETHERUS_PROFILE — CONTINUATION"
+    ],
+    "authority": "historical evidence only; current runtime contracts and verified repository state control"
+  },
+  "reconciliations": [
+    {
+      "legacy_label": "Agent 3 — Business Advisor",
+      "disposition": "migrated_function",
+      "current_function": "Commercial and Market Evidence Review",
+      "substantive_content_status": "partially reusable; strategic and market assertions require current evidence before use",
+      "purpose": "Review customer, market, licensing and commercial evidence on demand.",
+      "activation": "Explicit product or business research task; never permanently active.",
+      "inputs": ["current sourced market research", "customer evidence", "product capability evidence", "commercial question"],
+      "outputs": ["bounded commercial decision memo", "evidence gaps", "recommended validation work"],
+      "authority_boundary": "Advisory only; no final product, governance, pricing, legal or release authority.",
+      "operating_role": "Subsequent product/business work, outside live_governed_evaluation_v0.",
+      "rejected_assumptions": ["permanent Agent identity", "unsourced final adjudication authority", "historical market claims as current doctrine"]
+    },
+    {
+      "legacy_label": "Agent 4 — Pipeline Orchestrator",
+      "disposition": "split_and_superseded",
+      "current_function": "Bounded Invocation Control",
+      "substantive_content_status": "the need for explicit activation and handoff remains correct; the historical human-message-bus agent topology is obsolete",
+      "purpose": "Select and invoke one bounded Intelligence under authenticated user control; later sequence Intelligences only through an explicit orchestrator contract.",
+      "activation": "Per user run or future explicit orchestration request.",
+      "inputs": ["authenticated user and workspace identity", "selected intelligence_id", "bounded ScenarioInput", "run contract"],
+      "outputs": ["persisted run identity", "invocation evidence", "normalized result or fail-closed record"],
+      "authority_boundary": "Cannot invent authority, self-activate Intelligences, perform external actions or grant release eligibility.",
+      "operating_role": "Current single-Intelligence run control is implemented; generalized orchestration remains open build scope.",
+      "rejected_assumptions": ["always-active coordinator", "autonomous multi-agent loop", "legacy Agent routing labels as product runtime"]
+    },
+    {
+      "legacy_label": "Agent 7 — Signal Detection / Real-Time Researcher",
+      "disposition": "migrated_function",
+      "current_function": "Market Signal Research",
+      "substantive_content_status": "signal classification logic is reusable as a research method; historical signals, sources and thresholds require revalidation",
+      "purpose": "Collect and classify sourced market, regulatory and customer signals for later product/business decisions.",
+      "activation": "Explicit research task with current-source requirements; never permanently active.",
+      "inputs": ["approved current sources", "current signal taxonomy", "target-market question", "time boundary"],
+      "outputs": ["sourced signal brief", "confidence and recency fields", "unresolved evidence requirements"],
+      "authority_boundary": "Research only; cannot make governance, product, legal, commercial or release decisions.",
+      "operating_role": "Subsequent product/business work, outside live_governed_evaluation_v0.",
+      "rejected_assumptions": ["continuous monitoring by default", "unsourced real-time claim", "automatic routing to permanent legacy Agents"]
+    }
+  ],
+  "global_rejections": [
+    "Legacy Agent labels do not imply current independently running services.",
+    "Historical rationale is retained only in source evidence and is not copied into operational prompts.",
+    "No legacy artifact grants production, ledger, compliance, legal, release or external-action authority."
+  ]
+}

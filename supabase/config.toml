@@ -15,3 +15,6 @@ verify_jwt = false
 
 [functions.github-pages-conduit-invocation-v0]
 verify_jwt = false
+
+[functions.live-governed-evaluation-v0]
+verify_jwt = true

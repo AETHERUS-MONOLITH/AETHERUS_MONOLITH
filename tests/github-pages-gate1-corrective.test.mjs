@@ -91,7 +91,6 @@ function baseClaims(manifest, overrides = {}) {
     run_attempt: "1",
     actor: FIXED.actor,
     actor_id: FIXED.actorId,
-    triggering_actor: FIXED.actor,
     event_name: "workflow_dispatch",
     environment: FIXED.environment,
     runner_environment: "github-hosted",
@@ -195,7 +194,6 @@ test("signed synthetic OIDC substitutions fail with exact bounded classification
       ["owner ID", { repository_owner_id: "1" }, "oidc_owner_mismatch"],
       ["actor", { actor: "substituted" }, "oidc_actor_mismatch"],
       ["actor ID", { actor_id: "1" }, "oidc_actor_id_mismatch"],
-      ["triggering actor", { triggering_actor: "substituted" }, "oidc_triggering_actor_mismatch"],
       ["workflow", { workflow: "Substituted workflow" }, "oidc_workflow_mismatch"],
       ["workflow ref", { workflow_ref: "substituted/ref" }, "oidc_workflow_mismatch"],
       ["ref", { ref: "refs/heads/substituted" }, "oidc_ref_mismatch"],
@@ -232,6 +230,19 @@ test("signed synthetic OIDC substitutions fail with exact bounded classification
       );
     }
   });
+});
+
+test("OIDC verification uses standard claims while the workflow enforces triggering identity", async () => {
+  const manifest = baseManifest();
+  const claims = baseClaims(manifest);
+  assert.equal(Object.hasOwn(claims, "triggering_actor"), false);
+  await withOidcFetch(() => verifyGitHubOidc(signedToken(claims), FIXED.requestAudience, {
+    run_id: manifest.run_id,
+    workflow_sha: manifest.workflow_sha,
+    source_commit_sha: manifest.source_commit_sha
+  }));
+  const workflow = await fs.readFile(workflowPath, "utf8");
+  assert.match(workflow, /test "\$ACTOR" = "\$TRIGGERING_ACTOR"/);
 });
 
 test("artifact verification accepts the exact tuple and classifies bounded failures", async () => {

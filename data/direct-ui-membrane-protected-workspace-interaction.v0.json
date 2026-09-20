@@ -1,64 +1,83 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "artifact_id": "direct-ui-membrane-protected-workspace-interaction.v0",
   "section": "§1.2 Direct UI Membrane",
   "surface_file": "protected-shell.html",
   "script_file": "js/protected-workspace.js",
-  "object_classification": [
-    "protected workspace interaction",
-    "browser-side release-review flow",
-    "in-memory interaction preserved with later authenticated persistence wiring",
-    "local fixture only"
-  ],
-  "local_release_candidate": {
-    "id": "local-release-candidate-0-1",
-    "label": "Local release candidate",
-    "source": "static module fixture",
-    "customer_data": false,
-    "tenant_data": false,
-    "operational_log_data": false,
-    "audit_record_data": false
-  },
-  "interaction_controls": [
-    "Stage candidate",
-    "Run local review"
-  ],
-  "populated_areas": [
-    "Evidence Packet",
-    "Release Review",
-    "Trace / Activity"
-  ],
-  "blocked_review_result": {
-    "result": "Review blocked",
-    "reason": "Incomplete operational evidence",
-    "release_authority_available": false,
+  "live_run": {
+    "run_type": "live_governed_evaluation_v0",
+    "authenticated_user_workspace_binding": true,
+    "server_side_model_execution": true,
+    "model_provider": "OpenAI",
+    "five_independent_intelligence_contracts": [
+      "communicator",
+      "mediator",
+      "drafter",
+      "refiner",
+      "origin"
+    ],
+    "one_intelligence_per_run": true,
+    "nexus_boundary": "Pinned Python Alpha / Delta / Omega kernel through a separate server-to-server execution host",
+    "persistent_run_identity": true,
+    "persistent_events_and_result": true,
     "external_release_action_performed": false
   },
-  "state_boundary": {
+  "fixture_path": {
+    "id": "local-release-candidate-0-1",
+    "label": "Deterministic fixture",
     "browser_side": true,
-    "in_memory_only": false,
-    "in_memory_interaction_preserved": true,
+    "distinguishable_from_live_run": true,
+    "model_execution": false,
+    "nexus_execution": false
+  },
+  "interaction_controls": [
+    "Select active Intelligence",
+    "Stage input",
+    "Run governed evaluation",
+    "Inspect evidence",
+    "Save workspace state",
+    "Load saved workspace state",
+    "Load deterministic fixture",
+    "Run fixture review"
+  ],
+  "normalized_objects": [
+    "ScenarioInput",
+    "GateResult",
+    "Verdict",
+    "EvidenceRequirement",
+    "ArtifactReference",
+    "ReleaseEligibility",
+    "TraceEvent",
+    "HandoffReceipt",
+    "IntelligenceInvocation"
+  ],
+  "state_boundary": {
+    "browser_side_interface": true,
     "local_storage_used": false,
     "session_storage_used": false,
-    "cookies_used": false,
+    "cookies_written_by_workspace_script": false,
     "network_calls_used": true,
+    "supabase_function_invocation_used": true,
     "supabase_writes_used": true,
     "database_calls_used": true,
-    "api_calls_used": false,
-    "service_worker_used": false
+    "per_run_non_sensitive_classification_required": true,
+    "per_run_external_processing_consent_required": true
+  },
+  "bounded_claims": {
+    "backend_boundary_implemented": true,
+    "bounded_persistence_implemented": true,
+    "authenticated_identity_binding_implemented": true,
+    "rls_read_boundary_defined": true,
+    "one_live_model_invocation_per_run": true,
+    "pinned_nexus_mapping_required": true
   },
   "non_claims": {
-    "backend": false,
-    "persistence": false,
-    "tenant_isolation": false,
-    "rls": false,
-    "billing": false,
-    "monitoring": false,
-    "production_release_authority": false,
-    "public_nexus_runtime": false,
-    "model_api_execution": false,
-    "operational_use": false,
-    "doi_archive_search_publication_distribution": false
+    "production_audit_ledger": false,
+    "compliance_certification": false,
+    "external_release_authority": false,
+    "generalized_orchestration": false,
+    "autonomous_multi_agent_runtime": false,
+    "operational_observability_maturity": false
   },
   "guard_boundary": {
     "protected_shell_guard_preserved": true,

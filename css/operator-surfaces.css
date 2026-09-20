@@ -532,6 +532,17 @@
 [data-design-system="operator"] .operator-object-register > div + div { border-left: 1px solid var(--boundary-quiet); }
 [data-design-system="operator"] .operator-object-register span { color: var(--content-muted); font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
 [data-design-system="operator"] .operator-object-register strong { max-width: 36ch; color: var(--content-primary); font-size: 14px; font-weight: 600; }
+[data-design-system="operator"] .operator-evaluation-input { display: grid; gap: 12px; margin: 34px 0 22px; padding: 22px; border: 1px solid var(--boundary-quiet); background: linear-gradient(145deg, rgb(247 245 242 / 78%), rgb(232 225 216 / 36%)); box-shadow: inset 0 1px 0 rgb(255 255 255 / 72%), 0 12px 28px rgb(78 67 58 / 6%); }
+[data-design-system="operator"] .operator-evaluation-input > label:first-child { display: flex; justify-content: space-between; gap: 16px; color: var(--content-primary); font-size: 12px; font-weight: 600; }
+[data-design-system="operator"] .operator-evaluation-input > label:first-child small { color: var(--content-muted); font: 10px/1.4 var(--font-data); font-weight: 400; }
+[data-design-system="operator"] .operator-evaluation-input textarea { width: 100%; min-height: 128px; resize: vertical; padding: 16px 17px; border: 1px solid color-mix(in srgb, var(--boundary-authority) 28%, var(--boundary-quiet)); border-radius: 2px; outline: 0; background: rgb(247 245 242 / 88%); color: var(--content-primary); font: 14px/1.65 var(--font-ui); box-shadow: inset 0 1px 3px rgb(78 67 58 / 7%); }
+[data-design-system="operator"] .operator-evaluation-input select { width: 100%; padding: 12px 42px 12px 14px; border: 1px solid color-mix(in srgb, var(--boundary-authority) 24%, var(--boundary-quiet)); border-radius: 2px; outline: 0; background: rgb(247 245 242 / 88%); color: var(--content-primary); font: 12px/1.5 var(--font-ui); box-shadow: inset 0 1px 2px rgb(78 67 58 / 6%); }
+[data-design-system="operator"] .operator-evaluation-input select:focus-visible { border-color: var(--focus-ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 24%, transparent), inset 0 1px 2px rgb(78 67 58 / 6%); }
+[data-design-system="operator"] .operator-evaluation-input textarea::placeholder { color: var(--content-muted); }
+[data-design-system="operator"] .operator-evaluation-input textarea:focus-visible { border-color: var(--focus-ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 24%, transparent), inset 0 1px 3px rgb(78 67 58 / 7%); }
+[data-design-system="operator"] .operator-processing-consent { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; align-items: start; color: var(--content-secondary); font-size: 11px; line-height: 1.55; }
+[data-design-system="operator"] .operator-processing-consent input { width: 15px; height: 15px; margin: 2px 0 0; accent-color: var(--focus-ring); }
+[data-design-system="operator"] .operator-input-status { margin: 0; color: var(--content-muted); font: 10px/1.5 var(--font-data); }
 [data-design-system="operator"] .operator-view-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 32px; }
 
 [data-design-system="operator"] .operator-context { border-top: 1px solid var(--boundary-quiet); }
@@ -662,6 +673,8 @@
   [data-design-system="operator"] .operator-focus { padding: 26px 22px 30px; box-shadow: 5px 6px 0 rgb(213 201 185 / 30%), 0 18px 38px rgb(78 67 58 / 7%); }
   [data-design-system="operator"] .operator-state-seal { margin-top: 8px; }
   [data-design-system="operator"] .operator-object-register { grid-template-columns: 1fr; margin-block: 28px 24px; }
+  [data-design-system="operator"] .operator-evaluation-input { margin-block: 26px 18px; padding: 17px; }
+  [data-design-system="operator"] .operator-evaluation-input > label:first-child { align-items: start; flex-direction: column; gap: 3px; }
   [data-design-system="operator"] .operator-object-register > div + div { border-top: 1px solid var(--boundary-quiet); border-left: 0; }
   [data-design-system="operator"] .operator-view-actions { margin-block: 24px 28px; }
   [data-design-system="operator"] .operator-context summary { grid-template-columns: 30px minmax(0, 1fr) 18px; gap: 10px; }

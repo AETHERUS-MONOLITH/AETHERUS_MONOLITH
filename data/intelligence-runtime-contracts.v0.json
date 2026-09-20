@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1",
+  "run_type": "live_governed_evaluation_v0",
+  "runtime_boundary": "supabase/functions/live-governed-evaluation-v0",
+  "activation_model": "one explicitly selected Intelligence per authenticated run",
+  "shared_model": {
+    "provider": "openai",
+    "model": "gpt-5.6-luna",
+    "server_side_only": true,
+    "one_invocation_per_run": true,
+    "store": false
+  },
+  "orchestration": {
+    "generalized_sequence_implemented": false,
+    "autonomous_loop_implemented": false,
+    "current_control": "authenticated human selection through Current Work or exact API intelligence_id"
+  },
+  "intelligences": [
+    {
+      "id": "communicator",
+      "purpose": "Normalize raw intent into a bounded execution-plan candidate.",
+      "activation_condition": "The input needs objective framing and explicit unresolved constraints.",
+      "accepted_input_contract": "One authenticated non-sensitive ScenarioInput.",
+      "produced_output_contract": "execution_plan: objective, activation_recommendation, constraints_to_resolve.",
+      "authority_boundary": "May frame and recommend activation; cannot impose constraints, draft, verify, commit, release or act externally.",
+      "required_knowledge_resources": ["ScenarioInput", "Joint Workflow communicator semantics"],
+      "persistence_evidence": ["run identity", "model response identity", "execution-plan hash", "evidence requirements", "trace events"],
+      "independently_invokable": true
+    },
+    {
+      "id": "mediator",
+      "purpose": "Generate an enforceable candidate constraints packet.",
+      "activation_condition": "The bounded object needs constraints, acceptance tests and forbidden-pattern boundaries.",
+      "accepted_input_contract": "One authenticated non-sensitive ScenarioInput.",
+      "produced_output_contract": "constraints_packet: constraints, acceptance_tests, forbidden_patterns.",
+      "authority_boundary": "May define candidate constraints; cannot draft, certify, commit, release or act externally.",
+      "required_knowledge_resources": ["ScenarioInput", "Joint Workflow mediator semantics", "available policy and forbidden-pattern references"],
+      "persistence_evidence": ["run identity", "model response identity", "constraints-packet hash", "evidence requirements", "trace events"],
+      "independently_invokable": true
+    },
+    {
+      "id": "drafter",
+      "purpose": "Produce one bounded artifact candidate under supplied constraints.",
+      "activation_condition": "The input contains an explicit artifact request and complete constraints.",
+      "accepted_input_contract": "One authenticated non-sensitive ScenarioInput containing the artifact request and constraints.",
+      "produced_output_contract": "bounded_artifact: content, constraint_acknowledgements.",
+      "authority_boundary": "May draft a candidate artifact; cannot verify its own work, commit, release or act externally.",
+      "required_knowledge_resources": ["ScenarioInput", "explicit constraints in the input", "Joint Workflow drafter semantics"],
+      "persistence_evidence": ["run identity", "model response identity", "bounded-artifact hash", "evidence requirements", "trace events"],
+      "independently_invokable": true
+    },
+    {
+      "id": "refiner",
+      "purpose": "Verify a supplied artifact candidate and emit findings plus a bounded patchlist.",
+      "activation_condition": "The input contains a candidate artifact, its constraints and the requested verification boundary.",
+      "accepted_input_contract": "One authenticated non-sensitive ScenarioInput containing artifact and constraints.",
+      "produced_output_contract": "verification: verification_verdict, findings, patchlist.",
+      "authority_boundary": "May issue a candidate verification verdict and patchlist; cannot mutate, commit, release, certify or act externally.",
+      "required_knowledge_resources": ["ScenarioInput", "artifact and constraints in the input", "Joint Workflow refiner semantics"],
+      "persistence_evidence": ["run identity", "model response identity", "verification hash", "evidence requirements", "trace events"],
+      "independently_invokable": true
+    },
+    {
+      "id": "origin",
+      "purpose": "Prepare a pass-qualified lineage record and human delta brief.",
+      "activation_condition": "The input contains a pass-qualified verification identity and artifact identity.",
+      "accepted_input_contract": "One authenticated non-sensitive ScenarioInput containing verification and artifact identity.",
+      "produced_output_contract": "lineage_record: precondition_verdict, artifact_identity, delta_brief, commit_authority_exercised=false.",
+      "authority_boundary": "May prepare a lineage record; live_governed_evaluation_v0 cannot commit, publish, release or act externally.",
+      "required_knowledge_resources": ["ScenarioInput", "pass-qualified verification identity", "artifact identity", "Joint Workflow origin semantics"],
+      "persistence_evidence": ["run identity", "model response identity", "lineage-record hash", "evidence requirements", "trace events"],
+      "independently_invokable": true
+    }
+  ]
+}

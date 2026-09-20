@@ -324,11 +324,12 @@ const requiredShellPhrases = [
   "Load saved workspace state",
   "Persistence status",
   "unsaved",
-  "bounded release-review workspace state",
-  "Operational evidence pending",
-  "Tenant and customer context outside this frame",
-  "Customer data outside scope",
-  "Not a production SaaS interface"
+  "Bounded persistence",
+  "Execution evidence pending",
+  "non-sensitive input",
+  "production audit ledger",
+  "compliance certification",
+  "No external release action"
 ];
 
 for (const phrase of requiredShellPhrases) {

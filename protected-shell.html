@@ -54,27 +54,46 @@
           <div class="operator-work-object__header">
             <div>
               <p class="operator-index">Object</p>
-              <h2 id="current-object-title">Local release candidate</h2>
-              <p>Protected shell review fixture</p>
+              <h2 id="current-object-title">Live governed evaluation</h2>
+              <p>One selected Intelligence · one bounded server-side evaluation</p>
             </div>
-            <span class="operator-state-seal operator-state-seal--conditional"><small>Review state</small><strong data-review-candidate-summary>Sample release candidate available for local review.</strong></span>
+            <span class="operator-state-seal operator-state-seal--conditional"><small>Run state</small><strong data-review-candidate-summary>Waiting for a bounded input.</strong></span>
           </div>
 
+          <form class="operator-evaluation-input" data-live-evaluation-form>
+            <label for="live-evaluation-intelligence"><span>Active Intelligence</span><small>One bounded invocation</small></label>
+            <select id="live-evaluation-intelligence" name="live-evaluation-intelligence" data-live-evaluation-intelligence>
+              <option value="communicator">Communicator · intent to execution plan</option>
+              <option value="mediator" selected>Mediator · object to constraints packet</option>
+              <option value="drafter">Drafter · constraints to bounded artifact</option>
+              <option value="refiner">Refiner · artifact to verification and patchlist</option>
+              <option value="origin">Origin · pass-qualified lineage record</option>
+            </select>
+            <label for="live-evaluation-input"><span>Bounded input</span><small>20–4,000 characters</small></label>
+            <textarea id="live-evaluation-input" name="live-evaluation-input" rows="5" maxlength="4000" minlength="20" data-live-evaluation-input placeholder="Describe one bounded object or action for evaluation."></textarea>
+            <label class="operator-processing-consent">
+              <input type="checkbox" data-live-evaluation-consent>
+              <span>I confirm this input is non-sensitive and authorize its server-side processing by OpenAI for this run.</span>
+            </label>
+            <p class="operator-input-status" data-live-input-status role="status">No input staged.</p>
+          </form>
+
           <div class="operator-object-register" aria-label="Object review summary">
-            <div><span>01 · State</span><strong data-review-workspace-state>No active release candidate is queued.</strong></div>
-            <div><span>02 · Evidence</span><strong>Incomplete operational evidence</strong></div>
+            <div><span>01 · State</span><strong data-review-workspace-state>No live evaluation is queued.</strong></div>
+            <div><span>02 · Evidence</span><strong data-object-evidence-state>Execution evidence pending</strong></div>
           </div>
 
           <div class="operator-view-actions">
-            <button class="operator-primary-action" type="button" data-action="stage-local-candidate">Stage candidate</button>
+            <button class="operator-primary-action" type="button" data-action="stage-live-evaluation" disabled>Stage input</button>
             <button class="operator-primary-action" type="button" data-operator-action="inspect-evidence" hidden>Inspect evidence</button>
           </div>
 
           <details class="operator-context">
             <summary><span aria-hidden="true">01</span><strong>Object details</strong><small>Identity and boundary</small></summary>
             <dl>
-              <div><dt>Technical ID</dt><dd><code>local-release-candidate-0-1</code></dd></div>
-              <div><dt>Scope</dt><dd>Protected shell review fixture</dd></div>
+              <div><dt>Run type</dt><dd><code>live_governed_evaluation_v0</code></dd></div>
+              <div><dt>Intelligence</dt><dd data-live-intelligence-boundary>Mediator · independently invokable constraint generation</dd></div>
+              <div><dt>Execution</dt><dd>One OpenAI model call followed by pinned NEXUS normalization</dd></div>
               <div><dt>Boundary</dt><dd>No external release action</dd></div>
             </dl>
           </details>
@@ -90,47 +109,54 @@
 
           <details class="operator-context">
             <summary><span aria-hidden="true">03</span><strong>Scope and limits</strong><small>What this surface can claim</small></summary>
-            <p>This frame can save and load bounded release-review workspace state. Operational evidence pending. Tenant and customer context outside this frame. Customer data outside scope. Static evaluation mode. Not a production SaaS interface. Not an operational release system.</p>
-            <p>Protected workspace admission depends on recognized Supabase session state. Denial without a session is expected guard behavior. The authenticated save/load loop uses session-scoped Supabase state.</p>
+            <p>This path accepts one explicitly non-sensitive input, makes one server-side model call and records bounded execution evidence. It does not establish a production audit ledger, compliance certification or external release authority.</p>
+            <p>Protected workspace admission depends on recognized Supabase session state. The live endpoint binds every run to the authenticated user and active workspace membership, then fails closed when model execution, NEXUS execution, governance evaluation or persistence cannot be established.</p>
+          </details>
+
+          <details class="operator-context">
+            <summary><span aria-hidden="true">04</span><strong>Deterministic fixture</strong><small>Distinguishable local fallback</small></summary>
+            <p>The previous browser-side fixture remains available for interface testing. It does not invoke a model or NEXUS and cannot be mistaken for a live run.</p>
+            <button class="operator-secondary-action" type="button" data-action="stage-local-candidate">Load deterministic fixture</button>
           </details>
         </article>
       </section>
 
       <section class="operator-view" data-operator-view="evidence" aria-labelledby="evidence-focus-title" hidden>
         <button class="operator-back" type="button" data-operator-action="back-to-work">← Back to Current Work</button>
-        <p class="operator-breadcrumb">Current Work / Local release candidate</p>
+        <p class="operator-breadcrumb">Current Work / Governed evaluation</p>
         <article class="operator-focus operator-focus--evidence operator-work-plate">
           <header class="operator-focus__lead">
             <p class="operator-index">Evidence</p>
-            <h2 id="evidence-focus-title">Inspect the review evidence</h2>
+            <h2 id="evidence-focus-title">Inspect execution evidence</h2>
             <p data-evidence-status>No evidence packet is loaded yet.</p>
           </header>
           <div class="operator-evidence-list" data-evidence-fields>
-            <div><span class="operator-evidence-marker operator-evidence-marker--present" aria-hidden="true">●</span><div><strong>Candidate</strong><p data-evidence-candidate>None staged.</p></div></div>
-            <div><span class="operator-evidence-marker operator-evidence-marker--conditional" aria-hidden="true">◐</span><div><strong>Evidence status</strong><p data-evidence-completeness>Operational evidence packet missing.</p></div></div>
-            <div><span class="operator-evidence-marker operator-evidence-marker--missing" aria-hidden="true">−</span><div><strong>Missing requirements</strong><p data-evidence-missing>Operational evidence packet missing.</p></div></div>
-            <div><span class="operator-evidence-marker operator-evidence-marker--missing" aria-hidden="true">−</span><div><strong>Ledger and context</strong><p>Production audit ledger and tenant/customer context are outside this frame.</p></div></div>
+            <div><span class="operator-evidence-marker operator-evidence-marker--present" aria-hidden="true">●</span><div><strong>Object identity</strong><p data-evidence-candidate>None staged.</p></div></div>
+            <div><span class="operator-evidence-marker operator-evidence-marker--conditional" aria-hidden="true">◐</span><div><strong>Execution evidence</strong><p data-evidence-completeness>Model and NEXUS execution pending.</p></div></div>
+            <div><span class="operator-evidence-marker operator-evidence-marker--missing" aria-hidden="true">−</span><div><strong>Requirements</strong><p data-evidence-missing>Complete execution evidence is required.</p></div></div>
+            <div><span class="operator-evidence-marker operator-evidence-marker--missing" aria-hidden="true">−</span><div><strong>Release boundary</strong><p>Production ledger, compliance certification and external release authority remain outside this run.</p></div></div>
           </div>
           <div class="operator-view-actions">
-            <button class="operator-primary-action" type="button" data-action="run-local-review" disabled>Run local review</button>
+            <button class="operator-primary-action" type="button" data-action="run-live-evaluation" disabled>Run governed evaluation</button>
+            <button class="operator-secondary-action" type="button" data-action="run-local-review" hidden disabled>Run fixture review</button>
           </div>
-          <details class="operator-context"><summary><span aria-hidden="true">01</span><strong>Policy and lineage context</strong><small>Contextual disclosure</small></summary><p>This fixture identifies evidence boundaries; it does not establish production policy, lineage or release authority.</p></details>
+          <details class="operator-context"><summary><span aria-hidden="true">01</span><strong>Policy and lineage context</strong><small>Contextual disclosure</small></summary><p>The live path uses the Joint Workflow manifest as a reference, records model and pinned NEXUS identities, and applies a bounded executable policy decision. It does not claim generalized Palisade or Conduit maturity.</p></details>
         </article>
       </section>
 
       <section class="operator-view" data-operator-view="decision" aria-labelledby="decision-focus-title" hidden>
         <button class="operator-back" type="button" data-operator-action="back-to-work">← Back to Current Work</button>
-        <p class="operator-breadcrumb">Current Work / Local release candidate / Review</p>
+        <p class="operator-breadcrumb">Current Work / Governed evaluation / Result</p>
         <article class="operator-focus operator-focus--decision operator-work-plate">
           <header class="operator-focus__lead">
             <p class="operator-index">Decision → Result</p>
-            <h2 id="decision-focus-title">Review blocked</h2>
-            <p class="operator-decision-state" data-review-result role="status">No release candidate is queued.</p>
+            <h2 id="decision-focus-title" data-decision-heading>Evaluation pending</h2>
+            <p class="operator-decision-state" data-review-result role="status">No evaluation is queued.</p>
           </header>
           <div class="operator-authority-result">
-            <div><span>Review state</span><strong data-review-state>Waiting for local candidate.</strong></div>
-            <div><span>Decision</span><strong data-review-decision>Release authority unavailable.</strong></div>
-            <div><span>Reason</span><strong data-review-reason>Incomplete operational evidence; no external release action is performed.</strong></div>
+            <div><span>Run state</span><strong data-review-state>Waiting for bounded input.</strong></div>
+            <div><span>Verdict</span><strong data-review-decision>Not evaluated.</strong></div>
+            <div><span>Result</span><strong data-review-reason>No governed result is available.</strong></div>
           </div>
           <div class="operator-view-actions">
             <button class="operator-primary-action" type="button" data-action="save-workspace-state" disabled>Save workspace state</button>
@@ -140,7 +166,7 @@
             <p data-activity-status>No persistent activity has been recorded.</p>
             <ol data-activity-list><li>Local in-memory activity will appear here after staging.</li></ol>
           </details>
-          <p class="operator-boundary-note">Workspace-state persistence does not approve or release the candidate.</p>
+          <p class="operator-boundary-note">A persisted evaluation result does not approve or release an external action.</p>
         </article>
       </section>
 

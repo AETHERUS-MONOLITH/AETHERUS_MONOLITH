@@ -277,7 +277,7 @@ export async function verifyGitHubOidc(token: string, audience: string, binding:
     repository: FIXED.repository, repository_id: FIXED.repositoryId, repository_owner: FIXED.repositoryOwner,
     repository_owner_id: FIXED.repositoryOwnerId, repository_visibility: "public", ref: FIXED.ref, ref_type: "branch",
     workflow: FIXED.workflow, workflow_ref: `${FIXED.repository}/${FIXED.workflowPath}@${FIXED.ref}`, environment: FIXED.environment,
-    event_name: "workflow_dispatch", actor: FIXED.actor, actor_id: FIXED.actorId, triggering_actor: FIXED.actor,
+    event_name: "workflow_dispatch", actor: FIXED.actor, actor_id: FIXED.actorId,
     run_attempt: "1", runner_environment: "github-hosted"
   };
   for (const [field,value] of Object.entries(expected)) exact(claims[field], value, field);
