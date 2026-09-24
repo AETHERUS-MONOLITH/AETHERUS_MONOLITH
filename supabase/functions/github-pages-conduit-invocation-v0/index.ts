@@ -27,7 +27,7 @@ Deno.serve(async (request: Request) => {
   try {
     const rows = await sql.begin(async (tx) => {
       await tx.unsafe("set local role service_role");
-      return tx.unsafe("select * from private.prepare_github_pages_conduit_invocation_v0($1::jsonb,$2::text)", [JSON.stringify(envelope), tokenDigest]);
+      return tx.unsafe("select * from private.prepare_github_pages_conduit_invocation_v0($1::jsonb,$2::text)", [envelope, tokenDigest]);
     });
     if (!Array.isArray(rows) || rows.length !== 1) return json(503, { error: "conduit_prepare_indeterminate" });
     prepared = rows[0];
@@ -59,7 +59,7 @@ Deno.serve(async (request: Request) => {
       await tx.unsafe("set local role service_role");
       return tx.unsafe(
         "select * from private.consume_github_pages_publication_authorization_v0($1::uuid,$2::jsonb,$3::text)",
-        [envelope.request_id, JSON.stringify(observedBinding), tokenDigest]
+        [envelope.request_id, observedBinding, tokenDigest]
       );
     });
     if (!Array.isArray(rows) || rows.length !== 1) throw new Error("consumption_result_indeterminate");
@@ -89,7 +89,7 @@ Deno.serve(async (request: Request) => {
   try {
     const rows = await sql.begin(async (tx) => {
       await tx.unsafe("set local role service_role");
-      return tx.unsafe("select * from private.complete_github_pages_conduit_invocation_v0($1::uuid,$2::jsonb)", [prepared.conduit_invocation_id, JSON.stringify(receipt)]);
+      return tx.unsafe("select * from private.complete_github_pages_conduit_invocation_v0($1::uuid,$2::jsonb)", [prepared.conduit_invocation_id, receipt]);
     });
     if (!Array.isArray(rows) || rows.length !== 1 || rows[0].deployment_permit !== true) throw new Error("result_validation_failed");
     return json(200, rows[0]);
