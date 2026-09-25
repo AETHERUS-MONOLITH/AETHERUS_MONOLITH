@@ -24,3 +24,13 @@ A hosted Edge Function can call this service only after the Operator deploys it
 behind HTTPS and sets `AETHERUS_NEXUS_EXECUTION_URL` plus the matching token as
 Supabase Edge secrets. This repository change does not infer or silently create
 that infrastructure.
+
+The native `Dockerfile` builds only this host and checks out the exact pinned
+kernel commit in a clean `/opt/nexus` tree. It installs the data-model dependency
+without the Anthropic client. The container listens on `0.0.0.0:8080`; set a
+unique `AETHERUS_NEXUS_EXECUTION_TOKEN` of at least 32 characters in the host
+environment before starting it. Route HTTPS to port 8080. Both `/health` and
+`/v1/evaluate` require the bearer token, so use an authenticated external
+health probe rather than an unauthenticated platform healthcheck. Keep the
+service continuously running, with restart on failure and application sleeping
+disabled. The local JSONL directory is not a production audit ledger.
