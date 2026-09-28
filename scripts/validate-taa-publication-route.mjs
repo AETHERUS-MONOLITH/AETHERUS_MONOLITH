@@ -7,10 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const routePath = "the-apologetic-authority/index.html";
-const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
-const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
-const versionDoi = "10.5281/zenodo.20788207";
-const versionDoiUrl = "https://doi.org/10.5281/zenodo.20788207";
+const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const versionDoi = "10.5281/zenodo.23019747";
+const versionDoiUrl = "https://doi.org/10.5281/zenodo.23019747";
 const allVersionsDoiUrl = "https://doi.org/10.5281/zenodo.20788206";
 
 function fail(message) {
@@ -44,9 +44,15 @@ function getAttributeValues(text, tagPattern, attributeName) {
 }
 
 const html = await readText(routePath);
-const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
-if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))) fail("canonical PDF: missing PDF header");
-if (pdf.length === 0) fail("canonical PDF: empty file");
+let pdfMissing = false;
+try {
+  const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+  if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))) fail("canonical PDF: missing PDF header");
+  if (pdf.length === 0) fail("canonical PDF: empty file");
+} catch (error) {
+  if (error?.code === "ENOENT") pdfMissing = true;
+  else throw error;
+}
 
 assertIncludes(html, "<title>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone</title>", "title metadata");
 assertIncludes(html, 'name="author" content="Camilo Carlone"', "author metadata");
@@ -57,49 +63,66 @@ assertIncludes(html, 'property="og:title" content="The Apologetic Authority: A S
 assertIncludes(html, 'property="og:description" content="A structural critique of Anthropic\'s Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk."', "Open Graph description");
 assertIncludes(html, 'property="og:url" content="https://camilocarlone.com/the-apologetic-authority/"', "Open Graph URL");
 assertIncludes(html, 'property="article:published_time" content="2026-06-21"', "Open Graph published date");
-assertIncludes(html, 'property="article:modified_time" content="2026-06-22"', "Open Graph modified date");
+assertIncludes(html, 'property="article:modified_time" content="2026-09-29"', "Open Graph modified date");
 assertIncludes(html, 'name="twitter:card" content="summary"', "Twitter card");
 assertIncludes(html, 'type="application/ld+json"', "JSON-LD metadata");
 
 assertIncludes(html, "A Structural Critique of Anthropic's Constitution for Claude", "subtitle");
-assertIncludes(html, "v1.0.1 — Final Manuscript", "version status");
+assertIncludes(html, "v1.0.2 — Corrected Final Manuscript", "version status");
 assertIncludes(html, "May 2026", "manuscript date");
 assertIncludes(html, "Final manuscript", "publication status");
 assertIncludes(html, "https://camilocarlone.com/the-apologetic-authority/", "canonical route status");
-assertIncludes(html, `available / minted — ${versionDoi}`, "DOI minted status");
-assertIncludes(html, "available / deposited — Report, publication date 2026-06-21", "Zenodo archive status");
-assertIncludes(html, "available / v1.0.1, 44 pages, A4", "PDF status");
+assertIncludes(html, `<dt>Version DOI</dt><dd><a href="${versionDoiUrl}">${versionDoi}</a></dd>`, "version DOI status");
+assertIncludes(html, "<dt>Release date</dt><dd>September 29, 2026</dd>", "release date status");
+assertIncludes(html, "<dt>PDF</dt><dd>v1.0.2 · A4 · awaiting operator-provided artifact</dd>", "PDF preparation status");
 assertIncludes(html, "All rights reserved", "license status");
 assertIncludes(html, "Copyright © 2026 Camilo Carlone", "copyright status");
 assertIncludes(html, `rel="alternate" type="application/pdf" href="${pdfUrl}"`, "PDF alternate link");
-assertIncludes(html, 'name="citation_publication_date" content="2026-06-21"', "citation publication date");
+assertIncludes(html, 'name="citation_publication_date" content="2026-09-29"', "citation publication date");
 assertIncludes(html, `name="citation_doi" content="${versionDoi}"`, "citation DOI metadata");
 assertIncludes(html, `name="citation_pdf_url" content="${pdfUrl}"`, "citation PDF metadata");
 assertIncludes(html, `name="DC.identifier" content="${versionDoiUrl}"`, "Dublin Core DOI identifier");
 assertIncludes(html, 'name="DC.rights" content="All rights reserved"', "Dublin Core rights metadata");
 assertIncludes(html, "Metadata/GEO layer", "metadata/GEO layer status");
-assertIncludes(html, "NEXUS release gate", "NEXUS release-gate boundary label");
-assertIncludes(html, "<dd>none</dd>", "NEXUS release-gate boundary value");
-assertIncludes(html, "arXiv", "arXiv boundary label");
-assertIncludes(html, "<dd>optional</dd>", "arXiv optional value");
+assertIncludes(html, "No NEXUS release gate.", "NEXUS release-gate boundary");
+assertIncludes(html, "No product deployment claim.", "deployment boundary");
+assertIncludes(html, "No arXiv claim unless submitted.", "arXiv boundary");
+assertIncludes(html, "What This Publication Does Not Claim", "publication boundary label");
 
 assertIncludes(
   html,
-  `Carlone, C. (2026). <cite>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude</cite> (v1.0.1). Zenodo. <a href="${versionDoiUrl}">${versionDoiUrl}</a>`,
+  `Carlone, C. (2026). <cite>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude</cite> (v1.0.2). Zenodo. <a href="${versionDoiUrl}">${versionDoiUrl}</a>`,
   "version DOI citation"
 );
-assertIncludes(html, `DOI: available / minted for v1.0.1 at <a href="${versionDoiUrl}">${versionDoiUrl}</a>.`, "visible DOI minted state");
-assertIncludes(html, "Zenodo archive: available / deposited as an archived report.", "visible archive deposited state");
-assertIncludes(html, `<a href="${versionDoiUrl}">Zenodo DOI record</a>`, "visible Zenodo DOI record link");
-assertIncludes(html, `All-versions DOI: <a href="${allVersionsDoiUrl}">${allVersionsDoiUrl}</a>.`, "visible all-versions DOI link");
-assertIncludes(html, "Download PDF (v1.0.1, 44 pages, A4)", "visible PDF download link");
-assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"`, "visible PDF download href");
-assertIncludes(html, `PDF: available at <a href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf">${pdfUrl}</a>.`, "PDF availability boundary");
+assertIncludes(html, `<dt>Version DOI</dt><dd><a href="${versionDoiUrl}">${versionDoi}</a></dd>`, "visible version DOI");
+assertIncludes(html, "<dt>Release date</dt><dd>September 29, 2026</dd>", "visible release date");
+assertIncludes(html, `<a href="${versionDoiUrl}">${versionDoiUrl}</a>`, "visible version DOI URL");
+assertIncludes(html, `All versions: <a href="${allVersionsDoiUrl}">10.5281/zenodo.20788206</a>`, "visible all-versions DOI link");
+assertIncludes(html, "Download PDF (v1.0.2, A4; page count set on integration)", "visible PDF download link");
+assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf"`, "visible PDF download href");
+assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"`, "previous-version PDF link");
 assertIncludes(html, "What This Publication Does Not Claim", "publication boundary block");
+assertIncludes(html, 'id="revision-note"', "revision note anchor");
+assertIncludes(html, 'href="#revision-note"', "revision note link");
+assertIncludes(html, 'Revised in v1.0.2. See <a href="#revision-note">Revision Note</a>.', "§4.2 revision marker");
+assertIncludes(html, 'href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"', "previous-version PDF preserved");
+assertIncludes(html, 'href="https://doi.org/10.5281/zenodo.20788207"', "previous-version DOI preserved");
+for (const label of [
+  "Schema-Constrained Reasoning.",
+  "Deterministic, Append-Only Logging.",
+  "Reversible Provenance.",
+  "Policy-Scannable Substrates.",
+  "Observability Invariants.",
+  "Release Gates."
+]) {
+  assertIncludes(html, `<em>${label}</em>`, `§11.2 emphasis: ${label}`);
+}
+assertNotIncludes(html, "*Schema-Constrained Reasoning.*", "§11.2 literal asterisks");
 
 assertMatches(html, /<h3 id="table-of-contents">Table of Contents<\/h3>\s*<nav aria-labelledby="table-of-contents">/, "Table of Contents");
 
 const expectedTocAnchorIds = [
+  "revision-note",
   "author-note",
   "thesis",
   "1-the-final-authority-that-isn-t",
@@ -167,12 +190,12 @@ for (const anchorId of expectedTocAnchorIds) {
 
 const requiredManuscriptAnchors = [
   "A Structural Critique of Anthropic's Constitution for Claude",
-  "v1.0.1 — Final Manuscript",
+  "v1.0.2 — Corrected Final Manuscript",
   "The Constitution opens with an absolutist claim:",
   "Emotion Vectors: The Ungoverned Causal Layer",
   "Necessary Conditions for a Constitutional Governance Instrument",
   "AETHERUS-MONOLITH. &quot;NEXUS — Governance Kernel for AI Systems.&quot;",
-  "— End of v1.0.1 Final Manuscript —"
+  "— End of v1.0.2 Corrected Final Manuscript —"
 ];
 
 for (const anchor of requiredManuscriptAnchors) {
@@ -209,4 +232,5 @@ assertNotIncludes(html, "runtime execution", "runtime language must not be intro
 assertNotIncludes(html, "/AETHERUS" + "_MONOLITH/", "old GitHub Pages base path");
 assertNotIncludes(html, "AETHERUS" + "_MONOLITH/", "old GitHub Pages base path");
 
+if (pdfMissing) fail(`canonical PDF: missing ${pdfPath}`);
 console.log("TAA publication route validation passed.");

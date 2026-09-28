@@ -61,7 +61,7 @@
       "key": "claim:taa_version_doi",
       "subject": "entity:the_apologetic_authority",
       "predicate": "doi",
-      "value": "10.5281/zenodo.20788207",
+      "value": "10.5281/zenodo.23019747",
       "status": "confirmed",
       "source_references": [
         "the-apologetic-authority/index.html citation_doi metadata"

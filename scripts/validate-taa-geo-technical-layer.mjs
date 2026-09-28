@@ -11,11 +11,15 @@ const metadataPath = "data/taa-publication-metadata.v1.json";
 const routePath = "the-apologetic-authority/index.html";
 const sitemapPath = "sitemap.xml";
 const robotsPath = "robots.txt";
-const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
-const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf";
-const versionDoi = "10.5281/zenodo.20788207";
-const versionDoiUrl = "https://doi.org/10.5281/zenodo.20788207";
+const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const versionDoi = "10.5281/zenodo.23019747";
+const versionDoiUrl = "https://doi.org/10.5281/zenodo.23019747";
 const allVersionsDoiUrl = "https://doi.org/10.5281/zenodo.20788206";
+const claimsPath = "geo/source/claims.yaml";
+const entitiesPath = "geo/source/entities.yaml";
+const endpointsPath = "geo/config/endpoints.yaml";
+const conceptDoi = "10.5281/zenodo.20788206";
 
 function fail(message) {
   throw new Error(message);
@@ -75,16 +79,27 @@ await fs.access(path.join(repoRoot, metadataPath));
 await fs.access(path.join(repoRoot, routePath));
 await fs.access(path.join(repoRoot, sitemapPath));
 await fs.access(path.join(repoRoot, robotsPath));
-await fs.access(path.join(repoRoot, pdfPath));
+await fs.access(path.join(repoRoot, claimsPath));
+await fs.access(path.join(repoRoot, entitiesPath));
+await fs.access(path.join(repoRoot, endpointsPath));
 
 const metadata = await readJson(metadataPath);
 const publication = metadata.publication;
 const html = await readText(routePath);
 const sitemap = await readText(sitemapPath);
 const robots = await readText(robotsPath);
-const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
-assert(pdf.length > 0, "PDF artifact: must be non-empty");
-assert(pdf.subarray(0, 5).equals(Buffer.from("%PDF-")), "PDF artifact: must have PDF header");
+const claims = await readJson(claimsPath);
+const entities = await readJson(entitiesPath);
+const endpoints = await readJson(endpointsPath);
+let pdfMissing = false;
+try {
+  const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+  assert(pdf.length > 0, "PDF artifact: must be non-empty");
+  assert(pdf.subarray(0, 5).equals(Buffer.from("%PDF-")), "PDF artifact: must have PDF header");
+} catch (error) {
+  if (error?.code === "ENOENT") pdfMissing = true;
+  else throw error;
+}
 
 assert(publication && typeof publication === "object", "metadata package: missing publication object");
 
@@ -101,10 +116,10 @@ assertIncludes(html, `<title>${title} - ${author}</title>`, "HTML title");
 assert(metaContent(html, "description") === description, "meta description: must match metadata package");
 assert(metaContent(html, "author") === author, "author metadata: must match metadata package");
 assert(metaContent(html, "publication-status").includes(status), "publication status metadata: must include metadata status");
-assert(metaContent(html, "publication-status").includes("DOI minted"), "publication status metadata: must include DOI minted state");
-assert(metaContent(html, "publication-status").includes("Zenodo archive deposited"), "publication status metadata: must include archive deposited state");
-assert(metaContent(html, "publication-status").includes("PDF available"), "publication status metadata: must include PDF availability");
-assert(metaContent(html, "citation_publication_date") === "2026-06-21", "citation publication date: must match Zenodo publication date");
+assert(metaContent(html, "publication-status").includes(`version DOI ${versionDoi}`), "publication status metadata: must include version DOI");
+assert(metaContent(html, "publication-status").includes("release date 2026-09-29"), "publication status metadata: must include release date");
+assert(metaContent(html, "publication-status").includes("PDF integration awaiting operator artifact"), "publication status metadata: must include pending PDF integration state");
+assert(metaContent(html, "citation_publication_date") === "2026-09-29", "citation publication date: must match v1.0.2 release date");
 assert(metaContent(html, "citation_doi") === versionDoi, "citation DOI: must match version DOI");
 assert(metaContent(html, "citation_pdf_url") === pdfUrl, "citation PDF URL: must match canonical PDF URL");
 assert(metaContent(html, "DC.identifier") === versionDoiUrl, "Dublin Core identifier: must match version DOI URL");
@@ -119,7 +134,7 @@ assert(propertyContent(html, "og:url") === url, "Open Graph URL: must match meta
 assert(propertyContent(html, "og:type") === "article", "Open Graph type");
 assert(propertyContent(html, "article:author") === author, "Open Graph article author");
 assert(propertyContent(html, "article:published_time") === "2026-06-21", "Open Graph published time: must match Zenodo publication date");
-assert(propertyContent(html, "article:modified_time") === "2026-06-22", "Open Graph modified time: must match operator execution date");
+assert(propertyContent(html, "article:modified_time") === "2026-09-29", "Open Graph modified time: must match v1.0.2 release date");
 
 assert(metaContent(html, "twitter:card") === "summary", "Twitter card");
 assert(metaContent(html, "twitter:title") === title, "Twitter title: must match metadata package");
@@ -142,7 +157,7 @@ assert(article.identifier === versionDoiUrl, "JSON-LD identifier: must match ver
 assert(Array.isArray(article.sameAs), "JSON-LD sameAs: must be an array");
 assert(article.sameAs.includes(versionDoiUrl), "JSON-LD sameAs: must include version DOI URL");
 assert(article.sameAs.includes(allVersionsDoiUrl), "JSON-LD sameAs: must include all-versions DOI URL");
-assert(article.version === status, "JSON-LD version: must match metadata package");
+assert(article.version === "1.0.2", "JSON-LD version: must be 1.0.2");
 assert(article.genre === "Archived report", "JSON-LD genre: must describe archived report resource type");
 assert(Array.isArray(article.keywords), "JSON-LD keywords: must be an array");
 for (const keyword of keywords) {
@@ -151,26 +166,34 @@ for (const keyword of keywords) {
 assert(article.isAccessibleForFree === true, "JSON-LD isAccessibleForFree: must be true");
 assert(article.dateCreated === "2026-06-18", "JSON-LD dateCreated: must use grounded manuscript date");
 assert(article.datePublished === "2026-06-21", "JSON-LD datePublished: must use Zenodo publication date");
-assert(article.dateModified === "2026-06-22", "JSON-LD dateModified: must use operator execution date");
+assert(article.dateModified === "2026-09-29", "JSON-LD dateModified: must use v1.0.2 release date");
 
 assertIncludes(html, abstract, "visible abstract");
 assertIncludes(htmlToText(html), citation, "visible citation");
-assertIncludes(html, `DOI: available / minted for v1.0.1 at <a href="${versionDoiUrl}">${versionDoiUrl}</a>.`, "visible DOI minted state");
-assertIncludes(html, "Zenodo archive: available / deposited as an archived report.", "visible archive deposited state");
-assertIncludes(html, `<a href="${versionDoiUrl}">Zenodo DOI record</a>`, "visible Zenodo DOI record link");
-assertIncludes(html, "Download PDF (v1.0.1, 44 pages, A4)", "visible PDF download link");
-assertIncludes(html, `PDF: available at <a href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf">${pdfUrl}</a>.`, "visible PDF availability state");
+assertIncludes(html, `<dt>Version DOI</dt><dd><a href="${versionDoiUrl}">${versionDoi}</a></dd>`, "visible version DOI");
+assertIncludes(html, "<dt>Release date</dt><dd>September 29, 2026</dd>", "visible release date");
+assertIncludes(html, `<a href="${versionDoiUrl}">${versionDoiUrl}</a>`, "visible version DOI link");
+assertIncludes(html, "Download PDF (v1.0.2, A4; page count set on integration)", "visible PDF download link");
+assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf"`, "visible current PDF href");
 for (const boundary of publication.does_not_claim) {
   const visibleBoundary = boundary.replace(/^no /i, "No ");
   assertIncludes(html, visibleBoundary, `visible boundary block: ${boundary}`);
 }
 
 assertIncludes(sitemap, `<loc>${url}</loc>`, "sitemap canonical route");
-assertIncludes(sitemap, "<lastmod>2026-06-22</lastmod>", "sitemap grounded lastmod");
+assertIncludes(sitemap, "<lastmod>2026-09-29</lastmod>", "sitemap grounded lastmod");
 assertIncludes(robots, "User-agent: *", "robots user-agent");
 assertIncludes(robots, "Allow: /", "robots allow all");
 assertIncludes(robots, "Sitemap: https://camilocarlone.com/sitemap.xml", "robots sitemap reference");
 assert(!/Disallow:\s*\/the-apologetic-authority\/?/i.test(robots), "robots: canonical route must not be blocked");
+
+const taaVersionClaim = claims.claims.find((claim) => claim.key === "claim:taa_version_doi");
+assert(taaVersionClaim?.value === versionDoi, "GEO claims: taa_version_doi must match v1.0.2 DOI");
+const taaEntity = entities.entities.find((entity) => entity.id === "entity:the_apologetic_authority");
+assert(taaEntity?.identifiers?.doi === conceptDoi, "GEO entities: TAA Work-ID must use Concept DOI");
+assert(taaEntity?.controlled_surfaces?.includes(allVersionsDoiUrl), "GEO entities: Concept DOI surface missing");
+const taaEndpoint = endpoints.endpoints.find((endpoint) => endpoint.key === "taa_zenodo_doi");
+assert(taaEndpoint?.requested_url === allVersionsDoiUrl, "GEO endpoints: Zenodo endpoint must use Concept DOI");
 
 const scanned = [html, JSON.stringify(metadata), sitemap, robots].join("\n");
 const forbiddenClaims = [
@@ -218,4 +241,5 @@ for (const pattern of staleDoiArchiveClaims) {
   assertNotMatches(html, pattern, "stale DOI/archive boundary");
 }
 
+if (pdfMissing) fail(`PDF artifact: missing ${pdfPath}`);
 console.log("TAA GEO technical layer validation passed.");
