@@ -1,0 +1,20 @@
+[data-design-system="operator"] .operator-joint__body { padding: 16px 0 2px 40px; max-width: 760px; }
+[data-design-system="operator"] .operator-joint__body > p { margin: 0 0 20px; color: var(--content-secondary); line-height: 1.6; }
+[data-design-system="operator"] .operator-joint form { display: grid; gap: 10px; }
+[data-design-system="operator"] .operator-joint form > label:not(.operator-processing-consent) { display: flex; justify-content: space-between; gap: 12px; color: var(--content-primary); font-weight: 600; }
+[data-design-system="operator"] .operator-joint form > label small { color: var(--content-muted); font-weight: 400; }
+[data-design-system="operator"] .operator-joint textarea { width: 100%; max-width: 100%; box-sizing: border-box; padding: 14px; border: 1px solid var(--boundary-quiet); border-radius: 2px; background: var(--surface-plate); color: var(--content-primary); font: 14px/1.5 var(--font-interface); resize: vertical; }
+[data-design-system="operator"] .operator-joint textarea:focus-visible { outline: 2px solid var(--source-functional-olive); outline-offset: 2px; }
+[data-design-system="operator"] .operator-joint__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 4px; }
+[data-design-system="operator"] .operator-joint__identity { overflow-wrap: anywhere; font: 11px/1.5 var(--font-data); }
+[data-design-system="operator"] .operator-joint__stages { display: grid; gap: 0; margin: 14px 0 22px; padding: 0; list-style: none; border-top: 1px solid var(--boundary-quiet); }
+[data-design-system="operator"] .operator-joint__stages li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--boundary-quiet); color: var(--content-primary); }
+[data-design-system="operator"] .operator-joint__stages span { color: var(--content-secondary); text-transform: capitalize; }
+[data-design-system="operator"] .operator-joint__stages [data-state="completed"] { color: var(--source-functional-olive); }
+[data-design-system="operator"] .operator-joint__stages [data-state="failed"],
+[data-design-system="operator"] .operator-joint__stages [data-state="blocked"] { color: var(--boundary-authority); }
+[data-design-system="operator"] .operator-joint__disclosure { padding: 12px 0; border-top: 1px solid var(--boundary-quiet); }
+[data-design-system="operator"] .operator-joint__disclosure summary { cursor: pointer; color: var(--content-primary); font-weight: 600; }
+[data-design-system="operator"] .operator-joint__disclosure > div { display: grid; gap: 12px; margin-top: 12px; overflow-wrap: anywhere; }
+[data-design-system="operator"] .operator-joint__disclosure p { margin: 3px 0 0; white-space: pre-wrap; color: var(--content-secondary); }
+@media (max-width: 600px) { [data-design-system="operator"] .operator-joint__body { padding-left: 0; } [data-design-system="operator"] .operator-joint form > label:not(.operator-processing-consent) { display: block; } }

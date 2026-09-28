@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1",
+  "contract_id": "bounded_artifact_joint_v0",
+  "flow_type": "bounded_artifact_joint_v0",
+  "authority": "operational",
+  "supersedes_for_runtime": "data/joint-workflow.manifest.json",
+  "historical_manifest_is_runtime_authority": false,
+  "orchestrator": {
+    "kind": "deterministic_server_control",
+    "intelligence": false,
+    "model_calls": 0,
+    "external_action_authority": false,
+    "automatic_model_retries": false
+  },
+  "allowed_intelligence_ids": ["communicator", "mediator", "drafter", "refiner", "origin"],
+  "stage_order": ["communicator", "mediator", "drafter", "refiner", "origin"],
+  "stage_states": ["pending", "active", "completed", "skipped", "blocked", "failed"],
+  "terminal_flow_states": ["completed", "blocked", "failed"],
+  "request_schema": {
+    "version": "0.1",
+    "required": ["client_request_id", "workspace_id", "artifact_request", "scenario_context", "consent_reference", "data_classification", "external_processing_consent"],
+    "artifact_request_max_characters": 1800,
+    "scenario_context_max_characters": 1000,
+    "classification": "non_sensitive"
+  },
+  "handoff_schema": {
+    "version": "0.1",
+    "required": ["schema_version", "joint_flow_id", "upstream_stage", "downstream_stage", "upstream_child_run_id", "upstream_intelligence_id", "upstream_output_schema_version", "upstream_output_sha256", "artifact_identity", "consent_reference", "workspace_id", "nexus_commit", "created_at", "eligibility"],
+    "digest": "sha256 of stable canonical JSON",
+    "transport": "append-only joint_flow_events.handoff_created; receiving stage verifies digest and binding before model invocation"
+  },
+  "stages": [
+    {"id":"communicator","ordinal":1,"activation":"new authenticated flow with exact non-sensitive request, active workspace membership and explicit OpenAI consent","input_schema":{"version":"0.1","required":["artifact_request","scenario_context"]},"output_schema":{"version":"0.1","source":"live-governed-evaluation-v0 communicator intelligence_output","required":["objective","activation_recommendation","constraints_to_resolve"]},"continuation":"candidate and governed verdict pass; activation_recommendation mediator","resources":["ScenarioInput","Joint Workflow communicator semantics"]},
+    {"id":"mediator","ordinal":2,"activation":"verified eligible Communicator handoff and persisted child run","input_schema":{"version":"0.1","required":["artifact_request","scenario_context","execution_plan","incoming_handoff"]},"output_schema":{"version":"0.1","source":"live-governed-evaluation-v0 mediator intelligence_output","required":["constraints","acceptance_tests","forbidden_patterns"]},"continuation":"candidate and governed verdict pass; all three packet arrays nonempty","resources":["ScenarioInput","execution_plan handoff","Joint Workflow mediator semantics","available policy and forbidden-pattern references"]},
+    {"id":"drafter","ordinal":3,"activation":"verified eligible Mediator handoff, explicit artifact request and complete constraints packet","input_schema":{"version":"0.1","required":["artifact_request","scenario_context","constraints_packet","incoming_handoff"]},"output_schema":{"version":"0.1","source":"live-governed-evaluation-v0 drafter intelligence_output","required":["content","constraint_acknowledgements"]},"continuation":"candidate and governed verdict pass; artifact content and acknowledgements persisted before Refiner","resources":["ScenarioInput","explicit constraints in the input","constraints_packet handoff","Joint Workflow drafter semantics"]},
+    {"id":"refiner","ordinal":4,"activation":"verified eligible Drafter handoff and persisted artifact identity and lineage","input_schema":{"version":"0.1","required":["artifact_request","scenario_context","artifact_identity","artifact_candidate","constraints_packet","verification_boundary","incoming_handoff"]},"output_schema":{"version":"0.1","source":"live-governed-evaluation-v0 refiner intelligence_output","required":["verification_verdict","findings","patchlist"]},"continuation":"verification_verdict pass and candidate/governed verdict pass","resources":["ScenarioInput","artifact and constraints in the input","artifact candidate","constraints_packet handoff","requested verification boundary","Joint Workflow refiner semantics"]},
+    {"id":"origin","ordinal":5,"activation":"verified eligible Refiner PASS handoff and persisted artifact identity","input_schema":{"version":"0.1","required":["artifact_request","scenario_context","artifact_identity","verification_identity","incoming_handoff"]},"output_schema":{"version":"0.1","source":"live-governed-evaluation-v0 origin intelligence_output","required":["precondition_verdict","artifact_identity","delta_brief","commit_authority_exercised"]},"continuation":"precondition_verdict pass, artifact identity matches and commit_authority_exercised false","resources":["ScenarioInput","pass-qualified verification identity","artifact identity","Joint Workflow origin semantics"]}
+  ],
+  "skip_predicate": "all downstream pending stages become skipped after terminal fail, escalate, invalid handoff or missing precondition; skipped means never invoked",
+  "fail_closed_predicate": "invalid contract, unverified handoff, missing persistence, model/NEXUS failure or non-pass stage outcome blocks downstream activation without retry",
+  "model_call_ceiling": 5,
+  "model_calls_per_activated_stage": 1,
+  "nexus_boundary": {"execution":"each child uses live_governed_evaluation_v0 pinned Alpha/Delta/Omega adapter","kernel_commit":"ab95cbbd24df5817c4e363d24b3b199ac8af6c6f","mutation_allowed":false},
+  "evidence_requirements": ["workspace/user binding","per-flow OpenAI consent reference","child run and model response identity","child model output digest","NEXUS result digest and kernel pin","stage output schema and digest","append-only transition handoff","terminal governance and artifact lineage"],
+  "lineage_requirements": ["Drafter artifact identity is sha256 of candidate content","Refiner verifies the same artifact identity","Origin repeats the pass-qualified artifact identity","Origin commit_authority_exercised is always false"],
+  "knowledge_boundary": {"inputs":"request, scenario context, operational contract, and verified prior-stage handoffs only","external_policy_corpus_available":false,"uncontrolled_web_retrieval":false,"tenant_crossing_knowledge":false,"missing_policy_or_forbidden_pattern_reference":"escalate or stop; do not imply hidden retrieval"},
+  "external_action_boundary": {"external_release_performed":false,"production_ledger_claim":false,"compliance_certification_claim":false,"origin_commit_authority_exercised":false}
+}

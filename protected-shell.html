@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/operator-system.css?v=operator-v7">
   <link rel="stylesheet" href="css/operator-surfaces.css?v=operator-v7">
+  <link rel="stylesheet" href="css/operator-joint.css?v=joint-v0">
   <script>
     (function () {
       const host = globalThis.location ? globalThis.location.hostname : "";
@@ -21,6 +22,7 @@
   </script>
   <script type="module" src="js/supabase-protected-shell.js"></script>
   <script type="module" src="js/protected-workspace.js"></script>
+  <script type="module" src="js/bounded-artifact-joint.js"></script>
   <script type="module" src="js/operator-view-state.js"></script>
 </head>
 <body class="operator-page operator-protected">
@@ -82,6 +84,27 @@
             <div><span>01 · State</span><strong data-review-workspace-state>No live evaluation is queued.</strong></div>
             <div><span>02 · Evidence</span><strong data-object-evidence-state>Execution evidence pending</strong></div>
           </div>
+
+          <details class="operator-context operator-joint" data-joint-mode>
+            <summary><span aria-hidden="true">02</span><strong>Bounded artifact Joint</strong><small>Five independent Intelligences · open only when needed</small></summary>
+            <div class="operator-joint__body">
+              <p>One artifact request moves through Communicator, Mediator, Drafter, Refiner and Origin only while each persisted handoff remains eligible. No external action is released.</p>
+              <form data-joint-form>
+                <label for="joint-artifact-request">Artifact request <small>20–1,800 characters</small></label>
+                <textarea id="joint-artifact-request" data-joint-request rows="4" minlength="20" maxlength="1800" required placeholder="Describe one bounded artifact to produce and inspect."></textarea>
+                <label for="joint-scenario-context">Scenario context <small>10–1,000 characters</small></label>
+                <textarea id="joint-scenario-context" data-joint-context rows="3" minlength="10" maxlength="1000" required placeholder="Provide only the non-sensitive context required for this artifact."></textarea>
+                <label class="operator-processing-consent"><input type="checkbox" data-joint-consent required><span>I confirm this request and context are non-sensitive and authorize their server-side OpenAI processing for this Joint flow.</span></label>
+                <div class="operator-joint__actions"><button class="operator-primary-action" type="submit" data-joint-start>Start bounded Joint</button><button class="operator-secondary-action" type="button" data-joint-continue hidden>Continue next eligible stage</button></div>
+              </form>
+              <p class="operator-input-status" data-joint-status role="status">No Joint flow loaded.</p>
+              <p class="operator-joint__identity" data-joint-identity hidden></p>
+              <ol class="operator-joint__stages" data-joint-stages aria-label="Persisted Joint stages"></ol>
+              <details class="operator-joint__disclosure"><summary>Artifact and verification</summary><div data-joint-artifact>No artifact candidate has been persisted.</div></details>
+              <details class="operator-joint__disclosure"><summary>Evidence and lineage</summary><div data-joint-evidence>No stage evidence has been persisted.</div></details>
+              <p class="operator-boundary-note">A completed Joint is a persisted artifact and lineage result, not a commit, publication, certification or release.</p>
+            </div>
+          </details>
 
           <div class="operator-view-actions">
             <button class="operator-primary-action" type="button" data-action="stage-live-evaluation" disabled>Stage input</button>

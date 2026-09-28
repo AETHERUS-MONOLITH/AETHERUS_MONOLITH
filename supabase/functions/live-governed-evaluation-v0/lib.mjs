@@ -207,7 +207,7 @@ function requireStringArray(value, name, maxItems = 8, maxLength = 500) {
   return value.map((item) => requireString(item, name, maxLength));
 }
 
-function validateIntelligenceOutput(value, intelligenceId) {
+export function validateIntelligenceOutput(value, intelligenceId) {
   if (!isPlainObject(value)) throw new Error("model_intelligence_output_invalid");
   const contract = intelligenceContractFor(intelligenceId);
   const expected = contract.output_schema.required.slice().sort();

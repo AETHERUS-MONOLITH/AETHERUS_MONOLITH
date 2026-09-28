@@ -5,6 +5,9 @@
   "source_section": "Architecture overview, joint definitions, pipelines, safety policy, handoff receipt contract, event ledger contract, fixture library",
   "implementation_status": "deterministic-browser-model",
   "operational_status": "not-operational",
+  "runtime_authority": false,
+  "operational_successor": "supabase/functions/bounded-artifact-joint-v0/contract.json",
+  "historical_origin_commit_authority_is_current": false,
   "description": "Static explanatory data model derived from Joint-Workflow concepts for deterministic browser-side governance traces. This manifest is not an executable prompt system.",
   "joints": {
     "source_document": "Joint-Workflow.pdf",
