@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -7,6 +8,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const metadataPath = "data/taa-publication-metadata.v1.json";
+const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const pdfSha256 = "0f9aa06ecc8168c6ae1ab43ad0b859f2cd54531c855a54133d52527e9b6475d4";
 const versionDoi = "10.5281/zenodo.23019747";
 const versionDoiUrl = "https://doi.org/10.5281/zenodo.23019747";
 const allVersionsDoi = "10.5281/zenodo.20788206";
@@ -114,26 +117,31 @@ assertEqual(publication.archive?.resource_type, "Report", "archive resource type
 assertEqual(publication.archive?.publication_date, "2026-09-29", "archive publication date");
 assertEqual(publication.archive?.operator_execution_date, null, "archive operator execution date");
 
-assertEqual(publication.pdf?.status, "awaiting_operator_artifact", "PDF status");
+assertEqual(publication.pdf?.status, "repository_integrated", "PDF status");
 assertEqual(
   publication.pdf?.public_url,
   "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf",
   "PDF public URL"
 );
-assertEqual(publication.pdf?.claimable, false, "PDF claimable");
-assertEqual(publication.pdf?.page_count, null, "PDF page count pending operator artifact");
+assertEqual(publication.pdf?.claimable, true, "PDF claimable");
+assertEqual(publication.pdf?.page_count, 48, "PDF page count");
 assertEqual(publication.pdf?.format, "A4", "PDF format");
+assertEqual(publication.pdf?.byte_count, 403811, "PDF byte count");
+assertEqual(publication.pdf?.sha256, pdfSha256, "PDF SHA-256 metadata");
 assertEqual(
   publication.pdf?.source_artifact,
-  "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf",
+  pdfPath,
   "PDF source artifact"
 );
+const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+assertEqual(pdf.length, publication.pdf.byte_count, "PDF actual byte count");
+assertEqual(createHash("sha256").update(pdf).digest("hex"), pdfSha256, "PDF actual SHA-256");
 
 const sourceStatus = publication.repository_source_status;
 assertEqual(sourceStatus?.canonical_route_live, true, "canonical route live");
-assertEqual(sourceStatus?.canonical_surface_complete, false, "canonical surface complete pending PDF");
+assertEqual(sourceStatus?.canonical_surface_complete, true, "canonical surface complete");
 assertEqual(sourceStatus?.metadata_package_created, true, "metadata package created");
-assertEqual(sourceStatus?.pdf_artifact_integrated, false, "PDF artifact integrated");
+assertEqual(sourceStatus?.pdf_artifact_integrated, true, "PDF artifact integrated");
 assertEqual(sourceStatus?.doi_minted, false, "DOI minted");
 assertEqual(sourceStatus?.archive_release_completed, false, "archive release completed");
 assertEqual(sourceStatus?.search_submission_completed, false, "search submission completed");

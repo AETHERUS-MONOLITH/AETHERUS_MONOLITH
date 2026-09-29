@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -13,6 +14,7 @@ const sitemapPath = "sitemap.xml";
 const robotsPath = "robots.txt";
 const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
 const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const pdfSha256 = "0f9aa06ecc8168c6ae1ab43ad0b859f2cd54531c855a54133d52527e9b6475d4";
 const versionDoi = "10.5281/zenodo.23019747";
 const versionDoiUrl = "https://doi.org/10.5281/zenodo.23019747";
 const allVersionsDoiUrl = "https://doi.org/10.5281/zenodo.20788206";
@@ -91,15 +93,10 @@ const robots = await readText(robotsPath);
 const claims = await readJson(claimsPath);
 const entities = await readJson(entitiesPath);
 const endpoints = await readJson(endpointsPath);
-let pdfMissing = false;
-try {
-  const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
-  assert(pdf.length > 0, "PDF artifact: must be non-empty");
-  assert(pdf.subarray(0, 5).equals(Buffer.from("%PDF-")), "PDF artifact: must have PDF header");
-} catch (error) {
-  if (error?.code === "ENOENT") pdfMissing = true;
-  else throw error;
-}
+const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+assert(pdf.subarray(0, 5).equals(Buffer.from("%PDF-")), "PDF artifact: must have PDF header");
+assert(pdf.length === 403811, "PDF artifact: wrong byte count");
+assert(createHash("sha256").update(pdf).digest("hex") === pdfSha256, "PDF artifact: wrong SHA-256");
 
 assert(publication && typeof publication === "object", "metadata package: missing publication object");
 
@@ -118,7 +115,7 @@ assert(metaContent(html, "author") === author, "author metadata: must match meta
 assert(metaContent(html, "publication-status").includes(status), "publication status metadata: must include metadata status");
 assert(metaContent(html, "publication-status").includes(`version DOI ${versionDoi}`), "publication status metadata: must include version DOI");
 assert(metaContent(html, "publication-status").includes("release date 2026-09-29"), "publication status metadata: must include release date");
-assert(metaContent(html, "publication-status").includes("PDF integration awaiting operator artifact"), "publication status metadata: must include pending PDF integration state");
+assert(metaContent(html, "publication-status").includes("PDF repository integrated"), "publication status metadata: must include PDF integration state");
 assert(metaContent(html, "citation_publication_date") === "2026-09-29", "citation publication date: must match v1.0.2 release date");
 assert(metaContent(html, "citation_doi") === versionDoi, "citation DOI: must match version DOI");
 assert(metaContent(html, "citation_pdf_url") === pdfUrl, "citation PDF URL: must match canonical PDF URL");
@@ -173,7 +170,7 @@ assertIncludes(htmlToText(html), citation, "visible citation");
 assertIncludes(html, `<dt>Version DOI</dt><dd><a href="${versionDoiUrl}">${versionDoi}</a></dd>`, "visible version DOI");
 assertIncludes(html, "<dt>Release date</dt><dd>September 29, 2026</dd>", "visible release date");
 assertIncludes(html, `<a href="${versionDoiUrl}">${versionDoiUrl}</a>`, "visible version DOI link");
-assertIncludes(html, "Download PDF (v1.0.2, A4; page count set on integration)", "visible PDF download link");
+assertIncludes(html, "Download PDF (v1.0.2, 48 pages, A4)", "visible PDF download link");
 assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf"`, "visible current PDF href");
 for (const boundary of publication.does_not_claim) {
   const visibleBoundary = boundary.replace(/^no /i, "No ");
@@ -241,5 +238,4 @@ for (const pattern of staleDoiArchiveClaims) {
   assertNotMatches(html, pattern, "stale DOI/archive boundary");
 }
 
-if (pdfMissing) fail(`PDF artifact: missing ${pdfPath}`);
 console.log("TAA GEO technical layer validation passed.");

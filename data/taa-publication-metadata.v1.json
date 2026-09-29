@@ -51,18 +51,20 @@
       "operator_execution_date": null
     },
     "pdf": {
-      "status": "awaiting_operator_artifact",
+      "status": "repository_integrated",
       "public_url": "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf",
-      "claimable": false,
-      "page_count": null,
+      "claimable": true,
+      "page_count": 48,
       "format": "A4",
+      "byte_count": 403811,
+      "sha256": "0f9aa06ecc8168c6ae1ab43ad0b859f2cd54531c855a54133d52527e9b6475d4",
       "source_artifact": "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf"
     },
     "repository_source_status": {
       "canonical_route_live": true,
-      "canonical_surface_complete": false,
+      "canonical_surface_complete": true,
       "metadata_package_created": true,
-      "pdf_artifact_integrated": false,
+      "pdf_artifact_integrated": true,
       "doi_minted": false,
       "archive_release_completed": false,
       "search_submission_completed": false,

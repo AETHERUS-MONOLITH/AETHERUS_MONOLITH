@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -9,6 +10,7 @@ const repoRoot = path.resolve(__dirname, "..");
 const routePath = "the-apologetic-authority/index.html";
 const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
 const pdfUrl = "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const pdfSha256 = "0f9aa06ecc8168c6ae1ab43ad0b859f2cd54531c855a54133d52527e9b6475d4";
 const versionDoi = "10.5281/zenodo.23019747";
 const versionDoiUrl = "https://doi.org/10.5281/zenodo.23019747";
 const allVersionsDoiUrl = "https://doi.org/10.5281/zenodo.20788206";
@@ -44,15 +46,10 @@ function getAttributeValues(text, tagPattern, attributeName) {
 }
 
 const html = await readText(routePath);
-let pdfMissing = false;
-try {
-  const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
-  if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))) fail("canonical PDF: missing PDF header");
-  if (pdf.length === 0) fail("canonical PDF: empty file");
-} catch (error) {
-  if (error?.code === "ENOENT") pdfMissing = true;
-  else throw error;
-}
+const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+if (!pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))) fail("canonical PDF: missing PDF header");
+if (pdf.length !== 403811) fail("canonical PDF: wrong byte count");
+if (createHash("sha256").update(pdf).digest("hex") !== pdfSha256) fail("canonical PDF: wrong SHA-256");
 
 assertIncludes(html, "<title>The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude - Camilo Carlone</title>", "title metadata");
 assertIncludes(html, 'name="author" content="Camilo Carlone"', "author metadata");
@@ -74,7 +71,7 @@ assertIncludes(html, "Final manuscript", "publication status");
 assertIncludes(html, "https://camilocarlone.com/the-apologetic-authority/", "canonical route status");
 assertIncludes(html, `<dt>Version DOI</dt><dd><a href="${versionDoiUrl}">${versionDoi}</a></dd>`, "version DOI status");
 assertIncludes(html, "<dt>Release date</dt><dd>September 29, 2026</dd>", "release date status");
-assertIncludes(html, "<dt>PDF</dt><dd>v1.0.2 · A4 · awaiting operator-provided artifact</dd>", "PDF preparation status");
+assertIncludes(html, "<dt>PDF</dt><dd>v1.0.2 · 48 pages · A4 · repository integrated</dd>", "PDF integration status");
 assertIncludes(html, "All rights reserved", "license status");
 assertIncludes(html, "Copyright © 2026 Camilo Carlone", "copyright status");
 assertIncludes(html, `rel="alternate" type="application/pdf" href="${pdfUrl}"`, "PDF alternate link");
@@ -98,7 +95,7 @@ assertIncludes(html, `<dt>Version DOI</dt><dd><a href="${versionDoiUrl}">${versi
 assertIncludes(html, "<dt>Release date</dt><dd>September 29, 2026</dd>", "visible release date");
 assertIncludes(html, `<a href="${versionDoiUrl}">${versionDoiUrl}</a>`, "visible version DOI URL");
 assertIncludes(html, `All versions: <a href="${allVersionsDoiUrl}">10.5281/zenodo.20788206</a>`, "visible all-versions DOI link");
-assertIncludes(html, "Download PDF (v1.0.2, A4; page count set on integration)", "visible PDF download link");
+assertIncludes(html, "Download PDF (v1.0.2, 48 pages, A4)", "visible PDF download link");
 assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf"`, "visible PDF download href");
 assertIncludes(html, `href="/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"`, "previous-version PDF link");
 assertIncludes(html, "What This Publication Does Not Claim", "publication boundary block");
@@ -232,5 +229,4 @@ assertNotIncludes(html, "runtime execution", "runtime language must not be intro
 assertNotIncludes(html, "/AETHERUS" + "_MONOLITH/", "old GitHub Pages base path");
 assertNotIncludes(html, "AETHERUS" + "_MONOLITH/", "old GitHub Pages base path");
 
-if (pdfMissing) fail(`canonical PDF: missing ${pdfPath}`);
 console.log("TAA publication route validation passed.");
