@@ -6,11 +6,11 @@
     "author": {
       "name": "Camilo Carlone"
     },
-    "status": "v1.0.1 — Final Manuscript",
+    "status": "v1.0.2 — Corrected Final Manuscript",
     "date": {
-      "value": "June 18, 2026",
+      "value": "September 29, 2026",
       "verification": "verified",
-      "source": "Canonical route version history states: v1.0.1 — June 18, 2026. Final manuscript."
+      "source": "Canonical route release values per TAA Publication OS F1; TEXTFREEZE v1.0.2 FINAL."
     },
     "abstract": "The Apologetic Authority is a structural critique of Anthropic's Constitution for Claude as a governance document. It argues that the Constitution claims final authority while lacking the structural properties required for constitutional governance, including enforceable obligations, auditability, and stable observability across model behavior. The manuscript examines how aspirational language, scoped authority, behavioral anti-patterns, memory and personalization surfaces, and unauditable ethical framing produce governance failure modes that cannot be resolved by rhetorical commitments alone.",
     "short_description": "A structural critique of Anthropic's Constitution for Claude as an AI governance instrument, focused on authority, auditability, observability, and model behavior risk.",
@@ -27,18 +27,18 @@
       "structural critique"
     ],
     "citation": {
-      "text": "Carlone, C. (2026). The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.20788207",
+      "text": "Carlone, C. (2026). The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude (v1.0.2). Zenodo. https://doi.org/10.5281/zenodo.23019747",
       "doi_included": true,
-      "version_doi": "10.5281/zenodo.20788207",
-      "version_doi_url": "https://doi.org/10.5281/zenodo.20788207",
+      "version_doi": "10.5281/zenodo.23019747",
+      "version_doi_url": "https://doi.org/10.5281/zenodo.23019747",
       "all_versions_doi": "10.5281/zenodo.20788206",
       "all_versions_doi_url": "https://doi.org/10.5281/zenodo.20788206"
     },
     "doi": {
       "status": "minted",
-      "display": "DOI: 10.5281/zenodo.20788207",
-      "version": "10.5281/zenodo.20788207",
-      "version_url": "https://doi.org/10.5281/zenodo.20788207",
+      "display": "DOI: 10.5281/zenodo.23019747",
+      "version": "10.5281/zenodo.23019747",
+      "version_url": "https://doi.org/10.5281/zenodo.23019747",
       "all_versions": "10.5281/zenodo.20788206",
       "all_versions_url": "https://doi.org/10.5281/zenodo.20788206",
       "claimable": true
@@ -47,16 +47,18 @@
       "status": "deposited",
       "platform": "Zenodo",
       "resource_type": "Report",
-      "publication_date": "2026-06-21",
-      "operator_execution_date": "2026-06-22"
+      "publication_date": "2026-09-29",
+      "operator_execution_date": "2026-09-29"
     },
     "pdf": {
       "status": "repository_integrated",
-      "public_url": "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf",
+      "public_url": "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf",
       "claimable": true,
-      "page_count": 44,
+      "page_count": 48,
       "format": "A4",
-      "source_artifact": "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"
+      "byte_count": 403811,
+      "sha256": "0f9aa06ecc8168c6ae1ab43ad0b859f2cd54531c855a54133d52527e9b6475d4",
+      "source_artifact": "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf"
     },
     "repository_source_status": {
       "canonical_route_live": true,
@@ -90,6 +92,46 @@
       "LessWrong post",
       "email outreach",
       "arXiv endorsement request"
-    ]
+    ],
+    "previous_version": {
+      "status": "v1.0.1 — Final Manuscript",
+      "date": {
+        "value": "June 18, 2026",
+        "verification": "verified",
+        "source": "Canonical route version history states: v1.0.1 — June 18, 2026. Final manuscript."
+      },
+      "citation": {
+        "text": "Carlone, C. (2026). The Apologetic Authority: A Structural Critique of Anthropic’s Constitution for Claude (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.20788207",
+        "doi_included": true,
+        "version_doi": "10.5281/zenodo.20788207",
+        "version_doi_url": "https://doi.org/10.5281/zenodo.20788207",
+        "all_versions_doi": "10.5281/zenodo.20788206",
+        "all_versions_doi_url": "https://doi.org/10.5281/zenodo.20788206"
+      },
+      "doi": {
+        "status": "minted",
+        "display": "DOI: 10.5281/zenodo.20788207",
+        "version": "10.5281/zenodo.20788207",
+        "version_url": "https://doi.org/10.5281/zenodo.20788207",
+        "all_versions": "10.5281/zenodo.20788206",
+        "all_versions_url": "https://doi.org/10.5281/zenodo.20788206",
+        "claimable": true
+      },
+      "archive": {
+        "status": "deposited",
+        "platform": "Zenodo",
+        "resource_type": "Report",
+        "publication_date": "2026-06-21",
+        "operator_execution_date": "2026-06-22"
+      },
+      "pdf": {
+        "status": "repository_integrated",
+        "public_url": "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf",
+        "claimable": true,
+        "page_count": 44,
+        "format": "A4",
+        "source_artifact": "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf"
+      }
+    }
   }
 }

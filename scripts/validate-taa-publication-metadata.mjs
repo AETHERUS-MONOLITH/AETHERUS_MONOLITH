@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -7,8 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const metadataPath = "data/taa-publication-metadata.v1.json";
-const versionDoi = "10.5281/zenodo.20788207";
-const versionDoiUrl = "https://doi.org/10.5281/zenodo.20788207";
+const pdfPath = "the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf";
+const pdfSha256 = "0f9aa06ecc8168c6ae1ab43ad0b859f2cd54531c855a54133d52527e9b6475d4";
+const versionDoi = "10.5281/zenodo.23019747";
+const versionDoiUrl = "https://doi.org/10.5281/zenodo.23019747";
 const allVersionsDoi = "10.5281/zenodo.20788206";
 const allVersionsDoiUrl = "https://doi.org/10.5281/zenodo.20788206";
 
@@ -56,7 +59,7 @@ assertEqual(
 assertEqual(publication.canonical_url, "https://camilocarlone.com/the-apologetic-authority/", "canonical URL");
 assert(publication.canonical_url.endsWith("/"), "canonical URL: must be trailing-slash stable");
 assertEqual(publication.author?.name, "Camilo Carlone", "author");
-assert(publication.status.includes("v1.0.1"), "status: must include v1.0.1");
+assert(publication.status.includes("v1.0.2"), "status: must include v1.0.2");
 assert(publication.status.includes("Final Manuscript"), "status: must include Final Manuscript");
 
 const date = publication.date;
@@ -92,7 +95,7 @@ for (const keyword of requiredKeywords) {
 const citationText = publication.citation?.text ?? "";
 assert(citationText.length > 0, "citation block: missing text");
 assert(citationText.includes("Carlone, C. (2026)."), "citation block: missing author/date");
-assert(citationText.includes("(v1.0.1). Zenodo."), "citation block: missing version/Zenodo state");
+assert(citationText.includes("(v1.0.2). Zenodo."), "citation block: missing version/Zenodo state");
 assert(citationText.includes(versionDoiUrl), "citation block: missing version DOI URL");
 assertEqual(publication.citation?.doi_included, true, "citation DOI flag");
 assertEqual(publication.citation?.version_doi, versionDoi, "citation version DOI");
@@ -111,23 +114,28 @@ assertEqual(publication.doi?.all_versions_url, allVersionsDoiUrl, "all-versions 
 assertEqual(publication.archive?.status, "deposited", "archive status");
 assertEqual(publication.archive?.platform, "Zenodo", "archive platform");
 assertEqual(publication.archive?.resource_type, "Report", "archive resource type");
-assertEqual(publication.archive?.publication_date, "2026-06-21", "archive publication date");
-assertEqual(publication.archive?.operator_execution_date, "2026-06-22", "archive operator execution date");
+assertEqual(publication.archive?.publication_date, "2026-09-29", "archive publication date");
+assertEqual(publication.archive?.operator_execution_date, "2026-09-29", "archive operator execution date");
 
 assertEqual(publication.pdf?.status, "repository_integrated", "PDF status");
 assertEqual(
   publication.pdf?.public_url,
-  "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf",
+  "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.2.pdf",
   "PDF public URL"
 );
 assertEqual(publication.pdf?.claimable, true, "PDF claimable");
-assertEqual(publication.pdf?.page_count, 44, "PDF page count");
+assertEqual(publication.pdf?.page_count, 48, "PDF page count");
 assertEqual(publication.pdf?.format, "A4", "PDF format");
+assertEqual(publication.pdf?.byte_count, 403811, "PDF byte count");
+assertEqual(publication.pdf?.sha256, pdfSha256, "PDF SHA-256 metadata");
 assertEqual(
   publication.pdf?.source_artifact,
-  "the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf",
+  pdfPath,
   "PDF source artifact"
 );
+const pdf = await fs.readFile(path.join(repoRoot, pdfPath));
+assertEqual(pdf.length, publication.pdf.byte_count, "PDF actual byte count");
+assertEqual(createHash("sha256").update(pdf).digest("hex"), pdfSha256, "PDF actual SHA-256");
 
 const sourceStatus = publication.repository_source_status;
 assertEqual(sourceStatus?.canonical_route_live, true, "canonical route live");
@@ -138,6 +146,14 @@ assertEqual(sourceStatus?.doi_minted, true, "DOI minted");
 assertEqual(sourceStatus?.archive_release_completed, true, "archive release completed");
 assertEqual(sourceStatus?.search_submission_completed, false, "search submission completed");
 assertEqual(sourceStatus?.distribution_completed, false, "distribution completed");
+
+const previous = publication.previous_version;
+assert(previous && typeof previous === "object", "previous_version: missing object");
+assertEqual(previous.status, "v1.0.1 — Final Manuscript", "previous version status");
+assertEqual(previous.citation?.version_doi, "10.5281/zenodo.20788207", "previous version DOI");
+assertEqual(previous.pdf?.public_url, "https://camilocarlone.com/the-apologetic-authority/the-apologetic-authority-v1.0.1.pdf", "previous PDF URL");
+assertEqual(previous.pdf?.page_count, 44, "previous PDF page count");
+assertEqual(previous.archive?.publication_date, "2026-06-21", "previous archive publication date");
 
 const license = publication.license;
 assert(license && typeof license === "object", "license: missing object");
