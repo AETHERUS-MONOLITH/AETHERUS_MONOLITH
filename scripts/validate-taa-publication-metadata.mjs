@@ -103,7 +103,7 @@ assertEqual(publication.citation?.version_doi_url, versionDoiUrl, "citation vers
 assertEqual(publication.citation?.all_versions_doi, allVersionsDoi, "citation all-versions DOI");
 assertEqual(publication.citation?.all_versions_doi_url, allVersionsDoiUrl, "citation all-versions DOI URL");
 
-assertEqual(publication.doi?.status, "reserved_for_release", "DOI status");
+assertEqual(publication.doi?.status, "minted", "DOI status");
 assertEqual(publication.doi?.claimable, true, "DOI claimable");
 assertEqual(publication.doi?.display, `DOI: ${versionDoi}`, "DOI display");
 assertEqual(publication.doi?.version, versionDoi, "version DOI");
@@ -111,11 +111,11 @@ assertEqual(publication.doi?.version_url, versionDoiUrl, "version DOI URL");
 assertEqual(publication.doi?.all_versions, allVersionsDoi, "all-versions DOI");
 assertEqual(publication.doi?.all_versions_url, allVersionsDoiUrl, "all-versions DOI URL");
 
-assertEqual(publication.archive?.status, "release_scheduled", "archive status");
+assertEqual(publication.archive?.status, "deposited", "archive status");
 assertEqual(publication.archive?.platform, "Zenodo", "archive platform");
 assertEqual(publication.archive?.resource_type, "Report", "archive resource type");
 assertEqual(publication.archive?.publication_date, "2026-09-29", "archive publication date");
-assertEqual(publication.archive?.operator_execution_date, null, "archive operator execution date");
+assertEqual(publication.archive?.operator_execution_date, "2026-09-29", "archive operator execution date");
 
 assertEqual(publication.pdf?.status, "repository_integrated", "PDF status");
 assertEqual(
@@ -142,8 +142,8 @@ assertEqual(sourceStatus?.canonical_route_live, true, "canonical route live");
 assertEqual(sourceStatus?.canonical_surface_complete, true, "canonical surface complete");
 assertEqual(sourceStatus?.metadata_package_created, true, "metadata package created");
 assertEqual(sourceStatus?.pdf_artifact_integrated, true, "PDF artifact integrated");
-assertEqual(sourceStatus?.doi_minted, false, "DOI minted");
-assertEqual(sourceStatus?.archive_release_completed, false, "archive release completed");
+assertEqual(sourceStatus?.doi_minted, true, "DOI minted");
+assertEqual(sourceStatus?.archive_release_completed, true, "archive release completed");
 assertEqual(sourceStatus?.search_submission_completed, false, "search submission completed");
 assertEqual(sourceStatus?.distribution_completed, false, "distribution completed");
 
