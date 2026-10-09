@@ -553,3 +553,25 @@
   [data-design-system="operator"] .auth-login-status-strip { grid-template-columns: 1fr; }
   [data-design-system="operator"] .membrane-surface-card { min-height: 0; }
 }
+
+/* Review-surface legibility: label and note colours come from tokens (>= 4.5:1 on the card and page surfaces). */
+[data-design-system="operator"] {
+  --label-ink: var(--source-walnut);
+  --note-ink: var(--source-deep-taupe);
+}
+[data-design-system="operator"] .membrane-card-field strong,
+[data-design-system="operator"] .membrane-surface-card small strong {
+  color: var(--label-ink);
+  font-weight: 600;
+}
+[data-design-system="operator"] .membrane-surface-card small {
+  color: var(--note-ink);
+  font-size: 11px;
+}
+[data-design-system="operator"] .footer-status p,
+[data-design-system="operator"] .footer-statement p {
+  color: var(--note-ink);
+}
+/* An odd card count no longer leaves a filled empty cell: cards carry their own edge instead of a shared chalk ground. */
+[data-design-system="operator"] .membrane-surface-grid { gap: 12px; border: 0; background: transparent; }
+[data-design-system="operator"] .membrane-surface-card { border: 1px solid var(--boundary-quiet); }
