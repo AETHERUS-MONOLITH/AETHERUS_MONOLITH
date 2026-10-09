@@ -964,3 +964,53 @@
 @media (prefers-reduced-motion: reduce) {
   [data-design-system="operator"] .operator-publication-object { transform: none !important; }
 }
+
+/* Governance stack: one grid, one timing, one active state, a stable evidence panel. */
+[data-design-system="operator"] {
+  --stack-duration: 180ms;
+  --stack-ease: var(--motion-ease);
+  --stack-active-bg: var(--selection-surface);
+  --stack-active-edge: var(--action-ink);
+  --stack-active-ink: var(--selection-ink);
+}
+[data-design-system="operator"] .operator-stack { align-items: stretch; }
+[data-design-system="operator"] .operator-stack > li:not(.operator-stack__group) { display: flex; min-width: 0; }
+[data-design-system="operator"] .operator-stack > li > button,
+[data-design-system="operator"] .operator-stack__group { flex: 1 1 auto; align-content: center; }
+[data-design-system="operator"] .operator-stack__group {
+  grid-column: auto;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  align-content: stretch;
+}
+[data-design-system="operator"] .operator-stack__group-label { min-height: 0; border-style: dashed; }
+[data-design-system="operator"] .operator-stack > li > button,
+[data-design-system="operator"] .operator-stack__chambers button {
+  border-width: 1px;
+  transition:
+    background-color var(--stack-duration) var(--stack-ease),
+    border-color var(--stack-duration) var(--stack-ease),
+    color var(--stack-duration) var(--stack-ease),
+    box-shadow var(--stack-duration) var(--stack-ease),
+    transform var(--stack-duration) var(--stack-ease);
+}
+[data-design-system="operator"] .operator-stack > li > button.active,
+[data-design-system="operator"] .operator-stack__chambers button.active {
+  border-color: var(--stack-active-edge);
+  background: var(--stack-active-bg);
+  color: var(--stack-active-ink);
+}
+[data-design-system="operator"] .operator-stack > li > button.active strong,
+[data-design-system="operator"] .operator-stack > li > button.active small,
+[data-design-system="operator"] .operator-stack__chambers button.active { color: var(--stack-active-ink); }
+[data-design-system="operator"] .operator-stack__chambers button.active::before { color: var(--stack-active-ink); }
+[data-design-system="operator"] .related-evidence-panel { min-height: 24rem; align-content: start; }
+[data-design-system="operator"] #related-evidence-list { max-height: 20rem; overflow-y: auto; align-content: start; }
+@media (max-width: 767px) {
+  [data-design-system="operator"] .related-evidence-panel { min-height: 38.5rem; }
+  [data-design-system="operator"] #related-evidence-list { max-height: 22rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-design-system="operator"] .operator-stack > li > button,
+  [data-design-system="operator"] .operator-stack__chambers button { transition: none; }
+}
