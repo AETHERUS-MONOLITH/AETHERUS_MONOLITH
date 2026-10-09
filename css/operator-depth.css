@@ -1,0 +1,306 @@
+/* AETHERUS depth layer: raised plates with layered shadows, a slight perspective lean towards the pointer and a
+   soft warm reflex that travels with it. Restrained by design: no rainbow, no holographic sheen, no motion
+   when the visitor asks for none. Presentation only. */
+
+[data-design-system="operator"] {
+  --depth-ink: 59 50 43;
+  --depth-rest:
+    0 1px 1px rgb(var(--depth-ink) / 6%),
+    0 2px 2px rgb(var(--depth-ink) / 5%),
+    0 4px 4px rgb(var(--depth-ink) / 4%),
+    0 8px 8px rgb(var(--depth-ink) / 3.5%),
+    0 16px 16px rgb(var(--depth-ink) / 3%);
+  --depth-lift:
+    0 1px 1px rgb(var(--depth-ink) / 7%),
+    0 3px 3px rgb(var(--depth-ink) / 6%),
+    0 6px 6px rgb(var(--depth-ink) / 5%),
+    0 12px 12px rgb(var(--depth-ink) / 4.5%),
+    0 24px 24px rgb(var(--depth-ink) / 4%),
+    0 40px 40px rgb(var(--depth-ink) / 3%);
+  --depth-bevel: inset 0 1px 0 rgb(255 255 255 / 80%), inset 0 -1px 0 rgb(123 81 47 / 8%);
+  --depth-press: inset 0 2px 5px rgb(var(--depth-ink) / 14%), inset 0 0 0 1px rgb(123 81 47 / 22%);
+  --depth-glare: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgb(255 252 244 / 62%), rgb(216 177 134 / 12%) 42%, transparent 66%);
+  --depth-perspective: 1100px;
+  --depth-shift: 7px;
+}
+
+/* ---- shared plate behaviour ------------------------------------------------------------------------------ */
+[data-design-system="operator"] :is(
+  .operator-disclosure,
+  .doc-card,
+  .operator-stack > li > button,
+  .operator-stack__chambers button,
+  .operator-publication-object
+) {
+  position: relative;
+  transform: perspective(var(--depth-perspective)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-origin: 50% 50%;
+  transition:
+    transform 320ms var(--motion-ease),
+    box-shadow 320ms var(--motion-ease),
+    border-color 180ms var(--motion-ease),
+    background-color 180ms var(--motion-ease);
+}
+[data-design-system="operator"] :is(
+  .operator-disclosure,
+  .doc-card,
+  .operator-stack > li > button,
+  .operator-stack__chambers button,
+  .operator-publication-object,
+  .work-method,
+  .work-provenance
+).is-tilting {
+  transition: transform 70ms linear, box-shadow 320ms var(--motion-ease), border-color 180ms var(--motion-ease), background-color 180ms var(--motion-ease);
+}
+
+/* the reflex */
+[data-design-system="operator"] :is(
+  .operator-disclosure,
+  .doc-card,
+  .operator-stack > li > button,
+  .operator-stack__chambers button,
+  .operator-publication-object,
+  .work-method,
+  .work-provenance
+)::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: var(--depth-glare);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms var(--motion-ease);
+}
+[data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack > li > button, .operator-stack__chambers button, .operator-publication-object, .work-method, .work-provenance).is-tilting::after,
+[data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack > li > button, .operator-stack__chambers button, .operator-publication-object):focus-visible::after,
+[data-design-system="operator"] .operator-disclosure:not([open]):focus-within::after { opacity: .7; }
+[data-design-system="operator"] .doc-card:focus-visible::after,
+[data-design-system="operator"] .operator-stack button:focus-visible::after { --mx: 18%; --my: 0%; opacity: .9; }
+
+[data-design-system="operator"] .operator-disclosure > * { position: relative; z-index: 1; }
+
+/* keyboard focus: one visible, token-based ring everywhere */
+[data-design-system="operator"] :is(.doc-card, .operator-stack button, .operator-publication-object, .operator-research-nav a, .operator-disclosure > summary):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* ---- collapsible cards -------------------------------------------------------------------------------------- */
+[data-design-system="operator"] .operator-secondary { gap: 16px; padding-top: 28px; }
+[data-design-system="operator"] .operator-disclosure,
+[data-design-system="operator"] .operator-disclosure:last-child {
+  border: 1px solid color-mix(in srgb, var(--edge-champagne) 70%, transparent);
+  border-radius: var(--radius-plate);
+  background: linear-gradient(168deg, rgb(255 255 255 / 66%), rgb(247 245 242 / 94%) 58%, rgb(232 225 216 / 46%));
+  box-shadow: var(--depth-bevel), var(--depth-rest);
+}
+[data-design-system="operator"] .operator-disclosure--evidence { margin-top: 28px; }
+[data-design-system="operator"] .operator-disclosure:not([open]).is-tilting,
+[data-design-system="operator"] .operator-disclosure:not([open]):hover {
+  box-shadow:
+    var(--depth-bevel),
+    calc(var(--tx, 0) * var(--depth-shift) * -1) calc(var(--ty, 0) * var(--depth-shift) * -1 + 4px) 0 -2px rgb(213 201 185 / 40%),
+    var(--depth-lift);
+}
+[data-design-system="operator"] .operator-disclosure:not([open]):active { transform: perspective(var(--depth-perspective)) scale(.995); }
+[data-design-system="operator"] .operator-disclosure[open] { transform: none; box-shadow: var(--depth-bevel), var(--depth-rest); }
+[data-design-system="operator"] .operator-disclosure > summary {
+  position: relative;
+  border-radius: inherit;
+  padding-left: 28px;
+  transition: background-color 180ms var(--motion-ease);
+}
+[data-design-system="operator"] .operator-disclosure > summary::before {
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 12px;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--source-oak), color-mix(in srgb, var(--source-oak) 12%, transparent));
+  content: "";
+  transition: top 220ms var(--motion-ease), bottom 220ms var(--motion-ease);
+}
+[data-design-system="operator"] .operator-disclosure:not([open]):hover > summary::before { top: 12px; bottom: 12px; }
+[data-design-system="operator"] .operator-disclosure[open] > summary { border-radius: var(--radius-plate) var(--radius-plate) 0 0; }
+[data-design-system="operator"] .operator-disclosure[open] > .operator-disclosure__body {
+  animation: depth-reveal 340ms var(--motion-ease) both;
+}
+@keyframes depth-reveal {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- document cards (Architecture & Governance, Pipeline Methodology, Artefact Evidence) ------------------- */
+[data-design-system="operator"] .doc-card {
+  border: 1px solid color-mix(in srgb, var(--boundary-quiet) 86%, transparent) !important;
+  border-radius: var(--radius-plate) !important;
+  background: linear-gradient(150deg, rgb(255 255 255 / 80%), rgb(247 245 242 / 97%) 60%, rgb(232 225 216 / 26%)) !important;
+  box-shadow: var(--depth-bevel), var(--depth-rest) !important;
+  cursor: pointer;
+}
+[data-design-system="operator"] .doc-card:hover,
+[data-design-system="operator"] .doc-card.is-tilting {
+  border-color: color-mix(in srgb, var(--edge-champagne) 80%, transparent) !important;
+  background: linear-gradient(150deg, rgb(255 255 255 / 94%), rgb(247 245 242 / 98%) 60%, rgb(232 225 216 / 54%)) !important;
+  box-shadow:
+    var(--depth-bevel),
+    calc(var(--tx, 0) * var(--depth-shift) * -1) calc(var(--ty, 0) * var(--depth-shift) * -1 + 4px) 0 -2px rgb(213 201 185 / 42%),
+    var(--depth-lift) !important;
+}
+[data-design-system="operator"] .doc-card.active,
+[data-design-system="operator"] .doc-card.evidence-match {
+  border-color: color-mix(in srgb, var(--source-oak) 52%, var(--boundary-quiet)) !important;
+  box-shadow: inset 3px 0 0 var(--source-oak), var(--depth-bevel), var(--depth-lift) !important;
+}
+[data-design-system="operator"] .doc-card:hover,
+[data-design-system="operator"] .doc-card.is-tilting { transform: perspective(var(--depth-perspective)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) !important; }
+[data-design-system="operator"] .doc-card:active { transform: perspective(var(--depth-perspective)) scale(.992) !important; }
+[data-design-system="operator"] .doc-card > * { position: relative; z-index: 1; }
+[data-design-system="operator"] .doc-card-cta { transition: letter-spacing 220ms var(--motion-ease), color 180ms var(--motion-ease); }
+[data-design-system="operator"] .doc-card:hover .doc-card-cta { letter-spacing: .06em; }
+[data-design-system="operator"] .docs-grid { gap: 22px; perspective: none; }
+
+/* ---- governance stack: raised keys that press in when selected ---------------------------------------------- */
+[data-design-system="operator"] .operator-stack > li > button,
+[data-design-system="operator"] .operator-stack__chambers button {
+  border-radius: var(--radius-control);
+  box-shadow: var(--depth-bevel), 0 1px 1px rgb(var(--depth-ink) / 7%), 0 3px 5px rgb(var(--depth-ink) / 6%), 0 8px 14px rgb(var(--depth-ink) / 4%);
+}
+[data-design-system="operator"] .operator-stack > li > button:hover,
+[data-design-system="operator"] .operator-stack__chambers button:hover {
+  border-color: color-mix(in srgb, var(--action-ink) 55%, var(--boundary-quiet));
+  box-shadow: var(--depth-bevel), 0 2px 2px rgb(var(--depth-ink) / 8%), 0 6px 10px rgb(var(--depth-ink) / 7%), 0 14px 24px rgb(var(--depth-ink) / 6%);
+}
+[data-design-system="operator"] .operator-stack > li > button:active,
+[data-design-system="operator"] .operator-stack__chambers button:active { transform: perspective(var(--depth-perspective)) scale(.99); }
+[data-design-system="operator"] .operator-stack > li > button.active,
+[data-design-system="operator"] .operator-stack__chambers button.active {
+  box-shadow: var(--depth-press);
+  transform: none;
+}
+[data-design-system="operator"] .operator-stack > li > button > *,
+[data-design-system="operator"] .operator-stack__chambers button > * { position: relative; z-index: 1; }
+
+/* ---- Pipeline Methodology: a running flow ------------------------------------------------------------------- */
+[data-design-system="operator"] #docs-pipeline { counter-reset: pipeline-step; }
+[data-design-system="operator"] #docs-pipeline .doc-card { counter-increment: pipeline-step; padding-top: 42px !important; }
+[data-design-system="operator"] #docs-pipeline .doc-card::before {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--action-ink);
+  font: 600 10px/1 var(--font-interface);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  content: "Step 0" counter(pipeline-step);
+}
+[data-design-system="operator"] #docs-pipeline .doc-card::before { text-indent: 0; }
+/* the rail under the section title, with a light that runs along it */
+[data-design-system="operator"] .operator-research-library > section:has(#docs-pipeline) > h3 {
+  position: relative;
+  padding-bottom: 18px;
+}
+[data-design-system="operator"] .operator-research-library > section:has(#docs-pipeline) > h3::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, transparent, rgb(216 177 134 / 90%), transparent) 0 0 / 28% 100% no-repeat,
+    linear-gradient(90deg, var(--boundary-quiet), color-mix(in srgb, var(--boundary-quiet) 30%, transparent));
+  content: "";
+  animation: pipeline-run 6.5s var(--motion-ease) infinite;
+}
+@keyframes pipeline-run {
+  0% { background-position: -30% 0, 0 0; }
+  70%, 100% { background-position: 130% 0, 0 0; }
+}
+/* each step lights in turn */
+[data-design-system="operator"] #docs-pipeline .doc-card::after { animation: none; }
+@media (prefers-reduced-motion: no-preference) {
+  [data-design-system="operator"] #docs-pipeline .doc-card:nth-child(1)::before { animation: step-glow 8s ease-in-out infinite 0s; }
+  [data-design-system="operator"] #docs-pipeline .doc-card:nth-child(2)::before { animation: step-glow 8s ease-in-out infinite 2s; }
+  [data-design-system="operator"] #docs-pipeline .doc-card:nth-child(3)::before { animation: step-glow 8s ease-in-out infinite 4s; }
+  [data-design-system="operator"] #docs-pipeline .doc-card:nth-child(4)::before { animation: step-glow 8s ease-in-out infinite 6s; }
+}
+@keyframes step-glow {
+  0%, 22%, 100% { color: var(--action-ink); text-shadow: none; }
+  8% { color: var(--source-oak); text-shadow: 0 0 14px rgb(216 177 134 / 80%); }
+}
+
+/* ---- Read the supporting evidence: the publication as an object ---------------------------------------------- */
+[data-design-system="operator"] #research:not([open]) {
+  box-shadow:
+    var(--depth-bevel),
+    5px 5px 0 -1px rgb(232 225 216 / 92%), 5px 5px 0 0 color-mix(in srgb, var(--boundary-quiet) 80%, transparent),
+    10px 10px 0 -1px rgb(240 235 227 / 92%), 10px 10px 0 0 color-mix(in srgb, var(--boundary-quiet) 55%, transparent),
+    var(--depth-rest);
+}
+[data-design-system="operator"] #research:not([open]).is-tilting,
+[data-design-system="operator"] #research:not([open]):hover {
+  box-shadow:
+    var(--depth-bevel),
+    7px 7px 0 -1px rgb(232 225 216 / 94%), 7px 7px 0 0 color-mix(in srgb, var(--boundary-quiet) 85%, transparent),
+    14px 14px 0 -1px rgb(240 235 227 / 94%), 14px 14px 0 0 color-mix(in srgb, var(--boundary-quiet) 60%, transparent),
+    var(--depth-lift);
+}
+[data-design-system="operator"] .operator-research-nav a {
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: background-color 180ms var(--motion-ease), border-color 180ms var(--motion-ease), color 180ms var(--motion-ease);
+}
+[data-design-system="operator"] .operator-research-nav a:hover { border-color: var(--boundary-quiet); background: rgb(232 225 216 / 54%); }
+[data-design-system="operator"] .operator-publication-object {
+  border-radius: var(--radius-plate);
+  box-shadow:
+    var(--depth-bevel),
+    calc(var(--tx, 0) * var(--depth-shift) * -1 + 8px) calc(var(--ty, 0) * var(--depth-shift) * -1 + 9px) 0 -1px rgb(213 201 185 / 40%),
+    calc(var(--tx, 0) * var(--depth-shift) * -2 + 16px) calc(var(--ty, 0) * var(--depth-shift) * -2 + 18px) 0 -2px rgb(232 225 216 / 46%),
+    var(--depth-lift);
+}
+[data-design-system="operator"] .operator-publication-object:hover { transform: perspective(var(--depth-perspective)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+[data-design-system="operator"] .operator-publication-object > * { position: relative; z-index: 1; }
+[data-design-system="operator"] .operator-publication-object__folio { position: relative; }
+[data-design-system="operator"] .operator-publication-object__folio::after {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--source-oak), transparent 80%);
+  content: "";
+}
+[data-design-system="operator"] .operator-research-library > section {
+  animation: depth-rise 480ms var(--motion-ease) both;
+}
+[data-design-system="operator"] .operator-research-library > section:nth-child(2) { animation-delay: 70ms; }
+[data-design-system="operator"] .operator-research-library > section:nth-child(3) { animation-delay: 140ms; }
+@keyframes depth-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- touch and reduced motion ------------------------------------------------------------------------------- */
+@media (hover: none), (pointer: coarse) {
+  [data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack button, .operator-publication-object) { transform: none; }
+  [data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack button):active { transform: scale(.99); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack button, .operator-publication-object, .operator-research-nav a, .doc-card-cta, .operator-disclosure > summary::before) { transition: none !important; }
+  [data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack button, .operator-publication-object) { transform: none !important; }
+  [data-design-system="operator"] :is(.operator-disclosure__body, .operator-research-library > section, #docs-pipeline .doc-card::before, .operator-research-library h3::after) { animation: none !important; }
+}
+@media (forced-colors: active) {
+  [data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack button, .operator-publication-object) { forced-color-adjust: auto; box-shadow: none !important; border: 1px solid CanvasText !important; }
+  [data-design-system="operator"] :is(.operator-disclosure, .doc-card, .operator-stack button, .operator-publication-object)::after { display: none; }
+}
