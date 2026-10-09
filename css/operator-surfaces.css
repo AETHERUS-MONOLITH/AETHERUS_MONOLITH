@@ -1070,3 +1070,31 @@
 [data-design-system="operator"] .evidence-row { padding: 12px 16px 14px; background: rgb(232 225 216 / 30%); }
 [data-design-system="operator"] .evidence-row dt { font-size: 10px !important; margin-bottom: 4px; }
 [data-design-system="operator"] .evidence-row dd { margin: 0 !important; font-size: 14px !important; line-height: 1.5; }
+
+/* Reflow: grid tracks may shrink below their content, long words wrap instead of widening the page. */
+@media (max-width: 767px) {
+  [data-design-system="operator"] .operator-stack,
+  [data-design-system="operator"] .related-evidence-panel,
+  [data-design-system="operator"] .operator-footer,
+  [data-design-system="operator"] .operator-stack__group { grid-template-columns: minmax(0, 1fr); }
+}
+[data-design-system="operator"] .operator-disclosure,
+[data-design-system="operator"] .operator-disclosure__body,
+[data-design-system="operator"] .operator-disclosure__body > *,
+[data-design-system="operator"] .related-evidence-panel > *,
+[data-design-system="operator"] .operator-stack > li { min-width: 0; }
+[data-design-system="operator"] .operator-disclosure > summary,
+[data-design-system="operator"] .operator-stack button,
+[data-design-system="operator"] .related-evidence-panel,
+[data-design-system="operator"] .doc-detail-panel,
+[data-design-system="operator"] .operator-hero h1,
+[data-design-system="operator"] .operator-footer { overflow-wrap: anywhere; }
+[data-design-system="operator"] .operator-header { gap: 8px 16px; }
+@media (max-width: 767px) {
+  [data-design-system="operator"] .operator-header,
+  [data-design-system="operator"] .operator-protected .operator-header { grid-template-columns: minmax(0, 1fr) auto; }
+  [data-design-system="operator"] .operator-wordmark { max-width: 100%; flex-wrap: wrap; }
+  [data-design-system="operator"] .operator-session-link { justify-self: end; max-width: 100%; text-align: right; overflow-wrap: anywhere; }
+  [data-design-system="operator"] .operator-menu summary { white-space: nowrap; }
+  [data-design-system="operator"] :where(.doc-card, .doc-card *, .operator-publication-object, .operator-publication-object *) { min-width: 0; overflow-wrap: anywhere; }
+}
