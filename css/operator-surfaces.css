@@ -1014,3 +1014,26 @@
   [data-design-system="operator"] .operator-stack > li > button,
   [data-design-system="operator"] .operator-stack__chambers button { transition: none; }
 }
+
+/* Hero: the identity overlay faded to an opaque page colour at the figure box, which cut the halo behind it
+   into a visible edge above "Operational evidence pending". The mark's own radial mask already feathers its
+   border, so the overlay now only feathers towards transparency and the halo runs on unbroken. */
+[data-design-system="operator"] .operator-identity::after {
+  background:
+    linear-gradient(90deg, rgb(247 245 242 / 56%) 0%, transparent 18%, transparent 82%, rgb(247 245 242 / 56%) 100%);
+}
+@media (min-width: 768px) {
+  [data-design-system="operator"] .operator-identity img {
+    -webkit-mask-image:
+      linear-gradient(180deg, transparent 0%, #000 16%, #000 68%, transparent 100%),
+      radial-gradient(ellipse 52% 61% at 59% 51%, #000 45%, rgb(0 0 0 / 88%) 63%, transparent 96%);
+    mask-image:
+      linear-gradient(180deg, transparent 0%, #000 16%, #000 68%, transparent 100%),
+      radial-gradient(ellipse 52% 61% at 59% 51%, #000 45%, rgb(0 0 0 / 88%) 63%, transparent 96%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+}
+@media (forced-colors: active) {
+  [data-design-system="operator"] .operator-identity img { -webkit-mask-image: none; mask-image: none; }
+}
