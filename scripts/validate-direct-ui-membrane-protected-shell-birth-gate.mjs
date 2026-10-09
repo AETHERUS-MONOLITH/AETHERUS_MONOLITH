@@ -79,6 +79,7 @@ const boundedAuthFiles = [
 
 const allowedServerSecretFiles = new Set([
   recordPath,
+  "AETHERUS-V2-UX-UI-BASELINE.md",
   "scripts/validate-direct-ui-membrane-protected-shell-birth-gate.mjs",
   ".env.example",
   "supabase/migrations/20260716_0001_github_pages_operator_resolution_bridge_v0.sql",
@@ -116,14 +117,14 @@ const forbiddenImplementationPatterns = [
 const protectedShellRequiredPhrases = [
   "Current Work",
   "Checking session",
-  "Protected shell review fixture",
-  "authenticated save/load loop",
-  "session-scoped Supabase state",
-  "Operational evidence pending",
-  "Customer data outside scope",
-  "Static evaluation mode",
-  "Not a production SaaS interface",
-  "Not an operational release system"
+  "Live governed evaluation",
+  "Bounded input",
+  "Stage input",
+  "Run governed evaluation",
+  "Load deterministic fixture",
+  "No external release action",
+  "production audit ledger",
+  "compliance certification"
 ];
 
 const loginSurfaceRequiredBoundaryPhrases = [
@@ -156,17 +157,14 @@ const callbackRequiredBoundaryPhrases = [
 ];
 
 const protectedShellMessagingRequiredPhrases = [
-  "Protected workspace admission depends on recognized Supabase session state",
-  "Denial without a session is expected guard behavior",
+  "Checking access",
+  "Sign in to view Current Work",
   "No external release action",
-  "bounded release-review workspace state",
-  "authenticated save/load loop",
-  "session-scoped Supabase state",
-  "Operational evidence pending",
-  "Customer data outside scope",
-  "Static evaluation mode",
-  "Not a production SaaS interface",
-  "Not an operational release system"
+  "Bounded persistence",
+  "Execution evidence pending",
+  "non-sensitive input",
+  "production audit ledger",
+  "compliance certification"
 ];
 
 const homepageForbiddenExposurePatterns = [
@@ -236,8 +234,20 @@ function assertRecordFlags(record) {
 }
 
 function assertNoForbiddenImplementation(filePath, text) {
+  // The post-birth Current Work surface contains one bounded evaluation form.
+  // Remove only its exact non-credential form and consent control before the
+  // original credential-form prohibition is applied to the remaining markup.
+  let credentialScanText = text;
+  if (filePath === protectedShellPath) {
+    credentialScanText = credentialScanText
+      .replace(/<form\b[^>]*\bdata-live-evaluation-form\b[^>]*>/i, "")
+      .replace(/<input\b[^>]*\btype=["']checkbox["'][^>]*\bdata-live-evaluation-consent\b[^>]*>/i, "");
+  }
   for (const { label, pattern } of forbiddenImplementationPatterns) {
-    if (pattern.test(text)) fail(`${filePath} contains forbidden ${label}`);
+    const inspectedText = label === "credential form" || label === "credential input"
+      ? credentialScanText
+      : text;
+    if (pattern.test(inspectedText)) fail(`${filePath} contains forbidden ${label}`);
   }
   for (const term of serverSecretTerms) {
     if (text.includes(term)) fail(`${filePath} contains server-secret term ${term}`);

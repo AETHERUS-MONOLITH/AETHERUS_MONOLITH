@@ -138,7 +138,11 @@ const postInventoryCorrectionArtifacts = new Set([
   "data/github-pages-governable-deployment-action.v0.json",
   "data/github-pages-governable-deployment-boundary.v0.json",
   "data/github-pages-supabase-execution-package.v0.json",
-  "data/github-pages-supabase-execution-receipt.v0.json"
+  "data/github-pages-supabase-execution-receipt.v0.json",
+  "docs/AETHERUS-RESIDUAL-BUILD-REGISTER.md",
+  "docs/LIVE-GOVERNED-EVALUATION-V0.md",
+  "data/intelligence-runtime-contracts.v0.json",
+  "data/legacy-function-reconciliation.v0.json"
 ]);
 
 const inventory = readJson(inventoryPath);

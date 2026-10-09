@@ -12,14 +12,14 @@ const requiredProtectedShellPhrases = [
   "Evidence",
   "Decision → Result",
   "Inspect evidence",
-  "Stage candidate",
-  "Run local review",
+  "Stage input",
+  "Run governed evaluation",
   "Save workspace state",
   "Load saved workspace state",
   "No evidence packet is loaded yet.",
-  "No active release candidate is queued.",
+  "No live evaluation is queued.",
   "No persistent activity has been recorded.",
-  "This frame can save and load bounded release-review workspace state"
+  "This path accepts one explicitly non-sensitive input"
 ];
 
 const requiredNavigationTargets = [
@@ -29,16 +29,13 @@ const requiredNavigationTargets = [
 
 const protectedBoundaryPhrases = [
   "Protected workspace admission depends on recognized Supabase session state",
-  "Denial without a session is expected guard behavior",
   "data-protected-shell-boundary",
   "js/supabase-protected-shell.js",
-  "authenticated save/load loop",
-  "session-scoped Supabase state",
-  "Operational evidence pending",
-  "Customer data outside scope",
-  "Static evaluation mode",
-  "Not a production SaaS interface",
-  "Not an operational release system"
+  "Bounded persistence",
+  "Execution evidence pending",
+  "No external release action",
+  "production audit ledger",
+  "compliance certification"
 ];
 
 const forbiddenPositiveClaims = [
@@ -103,7 +100,7 @@ if (!previewWorkspace.includes("Interactive workspace preview")) {
   fail(`${previewWorkspacePath}: must remain the interactive workspace preview`);
 }
 
-for (const phrase of ["Current Work", "Inspect evidence", "Run local review"]) {
+for (const phrase of ["Current Work", "Inspect evidence", "Run governed evaluation"]) {
   if (taaRoute.includes(phrase)) {
     fail(`${taaRoutePath}: workspace functionality must not be placed under the TAA route`);
   }
