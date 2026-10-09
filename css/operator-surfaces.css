@@ -1017,10 +1017,10 @@
 
 /* Hero: the identity overlay faded to an opaque page colour at the figure box, which cut the halo behind it
    into a visible edge above "Operational evidence pending". The mark's own radial mask already feathers its
-   border, so the overlay now only feathers towards transparency and the halo runs on unbroken. */
+   border, so the overlay now keeps only its side feathering and the halo runs on unbroken below the figure. */
 [data-design-system="operator"] .operator-identity::after {
   background:
-    linear-gradient(90deg, rgb(247 245 242 / 56%) 0%, transparent 18%, transparent 82%, rgb(247 245 242 / 56%) 100%);
+    linear-gradient(90deg, var(--surface-page) 0%, rgb(247 245 242 / 72%) 7%, transparent 24%, transparent 76%, rgb(247 245 242 / 72%) 93%, var(--surface-page) 100%);
 }
 @media (min-width: 768px) {
   [data-design-system="operator"] .operator-identity img {
