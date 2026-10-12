@@ -553,3 +553,46 @@
   [data-design-system="operator"] .auth-login-status-strip { grid-template-columns: 1fr; }
   [data-design-system="operator"] .membrane-surface-card { min-height: 0; }
 }
+
+/* Review-surface legibility: label and note colours come from tokens (>= 4.5:1 on the card and page surfaces). */
+[data-design-system="operator"] {
+  --label-ink: var(--source-walnut);
+  --note-ink: var(--source-deep-taupe);
+}
+[data-design-system="operator"] .membrane-card-field strong,
+[data-design-system="operator"] .membrane-surface-card small strong {
+  color: var(--label-ink);
+  font-weight: 600;
+}
+[data-design-system="operator"] .membrane-surface-card small {
+  color: var(--note-ink);
+  font-size: 11px;
+}
+[data-design-system="operator"] .footer-status p,
+[data-design-system="operator"] .footer-statement p {
+  color: var(--note-ink);
+}
+/* An odd card count no longer leaves a filled empty cell: cards carry their own edge instead of a shared chalk ground. */
+[data-design-system="operator"] .membrane-surface-grid { gap: 12px; border: 0; background: transparent; }
+[data-design-system="operator"] .membrane-surface-card { border: 1px solid var(--boundary-quiet); }
+
+/* Reflow (320 CSS px, 200% text): headers, grids and long strings shrink or wrap instead of widening the page. */
+[data-design-system="operator"] :where(.site-header, .site-nav, .brand-lockup, .brand-copy, main, main section, main article, main aside, main div, main p, main h1, main h2, main h3, main li, main a, main span, .footer-status, .footer-status *) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+[data-design-system="operator"] .brand-lockup { max-width: 100%; }
+@media (max-width: 820px) {
+  [data-design-system="operator"] .site-header { grid-template-columns: minmax(0, 1fr); }
+  [data-design-system="operator"] .brand-name { white-space: normal; letter-spacing: .1em; }
+  [data-design-system="operator"] .site-nav { flex-wrap: wrap; }
+  [data-design-system="operator"] .membrane-layout,
+  [data-design-system="operator"] .workspace-grid,
+  [data-design-system="operator"] .membrane-hero,
+  [data-design-system="operator"] .auth-login-hero,
+  [data-design-system="operator"] .auth-login-boundary-grid,
+  [data-design-system="operator"] .auth-boundary-grid,
+  [data-design-system="operator"] .membrane-surface-grid,
+  [data-design-system="operator"] .footer-status { grid-template-columns: minmax(0, 1fr); }
+  [data-design-system="operator"] .membrane-status-strip { grid-template-columns: minmax(0, 1fr); }
+}

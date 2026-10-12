@@ -1,0 +1,225 @@
+/* The Apologetic Authority: reading layer.
+   Scale and density are tuned so the page breathes at 100% browser zoom the way it used to at 80%:
+   body text stays at 16.5px (never below 16px), the measure is held near 68 characters, display sizes come down and
+   the surrounding space goes up. Presentation only; the manuscript text and markup order are untouched. */
+
+:root {
+  --reader-body: 1.0313rem;      /* 16.5px at the default root size */
+  --reader-gutter: clamp(20px, 5.2vw, 68px);
+  --reader-rail: 212px;
+  --reader-shell: 1120px;
+  --reader-shadow:
+    0 1px 1px rgb(59 50 43 / 6%), 0 3px 3px rgb(59 50 43 / 5%), 0 8px 8px rgb(59 50 43 / 4%), 0 18px 20px rgb(59 50 43 / 4%);
+  --reader-bevel: inset 0 1px 0 rgb(255 255 255 / 85%);
+}
+
+body {
+  font-size: var(--reader-body);
+  line-height: 1.68;
+  background:
+    radial-gradient(circle at 80% 0%, rgb(216 177 134 / 14%), transparent 34rem),
+    #e8e1d8;
+}
+.publication-shell {
+  width: min(var(--reader-shell), calc(100% - 64px));
+  margin-block: clamp(16px, 3vw, 40px);
+  min-height: 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgb(78 67 58 / 8%), 0 24px 70px rgb(78 67 58 / 13%);
+}
+.publication-header, .publication-meta, .manuscript, .publication-footer { padding-inline: var(--reader-gutter); }
+
+/* header */
+.publication-header { padding-top: clamp(28px, 5.5vw, 64px); padding-bottom: 26px; }
+.site-link { margin-bottom: 30px; font-size: .75rem; }
+h1 { margin: 8px 0 10px; font-size: clamp(2.3rem, 5.4vw, 4rem); line-height: 1.08; }
+.subtitle { margin-bottom: 18px; font-size: clamp(1.02rem, 1.7vw, 1.22rem); }
+.byline { font-size: .9rem; line-height: 1.55; }
+
+/* ---- metadata ---------------------------------------------------------------------------------------------- */
+.publication-meta { gap: 16px; padding-top: 26px; padding-bottom: 30px; }
+.publication-meta > .meta-label { margin: 0; color: #61564c; }
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.status-grid > div {
+  position: relative;
+  grid-column: span 3;
+  padding: 12px 14px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(165deg, #fffdf9, rgb(251 249 245 / 90%) 60%, rgb(243 238 230 / 70%));
+  box-shadow: var(--reader-bevel), 0 1px 1px rgb(59 50 43 / 5%), 0 4px 8px rgb(59 50 43 / 4%);
+}
+.status-grid > div:nth-child(1) { grid-column: span 2; }
+.status-grid > div:nth-child(2) { grid-column: span 4; }
+.status-grid dt { color: #61564c; font-size: .72rem; letter-spacing: .1em; }
+.status-grid dd { margin-top: 3px; font-family: var(--sans); font-size: .93rem; line-height: 1.45; color: var(--ink); }
+/* the identifying facts carry an accent edge */
+.status-grid > div:nth-child(2)::before,
+.status-grid > div:nth-child(3)::before,
+.status-grid > div:nth-child(4)::before {
+  position: absolute; top: 10px; bottom: 10px; left: 0; width: 3px; border-radius: 0 2px 2px 0;
+  background: linear-gradient(180deg, #c89a6a, rgb(200 154 106 / 15%)); content: "";
+}
+
+.abstract-box, .citation-box, .placeholder-box, .boundary-box {
+  padding: 16px 18px 17px;
+  border-radius: 8px;
+  box-shadow: var(--reader-bevel), 0 1px 1px rgb(59 50 43 / 5%), 0 4px 8px rgb(59 50 43 / 4%);
+}
+.abstract-box { background: #fffdf9; }
+.abstract-box p { max-width: 70ch; font-size: .98rem; line-height: 1.65; }
+.citation-box { background: rgb(243 238 230 / 62%); font-family: var(--sans); font-size: .9rem; line-height: 1.55; }
+.citation-box p { font-size: .9rem; }
+.meta-label { color: #61564c; font-size: .72rem; }
+
+/* Revision: a note with an accent edge */
+.placeholder-box {
+  border-left: 3px solid #7b512f;
+  background: linear-gradient(165deg, #fffdf9, rgb(243 238 230 / 70%));
+  font-family: var(--sans);
+  font-size: .92rem;
+  line-height: 1.55;
+}
+.placeholder-box p { font-size: .92rem; }
+
+/* Does not claim: each exclusion is marked, in two columns on wide screens */
+.boundary-box { background: rgb(243 238 230 / 60%); }
+.boundary-box ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 6px 22px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: .9rem;
+}
+.boundary-box li { position: relative; padding-left: 22px; }
+.boundary-box li::before {
+  position: absolute; left: 0; top: .05em; width: 15px; height: 15px; border: 1px solid #b8aa99; border-radius: 50%;
+  background:
+    linear-gradient(45deg, transparent calc(50% - .6px), #756b60 calc(50% - .6px) calc(50% + .6px), transparent calc(50% + .6px)),
+    linear-gradient(-45deg, transparent calc(50% - .6px), #756b60 calc(50% - .6px) calc(50% + .6px), transparent calc(50% + .6px));
+  background-size: 7px 7px; background-position: center; background-repeat: no-repeat; content: "";
+}
+
+/* ---- manuscript --------------------------------------------------------------------------------------------- */
+.manuscript { padding-top: clamp(24px, 4vw, 48px); padding-bottom: clamp(32px, 5.5vw, 68px); }
+.manuscript p, .manuscript li { max-width: 68ch; }
+.manuscript p { margin-block: .9em; }
+.manuscript h2 { margin-top: 2.1em; font-size: clamp(1.45rem, 2.9vw, 2.05rem); line-height: 1.2; }
+.manuscript h3 { margin-top: 1.8em; font-size: clamp(1.1rem, 2.1vw, 1.32rem); }
+.manuscript hr { margin: 1.6rem 0; }
+table { font-size: .84rem; margin-block: 1rem 1.4rem; }
+th, td { padding: 9px 11px; }
+
+/* ---- Changelog: collapsible ----------------------------------------------------------------------------------- */
+details.changelog {
+  margin: 1.4em 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(165deg, #fffdf9, rgb(243 238 230 / 55%));
+  box-shadow: var(--reader-bevel), 0 1px 1px rgb(59 50 43 / 5%), 0 4px 8px rgb(59 50 43 / 4%);
+}
+details.changelog > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 12px 18px; cursor: pointer; list-style: none; border-radius: 8px;
+}
+details.changelog > summary::-webkit-details-marker { display: none; }
+details.changelog > summary h3 { margin: 0; font-size: 1.15rem; }
+details.changelog > summary::after {
+  flex: 0 0 auto; padding: 4px 11px; border: 1px solid var(--line); border-radius: 999px; background: #fff;
+  color: #7b512f; font: 700 .72rem/1.4 var(--sans); letter-spacing: .1em; text-transform: uppercase; content: "Show";
+}
+details.changelog[open] > summary { border-bottom: 1px solid var(--line); border-radius: 8px 8px 0 0; }
+details.changelog[open] > summary::after { content: "Hide"; }
+details.changelog > :not(summary) { margin-inline: 18px; }
+details.changelog > table { width: calc(100% - 36px); }
+details.changelog > p:last-of-type, details.changelog > table:last-child { margin-bottom: 18px; }
+details.changelog > summary:focus-visible, .toc-rail a:focus-visible, .to-top:focus-visible {
+  outline: 2px solid #596344; outline-offset: 3px;
+}
+
+/* ---- Table of contents: inline list plus an "On this page" rail with scroll-spy ----------------------------------- */
+.toc-list { font-size: .92rem; line-height: 1.5; }
+.toc-list a { padding-block: 1px; }
+
+.toc-rail { display: none; }
+@media (min-width: 1100px) {
+  .manuscript.has-rail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--reader-rail);
+    column-gap: 40px;
+    align-items: start;
+  }
+  .manuscript.has-rail > * { grid-column: 1; }
+  .manuscript.has-rail > .toc-rail {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / span 400;
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    margin-top: 6px;
+    padding: 14px 4px 14px 0;
+    font-family: var(--sans);
+    scrollbar-width: thin;
+  }
+  .toc-rail h2 {
+    margin: 0 0 10px; padding: 0; border: 0;
+    color: #61564c; font: 700 .72rem/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase;
+  }
+  .toc-rail ol { margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--line); }
+  .toc-rail a {
+    display: block; margin-left: -1px; padding: 5px 8px 5px 14px; border-left: 2px solid transparent;
+    color: #4e433a; font-size: .83rem; line-height: 1.38; text-decoration: none;
+    transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  }
+  .toc-rail a:hover { color: #7b512f; background: rgb(232 225 216 / 40%); }
+  .toc-rail a[aria-current="location"] { border-left-color: #7b512f; color: #7b512f; font-weight: 600; background: rgb(232 225 216 / 55%); }
+}
+.to-top {
+  position: fixed; right: 18px; bottom: 18px; z-index: 5; display: none; padding: 9px 14px;
+  border: 1px solid var(--line); border-radius: 999px; background: #fffdf9; color: #7b512f;
+  font: 700 .74rem/1 var(--sans); letter-spacing: .1em; text-decoration: none; text-transform: uppercase;
+  box-shadow: 0 2px 4px rgb(59 50 43 / 10%), 0 10px 22px rgb(59 50 43 / 10%);
+}
+.to-top.is-visible { display: inline-block; }
+
+/* ---- small screens -------------------------------------------------------------------------------------------- */
+@media (max-width: 899px) {
+  .status-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .status-grid > div, .status-grid > div:nth-child(1), .status-grid > div:nth-child(2) { grid-column: span 1; }
+  .status-grid > div:nth-child(2), .status-grid > div:nth-child(3) { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  body { font-size: 1rem; }
+  .publication-shell { width: 100%; margin-block: 0; border-radius: 0; }
+  .status-grid { grid-template-columns: minmax(0, 1fr); }
+  .status-grid > div, .status-grid > div:nth-child(n) { grid-column: 1; }
+  details.changelog > :not(summary) { margin-inline: 12px; }
+  /* Changelog rows become stacked entries; the header row stays available to assistive technology. */
+  details.changelog > table { display: block; width: calc(100% - 24px); overflow: visible; }
+  details.changelog > table tbody { display: block; width: auto; }
+  details.changelog > table { table-layout: auto; margin-top: 12px; }
+  details.changelog > table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  details.changelog > table tr { display: block; margin-bottom: 10px; border: 1px solid var(--line); border-radius: 8px; background: #fffdf9; }
+  details.changelog > table td { display: block; border: 0; border-bottom: 1px solid rgb(213 201 185 / 55%); padding: 8px 12px; overflow-wrap: break-word; word-break: normal; }
+  details.changelog > table td:last-child { border-bottom: 0; }
+  details.changelog > table td::before { display: block; margin-bottom: 2px; color: #61564c; font: 700 .7rem/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+  details.changelog > table td:nth-child(1)::before { content: "Version"; }
+  details.changelog > table td:nth-child(2)::before { content: "Change"; }
+  details.changelog > table td:nth-child(3)::before { content: "Sections Affected"; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toc-rail a { transition: none; }
+}
+@media print {
+  .toc-rail, .to-top { display: none !important; }
+  details.changelog > :not(summary) { display: block; }
+}

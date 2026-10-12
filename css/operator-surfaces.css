@@ -964,3 +964,137 @@
 @media (prefers-reduced-motion: reduce) {
   [data-design-system="operator"] .operator-publication-object { transform: none !important; }
 }
+
+/* Governance stack: one grid, one timing, one active state, a stable evidence panel. */
+[data-design-system="operator"] {
+  --stack-duration: 180ms;
+  --stack-ease: var(--motion-ease);
+  --stack-active-bg: var(--selection-surface);
+  --stack-active-edge: var(--action-ink);
+  --stack-active-ink: var(--selection-ink);
+}
+[data-design-system="operator"] .operator-stack { align-items: stretch; }
+[data-design-system="operator"] .operator-stack > li:not(.operator-stack__group) { display: flex; min-width: 0; }
+[data-design-system="operator"] .operator-stack > li > button,
+[data-design-system="operator"] .operator-stack__group { flex: 1 1 auto; align-content: center; }
+[data-design-system="operator"] .operator-stack__group {
+  grid-column: auto;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  align-content: stretch;
+}
+[data-design-system="operator"] .operator-stack__group-label { min-height: 0; border-style: dashed; }
+[data-design-system="operator"] .operator-stack > li > button,
+[data-design-system="operator"] .operator-stack__chambers button {
+  border-width: 1px;
+  transition:
+    background-color var(--stack-duration) var(--stack-ease),
+    border-color var(--stack-duration) var(--stack-ease),
+    color var(--stack-duration) var(--stack-ease),
+    box-shadow var(--stack-duration) var(--stack-ease),
+    transform var(--stack-duration) var(--stack-ease);
+}
+[data-design-system="operator"] .operator-stack > li > button.active,
+[data-design-system="operator"] .operator-stack__chambers button.active {
+  border-color: var(--stack-active-edge);
+  background: var(--stack-active-bg);
+  color: var(--stack-active-ink);
+}
+[data-design-system="operator"] .operator-stack > li > button.active strong,
+[data-design-system="operator"] .operator-stack > li > button.active small,
+[data-design-system="operator"] .operator-stack__chambers button.active { color: var(--stack-active-ink); }
+[data-design-system="operator"] .operator-stack__chambers button.active::before { color: var(--stack-active-ink); }
+[data-design-system="operator"] .related-evidence-panel { min-height: 24rem; align-content: start; }
+[data-design-system="operator"] #related-evidence-list { max-height: 20rem; overflow-y: auto; align-content: start; }
+@media (max-width: 767px) {
+  [data-design-system="operator"] .related-evidence-panel { min-height: 38.5rem; }
+  [data-design-system="operator"] #related-evidence-list { max-height: 22rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-design-system="operator"] .operator-stack > li > button,
+  [data-design-system="operator"] .operator-stack__chambers button { transition: none; }
+}
+
+/* Hero: the identity overlay faded to an opaque page colour at the figure box, which cut the halo behind it
+   into a visible edge above "Operational evidence pending". The mark's own radial mask already feathers its
+   border, so the overlay now keeps only its side feathering and the halo runs on unbroken below the figure. */
+[data-design-system="operator"] .operator-identity::after {
+  background:
+    linear-gradient(90deg, var(--surface-page) 0%, rgb(247 245 242 / 72%) 7%, transparent 24%, transparent 76%, rgb(247 245 242 / 72%) 93%, var(--surface-page) 100%);
+}
+@media (min-width: 768px) {
+  [data-design-system="operator"] .operator-identity img {
+    -webkit-mask-image:
+      linear-gradient(180deg, transparent 0%, #000 16%, #000 68%, transparent 100%),
+      radial-gradient(ellipse 52% 61% at 59% 51%, #000 45%, rgb(0 0 0 / 88%) 63%, transparent 96%);
+    mask-image:
+      linear-gradient(180deg, transparent 0%, #000 16%, #000 68%, transparent 100%),
+      radial-gradient(ellipse 52% 61% at 59% 51%, #000 45%, rgb(0 0 0 / 88%) 63%, transparent 96%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+}
+@media (forced-colors: active) {
+  [data-design-system="operator"] .operator-identity img { -webkit-mask-image: none; mask-image: none; }
+}
+
+/* Version / Boundary Notes and every other document panel: one heading hierarchy.
+   Document title (#) and section (##) share a size, sections are separated by a rule, subsections (###) step down. */
+[data-design-system="operator"] .doc-detail-panel h1,
+[data-design-system="operator"] .doc-detail-panel h2 {
+  margin: 2.2em 0 .7em !important;
+  padding: 0 !important;
+  border: 0 !important;
+  font: 400 clamp(26px, 3.2vw, 34px)/1.15 var(--font-display) !important;
+  letter-spacing: -.012em !important;
+  text-transform: none !important;
+}
+[data-design-system="operator"] .doc-detail-panel h2,
+[data-design-system="operator"] .doc-detail-panel h1 ~ h1 {
+  padding-top: 1.1em !important;
+  border-top: 1px solid var(--boundary-quiet) !important;
+}
+[data-design-system="operator"] .doc-detail-panel > .evidence-panel + h1,
+[data-design-system="operator"] .doc-detail-panel > :first-child:is(h1, h2) { margin-top: 0 !important; }
+[data-design-system="operator"] .doc-detail-panel h3 {
+  margin: 1.6em 0 .5em !important;
+  font: 600 15px/1.35 var(--font-interface) !important;
+  letter-spacing: .01em !important;
+  text-transform: none !important;
+}
+[data-design-system="operator"] .evidence-panel {
+  margin: 0 0 clamp(36px, 4vw, 52px) !important;
+  padding: 0 0 clamp(28px, 3vw, 36px) !important;
+}
+[data-design-system="operator"] .evidence-panel-kicker { margin-bottom: 16px; font-size: 11px !important; }
+[data-design-system="operator"] .evidence-row { padding: 12px 16px 14px; background: rgb(232 225 216 / 30%); }
+[data-design-system="operator"] .evidence-row dt { font-size: 10px !important; margin-bottom: 4px; }
+[data-design-system="operator"] .evidence-row dd { margin: 0 !important; font-size: 14px !important; line-height: 1.5; }
+
+/* Reflow: grid tracks may shrink below their content, long words wrap instead of widening the page. */
+@media (max-width: 767px) {
+  [data-design-system="operator"] .operator-stack,
+  [data-design-system="operator"] .related-evidence-panel,
+  [data-design-system="operator"] .operator-footer,
+  [data-design-system="operator"] .operator-stack__group { grid-template-columns: minmax(0, 1fr); }
+}
+[data-design-system="operator"] .operator-disclosure,
+[data-design-system="operator"] .operator-disclosure__body,
+[data-design-system="operator"] .operator-disclosure__body > *,
+[data-design-system="operator"] .related-evidence-panel > *,
+[data-design-system="operator"] .operator-stack > li { min-width: 0; }
+[data-design-system="operator"] .operator-disclosure > summary,
+[data-design-system="operator"] .operator-stack button,
+[data-design-system="operator"] .related-evidence-panel,
+[data-design-system="operator"] .doc-detail-panel,
+[data-design-system="operator"] .operator-hero h1,
+[data-design-system="operator"] .operator-footer { overflow-wrap: anywhere; }
+[data-design-system="operator"] .operator-header { gap: 8px 16px; }
+@media (max-width: 767px) {
+  [data-design-system="operator"] .operator-header,
+  [data-design-system="operator"] .operator-protected .operator-header { grid-template-columns: minmax(0, 1fr) auto; }
+  [data-design-system="operator"] .operator-wordmark { max-width: 100%; flex-wrap: wrap; }
+  [data-design-system="operator"] .operator-session-link { justify-self: end; max-width: 100%; text-align: right; overflow-wrap: anywhere; }
+  [data-design-system="operator"] .operator-menu summary { white-space: nowrap; }
+  [data-design-system="operator"] :where(.doc-card, .doc-card *, .operator-publication-object, .operator-publication-object *) { min-width: 0; overflow-wrap: anywhere; }
+}
